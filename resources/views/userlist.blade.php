@@ -21,7 +21,7 @@
 								<div class="col-lg-12">
 									<div class="e-panel card">
 										<div class="card-header">
-											<h4>Users List</h4>
+											<h4>Users</h4>
 										</div>
 										<div class="card-body">
 											<div class="e-table">
