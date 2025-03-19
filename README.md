@@ -1,11 +1,11 @@
-<p align="center"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/KP_logo.png/467px-KP_logo.png" width="400" alt="Laravel Logo"></p>
+<p align="center"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/KP_logo.png/467px-KP_logo.png" width="140" alt="Logo"></p>
 
 
 ## About E-Abyana | Water Billing Management System
 
 <b>E-Abyana</b> is a web-based <b>Water Billing Management System</b> designed to <b>automate and digitize the billing process</b> for the <b>Irrigation Department</b>. Developed using Laravel 10.x, JavaScript, and Bootstrap, this system streamlines the entire workflow, from land survey and assessment to bill generation and handover, ensuring efficiency, transparency, and accuracy in water billing operations.
 
-This project was developed under the <b>KP Government Fellowship Program</b>, under the supervision of <a href="https://www.kpitb.gov.pk/"><b>KPIT</b></a> & <a href="https://codeforpakistan.org/"><b>Code for Pakistan</b></a>.
+This project was developed under the <b>KP Government Fellowship Program</b>, under the supervision of <a href="https://www.kpitb.gov.pk/"><b>KPITB</b></a> & <a href="https://codeforpakistan.org/"><b>Code for Pakistan</b></a>.
 
 ## Key Features:
 
