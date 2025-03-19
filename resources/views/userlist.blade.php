@@ -6,7 +6,7 @@
 
 					    <!--page-header open-->
 						<div class="page-header pt-0">
-							<h4 class="page-title">Users</h4>
+							<h4 class="page-title">Users List</h4>
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="#" class="text-light-color">UI Elements</a></li>
 								<li class="breadcrumb-item active" aria-current="page">Users</li>
@@ -21,7 +21,7 @@
 								<div class="col-lg-12">
 									<div class="e-panel card">
 										<div class="card-header">
-											<h4>Users</h4>
+											<h4>Users List</h4>
 										</div>
 										<div class="card-body">
 											<div class="e-table">
