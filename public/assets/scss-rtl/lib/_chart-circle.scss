@@ -1,0 +1,88 @@
+.chartsh {
+	height: 16rem;
+}
+.chart-dropshadow {
+	-webkit-filter: drop-shadow((-6px) 9px 4px rgba(0, 0, 0, 0.1));
+	filter: drop-shadow((-6px) 9px 4px rgba(0, 0, 0, 0.1));
+}
+.BarChartShadow {
+	-webkit-filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.3));
+	filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.3));
+}
+#chart {
+	max-width: 760px;
+	margin: 35px auto;
+	opacity: 0.9;
+}
+#timeline-chart .apexcharts-toolbar {
+	opacity: 1;
+	border: 0;
+}
+.ct-chart-pie {
+	height: 292px !important;
+}
+.chartist-tooltip {
+	position: relative;
+}
+.knob-chart .dash3 {
+	margin-top: 13px;
+	h2 {
+		font-size: 26px;
+	}
+}
+.chart-circle {
+	display: block;
+	height: 8rem;
+	width: 8rem;
+	position: relative;
+	margin: 0 auto;
+	canvas {
+		margin: 0 auto;
+		display: block;
+		max-width: 100%;
+		max-height: 100%;
+	}
+}
+.chart-circle-xs {
+	height: 2.5rem;
+	width: 2.5rem;
+	font-size: .8rem;
+}
+.chart-circle-sm {
+	height: 4rem;
+	width: 4rem;
+	font-size: .8rem;
+}
+.chart-circle-lg {
+	height: 10rem;
+	width: 10rem;
+	font-size: .8rem;
+}
+.chart-circle-value {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
+	bottom: 0;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	line-height: 1;
+	small {
+		display: block;
+		color: #9aa0ac;
+		font-size: 0.9375rem;
+	}
+}
+#Area-chart {
+	height: 97px !important;
+	bottom: -7px;
+	position: relative;
+}

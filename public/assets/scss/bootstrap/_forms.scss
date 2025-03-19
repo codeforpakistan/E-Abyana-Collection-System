@@ -1,0 +1,148 @@
+/*
+ * Form Control
+ * ----------------------
+ */
+
+ .form-control {
+	&:disabled, &[readonly] {
+	  background-color: #f0f0f5;
+	}
+  }
+  
+  .input-group-addon:first-child {
+	border-right: 0;
+  }
+  
+  .form-control {
+	border: 1px solid #e6eaea;
+	color: #888a8a;
+  
+	&:focus {
+	  border-color: $primary;
+	}
+  
+	&.creditcard {
+	  background-position: 98%;
+	  background-repeat: no-repeat;
+	  background-size: 40px;
+	  padding-right: 60px;
+  
+	  &.visa {
+		background-image: url("../img/visa.png");
+	  }
+  
+	  &.americanexpress {
+		background-image: url("../img/americanexpress.png");
+	  }
+  
+	  &.dinersclub {
+		background-image: url("../img/dinersclub.png");
+	  }
+  
+	  &.discover {
+		background-image: url("../img/discover.png");
+	  }
+  
+	  &.jcb {
+		background-image: url("../img/jcb.png");
+	  }
+  
+	  &.mastercard {
+		background-image: url("../img/mastercard.png");
+	  }
+	}
+  }
+  
+  .form-horizontal label.control-label {
+	margin-bottom: 20px;
+  }
+  
+  .form-group {
+	label {
+	  font-weight: 400;
+	  color: #7a7d7d;
+	  font-size: 14px;
+	  letter-spacing: .5px;
+	}
+  
+	&.floating-addon {
+	  position: relative;
+	}
+  }
+  
+  .custom-control-label::before {
+	position: absolute;
+	left: -1.5rem;
+	display: block;
+	width: 1rem;
+	height: 1rem;
+	pointer-events: none;
+	content: "";
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-color: #dee2e6;
+  }
+  
+  .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+	background-color: $primary;
+  }
+  
+  .form-group.floating-addon {
+	.input-group-prepend {
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  z-index: 5;
+	}
+  
+	.input-group-append {
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  z-index: 5;
+	  left: initial;
+	  right: 0;
+	}
+  
+	.input-group-prepend .input-group-text, .input-group-append .input-group-text {
+	  border-color: transparent;
+	  font-size: 20px;
+	  line-height: 24px;
+	}
+  
+	.form-control {
+	  border-radius: 3px;
+	  padding-left: 50px;
+  
+	  + .form-control {
+		border-radius: 0 3px 3px 0;
+		padding-left: 15px;
+	  }
+	}
+  }
+  
+  .input-group-text {
+	background-color: transparent;
+  }
+  
+  @media (min-width: 576px) {
+	.form-inline .form-control {
+	  display: inline-block;
+	  width: auto;
+	  vertical-align: inherit;
+	  align-items: center;
+	  margin-bottom: 2px;
+	}
+  }
+  
+  .form-control::-webkit-input-placeholder {
+	color: #bdbfbf;
+	opacity: 1;
+  }
+  
+  #smartwizard .nav.nav-tabs.step-anchor {
+	border-bottom: 0 !important;
+	padding: 15px;
+  }

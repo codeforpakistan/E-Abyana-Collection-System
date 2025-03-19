@@ -1,0 +1,63 @@
+/*
+ * Alert
+ * ----------------------
+ */
+
+ .alert {
+	color: #fff;
+	border: none;
+	.alert-title {
+		font-size: 16px;
+		font-weight: 500;
+	}
+	&.alert-has-icon {
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		.alert-icon {
+			font-size: 20px;
+			width: 30px;
+		}
+		.alert-body {
+			-webkit-box-flex: 1;
+			-ms-flex: 1;
+			flex: 1;
+		}
+	}
+	&:not(.alert-light) a {
+		color: #fff;
+	}
+	&.alert-primary {
+		background-color: $primary;
+	}
+	&.alert-secondary {
+		background-color: $secondary;
+	}
+	&.alert-success {
+		background-color: $success;
+	}
+	&.alert-info {
+		background-color: $info;
+	}
+	&.alert-warning {
+		background-color: $warning;
+	}
+	&.alert-danger {
+		background-color: $danger;
+	}
+	&.alert-light {
+		background-color: #f8f9fa;
+		color: #343a40;
+	}
+	&.alert-dark {
+		background-color: #343a40;
+	}
+}
+.alert-dismissible {
+    padding-left: 4rem;
+    padding-right:1.25rem;
+}
+.alert-dismissible .close {
+    left: 0;
+    right:auto;
+}

@@ -1,0 +1,101 @@
+/*-- list unstyled --*/
+
+.list-unstyled-border li {
+	border-bottom: 1px solid #e6eaea;
+	padding-bottom: 15px;
+	margin-bottom: 15px;
+  
+	.custom-checkbox {
+	  margin-right: 15px;
+	  margin-top: 13px;
+	}
+  }
+  
+  .list-unstyled-noborder li:last-child {
+	border-bottom: none;
+  }
+  
+  .list-group-item {
+	border: 1px solid #e6eaea;
+	color: #7a7d7d;
+  
+	&:hover {
+	  background: #f0f0f5;
+	  color: #7a7d7d;
+	}
+  }
+  
+  .contacts-list > li {
+	border-bottom: 1px solid #e6eaea;
+	padding: 10px;
+	margin: 0;
+  
+	&:before {
+	  content: " ";
+	  display: table;
+	}
+  
+	&:after {
+	  content: " ";
+	  display: table;
+	  clear: both;
+	}
+  
+	&:last-of-type {
+	  border-bottom: none;
+	}
+  }
+  
+  .contacts-list-img {
+	border-radius: 50%;
+	width: 40px;
+	float: left;
+  }
+  
+  .list-unstyled, .chart-legend, .contacts-list, .users-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+  }
+  
+  .contacts-list-info {
+	margin-left: 50px;
+  }
+  
+  .contacts-list-name, .contacts-list-status {
+	display: block;
+  }
+  
+  .contacts-list-name {
+	font-weight: 600;
+  }
+  
+  .contacts-list-status {
+	font-size: 12px;
+  }
+  
+  .contacts-list-date {
+	color: #9fa0b9;
+	font-weight: normal;
+  }
+  
+  .contacts-list-msg {
+	color: #9fa0b9;
+	font-weight: 400;
+	font-size: 12px;
+  }
+  
+  .contacts-list a:hover {
+	text-decoration: none !important;
+  }
+  
+  .list-group-item.active {
+	z-index: 2;
+	color: #fff;
+	background-color: $primary;
+	border-color: $primary;
+  }
+  
+  .list-group.lg-alt .list-group-item {
+	border: 0;
+  }

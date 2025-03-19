@@ -1,0 +1,89 @@
+/*
+ * labels
+ * ----------------------
+ */
+
+ .label {
+	display: inline;
+	padding: .2em .6em .3em;
+	font-size: 75%;
+	line-height: 1;
+	color: #fff;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border-radius: 0.25rem;
+}
+.label-pill {
+	padding-right: .6em;
+	padding-left: .6em;
+	border-radius: 10rem;
+}
+.label-default {
+	background-color: #efefef;
+	color: #343a40;
+}
+.label-primary {
+	background-color: $primary;
+}
+.label-secondary {
+	background-color: #6c757d;
+}
+.label-pink {
+	background-color: $secondary;
+}
+.label-info {
+	background-color: $info;
+}
+.label-danger {
+	background-color: $danger;
+}
+.label-warning {
+	background-color: $warning;
+}
+.label-success {
+	background-color: $success;
+}
+.dot-label {
+	width: 10px;
+	height: 10px;
+	display: inline-block;
+	border-radius: 100%;
+	margin-right: 10px;
+}
+@media (min-width: 507px) and (max-width: 846px) {
+	.heart label:before, .rate label:before {
+		font-size: 29px !important;
+	}
+}
+@media (min-width: 1200px) and (max-width: 1417px) {
+	.heart label:before, .rate label:before {
+		font-size: 28px !important;
+	}
+}
+@media (min-width: 380px) and (max-width: 506px) {
+	.heart label:before, .rate label:before {
+		font-size: 20px !important;
+	}
+}
+@media (max-width: 320px) {
+	.heart label:before {
+		font-size: 12px !important;
+	}
+	.rate label:before {
+		font-size: 10px !important;
+	}
+	.static-rate i {
+		font-size: 30px !important;
+	}
+}
+.form-label {
+	display: block;
+	margin-bottom: .375rem;
+	font-weight: 600;
+	font-size: 0.875rem;
+	margin-top: 9px;
+}
+.custom-control-label {
+	display: flex;
+}

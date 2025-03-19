@@ -1,0 +1,30 @@
+@media (max-width: 375px) {
+	.breadcrumb {
+		font-size: 12px;
+	}
+}
+.breadcrumb-item {
+	&.active {
+		color: $primary;
+	}
+	+.breadcrumb-item::before {
+		display: inline-block;
+		padding-left: .5rem;
+		color: #68686b;
+		content: "/";
+	}
+}
+.breadcrumb {
+	background: transparent;
+	color: #d8dede;
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 0;
+	list-style: none;
+	padding: 0 !important;
+}
+.page-header .breadcrumb-item {
+	&.active, +.breadcrumb-item::before {
+		color: #fff;
+	}
+}

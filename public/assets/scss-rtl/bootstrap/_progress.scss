@@ -1,0 +1,45 @@
+.progress {
+	background: #f5f7f7;
+	box-shadow: 0 4px 6px rgba(241, 246, 247, 0.1), 0 1px 3px rgba(243, 243, 243, 0.08);
+}
+.progress-bar {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	-ms-flex-pack: center;
+	justify-content: center;
+	color: #fff;
+	text-align: center;
+	white-space: nowrap;
+	background-color: $primary;
+	transition: width .6s ease;
+}
+.progress-bar-striped {
+	background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+	background-size: 1rem 1rem;
+}
+.progress-bar-animated {
+	-webkit-animation: progress-bar-stripes 1s linear infinite;
+     animation: progress-bar-stripes 1s linear infinite; 
+}
+.tile_count {
+	margin-bottom: 20px;
+	margin-top: 60px;
+	padding: 15px;
+	background: #fff;
+	.tile_stats_count {
+		padding: 0 10px 0 20px;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+		position: relative;
+	}
+	.progress {
+		margin-top: 8px !important;
+		margin-bottom: 5px !important;
+	}
+}
+#count-down {
+	position: relative;
+}

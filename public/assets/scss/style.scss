@@ -1,0 +1,155 @@
+@charset "UTF-8";
+/*------------------------------------------------------------------
+[Master Stylesheet]
+
+Project        :   Splite - a responsive, flat and full featured admin template
+Version        :   V.2.0
+Create Date    :   15/09/18
+Copyright      :   Spruko Technologies Private Limited 
+Author         :   SprukoSoft
+Author URL     :   https://themeforest.net/user/sprukosoft
+Support	       :   support@spruko.com
+License        :   Licensed under ThemeForest License
+
+-------------------------------------------------------------------*/
+
+/********* TABLE OF CONTENTS *****/
+
+/******------------------
+
+1.  Accordions
+2.  Alert
+3.  Avatars
+4.  Badge
+5.  Bootstrap-custom
+6.  Breadcrumb
+7.  Buttons
+8.  Cards
+9.  Carousel
+10. Dropdown
+11. Forms
+12. Grid
+13. Input-group
+14. Jumbotron
+15. Lists
+16. Modal
+17. Navigation
+18. Pagination
+19. Progress
+20. Tables
+21. Tooltip&Popover
+22. count-down
+23.  Custom-styles
+24. label
+25. Icons
+26. Imagecheck
+27. Mediaobject
+28. Panel
+29. Rating
+30. Select
+31. Tags
+32. Timeline
+33. Footer 
+34.  Headers
+35. Horizontal-menu
+36. Horizontal-menu1
+37. item-cards
+38. Profile
+39. Chart-circle
+40. Chat
+41. Email
+42. Gallery
+43. Jvectormap
+44. Loaders
+45. Pricing
+46. Products
+47. Calendar
+48. Errors
+49. Sidebar
+50. Widget
+51. Background
+52. Border
+53. Height
+54. Margin
+55. Typography
+56. Width
+
+******------------------/
+
+
+/* ########## bootstrap OVERRIDES ########## */
+
+@import "custom/fonts/_fonts.scss";
+@import "variables";
+
+@import "bootstrap/accordions";
+@import "bootstrap/alert";
+@import "bootstrap/avatars";
+@import "bootstrap/badge";
+@import "bootstrap/bootstrap-custom";
+@import "bootstrap/breadcrumb";
+@import "bootstrap/buttons";
+@import "bootstrap/cards";
+@import "bootstrap/carousel";
+@import "bootstrap/dropdown";
+@import "bootstrap/forms";
+@import "bootstrap/grid";
+@import "bootstrap/input-group";
+@import "bootstrap/jumbotron";
+@import "bootstrap/lists";
+@import "bootstrap/modal";
+@import "bootstrap/navigation";
+@import "bootstrap/pagination";
+@import "bootstrap/progress";
+@import "bootstrap/tables";
+@import "bootstrap/tooltip&popover";
+
+
+/* ########## CUSTOM  STYLES ########## */
+
+@import "custom/count-down";
+@import "custom/custom-styles";
+@import "custom/icons";
+@import "custom/imagecheck";
+@import "custom/label";
+@import "custom/mediaobject";
+@import "custom/panel";
+@import "custom/rating";
+@import "custom/select";
+@import "custom/tags";
+@import "custom/timeline";
+
+
+/* ############### LAYOUTS STYLES ############### */
+@import "layouts/footer";
+@import "layouts/headers";
+@import "layouts/horizontal-menu";
+@import "layouts/horizontal-menu-1";
+@import "layouts/item-cards";
+@import "layouts/profile";
+
+
+/* ############### CUSTOM STYLES ############### */
+@import "lib/chart-circle";
+@import "lib/chat";
+@import "lib/email";
+@import "lib/gallery";
+@import "lib/jvectormap";
+@import "lib/loaders";
+@import "lib/pricing";
+@import "lib/products";
+
+
+/* ############### TEMPLAT CLASSES ############### */
+@import "template/calendar";
+@import "template/errors";
+@import "template/sidebar";
+@import "template/widget";
+
+/* ############### UTILITIES CLASSES ############### */
+@import "utils/background";
+@import "utils/border";
+@import "utils/height";
+@import "utils/margin";
+@import "utils/typography";
+@import "utils/width";

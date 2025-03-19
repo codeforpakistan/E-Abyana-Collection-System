@@ -1,0 +1,111 @@
+.main-footer {
+	padding: 20px 30px 20px 30px;
+	font-size: 14px;
+	font-weight: 400;
+	background-color: #fff;
+	border-top: 1px solid #e6eaea;
+        margin-top: auto;
+       display: block;
+}
+.sidenav-toggled .main-footer {
+	padding: 20px 30px 20px 150px;
+}
+/*
+ * Footer
+ * ----------------------
+ */
+
+.footer-social-list {
+	padding-left: 0;
+	list-style: none;
+	margin: 0;
+	line-height: 1.25rem;
+	li {
+		&:not(:last-child) {
+			margin-right: 1.5rem;
+		}
+		display: inline-block;
+	}
+	a {
+		color: #8e9090;
+		text-decoration: none;
+		font-size: 1rem;
+		&:hover {
+			color: $primary;
+		}
+	}
+}
+.top-footer {
+	width: 100%;
+	line-height: 1.25rem;
+	opacity: 1;
+	transform: translate(0px, 0px);
+	color: #68686b;
+	font-size: 14px;
+	flex: 0 0 auto;
+	h6 {
+		font-size: 14px;
+		margin-bottom: 1rem;
+		font-weight: 600;
+	}
+	p {
+		color: #8e9090;
+	}
+	a {
+		color: #8e9090;
+		line-height: 2;
+	}
+	p:hover {
+		color: $primary;
+	}
+	a address {
+		color: #8e9090;
+		margin-bottom: 0;
+		line-height: 2;
+		&:hover {
+			color: $primary;
+		}
+	}
+	img {
+		width: 80px;
+		border: 1px solid #e6eaea;
+		padding: 2px;
+		&:hover {
+			color: #8e9090;
+			opacity: .6;
+		}
+	}
+	a:hover {
+		color: $primary;
+	}
+}
+.footer-payments {
+	padding-left: 0;
+	list-style: none;
+	margin: 0;
+	line-height: 1.25rem;
+	li {
+		&:not(:last-child) {
+			margin-right: 1.5rem;
+		}
+		display: inline-block;
+	}
+	a {
+		color: #8e9090;
+		text-decoration: none;
+		font-size: 2rem;
+		&:hover {
+			color: $primary;
+			opacity: .9;
+		}
+	}
+}
+@media (max-width: 992px) {
+	.footer-social-list {
+		text-align: center;
+		margin-top: 1rem;
+	}
+	.footer1 {
+		text-align: center;
+	}
+}
