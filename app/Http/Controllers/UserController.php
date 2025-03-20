@@ -64,6 +64,9 @@ public function storeUser(Request $request)
         'phone_number' => $request->input('phone_number'),
         'role_id' => $request->input('role_id'),
         'halqa_id' => $request->input('halqa_id'),
+        'div_id' => $request->div_id,
+        'district_id' => $request->district_id,
+        'tehsil_id' => $request->tehsil_id,
     ]);
 
     // Assign role to user

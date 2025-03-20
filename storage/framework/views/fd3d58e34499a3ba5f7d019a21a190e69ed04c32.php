@@ -1,5 +1,4 @@
-@extends('layout')
-@section('content')
+<?php $__env->startSection('content'); ?>
 <head>
     ...
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -9,27 +8,27 @@
   
     <section class="section">
 
-    @if(session('success'))
+    <?php if(session('success')): ?>
         <script>
             Swal.fire({
                 icon: 'success',
                 title: 'Success',
-                text: "{{ session('success') }}",
+                text: "<?php echo e(session('success')); ?>",
                 confirmButtonText: 'OK'
             });
         </script>
-    @endif
+    <?php endif; ?>
 
-    @if(session('error'))
+    <?php if(session('error')): ?>
         <script>
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: "{{ session('error') }}",
+                text: "<?php echo e(session('error')); ?>",
                 confirmButtonText: 'OK'
             });
         </script>
-    @endif
+    <?php endif; ?>
 
         <!--row open-->
       
@@ -46,8 +45,8 @@
                 <i class="fa fa-close"></i></button>
         </div>
         <div class="card-body">
-            <form class="form-horizontal" action="{{ url('AddUser/add') }}" method="POST">
-                @csrf
+            <form class="form-horizontal" action="<?php echo e(url('AddUser/add')); ?>" method="POST">
+                <?php echo csrf_field(); ?>
                 
                 <!-- First Row (Name and CNIC) -->
                 <div class="form-group row">
@@ -79,9 +78,9 @@
                         <label  for="role_id" class="form-label font-weight-bold">Select  Role</label>
                         <select name="role_id" id="role_id" class="form-control" required>
                             <option class="form-label font-weight-bold">Choose  Role</option>
-                            @foreach($roles as $role)
-                                <option value="{{ $role->id }}">{{ $role->name }}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($role->id); ?>"><?php echo e($role->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                         </div>
                  
@@ -93,18 +92,18 @@
                         <label for="div_id" class="form-label font-weight-bold">Select Divsion/ڈویژن</label>
                         <select name="div_id" id="div_id" class="form-group form-control select_search" onchange="get_districts(this)">
                             <option class="form-label font-weight-bold value=">Choose Division/ڈویژن</option>
-                            @foreach($divsions as $divsion)
-                                <option value="{{ $divsion->id }}">{{ $divsion->divsion_name }}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $divsions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $divsion): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($divsion->id); ?>"><?php echo e($divsion->divsion_name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div> 
                     <div class="form-group col-lg-6">
                         <label class="form-label font-weight-bold" for="district_id">Select District/ضلع</label>
                         <select name="district_id" id="district_id" class="form-control" onchange="get_tehsils(this)">
                             <option value="">Choose district</option>
-                            @foreach($districts as $district)
-                                <option value="{{ $district->id }}">{{ $district->name }}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $districts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $district): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($district->id); ?>"><?php echo e($district->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>                                
                     </div>
                  
@@ -112,9 +111,9 @@
                         <label class="form-label font-weight-bold" for="tehsil_id">Select Tehsil/تحصیل</label>
                         <select name="tehsil_id" id="tehsil_id" class="form-control" onchange="get_halqa(this)">
                             <option value="">Choose Tehsil</option>
-                            @foreach($tehsils as $tehsil)
-                                <option value="{{$tehsil->tehsil_id }}">{{$tehsil->tehsil_name }}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $tehsils; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tehsil): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($tehsil->tehsil_id); ?>"><?php echo e($tehsil->tehsil_name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
 
@@ -131,9 +130,9 @@
                         <label class="form-label font-weight-bold" for="halqa_id" style="">Select Halqa/حلقہ</label>
                         <select name="halqa_id" id="halqa_id" class="form-control form-control-lg" required style="font-size: 1.1rem; padding: 0.5rem 1rem; line-height: 1.5;">
                             <option value="" style="font-weight: bold;">Choose Halqa/حلقہ</option>
-                            @foreach($Halqas as $Halqa)
-                                <option value="{{$Halqa->id }}">{{$Halqa->halqa_name }}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $Halqas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $Halqa): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($Halqa->id); ?>"><?php echo e($Halqa->halqa_name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                     </div>
@@ -166,9 +165,9 @@
 </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <form id="districtDeleteForm" action="{{ route('district.delete') }}" method="POST">
-                                @csrf
-                                @method('DELETE')
+                            <form id="districtDeleteForm" action="<?php echo e(route('district.delete')); ?>" method="POST">
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('DELETE'); ?>
                                 
                                 <table id="example" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
                                     <thead>
@@ -185,22 +184,22 @@
                                     </thead>
                                          
                                 <ul>
-                                    @foreach($usersWithRoles as $usersWithRole)
+                                    <?php $__currentLoopData = $usersWithRoles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $usersWithRole): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                        <td>{{ $usersWithRole->id }}</td>
-                                          <td>{{ $usersWithRole->user_name }}</td>
+                                        <td><?php echo e($usersWithRole->id); ?></td>
+                                          <td><?php echo e($usersWithRole->user_name); ?></td>
 
-                                            <td>{{ $usersWithRole->email }}</td>
-                                             <td>{{ $usersWithRole->phone_number }}</td>
-                                                 <td>{{ $usersWithRole->role_name ?? 'No role assigned' }}</td>
+                                            <td><?php echo e($usersWithRole->email); ?></td>
+                                             <td><?php echo e($usersWithRole->phone_number); ?></td>
+                                                 <td><?php echo e($usersWithRole->role_name ?? 'No role assigned'); ?></td>
                                               <td>
                                                 <form
-                                                action="{{ route('AddUser.destroy', $usersWithRole->id) }}"
+                                                action="<?php echo e(route('AddUser.destroy', $usersWithRole->id)); ?>"
                                                 method="POST"
                                                 onsubmit="return confirm('Are you sure you want to delete this irrigator?');"
                                                 style="display: inline;">
-                                                @csrf
-                                                @method('DELETE')
+                                                <?php echo csrf_field(); ?>
+                                                <?php echo method_field('DELETE'); ?>
                                             
 
                                                         <button class="btn btn-sm btn-primary badge rounded-pill" type="submit">
@@ -208,12 +207,12 @@
                                                         </button>
 
                                             </form>
-                                            <a href="{{ route('edit.user', $usersWithRole->id) }}" class="btn btn-sm btn-primary">
+                                            <a href="<?php echo e(route('edit.user', $usersWithRole->id)); ?>" class="btn btn-sm btn-primary">
                                                 <i class="fa fa-edit"></i> Edit</a> 
                                               </td>
                                                   
                                     </tr>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         
                                               </ul>
                                         
@@ -232,17 +231,17 @@
         
     </section>
 
-    @if(Session::has('success'))
+    <?php if(Session::has('success')): ?>
         <script>
             swal({
                 title: "Success!",
-                text: "{{ Session::get('success') }}",
+                text: "<?php echo e(Session::get('success')); ?>",
                 icon: "success",
                 button: "OK",
             });
             
         </script>
-    @endif
+    <?php endif; ?>
 
     <script>
         function confirmDelete(districtId) {
@@ -262,11 +261,11 @@
         }
     
         function deleteDistrict(districtId) {
-            fetch(`{{ route('district.delete') }}`, {
+            fetch(`<?php echo e(route('district.delete')); ?>`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>'
                 },
                 body: JSON.stringify({
                     ids: { [districtId]: districtId }
@@ -401,5 +400,6 @@ function get_halqa(element) {
     <script> <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 </script>
 </div>             
- @endsection
+ <?php $__env->stopSection(); ?>
  
+<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Applications/XAMPP/xamppfiles/htdocs/E-Abyana-Collection-System/resources/views/UserManagement/AddUser.blade.php ENDPATH**/ ?>

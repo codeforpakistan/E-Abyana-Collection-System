@@ -27,8 +27,9 @@ class User extends Authenticatable
         'phone_number',
         'role_id',
         'halqa_id',
-
-        
+        'div_id',
+        'district_id',
+        'tehsil_id',
        
     ];
     
