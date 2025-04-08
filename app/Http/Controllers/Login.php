@@ -27,6 +27,9 @@ class Login extends Controller
                 'name' => $user->name,
                 'halqa_id' => $user->halqa_id,
                 'role_id' => $user->role_id,
+                'district_id' => $user->district_id,
+                'div_id' => $user->div_id,
+                'tehsil_id' => $user->tehsil_id,
             ]);
     
             return redirect('/dashboard')->with('success', 'Login Successful');

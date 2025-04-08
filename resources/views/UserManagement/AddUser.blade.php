@@ -48,30 +48,30 @@
                 <i class="fa fa-close"></i></button>
         </div>
         <div class="card-body">
-            <form class="form-horizontal p-3 shadow rounded" action="{{ url('AddUser/add') }}" method="POST">
+            <form class="form-horizontal" action="{{ url('AddUser/add') }}" method="POST">
                 @csrf
-            
-         
+                
+                <!-- First Row (Name and Email) -->
                 <div class="form-group row">
                     <div class="col-md-6 mb-3">
-                        <label class="form-label font-weight-bold">Name</label>
-                        <input type="text" class="form-control" placeholder="Enter Name" name="name">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-control" placeholder="Name" name="name" required>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label class="form-label font-weight-bold">Email</label>
-                        <input type="email" class="form-control" placeholder="Enter Email" name="email">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" placeholder="Enter Email" name="email" required>
                     </div>
                 </div>
             
-               
+                <!-- Second Row (Password, Phone Number, Role) -->
                 <div class="form-group row">
                     <div class="col-md-4 mb-3">
-                        <label class="form-label font-weight-bold">Password</label>
-                        <input type="password" class="form-control" placeholder="Enter Password" name="password">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" placeholder="Enter Password" name="password" required>
                     </div>
                     <div class="col-md-4 mb-3">
-                        <label class="form-label font-weight-bold">Phone Number</label>
-                        <input type="text" class="form-control" placeholder="Enter Phone Number" name="phone_number">
+                        <label class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" placeholder="Enter Phone Number" name="phone_number" required>
                     </div>
                     <div class="col-md-4 mb-3">
                         <label class="form-label font-weight-bold">Select Role</label>
@@ -84,20 +84,20 @@
                     </div>
                 </div>
             
-
-                <div class="row">
-                    <div id="div_division" class="form-group col-lg-6">
-                        <label class="form-label font-weight-bold">Select Division/ڈویژن</label>
+                <!-- Third Row (Division and District) -->
+                <div class="form-group row">
+                    <div id="div_division" class="col-lg-6">
+                        <label class="form-label font-weight-bold">Select Division / ڈویژن</label>
                         <select name="div_id" id="div_id" class="form-control">
                             <option value="">Choose Division</option>
-                            @foreach($divsions as $divsion)
-                                <option value="{{ $divsion->id }}">{{ $divsion->divsion_name }}</option>
+                            @foreach($divsions as $division)
+                                <option value="{{ $division->id }}">{{ $division->division_name }}</option>
                             @endforeach
                         </select>
                     </div>
-            
-                    <div id="div_district" class="form-group col-lg-6">
-                        <label class="form-label font-weight-bold">Select District/ضلع</label>
+                    
+                    <div id="div_district" class="col-lg-6">
+                        <label class="form-label font-weight-bold">Select District / ضلع</label>
                         <select name="district_id" id="district_id" class="form-control">
                             <option value="">Choose District</option>
                             @foreach($districts as $district)
@@ -105,9 +105,12 @@
                             @endforeach
                         </select>
                     </div>
+                </div>
             
-                    <div id="div_tehsil" class="form-group col-lg-6">
-                        <label class="form-label font-weight-bold">Select Tehsil/تحصیل</label>
+                <!-- Fourth Row (Tehsil and Halqa) -->
+                <div class="form-group row">
+                    <div id="div_tehsil" class="col-lg-6">
+                        <label class="form-label font-weight-bold">Select Tehsil / تحصیل</label>
                         <select name="tehsil_id" id="tehsil_id" class="form-control">
                             <option value="">Choose Tehsil</option>
                             @foreach($tehsils as $tehsil)
@@ -115,18 +118,23 @@
                             @endforeach
                         </select>
                     </div>
-            
-                    <div id="div_halqa" class="form-group col-lg-6">
-                        <label class="form-label font-weight-bold">Select Halqa/حلقہ</label>
+                    
+                    <div id="div_halqa" class="col-lg-6">
+                        <label class="form-label font-weight-bold">Select Halqa / حلقہ</label>
                         <select name="halqa_id" id="halqa_id" class="form-control">
                             <option value="">Choose Halqa</option>
+                            @foreach($Halqas as $Halqa)
+                                <option value="{{ $Halqa->id }}">{{ $Halqa->halqa_name }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
             
-              
-                <div class="text-center mt-4">
-                    <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                <!-- Submit Button -->
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                    </div>
                 </div>
             </form>
             
@@ -202,7 +210,10 @@
 
                                 </tbody>
                                 </table>
-                                
+                                <div class="d-flex justify-content-center">
+    {{ $usersWithRoles->links() }}
+</div>
+
                             </form>
                         </div>
                     </div>
@@ -385,32 +396,28 @@ function get_halqa(element) {
 </div>             
  @endsection
  
- <script>
+<script>
     function toggleDropdowns() {
-        var role = $("#role_id option:selected").text().trim().toLowerCase(); // Get selected role name
-
-        console.log("Selected Role:", role); // Debugging line
+        var role = $("#role_id option:selected").text().toLowerCase(); // Get selected role name
 
         // Hide all dropdowns initially
         $("#div_division, #div_district, #div_tehsil, #div_halqa").hide();
 
         if (role === "patwari") {
-            // Show district, tehsil, and halqa for Patwari
+           
             $("#div_district, #div_tehsil, #div_halqa").show();
-        } else if (role === "zilladar" || role === "deputy collector") { 
-            // Ensure correct spelling for "Deputy Collector"
-            $("#div_district").show(); // Show only district
+        } else if (role === "zilladar" || role === "dupty collector") {
+           
+            $("#div_district").show();
         } else if (role === "xen") {
-            // Show only division for Xen
+            
             $("#div_division").show();
         }
-        // Admin automatically hides everything
+    
     }
 
-    // Hide all dropdowns on page load
+  
     $(document).ready(function () {
         toggleDropdowns();
-        $("#role_id").change(toggleDropdowns); // Trigger function when role changes
     });
 </script>
-

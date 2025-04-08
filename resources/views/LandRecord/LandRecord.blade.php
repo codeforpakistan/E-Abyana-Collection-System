@@ -80,6 +80,15 @@
                                     @endforeach
                                 </select>
                             </div>  -->
+                            <div class="form-group col-lg-3">
+                                <label class="form-label font-weight-bold" for="div_id">Select Division / ڈویژن</label>
+                                <select name="div_id" id="div_id" class="form-group form-control" required readon>
+                                   
+                          
+                                        <option value="{{ $divsion->id }}">{{ $divsion->divsion_name }}</option>
+                                    
+                                </select>
+                            </div>
                             <div class="col-md-3 form-group">
                                 <label class="form-label font-weight-bold">Select Village/گاؤں</label>
                                 <select name="village_id" class="form-control" required readonly>

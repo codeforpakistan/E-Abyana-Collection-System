@@ -7,7 +7,7 @@ use App\Models\Village;
 use App\Models\Outlet;
 use App\Models\Tehsil;
 use App\Models\District;
-use App\Models\canal;
+use App\Models\Canal;
 use App\Models\Divsion;
 use App\Models\Crop;
 use App\Models\Halqa;
@@ -63,9 +63,9 @@ class IrrigatorController extends Controller
         $districts = District::all();
         $tehsils = Tehsil::all();
         $divsions = Divsion::all();
-    
+        $canals = Canal::all();
         // Return the view with paginated data
-        return view('AddIrragtor', compact('villages', 'districts', 'tehsils', 'divsions', 'Halqas', 'Irrigators'));
+        return view('AddIrragtor', compact('villages', 'canals', 'districts', 'tehsils', 'divsions', 'Halqas', 'Irrigators'));
     }
     
 
@@ -104,6 +104,7 @@ public function StoreIrrgator(Request $request)
         'irrigator_mobile_number' => 'required|string|max:255',
         'village_id' => 'required|exists:villages,village_id',
         'canal_id' => 'required|exists:canals,id',
+        'div_id' => 'required|exists:divisions,id',
     ]);
 
     $duplicate = Irrigator::where('irrigator_khata_number', $request->irrigator_khata_number)

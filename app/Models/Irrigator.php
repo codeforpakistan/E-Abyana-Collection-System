@@ -13,6 +13,7 @@ class Irrigator extends Model
     protected $fillable = [
         'village_id',
         'canal_id',
+        'div_id',
         'irrigator_name', 
         'irrigator_khata_number', 
         'irrigator_f_name', 

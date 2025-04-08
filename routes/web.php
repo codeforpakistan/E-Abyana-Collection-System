@@ -97,6 +97,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('AddDivsion', [DivsionController::class, 'AddDivsion'])->name('AddDivsion');
     Route::post('AddDivsion/add', [DivsionController::class, 'StoreDivsion'])->name('AddDivsion/add');
 
+
+    Route::get('/get-canals/{division_id}', [CanalOutLet::class, 'getCanals']);
+    Route::get('/get-minors/{canal_id}', [CanalOutLet::class, 'getMinors']);
+    Route::get('/get-distributaries/{minor_id}', [CanalOutLet::class, 'getDistributaries']);
+    
+
+
     Route::get('AddFarmer', [FarmerController::class, 'AddFarmer'])->name('AddFarmer');
     Route::post('AddFarmer/add', [FarmerController::class, 'storeFarmer'])->name('AddFarmer.add');
 
@@ -140,7 +147,7 @@ Route::put('/canals/{id}/update', [CanalController::class, 'update'])->name('upd
     Route::get('/get-tehsils/{districtId}', [FarmerLandRecord::class, 'FarmerTehsils']);
     Route::get('ListIrrigator', [IrrigatorController::class, 'ListIrrigator']);
     
-    Route::get('LandRecord/LandRecord/{id}/{abs}/{village_id}/{canal_id}', [FarmerLandRecord::class, 'LandRecord'])->name('LandRecord.ListLandSurvey');
+    Route::get('LandRecord/LandRecord/{id}/{abs}/{village_id}/{canal_id}{div_id}', [FarmerLandRecord::class, 'LandRecord'])->name('LandRecord.ListLandSurvey');
 
     Route::post('LandRecord/add', [FarmerLandRecord::class, 'storeFarmer'])->name('LandRecord.add');
     

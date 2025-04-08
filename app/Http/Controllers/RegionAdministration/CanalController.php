@@ -159,7 +159,7 @@ public function fetchMinorCanals(Request $request)
 // Fetch distributary canals based on selected minor canal
 public function fetchDistributaryCanals(Request $request)
 {
-    $distributaries = Distributary::where('minor_id', $request->minor_id)->get();
+    $distributaries = Distributary::where('id', $request->minor_id)->get();
     return response()->json($distributaries);
 }
 public function edit($id)

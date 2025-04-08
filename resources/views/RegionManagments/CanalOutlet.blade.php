@@ -196,3 +196,68 @@ function closeModal() {
 }
 </script>
 @endsection
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    // Load Canals when Division is selected
+    $('#div_id').change(function() {
+        var division_id = $(this).val();
+        $('#canal_id').html('<option value="">Loading...</option>'); // Show loading text
+
+        if (division_id) {
+            $.ajax({
+                url: '/get-canals/' + division_id,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $('#canal_id').html('<option value="">Choose Canal</option>');
+                    $.each(data, function(key, value) {
+                        $('#canal_id').append('<option value="'+ value.id +'">'+ value.canal_name +'</option>');
+                    });
+                }
+            });
+        }
+    });
+
+    // Load Minor Canals when Canal is selected
+    $('#canal_id').change(function() {
+        var canal_id = $(this).val();
+        $('#minor_id').html('<option value="">Loading...</option>');
+
+        if (canal_id) {
+            $.ajax({
+                url: '/get-minors/' + canal_id,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $('#minor_id').html('<option value="">Choose Minor Canal</option>');
+                    $.each(data, function(key, value) {
+                        $('#minor_id').append('<option value="'+ value.id +'">'+ value.minor_name +'</option>');
+                    });
+                }
+            });
+        }
+    });
+
+    // Load Distributaries when Minor Canal is selected
+    $('#minor_id').change(function() {
+        var minor_id = $(this).val();
+        $('#distrib_id').html('<option value="">Loading...</option>');
+
+        if (minor_id) {
+            $.ajax({
+                url: '/get-distributaries/' + minor_id,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $('#distrib_id').html('<option value="">Choose Distributary</option>');
+                    $.each(data, function(key, value) {
+                        $('#distrib_id').append('<option value="'+ value.id +'">'+ value.name +'</option>');
+                    });
+                }
+            });
+        }
+    });
+});
+</script>

@@ -15,7 +15,7 @@ class CanalOutLet extends Controller
     public function AddOutlet(){
         $canals = canal::all(); 
         $minors = Minorcanal::all();
-        $canals = Canal::all();
+     
         $divsions = Divsion::all();
         $Distributaries = Distributary::all();
 
@@ -43,6 +43,23 @@ public function storeOutlet(Request $request)
     ]);
 
     return redirect()->back()->with('success', 'Canal outlet created successfully!');
+}
+public function getCanals($division_id)
+{
+    $canals = Canal::where('div_id', $division_id)->get();
+    return response()->json($canals);
+}
+
+public function getMinors($canal_id)
+{
+    $minors = MinorCanal::where('canal_id', $canal_id)->get();
+    return response()->json($minors);
+}
+
+public function getDistributaries($minor_id)
+{
+    $distributaries = Distributary::where('minor_id', $minor_id)->get();
+    return response()->json($distributaries);
 }
 
 }

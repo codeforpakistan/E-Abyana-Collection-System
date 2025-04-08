@@ -61,6 +61,7 @@
                         </div>
                         <div class="card-body">
                             <form class="form-horizontal" action="{{ route('update.user', $user->id) }}" method="POST">
+
                                 @csrf
                                 @method('PUT')
                                 
@@ -85,55 +86,73 @@
                                         <input type="text" class="form-control" placeholder="Enter Phone Number" name="phone_number" value="{{ $user->phone_number }}">
                                     </div>
                                     <div class="col-md-4 mb-3">
-                                        <label for="role_id" class="form-label font-weight-bold">Select Roles</label>
-                                        <select name="role_id" id="role_id" class="form-control" required>
-                                            <option>Choose Roles</option>
+                                        <label class="form-label font-weight-bold">Select Role</label>
+                                        <select name="role_id" id="role_id" class="form-control" required onchange="toggleDropdowns()">
+                                            <option value="">Choose Role</option>
                                             @foreach($roles as $role)
-                                                <option value="{{ $role->id }}" {{ $user->role_id == $role->id ? 'selected' : '' }}>{{ $role->name }}</option>
+                                                <option value="{{ $role->id }}" {{ $user->role_id == $role->id ? 'selected' : '' }}>
+                                                    {{ $role->name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
+                                    
                                 </div>
                             
                                 <div class="row">
-                                    <div class="form-group col-lg-4">
+                                    <div id="div_district" class="form-group col-lg-4">
                                         <label class="form-label font-weight-bold" for="district_id">Select District</label>
                                         <select name="district_id" id="district_id" class="form-control" onchange="get_tehsils(this)">
                                             <option value="">Choose District</option>
                                             @foreach($districts as $district)
-                                                <option value="{{ $district->id }}" {{ $user->district_id == $district->id ? 'selected' : '' }}>{{ $district->name }}</option>
+                                                <option value="{{ $district->id }}" {{ $user->district_id == $district->id ? 'selected' : '' }}>
+                                                    {{ $district->name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
-                                
-                                    <div class="form-group col-lg-4">
+                                    
+                                    <div id="div_tehsil" class="form-group col-lg-4">
                                         <label class="form-label font-weight-bold" for="tehsil_id">Select Tehsil</label>
                                         <select name="tehsil_id" id="tehsil_id" class="form-control" onchange="get_halqa(this)">
                                             <option value="">Choose Tehsil</option>
                                             @foreach($tehsils as $tehsil)
-                                                <option value="{{ $tehsil->tehsil_id }}" {{ $user->tehsil_id == $tehsil->tehsil_id ? 'selected' : '' }}>{{ $tehsil->tehsil_name }}</option>
+                                                <option value="{{ $tehsil->tehsil_id }}" {{ $user->tehsil_id == $tehsil->tehsil_id ? 'selected' : '' }}>
+                                                    {{ $tehsil->tehsil_name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
-                            
-                                    <div class="form-group col-lg-4">
+                                    
+                                    <div id="div_halqa" class="form-group col-lg-4">
                                         <label class="form-label font-weight-bold" for="halqa_id">Select Halqa</label>
                                         <select name="halqa_id" id="halqa_id" class="form-control" required>
                                             <option value="">Choose Halqa</option>
                                             @foreach($Halqas as $halqa)
-                                                <option value="{{ $halqa->id }}" {{ $user->halqa_id == $halqa->id ? 'selected' : '' }}>{{ $halqa->halqa_name }}</option>
+                                                <option value="{{ $halqa->id }}" {{ $user->halqa_id == $halqa->id ? 'selected' : '' }}>
+                                                    {{ $halqa->halqa_name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
-                                
+                                    
+                                    <div id="div_division" class="form-group col-lg-6">
+                                        <label class="form-label font-weight-bold">Select Division</label>
+                                        <select name="div_id" id="div_id" class="form-control">
+                                            <option value="">Choose Division</option>
+                                            @foreach($divsions as $divsion)
+                                                <option value="{{ $divsion->id }}">{{ $divsion->divsion_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <button type="submit" class="btn btn-primary btn-lg">Update</button>
                                     </div>
                                 </div>
                             </form>
-                            >
+                            
                             
                         </div>
                     </div>
@@ -279,6 +298,44 @@
             $('#tehsil_id').append('<option value="">Choose Tehsil</option>');
         }
     }
+</script>
+
+
+<script>
+   function getRoleIdFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("role_id");
+}
+
+$(document).ready(function () {
+    let roleId = getRoleIdFromUrl(); 
+
+    if (roleId) {
+        $("#role_id").val(roleId).change();
+        toggleDropdowns(roleId);
+    }
+
+    $("#role_id").change(function () {
+        toggleDropdowns($(this).val());
+    });
+});
+
+function toggleDropdowns(roleId) {
+    var selectedRoleName = $("#role_id option[value='" + roleId + "']").text().trim().toLowerCase();
+
+    console.log("Selected Role:", selectedRoleName);
+
+    $("#div_division, #div_district, #div_tehsil, #div_halqa").hide();
+
+    if (selectedRoleName === "patwari") {
+        $("#div_district, #div_tehsil, #div_halqa").show();
+    } else if (selectedRoleName === "zilladar" || selectedRoleName === "collector") { 
+        $("#div_district").show();
+    } else if (selectedRoleName === "xen") {
+        $("#div_division").show();
+    }
+}
+
 </script>
 
 

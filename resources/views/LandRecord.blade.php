@@ -38,6 +38,7 @@
                                 </label>
                                 <input class="form-control form-control-lg" type="text" name="irrigator_name" required>
                             </div>
+                            
                             <div class="form-group col-lg-12">
                                 <label  class="form-label font-weight-bold for="village_id">Select Village/ضلع</label>
                                 <select name="village_id" id="village_id" class="form-control" required>
@@ -46,8 +47,6 @@
                                         <option value="{{ $village->village_id }}">{{ $village->village_name }}</option>
                                     @endforeach
                                 </select>
-                                
-                
                             </div>
                             <div class="form-group col-lg-12">
                                 <label  class="form-label font-weight-bold for="id">Select Irrigator</label>

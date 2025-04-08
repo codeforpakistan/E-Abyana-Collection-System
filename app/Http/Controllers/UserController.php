@@ -20,19 +20,20 @@ class UserController extends Controller
         $tehsils = Tehsil::all();
         $divsions = Divsion::all(); 
     
-        $usersWithRoles = DB::table('users')
-            ->leftJoin('assign_roles', 'users.role_id', '=', 'assign_roles.role_id')
-            ->leftJoin('roles', 'users.role_id', '=', 'roles.id')
-            ->select(
-                'users.id',
-                'users.name as user_name',
-                'users.email',
-                'users.phone_number',
-                'roles.name as role_name'
-            )
-            ->groupBy('users.id', 'users.name', 'users.email', 'users.phone_number', 'roles.name') // Grouping to remove duplicates
-            ->get();
     
+$usersWithRoles = DB::table('users')
+->leftJoin('assign_roles', 'users.role_id', '=', 'assign_roles.role_id')
+->leftJoin('roles', 'users.role_id', '=', 'roles.id')
+->select(
+    'users.id',
+    'users.name as user_name',
+    'users.email',
+    'users.phone_number',
+    'roles.name as role_name'
+)
+->groupBy('users.id', 'users.name', 'users.email', 'users.phone_number', 'roles.name') // Grouping to remove duplicates
+->paginate(10); // Change 10 to the number of items per page
+
         return view('UserManagement.AddUser', [
             'roles' => $roles,
             'Halqas' => $Halqas,
@@ -83,14 +84,18 @@ public function destroy($id)
 }
 public function editUser($id)
 {
-    $user = User::findOrFail($id); // Fetch the exam by ID
-    $roles = Role::all(); 
-    $Halqas = Halqa::all(); 
+    $user = User::findOrFail($id); // Fetch user or fail if not found
+
+    $roles = Role::all();
+    $Halqas = Halqa::all();
     $districts = District::all();
-    $tehsils = Tehsil::all();// Fetch all levels for the dropdown
-    return view('UserManagement.Edituser', compact('user' ,'roles','Halqas',
-'districts','tehsils'));
+    $divsions = Divsion::all();
+    $tehsils = Tehsil::all();
+
+    return view('UserManagement.Edituser', compact('user', 'roles', 'Halqas', 'districts', 'tehsils', 'divsions'));
 }
+
+
 public function updateUser(Request $request, $id)
 {
     // Validate incoming data

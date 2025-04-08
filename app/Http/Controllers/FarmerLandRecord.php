@@ -17,8 +17,8 @@ use App\Models\Cropprice;
 use DB;
 
 class FarmerLandRecord extends Controller
-{
-    public function LandRecord($id, $abs, $village_id,$canal_id, Request $request)
+{public function LandRecord($id, $abs, $village_id, $canal_id, $div_id, Request $request)
+
     {
         $villages = Village::find($village_id);
 
@@ -229,11 +229,14 @@ public function ListBills()
 public function LandSurvey()
 {
     $halqa_id = session('halqa_id');
-    //return view('LandRecord.ListLandSurvey', compact('halqa_id'));
-    // return view('LandRecord.ListLandSurvey', ['halqa_id' => $halqa_id]);
+($div_id = session('div_id')); // Get division ID from session
+
     $query_survey = DB::table('cropsurveys')
         ->join('villages', 'cropsurveys.village_id', '=', 'villages.village_id')
         ->join('halqa', 'villages.halqa_id', '=', 'halqa.id')
+        ->join('tehsils', 'halqa.tehsil_id', '=', 'tehsils.tehsil_id') 
+        ->join('districts', 'tehsils.district_id', '=', 'districts.id') 
+        ->join('divisions', 'districts.div_id', '=', 'divisions.id') 
         ->join('irrigators', 'cropsurveys.irrigator_id', '=', 'irrigators.id')
         ->join('cropprices', 'cropsurveys.finalcrop_id', '=', 'cropprices.id')
         ->select(
@@ -250,21 +253,34 @@ public function LandSurvey()
             'cropsurveys.length',
             'cropsurveys.area_marla',
             'cropsurveys.area_kanal',
-            'cropsurveys.status'
-        );
+            'cropsurveys.status',
+            'halqa.id as halqa_id',
+            'tehsils.tehsil_name',
+            'districts.name as district_name',
+            'divisions.divsion_name'
+        )
+        ->where('cropsurveys.status', '=', 3); // Only fetch pending surveys
 
-        if ($halqa_id > 0) {
-            $query_survey->where('villages.halqa_id', '=', $halqa_id)
-                         ->where('cropsurveys.status', '=', 0);
-        }
+    // **1️⃣ If Admin (halqa_id = 0), show all records**
+    if ($halqa_id == 0 && $div_id == 0) {
+        // No additional filters needed, already fetching all records
+    }
+    // **2️⃣ If a Division Officer (div_id > 0), filter by division**
+    elseif ($div_id > 0) {
+        $query_survey->where('districts.div_id', '=', $div_id);
+    }
+    // **3️⃣ If Halqa Officer (halqa_id > 0), filter by halqa**
+    elseif ($halqa_id > 0) {
+        $query_survey->where('villages.halqa_id', '=', $halqa_id);
+    }
 
-   $survey_get = $query_survey
-    ->where('cropsurveys.status', '=', 0)
-    ->get();
+    // Execute query and group data by irrigator_id
+    $survey_get = $query_survey->get();
     $grouped_survey = $survey_get->groupBy('irrigator_id');
 
     return view('LandRecord.ListLandSurvey', compact('grouped_survey'));
 }
+
 
 public function IrrigatorsForApproval()
 {
@@ -331,11 +347,13 @@ public function IrrigatorsForApproval()
 public function LandSurveyZilladar()
 {
     $halqa_id = session('halqa_id');
-    //return view('LandRecord.ListLandSurvey', compact('halqa_id'));
-    // return view('LandRecord.ListLandSurvey', ['halqa_id' => $halqa_id]);
+    $district_id = session('district_id');
+
     $query_survey = DB::table('cropsurveys')
         ->join('villages', 'cropsurveys.village_id', '=', 'villages.village_id')
         ->join('halqa', 'villages.halqa_id', '=', 'halqa.id')
+        ->join('tehsils', 'halqa.tehsil_id', '=', 'tehsils.tehsil_id')
+        ->join('districts', 'tehsils.district_id', '=', 'districts.id')
         ->join('irrigators', 'cropsurveys.irrigator_id', '=', 'irrigators.id')
         ->join('cropprices', 'cropsurveys.finalcrop_id', '=', 'cropprices.id')
         ->select(
@@ -353,30 +371,36 @@ public function LandSurveyZilladar()
             'cropsurveys.area_marla',
             'cropsurveys.area_kanal',
             'cropsurveys.status'
-        );
+        )
+        ->where('cropsurveys.status', '=', 1);
 
-        if ($halqa_id > 0) {
-            $query_survey->where('villages.halqa_id', '=', $halqa_id)
-                         ->where('cropsurveys.status', '=', 1);
-        }
+    // **1️⃣ If Admin (halqa_id = 0), show all records**
+    if ($halqa_id == 0) {
+        // No extra filters needed, already getting all records
+    }
+    // **2️⃣ If Zilladar (halqa_id > 0), filter district-wise**
+    else {
+        $query_survey->where('districts.id', '=', $district_id);
+    }
 
-   $survey_get = $query_survey
-    ->where('cropsurveys.status', '=', 1)
-    ->get();
+    $survey_get = $query_survey->get();
     $grouped_survey = $survey_get->groupBy('irrigator_id');
 
     return view('LandRecord.ListLandSurveyZilladar', compact('grouped_survey'));
 }
 
 
+
 public function LandSurveyCollector()
 {
     $halqa_id = session('halqa_id');
-    //return view('LandRecord.ListLandSurvey', compact('halqa_id'));
-    // return view('LandRecord.ListLandSurvey', ['halqa_id' => $halqa_id]);
+    $district_id = session('district_id');
+
     $query_survey = DB::table('cropsurveys')
         ->join('villages', 'cropsurveys.village_id', '=', 'villages.village_id')
         ->join('halqa', 'villages.halqa_id', '=', 'halqa.id')
+        ->join('tehsils', 'halqa.tehsil_id', '=', 'tehsils.tehsil_id')
+        ->join('districts', 'tehsils.district_id', '=', 'districts.id')
         ->join('irrigators', 'cropsurveys.irrigator_id', '=', 'irrigators.id')
         ->join('cropprices', 'cropsurveys.finalcrop_id', '=', 'cropprices.id')
         ->select(
@@ -394,20 +418,24 @@ public function LandSurveyCollector()
             'cropsurveys.area_marla',
             'cropsurveys.area_kanal',
             'cropsurveys.status'
-        );
+        )
+        ->where('cropsurveys.status', '=', 2); // Only show surveys with status = 2
 
-        if ($halqa_id > 0) {
-            $query_survey->where('villages.halqa_id', '=', $halqa_id)
-                         ->where('cropsurveys.status', '=', 2);
-        }
+    // **1️⃣ If Admin (halqa_id = 0), show all records**
+    if ($halqa_id == 0) {
+        // No extra filters needed, already getting all records
+    }
+    // **2️⃣ If Collector (halqa_id > 0), filter by district**
+    else {
+        $query_survey->where('districts.id', '=', $district_id);
+    }
 
-   $survey_get = $query_survey
-    ->where('cropsurveys.status', '=', 2)
-    ->get();
+    $survey_get = $query_survey->get();
     $grouped_survey = $survey_get->groupBy('irrigator_id');
 
     return view('LandRecord.ListLandSurveyCollector', compact('grouped_survey'));
 }
+
 
 
 public function surveyView($id) {

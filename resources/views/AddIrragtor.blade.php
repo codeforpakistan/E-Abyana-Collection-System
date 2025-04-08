@@ -92,7 +92,7 @@
                                                         <td>{{ $Irrigator->divsion_name }}</td> -->
 
                                                         <td class="align-middle text-center">
-                                                            <a href="{{ route('LandRecord.ListLandSurvey', ['id' => $Irrigator->id, 'abs' => $Irrigator->irrigator_khata_number, 'village_id' => $Irrigator->village_id, 'canal_id' => $Irrigator->canal_id]) }}">
+                                                            <a href="{{ route('LandRecord.ListLandSurvey', ['id' => $Irrigator->id, 'abs' => $Irrigator->irrigator_khata_number, 'village_id' => $Irrigator->village_id, 'canal_id' => $Irrigator->canal_id,'div_id' => $Irrigator->div_id]) }}">
                                                                 <button class="btn btn-sm btn-primary" type="button">
                                                                     <span><i class="fa fa-plus"></i></span> Add Survey
                                                                 </button>
@@ -305,18 +305,28 @@
                 @csrf
                 <div class="row">
                     @if (session('halqa_id') <= 0)
-                        <div class="form-group col-lg-3">
-                            <label for="div_id" class="form-label font-weight-bold">Select
-                                Division/ڈویژن</label>
-                            <select name="div_id" id="div_id" class="form-control select2"
-                                onchange="get_districts(this)">
-                                <option class="form-label" value="">Choose Division/ڈویژن
-                                </option>
-                                @foreach ($divsions as $divsion)
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label class="form-label font-weight-bold" for="div_id">Select Division / ڈویژن</label>
+                            <select name="div_id" id="div_id" class="form-group form-control select_search" required>
+                                <option value="">Choose Division / ڈویژن</option>
+                                @foreach($divsions as $divsion)
                                     <option value="{{ $divsion->id }}">{{ $divsion->divsion_name }}</option>
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group col-lg-6">
+                            <label  class="form-label font-weight-bold" for="canal_id">Select Canal/ضلع</label>
+                            <select name="canal_id" id="canal_id" class="form-control" >
+                                <option value="">Choose Canal/گاؤں</option>
+                                @foreach($canals as $canal)
+                                    <option value="{{ $canal->id }}">{{ $canal->canal_name }}</option>
+                                @endforeach
+                            </select>
+                            
+            
+                        </div>
+                    </div>
                         <div class="form-group col-lg-3">
                             <label class="form-label font-weight-bold" for="district_id">Select
                                 District/ضلع</label>
@@ -352,7 +362,7 @@
                         <div class="form-group col-6">
                             <label class="form-label font-weight-bold" for="village_id">Select
                                 Village / گاؤں</label>
-                            <select name="village_id" id="village_id" class="form-control" required onchange="get_canals(this)">
+                            <select name="village_id" id="village_id" class="form-control">
                                 <option value="">Choose Village/گاؤں</option>
                                 @foreach ($villages as $village)
                                     <option value="{{ $village->village_id }}">{{ $village->village_name }}
@@ -360,15 +370,16 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group col-6">
+                        {{-- <div class="form-group col-6">
                             <label class="form-label font-weight-bold" for="canal_id">Select Canal / نہر</label>
                             <select name="canal_id" id="canal_id" class="form-control" required>
                             <option value="">Choose Canal / نہر</option>
                             </select>
-                        </div>
+                        </div> --}}
+                     
                     @endif
                     @if (session('halqa_id') > 0)
-                        <div class="form-group col-lg-3">
+                        <div class="form-group col-lg-6">
                             <label class="form-label font-weight-bold" for="halqa_id">Select Halqa/حلقہ</label>
                             <select name="halqa_id" id="halqa_id" class="form-control" readonly
                                 onchange="get_village(this)">
@@ -378,7 +389,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group col-4">
+                        <div class="form-group col-6">
                             <label class="form-label font-weight-bold" for="village_id">Select
                                 Village/گاؤں</label>
                             <select name="village_id" id="village_id" class="form-control" required onchange="get_canals(this)">
@@ -389,11 +400,27 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group col-4">
-                            <label class="form-label font-weight-bold" for="canal_id">Select Canal / نہر</label>
-                            <select name="canal_id" id="canal_id" class="form-control" required>
-                                <option value="">Choose Canal / نہر</option>
-                            </select>
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label class="form-label font-weight-bold" for="div_id">Select Division / ڈویژن</label>
+                                <select name="div_id" id="div_id" class="form-group form-control select_search" required>
+                                    <option value="">Choose Division / ڈویژن</option>
+                                    @foreach($divsions as $divsion)
+                                        <option value="{{ $divsion->id }}">{{ $divsion->divsion_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label  class="form-label font-weight-bold" for="canal_id">Select Canal/ضلع</label>
+                                <select name="canal_id" id="canal_id" class="form-control" >
+                                    <option value="">Choose Canal/گاؤں</option>
+                                    @foreach($canals as $canal)
+                                        <option value="{{ $canal->id }}">{{ $canal->canal_name }}</option>
+                                    @endforeach
+                                </select>
+                                
+                
+                            </div>
                         </div>
                     @endif
                 </div>
@@ -499,3 +526,29 @@
     });
 </script>
 
+<script>
+    $(document).ready(function() {
+
+        $('#div_id').change(function() {
+            var div_id = $(this).val();
+
+            if (div_id) {
+                $.ajax({
+                    url: "{{ route('getCanals') }}", // API route to fetch canals
+                    type: "GET",
+                    data: { div_id: div_id },
+                    success: function(data) {
+                        $('#canal_id').empty();
+                        $('#canal_id').append('<option value="">Choose Canal</option>');
+                        $.each(data, function(key, canal) {
+                            $('#canal_id').append('<option value="' + canal.id + '">' + canal.canal_name + '</option>');
+                        });
+                    }
+                });
+            } else {
+                $('#canal_id').empty();
+                $('#canal_id').append('<option value="">Choose Canal</option>');
+            }
+        });
+    });
+</script
