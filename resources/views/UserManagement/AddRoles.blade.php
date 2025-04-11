@@ -7,17 +7,29 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-@if(Session::has('success'))
-    <script>
-        swal({
-            title: "Success!",
-            text: "{{ Session::get('success') }}",
-            icon: "success",
-            button: "OK",
-        });
-        
-    </script>
-@endif
+@if (session('success'))
+                <script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: "{{ session('success') }}",
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                </script>
+            @endif
+
+            @if (session('error'))
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: "{{ session('error') }}",
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                </script>
+            @endif
 
 
 <div class="app-content">
@@ -33,24 +45,17 @@
                 <div class="card-body">
                     <form class="form-horizontal" action="{{ url('AddRoles/add') }}" method="POST">
                         @csrf
-                        
                         <!-- First Row (Name and CNIC) -->
                         <div class="row">
                             <div class="form-group col-lg-12">
                                 <label class="form-label font-weight-bold">Roles</label>
-                                <input class="form-control form-control-lg" type="text" name="name" required>
+                                <input class="form-control" type="text" name="name" required>
                             </div>
-                         
                         </div>
-                       
-                        
-                        <!-- Second Row (Skills) -->
-                      
-                        
                         <!-- Submit Button -->
                         <div class="row">
                             <div class="col-lg-12">
-                                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
 
@@ -59,8 +64,8 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
+
+            <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
                 <div class="card export-database">
                     <div class="card-header">
                         <h4>Table Roles</h4>
@@ -88,8 +93,8 @@
                                         <td>{{ $role->id }}</td>
                                         <td>{{ $role->name }}</td>
                                         <td>
-                                            <button class="btn btn-sm btn-primary badge" type="button" onclick="confirmDelete({{ $role->id }})">
-                                                <i class="fa fa-trash"></i>
+                                            <button class="btn btn-sm btn-primary" type="button" onclick="confirmDelete({{ $role->id }})">
+                                                <i class="fa fa-trash"></i>&nbsp;Delete
                                             </button>
                                         </td>
                                     </tr>
@@ -105,7 +110,6 @@
                     </div>
                 </div>
             </div>
-        </div>
         
         
     </section>

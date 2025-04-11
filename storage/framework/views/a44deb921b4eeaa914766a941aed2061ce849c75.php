@@ -72,6 +72,15 @@
             },
         };
     </script>
+
+    <style>
+        #example_paginate{
+            display: none !important;
+        }
+        #example_info{
+            display: none !important;
+        }
+    </style>
 </head>
 
 <body class="app ">
@@ -218,7 +227,7 @@ Welcome to E ABYANA
                         </a>
                         <ul class="slide-menu">
                             <?php if(session('role_id') == 12 || session('role_id') == 17 || session('role_id') == 1): ?> 
-                                <li><a class="slide-item" href="<?php echo e(url('ListLandSurvey')); ?>"><span> Patwari Survey</span></a></li>
+                                <li><a class="slide-item" href="<?php echo e(url('ListLandSurvey')); ?>"><span>  Survey</span></a></li>
                                 <li><a class="slide-item" href="<?php echo e(url('listforwardedpatwari')); ?>"><span> List Forwarded Patwari</span></a></li>
                             <?php endif; ?>
                             <?php if(session('role_id') == 15 || session('role_id') == 1): ?> 
@@ -318,8 +327,7 @@ Welcome to E ABYANA
                     </a>
                     <ul class="slide-menu">
                         <li><a class="slide-item" href="<?php echo e(url('AddRoles')); ?>"><span>Add Roles</span></a></li>
-                        <li><a class="slide-item" href="<?php echo e(url('AddPermission')); ?>"><span>Add Permission</span></a></li>
-                        <li><a class="slide-item" href="<?php echo e(url('AssignRoles_Permission')); ?>"><span>Add Assign Roles</span></a></li>
+                        
                         <li><a class="slide-item" href="<?php echo e(url('AddUser')); ?>"><span>Add User</span></a></li>
                     </ul>
                 </li> 
