@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('content'); ?>
 
     <head>
@@ -90,7 +92,7 @@
                                                         <td><?php echo e($Irrigator->divsion_name); ?></td> -->
 
                                                         <td class="align-middle text-center">
-                                                            <a href="<?php echo e(route('LandRecord.ListLandSurvey', ['id' => $Irrigator->id, 'abs' => $Irrigator->irrigator_khata_number, 'village_id' => $Irrigator->village_id, 'canal_id' => $Irrigator->canal_id])); ?>">
+                                                            <a href="<?php echo e(route('LandRecord.ListLandSurvey', ['id' => $Irrigator->id, 'abs' => $Irrigator->irrigator_khata_number, 'village_id' => $Irrigator->village_id, 'canal_id' => $Irrigator->canal_id,'div_id' => $Irrigator->div_id])); ?>">
                                                                 <button class="btn btn-sm btn-primary" type="button">
                                                                     <span><i class="fa fa-plus"></i></span> Add Survey
                                                                 </button>
@@ -304,18 +306,28 @@
                 <?php echo csrf_field(); ?>
                 <div class="row">
                     <?php if(session('halqa_id') <= 0): ?>
-                        <div class="form-group col-lg-3">
-                            <label for="div_id" class="form-label font-weight-bold">Select
-                                Division/ڈویژن</label>
-                            <select name="div_id" id="div_id" class="form-control select2"
-                                onchange="get_districts(this)">
-                                <option class="form-label" value="">Choose Division/ڈویژن
-                                </option>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label class="form-label font-weight-bold" for="div_id">Select Division / ڈویژن</label>
+                            <select name="div_id" id="div_id" class="form-group form-control select_search" required>
+                                <option value="">Choose Division / ڈویژن</option>
                                 <?php $__currentLoopData = $divsions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $divsion): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option value="<?php echo e($divsion->id); ?>"><?php echo e($divsion->divsion_name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
+                        <div class="form-group col-lg-6">
+                            <label  class="form-label font-weight-bold" for="canal_id">Select Canal/ضلع</label>
+                            <select name="canal_id" id="canal_id" class="form-control" >
+                                <option value="">Choose Canal/گاؤں</option>
+                                <?php $__currentLoopData = $canals; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $canal): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($canal->id); ?>"><?php echo e($canal->canal_name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                            
+            
+                        </div>
+                    </div>
                         <div class="form-group col-lg-3">
                             <label class="form-label font-weight-bold" for="district_id">Select
                                 District/ضلع</label>
@@ -351,7 +363,7 @@
                         <div class="form-group col-6">
                             <label class="form-label font-weight-bold" for="village_id">Select
                                 Village / گاؤں</label>
-                            <select name="village_id" id="village_id" class="form-control" required onchange="get_canals(this)">
+                            <select name="village_id" id="village_id" class="form-control">
                                 <option value="">Choose Village/گاؤں</option>
                                 <?php $__currentLoopData = $villages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $village): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option value="<?php echo e($village->village_id); ?>"><?php echo e($village->village_name); ?>
@@ -360,15 +372,11 @@
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
-                        <div class="form-group col-6">
-                            <label class="form-label font-weight-bold" for="canal_id">Select Canal / نہر</label>
-                            <select name="canal_id" id="canal_id" class="form-control" required>
-                            <option value="">Choose Canal / نہر</option>
-                            </select>
-                        </div>
+                        
+                     
                     <?php endif; ?>
                     <?php if(session('halqa_id') > 0): ?>
-                        <div class="form-group col-lg-3">
+                        <div class="form-group col-lg-6">
                             <label class="form-label font-weight-bold" for="halqa_id">Select Halqa/حلقہ</label>
                             <select name="halqa_id" id="halqa_id" class="form-control" readonly
                                 onchange="get_village(this)">
@@ -378,7 +386,7 @@
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
-                        <div class="form-group col-4">
+                        <div class="form-group col-6">
                             <label class="form-label font-weight-bold" for="village_id">Select
                                 Village/گاؤں</label>
                             <select name="village_id" id="village_id" class="form-control" required onchange="get_canals(this)">
@@ -390,11 +398,27 @@
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
-                        <div class="form-group col-4">
-                            <label class="form-label font-weight-bold" for="canal_id">Select Canal / نہر</label>
-                            <select name="canal_id" id="canal_id" class="form-control" required>
-                                <option value="">Choose Canal / نہر</option>
-                            </select>
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label class="form-label font-weight-bold" for="div_id">Select Division / ڈویژن</label>
+                                <select name="div_id" id="div_id" class="form-group form-control select_search" required>
+                                    <option value="">Choose Division / ڈویژن</option>
+                                    <?php $__currentLoopData = $divsions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $divsion): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($divsion->id); ?>"><?php echo e($divsion->divsion_name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label  class="form-label font-weight-bold" for="canal_id">Select Canal/ضلع</label>
+                                <select name="canal_id" id="canal_id" class="form-control" >
+                                    <option value="">Choose Canal/گاؤں</option>
+                                    <?php $__currentLoopData = $canals; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $canal): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($canal->id); ?>"><?php echo e($canal->canal_name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select>
+                                
+                
+                            </div>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -500,5 +524,30 @@
     });
 </script>
 
+<script>
+    $(document).ready(function() {
 
+        $('#div_id').change(function() {
+            var div_id = $(this).val();
+
+            if (div_id) {
+                $.ajax({
+                    url: "<?php echo e(route('getCanals')); ?>", // API route to fetch canals
+                    type: "GET",
+                    data: { div_id: div_id },
+                    success: function(data) {
+                        $('#canal_id').empty();
+                        $('#canal_id').append('<option value="">Choose Canal</option>');
+                        $.each(data, function(key, canal) {
+                            $('#canal_id').append('<option value="' + canal.id + '">' + canal.canal_name + '</option>');
+                        });
+                    }
+                });
+            } else {
+                $('#canal_id').empty();
+                $('#canal_id').append('<option value="">Choose Canal</option>');
+            }
+        });
+    });
+</script
 <?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\durshal_cfp\abyana\resources\views/AddIrragtor.blade.php ENDPATH**/ ?>

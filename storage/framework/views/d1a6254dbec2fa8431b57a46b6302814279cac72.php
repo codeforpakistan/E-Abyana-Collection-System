@@ -1,12 +1,121 @@
+
 <?php $__env->startSection('content'); ?>
 <head>
     ...
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
+
 <div class="app-content">
+<div id="simpleModal" class="fixed inset-0 top-[12%] bg-gray-400 bg-opacity-50 flex z-[9999] items-center justify-center hidden">
   
-    <section class="section">
+    <div class="card shadow-sm w-[60vw]">
+        <div class="card-header bg-primary flex justify-between text-white">
+            <h4 class="font-weight-bold">Add User</h4> <!-- Updated to reflect Employer data -->
+
+            <button onclick="closeModal()" type="button"
+                class="bg-white text-black h-[30px] w-[30px] rounded-[50px]" data-target="#exampleModalCenter">
+                <i class="fa fa-close"></i></button>
+        </div>
+        <div class="card-body">
+            <form class="form-horizontal" action="<?php echo e(url('AddUser/add')); ?>" method="POST">
+                <?php echo csrf_field(); ?>
+                
+                <!-- First Row (Name and Email) -->
+                <div class="form-group row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Name</label>
+                        <input type="text" class="form-control" placeholder="Name" name="name" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" placeholder="Enter Email" name="email" required>
+                    </div>
+                </div>
+            
+                <!-- Second Row (Password, Phone Number, Role) -->
+                <div class="form-group row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" placeholder="Enter Password" name="password" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" placeholder="Enter Phone Number" name="phone_number" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label font-weight-bold">Select Role</label>
+                        <select name="role_id" id="role_id" class="form-control" required onchange="toggleDropdowns()">
+                            <option value="">Choose Role</option>
+                            <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($role->id); ?>"><?php echo e($role->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </select>
+                    </div>
+                </div>
+            
+                <!-- Third Row (Division and District) -->
+                <div class="form-group row">
+                    <div id="div_division" class="col-lg-6">
+                        <label class="form-label font-weight-bold">Select Division / ڈویژن</label>
+                        <select name="div_id" id="div_id" class="form-control">
+                            <option value="">Choose Division</option>
+                            <?php $__currentLoopData = $divsions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $division): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($division->id); ?>"><?php echo e($division->division_name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </select>
+                    </div>
+                    
+                    <div id="div_district" class="col-lg-6">
+                        <label class="form-label font-weight-bold">Select District / ضلع</label>
+                        <select name="district_id" id="district_id" class="form-control">
+                            <option value="">Choose District</option>
+                            <?php $__currentLoopData = $districts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $district): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($district->id); ?>"><?php echo e($district->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </select>
+                    </div>
+                </div>
+            
+                <!-- Fourth Row (Tehsil and Halqa) -->
+                <div class="form-group row">
+                    <div id="div_tehsil" class="col-lg-6">
+                        <label class="form-label font-weight-bold">Select Tehsil / تحصیل</label>
+                        <select name="tehsil_id" id="tehsil_id" class="form-control">
+                            <option value="">Choose Tehsil</option>
+                            <?php $__currentLoopData = $tehsils; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tehsil): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($tehsil->tehsil_id); ?>"><?php echo e($tehsil->tehsil_name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </select>
+                    </div>
+                    
+                    <div id="div_halqa" class="col-lg-6">
+                        <label class="form-label font-weight-bold">Select Halqa / حلقہ</label>
+                        <select name="halqa_id" id="halqa_id" class="form-control">
+                            <option value="">Choose Halqa</option>
+                            <?php $__currentLoopData = $Halqas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $Halqa): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($Halqa->id); ?>"><?php echo e($Halqa->halqa_name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </select>
+                    </div>
+                </div>
+            
+                <!-- Submit Button -->
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                    </div>
+                </div>
+            </form>
+            
+            
+      
+        </div>
+    </div>
+</div>  
+<section class="section">
 
     <?php if(session('success')): ?>
         <script>
@@ -30,130 +139,7 @@
         </script>
     <?php endif; ?>
 
-        <!--row open-->
-      
-      
- <div id="simpleModal" 
- class="fixed inset-0 top-[12%] bg-gray-400 bg-opacity-50 flex z-[9999] items-center justify-center hidden">
-  
-    <div class="card shadow-sm w-[60vw]">
-        <div class="card-header bg-primary flex justify-between text-white">
-            <h4 class="font-weight-bold">Add User</h4> <!-- Updated to reflect Employer data -->
-
-            <button onclick="closeModal()" type="button"
-                class="bg-white text-black h-[30px] w-[30px] rounded-[50px]" data-target="#exampleModalCenter">
-                <i class="fa fa-close"></i></button>
-        </div>
-        <div class="card-body">
-            <form class="form-horizontal" action="<?php echo e(url('AddUser/add')); ?>" method="POST">
-                <?php echo csrf_field(); ?>
-                
-                <!-- First Row (Name and CNIC) -->
-                <div class="form-group row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Name  
-                        </label>
-                        <input type="text" class="form-control" placeholder="Name" name="name">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Email  
-                        </label>
-                        <input type="text" class="form-control" placeholder="Enter Email" name="email">
-                    </div>
-                 
-                </div>
-    
-                <div class="form-group row">
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Password  
-                        </label>
-                        <input type="text" class="form-control" placeholder="Enter Password" name="password">
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Phone Number  
-                        </label>
-                        <input type="text" class="form-control" placeholder="Enter Phone Number" name="phone_number">
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label  for="role_id" class="form-label font-weight-bold">Select  Role</label>
-                        <select name="role_id" id="role_id" class="form-control" required>
-                            <option class="form-label font-weight-bold">Choose  Role</option>
-                            <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($role->id); ?>"><?php echo e($role->name); ?></option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </select>
-                        </div>
-                 
-                 
-                </div>
-               
-                <div class="row">
-              <!--  <div class="form-group col-lg-3">
-                        <label for="div_id" class="form-label font-weight-bold">Select Divsion/ڈویژن</label>
-                        <select name="div_id" id="div_id" class="form-control" onchange="get_districts(this)">
-                            <option class="form-label font-weight-bold value=">Choose Division/ڈویژن</option>
-                            <?php $__currentLoopData = $divsions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $divsion): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($divsion->id); ?>"><?php echo e($divsion->divsion_name); ?></option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </select>
-                    </div> -->
-                    <div class="form-group col-lg-4">
-                        <label class="form-label font-weight-bold" for="district_id">Select District/ضلع</label>
-                        <select name="district_id" id="district_id" class="form-control" onchange="get_tehsils(this)">
-                            <option value="">Choose district</option>
-                            <?php $__currentLoopData = $districts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $district): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($district->id); ?>"><?php echo e($district->name); ?></option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </select>                                
-                    </div>
-                 
-                    <div class="form-group col-lg-4">
-                        <label class="form-label font-weight-bold" for="tehsil_id">Select Tehsil/تحصیل</label>
-                        <select name="tehsil_id" id="tehsil_id" class="form-control" onchange="get_halqa(this)">
-                            <option value="">Choose Tehsil</option>
-                            <?php $__currentLoopData = $tehsils; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tehsil): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($tehsil->tehsil_id); ?>"><?php echo e($tehsil->tehsil_name); ?></option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </select>
-                    </div>
-
-                    <div class="form-group col-lg-4">
-                    <label class="form-label font-weight-bold" for="halqa_id" style="">Select Halqa/حلقہ</label>
-                        <select name="halqa_id" id="halqa_id" class="form-control">
-                            <option value="">Choose Halqa/حلقہ</option>
-                        </select>
-                    </div>
-                </div>
-            
-               <!--  <div class="form-group row">
-                <div class="col-md-3 mb-3">
-                        <label class="form-label font-weight-bold" for="halqa_id" style="">Select Halqa/حلقہ</label>
-                        <select name="halqa_id" id="halqa_id" class="form-control form-control-lg" required style="font-size: 1.1rem; padding: 0.5rem 1rem; line-height: 1.5;">
-                            <option value="" style="font-weight: bold;">Choose Halqa/حلقہ</option>
-                            <?php $__currentLoopData = $Halqas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $Halqa): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($Halqa->id); ?>"><?php echo e($Halqa->halqa_name); ?></option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </select>
-                    </div>
-                    </div>
-                Second Row (Skills) -->
-              
-                
-                <!-- Submit Button -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-                    </div>
-                </div>
-
-            </form>
-            
-      
-        </div>
-    </div>
-</div>
-
-
+        <!--row open-->      
         <div class="row">
             <div class="col-md-12">
                 <div class="card export-database">
@@ -165,20 +151,17 @@
 </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <form id="districtDeleteForm" action="<?php echo e(route('district.delete')); ?>" method="POST">
-                                <?php echo csrf_field(); ?>
-                                <?php echo method_field('DELETE'); ?>
                                 
                                 <table id="example" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
                                     <thead>
                                         <tr>
                                             <th><input type="checkbox" id="select-all"></th>
-                                             <th>User Name</th>
-                                            <th>User Email</th>
-                                            <th>User Phone Number</th>
+                                             <th class="text-center">Name</th>
+                                            <th class="text-center">Email</th>
+                                            <th>Contact</th>
                                            <!-- <th>User Password</th> -->
-                                            <th>Role Name</th>
-                                            <th>Action</th>
+                                            <th>Role</th>
+                                            <th class="text-center">Action</th>
                                             
                                         </tr>
                                     </thead>
@@ -200,12 +183,7 @@
                                                 style="display: inline;">
                                                 <?php echo csrf_field(); ?>
                                                 <?php echo method_field('DELETE'); ?>
-                                            
-
-                                                        <button class="btn btn-sm btn-primary badge rounded-pill" type="submit">
-                                                            <i class="fa fa-trash"></i>
-                                                        </button>
-
+                                                <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-trash"></i> Delete</button>
                                             </form>
                                             <a href="<?php echo e(route('edit.user', $usersWithRole->id)); ?>" class="btn btn-sm btn-primary">
                                                 <i class="fa fa-edit"></i> Edit</a> 
@@ -219,8 +197,19 @@
 
                                 </tbody>
                                 </table>
-                                
-                            </form>
+                                <div class="row align-items-center mt-3">
+                                 <div class="col-md-6 text-left">
+                                     <p class="mb-0 text-muted">
+                                         Showing <?php echo e($usersWithRoles->firstItem()); ?> to <?php echo e($usersWithRoles->lastItem()); ?> of <?php echo e($usersWithRoles->total()); ?> results
+                                     </p>
+                                 </div>
+                                 <div class="col-md-6">
+                                     <div class="d-flex justify-content-end">
+                                     <?php echo e($usersWithRoles->links('pagination::bootstrap-4')); ?>
+
+                                     </div>
+                                 </div>
+                             </div>
                         </div>
                     </div>
                 </div>
@@ -402,4 +391,30 @@ function get_halqa(element) {
 </div>             
  <?php $__env->stopSection(); ?>
  
+<script>
+    function toggleDropdowns() {
+        var role = $("#role_id option:selected").text().toLowerCase(); // Get selected role name
+
+        // Hide all dropdowns initially
+        $("#div_division, #div_district, #div_tehsil, #div_halqa").hide();
+
+        if (role === "patwari") {
+           
+            $("#div_district, #div_tehsil, #div_halqa").show();
+        } else if (role === "zilladar" || role === "dupty collector") {
+           
+            $("#div_district").show();
+        } else if (role === "xen") {
+            
+            $("#div_division").show();
+        }
+    
+    }
+
+  
+    $(document).ready(function () {
+        toggleDropdowns();
+    });
+</script>
+
 <?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\durshal_cfp\abyana\resources\views/UserManagement/AddUser.blade.php ENDPATH**/ ?>

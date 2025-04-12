@@ -7,37 +7,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
+
 <div class="app-content">
-  
-    <section class="section">
-
-    @if(session('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: "{{ session('success') }}",
-                confirmButtonText: 'OK'
-            });
-        </script>
-    @endif
-
-    @if(session('error'))
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: "{{ session('error') }}",
-                confirmButtonText: 'OK'
-            });
-        </script>
-    @endif
-
-        <!--row open-->
-      
-      
- <div id="simpleModal" 
- class="fixed inset-0 top-[12%] bg-gray-400 bg-opacity-50 flex z-[9999] items-center justify-center hidden">
+<div id="simpleModal" class="fixed inset-0 top-[12%] bg-gray-400 bg-opacity-50 flex z-[9999] items-center justify-center hidden">
   
     <div class="card shadow-sm w-[60vw]">
         <div class="card-header bg-primary flex justify-between text-white">
@@ -142,9 +114,32 @@
       
         </div>
     </div>
-</div>
+</div>  
+<section class="section">
 
+    @if(session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: "{{ session('success') }}",
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
 
+    @if(session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "{{ session('error') }}",
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
+
+        <!--row open-->      
         <div class="row">
             <div class="col-md-12">
                 <div class="card export-database">
@@ -156,20 +151,17 @@
 </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <form id="districtDeleteForm" action="{{ route('district.delete') }}" method="POST">
-                                @csrf
-                                @method('DELETE')
                                 
                                 <table id="example" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
                                     <thead>
                                         <tr>
                                             <th><input type="checkbox" id="select-all"></th>
-                                             <th>User Name</th>
-                                            <th>User Email</th>
-                                            <th>User Phone Number</th>
+                                             <th class="text-center">Name</th>
+                                            <th class="text-center">Email</th>
+                                            <th>Contact</th>
                                            <!-- <th>User Password</th> -->
-                                            <th>Role Name</th>
-                                            <th>Action</th>
+                                            <th>Role</th>
+                                            <th class="text-center">Action</th>
                                             
                                         </tr>
                                     </thead>
@@ -191,12 +183,7 @@
                                                 style="display: inline;">
                                                 @csrf
                                                 @method('DELETE')
-                                            
-
-                                                        <button class="btn btn-sm btn-primary badge rounded-pill" type="submit">
-                                                            <i class="fa fa-trash"></i>
-                                                        </button>
-
+                                                <button class="btn btn-sm btn-primary" type="submit"><i class="fa fa-trash"></i> Delete</button>
                                             </form>
                                             <a href="{{ route('edit.user', $usersWithRole->id) }}" class="btn btn-sm btn-primary">
                                                 <i class="fa fa-edit"></i> Edit</a> 
@@ -210,11 +197,18 @@
 
                                 </tbody>
                                 </table>
-                                <div class="d-flex justify-content-center">
-    {{ $usersWithRoles->links() }}
-</div>
-
-                            </form>
+                                <div class="row align-items-center mt-3">
+                                 <div class="col-md-6 text-left">
+                                     <p class="mb-0 text-muted">
+                                         Showing {{ $usersWithRoles->firstItem() }} to {{ $usersWithRoles->lastItem() }} of {{ $usersWithRoles->total() }} results
+                                     </p>
+                                 </div>
+                                 <div class="col-md-6">
+                                     <div class="d-flex justify-content-end">
+                                     {{ $usersWithRoles->links('pagination::bootstrap-4') }}
+                                     </div>
+                                 </div>
+                             </div>
                         </div>
                     </div>
                 </div>
