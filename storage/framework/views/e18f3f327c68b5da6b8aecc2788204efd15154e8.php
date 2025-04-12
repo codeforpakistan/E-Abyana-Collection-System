@@ -5,7 +5,27 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
 </head>
+<?php if(session('success')): ?>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: "<?php echo e(session('success')); ?>",
+                confirmButtonText: 'OK'
+            });
+        </script>
+    <?php endif; ?>
 
+    <?php if(session('error')): ?>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "<?php echo e(session('error')); ?>",
+                confirmButtonText: 'OK'
+            });
+        </script>
+    <?php endif; ?>
     
     
 <div class="app-content">

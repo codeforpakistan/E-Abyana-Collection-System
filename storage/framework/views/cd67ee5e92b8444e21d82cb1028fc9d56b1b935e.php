@@ -1,9 +1,9 @@
-@extends('layout')
 
-@section('content')
-@push('scripts')
+
+<?php $__env->startSection('content'); ?>
+<?php $__env->startPush('scripts'); ?>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-@endpush
+<?php $__env->stopPush(); ?>
 
 <div class="app-content">
 <div id="simpleModal" class="fixed inset-0 bg-gray-400 bg-opacity-50 flex z-50 items-center justify-center hidden">
@@ -15,17 +15,17 @@
                     </button>
                 </div>
                 <div class="card-body">
-                    <form class="form-horizontal" action="{{ route('CanalOutlet/add') }}" method="POST">
-                        @csrf
+                    <form class="form-horizontal" action="<?php echo e(route('CanalOutlet/add')); ?>" method="POST">
+                        <?php echo csrf_field(); ?>
                         <div class="row" style="margin-top:-30px;">
                             <!-- Division Selection -->
                             <div class="form-group col-4">
                                 <label class="form-label" for="div_id">Select Division / ڈویژن</label>
                                 <select name="div_id" id="div_id" class="form-control" required>
                                     <option value="">Choose Division / ڈویژن</option>
-                                    @foreach($divsions as $divsion)
-                                        <option value="{{ $divsion->id }}">{{ $divsion->divsion_name }}</option>
-                                    @endforeach
+                                    <?php $__currentLoopData = $divsions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $divsion): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($divsion->id); ?>"><?php echo e($divsion->divsion_name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div> 
                             
@@ -34,18 +34,18 @@
                                 <label class="form-label" for="canal_id">Select Canal / نہر</label>
                                 <select name="canal_id" id="canal_id" class="form-control" required>
                                     <option value="">Choose Canal / نہر</option>
-                                    @foreach($canals as $canal)
-                                        <option value="{{ $canal->id }}">{{ $canal->canal_name }}</option>
-                                    @endforeach
+                                    <?php $__currentLoopData = $canals; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $canal): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($canal->id); ?>"><?php echo e($canal->canal_name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div> 
                             <div class="form-group col-4">
                                 <label class="form-label" for="minor_id">Select Minor Canal / چھوٹا نہر</label>
                                 <select name="minor_id" id="minor_id" class="form-control" required>
                                     <option value="">Choose Minor Canal</option>
-                                    @foreach($minors as $minor)
-                                        <option value="{{ $minor->id }}">{{ $minor->minor_name }}</option>
-                                    @endforeach
+                                    <?php $__currentLoopData = $minors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $minor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($minor->id); ?>"><?php echo e($minor->minor_name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div> 
                         </div>
@@ -56,9 +56,9 @@
                                 <label class="form-label" for="distrib_id">Select Distributary/ تقسیم نہر</label>
                                 <select name="distrib_id" id="distrib_id" class="form-control" required>
                                     <option value="">Choose Distributary</option>
-                                    @foreach($Distributaries as $Distributarie)
-                                        <option value="{{ $Distributarie->id }}">{{ $Distributarie->name }}</option>
-                                    @endforeach
+                                    <?php $__currentLoopData = $Distributaries; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $Distributarie): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($Distributarie->id); ?>"><?php echo e($Distributarie->name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
                             <div class="form-group col-4">
@@ -127,24 +127,25 @@
                                     </tr>
                                 </thead>
                                  <tbody>
-                                    @if($canal->count())
-                                        @foreach($outlets as $canal)
+                                    <?php if($canal->count()): ?>
+                                        <?php $__currentLoopData = $outlets; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $canal): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <tr>
-                                            <td>{{ $canal->id }}</td>
-                                            <td>{{ $canal->	outlet_name }}</td>
+                                            <td><?php echo e($canal->id); ?></td>
+                                            <td><?php echo e($canal->	outlet_name); ?></td>
                                             <td>
-                                                @if($canal->canal)
-                                                    {{ $canal->canal->canal_name }}
-                                                @else
-                                                    <strong style="color:red;">No Canal Found</strong>
-                                                @endif
-                                            </td>
-                                            <td>{{ $canal->minor->minor_name ?? 'N/A' }}</td>
+                                                <?php if($canal->canal): ?>
+                                                    <?php echo e($canal->canal->canal_name); ?>
 
-                                          <td>{{ $canal->division->division_name ?? 'N/A' }}</td>
+                                                <?php else: ?>
+                                                    <strong style="color:red;">No Canal Found</strong>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td><?php echo e($canal->minor->minor_name ?? 'N/A'); ?></td>
+
+                                          <td><?php echo e($canal->division->division_name ?? 'N/A'); ?></td>
                                           
-                                               <td>{{ $canal->total_no_cca }}</td>
-                                           <td>{{ $canal->total_no_discharge_cusic }}</td>
+                                               <td><?php echo e($canal->total_no_cca); ?></td>
+                                           <td><?php echo e($canal->total_no_discharge_cusic); ?></td>
 
                                             <td>
                                                 <button class="btn btn-sm btn-danger">
@@ -152,16 +153,17 @@
                                                 </button>
                                             </td>
                                         </tr>
-                                        @endforeach 
-                                    @else
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
+                                    <?php else: ?>
                                         <tr>
                                             <td colspan="4" class="text-center">No data available</td>
                                         </tr>
-                                    @endif
+                                    <?php endif; ?>
                                 </tbody> 
                             </table>
                             <div class="mt-3">
-                                {{ $outlets->links() }}
+                                <?php echo e($outlets->links()); ?>
+
                             </div>
                         </div>
                     </div>
@@ -179,7 +181,7 @@ function closeModal() {
     document.getElementById("simpleModal").classList.add("hidden");
 }
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
@@ -245,3 +247,5 @@ $(document).ready(function() {
     });
 });
 </script>
+
+<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\durshal_cfp\abyana\resources\views/RegionManagments/CanalOutlet.blade.php ENDPATH**/ ?>

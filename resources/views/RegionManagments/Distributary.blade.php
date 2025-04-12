@@ -4,19 +4,34 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endpush
+@if(session('success'))
+    @push('scripts')
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: "{{ session('success') }}",
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endpush
+@endif
 
+@if(session('error'))
+    @push('scripts')
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "{{ session('error') }}",
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endpush
+@endif
 <div class="app-content">
-    <section class="section">
-        <div class="page-header pt-0">
-            <h4 class="page-title font-weight-bold"></h4>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#" class="text-light-color">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Distributary</li>
-            </ol>
-        </div>
-
-        <div id="simpleModal" class="fixed inset-0 bg-gray-400 bg-opacity-50 flex z-50 items-center justify-center hidden">
-            <div class="card shadow-sm w-[40vw]">
+<div id="simpleModal" class="fixed inset-0 bg-gray-400 bg-opacity-50 flex z-50 items-center justify-center hidden">
+            <div class="card shadow-sm w-[60vw]">
                 <div class="card-header bg-primary flex justify-between text-white">
                     <h4 class="font-weight-bold">Add Distributary Canal</h4>
                     <button onclick="closeModal()" type="button" class="bg-white text-black h-[30px] w-[30px] rounded-[50px]">
@@ -26,10 +41,10 @@
                 <div class="card-body">
                     <form class="form-horizontal" action="{{ route('Distributary/add') }}" method="POST">
                         @csrf
-                        <div class="row">
+                        <div class="row" style="margin-top:-30px;">
                             <!-- Division Selection -->
-                            <div class="form-group col-lg-6">
-                                <label class="form-label font-weight-bold" for="div_id">Select Division / ڈویژن</label>
+                            <div class="form-group col-3">
+                                <label class="form-label" for="div_id">Division / ڈویژن</label>
                                 <select name="div_id" id="div_id" class="form-control select_search"required>
                                     <option value="">Choose Division / ڈویژن</option>
                                     @foreach($divsions as $divsion)
@@ -39,8 +54,8 @@
                             </div>
                             
                             <!-- Canal Selection -->
-                            <div class="form-group col-lg-6">
-                                <label class="form-label font-weight-bold" for="canal_id">Select Canal / نہر</label>
+                            <div class="form-group col-3">
+                                <label class="form-label" for="canal_id">Canal / نہر</label>
                                 <select name="canal_id" id="canal_id" class="form-control" required>
                                     <option value="">Choose Canal / نہر</option>
                                     @foreach($canals as $canal)
@@ -48,12 +63,8 @@
                                     @endforeach
                                 </select>
                             </div> 
-                        </div>
-                    
-                        <div class="row">
-                            <!-- Minor Canal Selection -->
-                            <div class="form-group col-lg-6">
-                                <label class="form-label font-weight-bold" for="minor_id">Select Minor Canal / چھوٹا نہر</label>
+                            <div class="form-group col-3">
+                                <label class="form-label" for="minor_id">Minor Canal / چھوٹا نہر</label>
                                 <select name="minor_id" id="minor_id" class="form-control" required>
                                     <option value="">Choose Minor Canal</option>
                                     @foreach($minors as $minor)
@@ -61,54 +72,48 @@
                                     @endforeach
                                 </select>
                             </div> 
-                           
-                            <!-- Name of Minor -->
-                            <div class="form-group col-lg-6">
-                                <label class="form-label font-weight-bold">Name Distributary</label>
-                                <input class="form-control form-control-lg" type="text" name="name" required>
+                            <div class="form-group col-3">
+                                <label class="form-label">Distributary Name</label>
+                                <input class="form-control" type="text" name="name" required>
                             </div>
                         </div>
                     
-                        <div class="row">
+                        <div class="row" style="margin-top:-10px;">
                             <!-- No. of Outlets -->
-                            <div class="form-group col-lg-6">
-                                <label class="form-label font-weight-bold">No. of Outlets</label>
-                                <input class="form-control form-control-lg" type="number" name="no_outlet" required>
+                            <div class="form-group col-4">
+                                <label class="form-label">No. of Outlets</label>
+                                <input class="form-control" type="number" name="no_outlet" required>
                             </div>
                             
                             <!-- No. of Outlets (Left Side) -->
-                            <div class="form-group col-lg-6">
-                                <label class="form-label font-weight-bold">No. of Outlets (Left Side)</label>
-                                <input class="form-control form-control-lg" type="number" name="no_outlet_ls" required>
+                            <div class="form-group col-4">
+                                <label class="form-label">No. of Outlets (Left Side)</label>
+                                <input class="form-control" type="number" name="no_outlet_ls" required>
+                            </div>
+                            <!-- No. of Outlets (Right Side) -->
+                            <div class="form-group col-4">
+                                <label class="form-label">No. of Outlets (Right Side)</label>
+                                <input class="form-control" type="number" name="no_outlet_rs" required>
                             </div>
                         </div>
                     
-                        <div class="row">
-                            <!-- No. of Outlets (Right Side) -->
-                            <div class="form-group col-lg-6">
-                                <label class="form-label font-weight-bold">No. of Outlets (Right Side)</label>
-                                <input class="form-control form-control-lg" type="number" name="no_outlet_rs" required>
-                            </div>
-                            
+                        <div class="row" style="margin-top:-10px;">
                             <!-- Total No. of CCA -->
                             <div class="form-group col-lg-6">
-                                <label class="form-label font-weight-bold">Total No. of CCA</label>
-                                <input class="form-control form-control-lg" type="number" name="total_no_cca" required>
+                                <label class="form-label">Total No. of CCA</label>
+                                <input class="form-control" type="number" name="total_no_cca" required>
                             </div>
-                        </div>
-                    
-                        <div class="row">
-                            <!-- Total No. of Discharge (Cusec) -->
-                            <div class="form-group col-lg-6">
-                                <label class="form-label font-weight-bold">Total No. of Discharge (Cusec)</label>
-                                <input class="form-control form-control-lg" type="number" name="total_no_discharge_cusic" required>
+                              <!-- Total No. of Discharge (Cusec) -->
+                              <div class="form-group col-lg-6">
+                                <label class="form-label">Total No. of Discharge (Cusec)</label>
+                                <input class="form-control" type="number" name="total_no_discharge_cusic" required>
                             </div>
                         </div>
                     
                         <!-- Submit Button -->
                         <div class="row">
-                            <div class="col-lg-12 text-center mt-3">
-                                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                            <div class="col-lg-12">
+                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
                     </form>
@@ -116,6 +121,7 @@
                 </div>
             </div>
         </div>
+    <section class="section">
 
         <div class="row">
             <div class="col-md-12">

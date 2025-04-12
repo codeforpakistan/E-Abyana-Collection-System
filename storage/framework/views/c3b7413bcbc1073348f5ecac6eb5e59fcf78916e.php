@@ -1,33 +1,33 @@
-@extends('layout')
-
-@section('content')
 
 
-@if(session('success'))
-    @push('scripts')
+<?php $__env->startSection('content'); ?>
+
+
+<?php if(session('success')): ?>
+    <?php $__env->startPush('scripts'); ?>
         <script>
             Swal.fire({
                 icon: 'success',
                 title: 'Success',
-                text: "{{ session('success') }}",
+                text: "<?php echo e(session('success')); ?>",
                 confirmButtonText: 'OK'
             });
         </script>
-    @endpush
-@endif
+    <?php $__env->stopPush(); ?>
+<?php endif; ?>
 
-@if(session('error'))
-    @push('scripts')
+<?php if(session('error')): ?>
+    <?php $__env->startPush('scripts'); ?>
         <script>
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: "{{ session('error') }}",
+                text: "<?php echo e(session('error')); ?>",
                 confirmButtonText: 'OK'
             });
         </script>
-    @endpush
-@endif
+    <?php $__env->stopPush(); ?>
+<?php endif; ?>
 
 <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
@@ -45,8 +45,8 @@
                 <i class="fa fa-close"></i></button>
         </div>
         <div class="card-body">
-            <form class="form-horizontal" action="{{ url('AddHalqa/add') }}" method="POST">
-                @csrf
+            <form class="form-horizontal" action="<?php echo e(url('AddHalqa/add')); ?>" method="POST">
+                <?php echo csrf_field(); ?>
             
                 <div class="row">
                     <!-- District Dropdown with Select2 -->
@@ -54,9 +54,9 @@
                         <label class="form-label font-weight-bold" for="district_id">Select District/ضلع</label>
                         <select name="district_id" id="district_id" class="form-control select2" required onchange="get_tehsils(this)">
                             <option value="">Choose District</option>
-                            @foreach($districts as $district)
-                                <option value="{{ $district->id }}">{{ $district->name }}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $districts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $district): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($district->id); ?>"><?php echo e($district->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>                                
                     </div>
             
@@ -98,9 +98,9 @@
 </div> 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <form id="districtDeleteForm" action="{{ route('district.delete') }}" method="POST">
-                                @csrf
-                                @method('DELETE')
+                            <form id="districtDeleteForm" action="<?php echo e(route('district.delete')); ?>" method="POST">
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('DELETE'); ?>
                                 
                                 <table id="example" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
                                     <thead>
@@ -115,25 +115,26 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($halqas as $halqa)
+                                        <?php $__currentLoopData = $halqas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $halqa): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <tr>
-                                            <td><input type="checkbox" name="ids[]" value="{{ $halqa->id }}"></td>
-                                            <td>{{ $halqa->id }}</td>
-                                            <td>{{ $halqa->halqa_name }}</td>
-                                            <td>{{ $halqa->tehsil_name }}</td>
-                                            <td>{{ $halqa->district_name }}</td>
-                                            <td>{{ $halqa->divsion_name }}</td>
+                                            <td><input type="checkbox" name="ids[]" value="<?php echo e($halqa->id); ?>"></td>
+                                            <td><?php echo e($halqa->id); ?></td>
+                                            <td><?php echo e($halqa->halqa_name); ?></td>
+                                            <td><?php echo e($halqa->tehsil_name); ?></td>
+                                            <td><?php echo e($halqa->district_name); ?></td>
+                                            <td><?php echo e($halqa->divsion_name); ?></td>
                                             <td>
                                                 <button class="btn btn-sm btn-primary" type="submit">
                                                     <i class="fa fa-trash"></i> Delete
                                                 </button>
                                             </td>
                                         </tr>
-                                        @endforeach
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </tbody>
                                     
                                 </table>
-                                {{ $halqas->links() }}
+                                <?php echo e($halqas->links()); ?>
+
 
                             </form>
                             
@@ -146,17 +147,17 @@
         
     </section>
 
-    @if(Session::has('success'))
+    <?php if(Session::has('success')): ?>
         <script>
             swal({
                 title: "Success!",
-                text: "{{ Session::get('success') }}",
+                text: "<?php echo e(Session::get('success')); ?>",
                 icon: "success",
                 button: "OK",
             });
             
         </script>
-    @endif
+    <?php endif; ?>
 
     <script>
     function get_tehsils(element) {
@@ -207,11 +208,11 @@
         }
     
         function deleteDistrict(districtId) {
-            fetch(`{{ route('district.delete') }}`, {
+            fetch(`<?php echo e(route('district.delete')); ?>`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>'
                 },
                 body: JSON.stringify({
                     ids: { [districtId]: districtId }
@@ -255,7 +256,7 @@
     
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 </div>         
- @endsection
+ <?php $__env->stopSection(); ?>
  <script>
   
 </script>
@@ -275,3 +276,5 @@
      });
  </script>
 
+
+<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\durshal_cfp\abyana\resources\views/RegionManagments/AddHalqa.blade.php ENDPATH**/ ?>

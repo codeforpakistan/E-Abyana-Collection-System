@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('content'); ?>
 <head>
     ...
@@ -5,30 +7,32 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<?php if(Session::has('success')): ?>
-    <script>
-        swal({
-            title: "Success!",
-            text: "<?php echo e(Session::get('success')); ?>",
-            icon: "success",
-            button: "OK",
-        });
-        
-    </script>
-<?php endif; ?>
+<?php if(session('success')): ?>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: "<?php echo e(session('success')); ?>",
+                confirmButtonText: 'OK'
+            });
+        </script>
+    <?php endif; ?>
+
+    <?php if(session('error')): ?>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "<?php echo e(session('error')); ?>",
+                confirmButtonText: 'OK'
+            });
+        </script>
+    <?php endif; ?>
 
 
 <div class="app-content">
   
     <section class="section">
-        <!--page-header open-->
-        <div class="page-header pt-0">
-            <h4 class="page-title font-weight-bold"></h4>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#" class="text-light-color"></a></li>
-                <li class="breadcrumb-item active" aria-current="page"></li>
-            </ol>
-        </div>
         <!--page-header closed-->
 
         <!--row open-->
@@ -116,16 +120,14 @@
                                             <td><?php echo e($district->name); ?></td>
                                             <td><?php echo e($district->division->divsion_name); ?></td> 
                                             <td>
-                                                <button class="btn btn-sm btn-primary badge" type="button" onclick="confirmDelete(<?php echo e($district->id); ?>)">
-                                                    <i class="fa fa-trash"></i>
+                                                <button class="btn btn-sm btn-primary" type="button" onclick="confirmDelete(<?php echo e($district->id); ?>)">
+                                                    <i class="fa fa-trash"></i> Delete
                                                 </button>
                                             </td>
                                         </tr>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </tbody>
                                 </table>
-                                
-                            <
                             
                         </div>
                     </div>

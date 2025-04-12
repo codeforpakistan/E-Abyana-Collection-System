@@ -1,32 +1,32 @@
-@extends('layout')
 
-@section('content')
 
-@if(session('success'))
-    @push('scripts')
+<?php $__env->startSection('content'); ?>
+
+<?php if(session('success')): ?>
+    <?php $__env->startPush('scripts'); ?>
         <script>
             Swal.fire({
                 icon: 'success',
                 title: 'Success',
-                text: "{{ session('success') }}",
+                text: "<?php echo e(session('success')); ?>",
                 confirmButtonText: 'OK'
             });
         </script>
-    @endpush
-@endif
+    <?php $__env->stopPush(); ?>
+<?php endif; ?>
 
-@if(session('error'))
-    @push('scripts')
+<?php if(session('error')): ?>
+    <?php $__env->startPush('scripts'); ?>
         <script>
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: "{{ session('error') }}",
+                text: "<?php echo e(session('error')); ?>",
                 confirmButtonText: 'OK'
             });
         </script>
-    @endpush
-@endif
+    <?php $__env->stopPush(); ?>
+<?php endif; ?>
 
 <div class="app-content">
 <div id="simpleModal" class="fixed  inset-0 bg-gray-400 bg-opacity-50 flex z-50 items-center justify-center hidden">
@@ -38,16 +38,16 @@
             </button>
         </div>
         <div class="card-body">
-            <form class="form-horizontal" action="{{ url('AddTahsil/add') }}" method="POST">
-                @csrf
+            <form class="form-horizontal" action="<?php echo e(url('AddTahsil/add')); ?>" method="POST">
+                <?php echo csrf_field(); ?>
                 <div class="row">
                     <div class="form-group col-6">
                         <label class="form-label font-weight-bold" for="div_id">Select Division/ڈویژن</label>
                         <select name="div_id" id="div_id" class="form-control" required onchange="get_districts(this)">
                             <option value="">Choose Division/ڈویژن</option>
-                            @foreach($divsions as $divsion)
-                                <option value="{{ $divsion->id }}">{{ $divsion->divsion_name }}</option>
-                            @endforeach
+                            <?php $__currentLoopData = $divsions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $divsion): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($divsion->id); ?>"><?php echo e($divsion->divsion_name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
 
@@ -86,9 +86,9 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <form action="{{ route('tehsil.delete') }}" method="POST">
-                                @csrf
-                                @method('DELETE')
+                            <form action="<?php echo e(route('tehsil.delete')); ?>" method="POST">
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('DELETE'); ?>
                                 <table id="example" class="table table-bordered key-buttons text-nowrap w-100">
                                     <thead>
                                         <tr>
@@ -101,24 +101,25 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($tehsils as $tehsil)
+                                        <?php $__currentLoopData = $tehsils; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tehsil): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <tr>
-                                                <td><input type="checkbox" name="ids[]" value="{{ $tehsil->tehsil_id }}"></td>
-                                                <td>{{ $tehsil->tehsil_id }}</td>
-                                                <td>{{ $tehsil->district->division->divsion_name }}</td>
-                                                <td>{{ $tehsil->district->name }}</td>
-                                                <td>{{ $tehsil->tehsil_name }}</td>
+                                                <td><input type="checkbox" name="ids[]" value="<?php echo e($tehsil->tehsil_id); ?>"></td>
+                                                <td><?php echo e($tehsil->tehsil_id); ?></td>
+                                                <td><?php echo e($tehsil->district->division->divsion_name); ?></td>
+                                                <td><?php echo e($tehsil->district->name); ?></td>
+                                                <td><?php echo e($tehsil->tehsil_name); ?></td>
                                                 <td>
                                                     <button class="btn btn-sm btn-primary" type="submit">
                                                         <i class="fa fa-trash"></i> Delete
                                                     </button>
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </tbody>
                                 </table>
                                 <div class="mt-3">
-                                    {{ $tehsils->links() }}
+                                    <?php echo e($tehsils->links()); ?>
+
                                 </div>
                             </form>
                         </div>
@@ -129,9 +130,9 @@
     </section>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('scripts')
+<?php $__env->startPush('scripts'); ?>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         function get_districts(element) {
@@ -157,4 +158,6 @@
             }
         }
     </script>
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\durshal_cfp\abyana\resources\views/RegionManagments/AddTahsil.blade.php ENDPATH**/ ?>

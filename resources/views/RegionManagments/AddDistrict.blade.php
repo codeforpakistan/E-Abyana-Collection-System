@@ -7,85 +7,87 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-@if(Session::has('success'))
-    <script>
-        swal({
-            title: "Success!",
-            text: "{{ Session::get('success') }}",
-            icon: "success",
-            button: "OK",
-        });
-        
-    </script>
-@endif
+@if(session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: "{{ session('success') }}",
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
+
+    @if(session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "{{ session('error') }}",
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
 
 
 <div class="app-content">
+<div id="simpleModal" class="fixed  inset-0 bg-gray-400 bg-opacity-50 flex z-50 items-center justify-center hidden">
   
+  <div class="card shadow-sm w-[40vw]">
+      <div class="card-header bg-primary flex justify-between text-white">
+          <h4 class="font-weight-bold">Add District </h4> <!-- Updated to reflect Employer data -->
+
+          <button onclick="closeModal()" type="button"
+              class="bg-white text-black h-[30px] w-[30px] rounded-[50px]" data-target="#exampleModalCenter">
+              <i class="fa fa-close"></i></button>
+      </div>
+      <div class="card-body">
+          <form class="form-horizontal" action="{{ route('AddDistrict.add') }}" method="POST">
+
+              @csrf
+              
+              <!-- First Row (Name and CNIC) -->
+              <div class="row">
+                  <div class="form-group col-lg-12">
+                      <label  class="form-label font-weight-bold for="div_id">Select Division /ڈویژن</label>
+                      <select name="div_id" id="div_id" class="form-control" required>
+                          <option class="form-label font-weight-bold value="">Choose Division /ڈویژن</option>
+                          @foreach($divsions as $divsion)
+                              <option value="{{ $divsion->id }}">{{ $divsion->divsion_name }}</option>
+                          @endforeach
+                      </select>
+      
+                  </div>
+                  <div class="form-group col-lg-12">
+                      <label class="form-label font-weight-bold">District /ضلع</label>
+                      <input class="form-control form-control-lg" type="text" name="name" required>
+                  </div>
+               
+              </div>
+      
+             
+              
+              <!-- Second Row (Skills) -->
+            
+              
+              <!-- Submit Button -->
+              <div class="row">
+                  <div class="col-lg-12">
+                      <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                  </div>
+              </div>
+
+          </form>
+    
+      </div>
+  </div>
+</div>   
     <section class="section">
-        <!--page-header open-->
-        <div class="page-header pt-0">
-            <h4 class="page-title font-weight-bold"></h4>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#" class="text-light-color"></a></li>
-                <li class="breadcrumb-item active" aria-current="page"></li>
-            </ol>
-        </div>
         <!--page-header closed-->
 
         <!--row open-->
     
-        <div id="simpleModal" class="fixed  inset-0 bg-gray-400 bg-opacity-50 flex z-50 items-center justify-center hidden">
-  
-    <div class="card shadow-sm w-[40vw]">
-        <div class="card-header bg-primary flex justify-between text-white">
-            <h4 class="font-weight-bold">Add District </h4> <!-- Updated to reflect Employer data -->
 
-            <button onclick="closeModal()" type="button"
-                class="bg-white text-black h-[30px] w-[30px] rounded-[50px]" data-target="#exampleModalCenter">
-                <i class="fa fa-close"></i></button>
-        </div>
-        <div class="card-body">
-            <form class="form-horizontal" action="{{ route('AddDistrict.add') }}" method="POST">
-
-                @csrf
-                
-                <!-- First Row (Name and CNIC) -->
-                <div class="row">
-                    <div class="form-group col-lg-12">
-                        <label  class="form-label font-weight-bold for="div_id">Select Division /ڈویژن</label>
-                        <select name="div_id" id="div_id" class="form-control" required>
-                            <option class="form-label font-weight-bold value="">Choose Division /ڈویژن</option>
-                            @foreach($divsions as $divsion)
-                                <option value="{{ $divsion->id }}">{{ $divsion->divsion_name }}</option>
-                            @endforeach
-                        </select>
-        
-                    </div>
-                    <div class="form-group col-lg-12">
-                        <label class="form-label font-weight-bold">District /ضلع</label>
-                        <input class="form-control form-control-lg" type="text" name="name" required>
-                    </div>
-                 
-                </div>
-        
-               
-                
-                <!-- Second Row (Skills) -->
-              
-                
-                <!-- Submit Button -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-                    </div>
-                </div>
-
-            </form>
-      
-        </div>
-    </div>
-</div> 
         <div class="row">
             <div class="col-md-12">
                 <div class="card export-database">
@@ -118,16 +120,14 @@
                                             <td>{{ $district->name }}</td>
                                             <td>{{ $district->division->divsion_name }}</td> 
                                             <td>
-                                                <button class="btn btn-sm btn-primary badge" type="button" onclick="confirmDelete({{ $district->id }})">
-                                                    <i class="fa fa-trash"></i>
+                                                <button class="btn btn-sm btn-primary" type="button" onclick="confirmDelete({{ $district->id }})">
+                                                    <i class="fa fa-trash"></i> Delete
                                                 </button>
                                             </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
-                                
-                            <
                             
                         </div>
                     </div>

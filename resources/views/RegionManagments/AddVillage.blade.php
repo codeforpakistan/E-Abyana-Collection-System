@@ -5,76 +5,92 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
 </head>
+@if(session('success'))
+    @push('scripts')
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: "{{ session('success') }}",
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endpush
+@endif
 
+@if(session('error'))
+    @push('scripts')
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "{{ session('error') }}",
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endpush
+@endif
     
     
 <div class="app-content">
-  
-    <section class="section">
-        <!--page-header open-->
-        <div class="page-header pt-0">
-            <h4 class="page-title font-weight-bold"></h4>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#" class="text-light-color"></a></li>
-                <li class="breadcrumb-item active" aria-current="page"></li>
-            </ol>
-        </div>
-        <!--page-header closed-->
-
-       
-
 <div id="simpleModal" class="fixed  inset-0 bg-gray-400 bg-opacity-50 flex z-50 items-center justify-center hidden">
   
-    <div class="card shadow-sm w-[40vw]">
-        <div class="card-header bg-primary flex justify-between text-white">
-            <h4 class="font-weight-bold">Add Village</h4> <!-- Updated to reflect Employer data -->
+  <div class="card shadow-sm w-[40vw]">
+      <div class="card-header bg-primary flex justify-between text-white">
+          <h4 class="font-weight-bold">Add Village</h4> <!-- Updated to reflect Employer data -->
 
-            <button onclick="closeModal()" type="button"
-                class="bg-white text-black h-[30px] w-[30px] rounded-[50px]" data-target="#exampleModalCenter">
-                <i class="fa fa-close"></i></button>
-        </div>
-        <div class="card-body">
-            <form class="form-horizontal" action="{{ url('AddVillage/add') }}" method="POST">
-                @csrf
-                
-                <div class="form-group col-lg-12">
-                    <label class="form-label font-weight-bold" for="tehsil_id" style="font-size: 1.2rem; display: block;">Select Tehsil/تحصیل</label>
-                    <select name="tehsil_id" id="tehsil_id" class="form-control form-control-lg" required style="font-size: 1.1rem; padding: 0.5rem 1rem; line-height: 1.5;">
-                        <option value="" style="font-weight: bold;">Choose Tehsil</option>
-                        @foreach($tehsils as $tehsil)
-                            <option value="{{$tehsil->tehsil_id }}">{{$tehsil->tehsil_name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                
-                <div class="form-group col-lg-12">
-                    <label class="form-label font-weight-bold" for="halqa_id" style="">Select Halqa/حلقہ</label>
-                    <select name="halqa_id" id="halqa_id" class="form-control form-control-lg" required style="font-size: 1.1rem; padding: 0.5rem 1rem; line-height: 1.5;">
-                        <option value="" style="font-weight: bold;">Choose Halqa/حلقہ</option>
-                        @foreach($Halqas as $Halqa)
-                            <option value="{{$Halqa->id }}">{{$Halqa->halqa_name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="row">
-                    <div class="form-group col-lg-12">
-                        <label class="form-label font-weight-bold" style="font-size: 1.1rem;">Name Village/نام موضع</label>
-                        <input class="form-control form-control-lg" type="text" name="village_name" required style="font-size: 1rem;">
-                    </div>
-                    
-                 
-                </div>
-                
-                <div class="row">
-                    <div class="col-lg-12">
-                        <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-                    </div>
-                </div>
-            </form>
-      
-        </div>
-    </div>
-</div> 
+          <button onclick="closeModal()" type="button"
+              class="bg-white text-black h-[30px] w-[30px] rounded-[50px]" data-target="#exampleModalCenter">
+              <i class="fa fa-close"></i></button>
+      </div>
+      <div class="card-body">
+          <form class="form-horizontal" action="{{ url('AddVillage/add') }}" method="POST">
+              @csrf
+              <div class="row">
+              <div class="form-group col-6">
+                  <label class="form-label font-weight-bold" for="tehsil_id">Select Tehsil/تحصیل</label>
+                  <select name="tehsil_id" id="tehsil_id" class="form-control" required>
+                      <option value="" style="font-weight: bold;">Choose Tehsil</option>
+                      @foreach($tehsils as $tehsil)
+                          <option value="{{$tehsil->tehsil_id }}">{{$tehsil->tehsil_name }}</option>
+                      @endforeach
+                  </select>
+              </div>
+
+              <div class="form-group col-6">
+                  <label class="form-label font-weight-bold" for="halqa_id" style="">Select Halqa/حلقہ</label>
+                  <select name="halqa_id" id="halqa_id" class="form-control" required>
+                      <option value="" style="font-weight: bold;">Choose Halqa/حلقہ</option>
+                      @foreach($Halqas as $Halqa)
+                          <option value="{{$Halqa->id }}">{{$Halqa->halqa_name }}</option>
+                      @endforeach
+                  </select>
+              </div>
+              </div>
+              
+              
+             
+              <div class="row">
+                  <div class="form-group col-lg-12">
+                      <label class="form-label font-weight-bold">Village Name</label>
+                      <input class="form-control" type="text" name="village_name" required>
+                  </div>
+                  
+               
+              </div>
+              
+              <div class="row">
+                  <div class="col-lg-12">
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+              </div>
+          </form>
+    
+      </div>
+  </div>
+</div>  
+    <section class="section">
+
 
 
         <div class="row">
@@ -118,8 +134,8 @@
                                             
                                      
                                             <td>
-                                                <button class="btn btn-sm btn-primary badge" type="submit">
-                                                    <i class="fa fa-trash"></i>
+                                                <button class="btn btn-sm btn-primary" type="submit">
+                                                    <i class="fa fa-trash"></i> Delete
                                                 </button>
                                             </td>
                                         </tr>

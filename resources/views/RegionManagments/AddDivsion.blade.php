@@ -5,17 +5,30 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
 </head>
+@if(session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: "{{ session('success') }}",
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
 
+    @if(session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "{{ session('error') }}",
+                confirmButtonText: 'OK'
+            });
+        </script>
+    @endif
     
     
 <div class="app-content">
-
-    <section class="section">
-        <!--page-header closed-->
-
-        <!--row open-->
-       
-
 <div id="simpleModal" class="fixed  inset-0 bg-gray-400 bg-opacity-50 flex z-50 items-center justify-center hidden">
   
     <div class="card shadow-sm w-[40vw]">
@@ -57,6 +70,13 @@
         </div>
     </div>
 </div> 
+    <section class="section">
+        <!--page-header closed-->
+
+        <!--row open-->
+       
+
+
 
 <div class="row">
     <div class="col-md-12">

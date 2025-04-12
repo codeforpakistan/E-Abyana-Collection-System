@@ -1,35 +1,35 @@
-@extends('layout')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <head>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
 </head>
-@if(session('success'))
-    @push('scripts')
+<?php if(session('success')): ?>
+    <?php $__env->startPush('scripts'); ?>
         <script>
             Swal.fire({
                 icon: 'success',
                 title: 'Success',
-                text: "{{ session('success') }}",
+                text: "<?php echo e(session('success')); ?>",
                 confirmButtonText: 'OK'
             });
         </script>
-    @endpush
-@endif
+    <?php $__env->stopPush(); ?>
+<?php endif; ?>
 
-@if(session('error'))
-    @push('scripts')
+<?php if(session('error')): ?>
+    <?php $__env->startPush('scripts'); ?>
         <script>
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: "{{ session('error') }}",
+                text: "<?php echo e(session('error')); ?>",
                 confirmButtonText: 'OK'
             });
         </script>
-    @endpush
-@endif  
+    <?php $__env->stopPush(); ?>
+<?php endif; ?>  
 <div class="app-content">
   
     <section class="section">
@@ -48,8 +48,8 @@
         </div>
         <div class="card-body">
            
- <form class="form-horizontal" action="{{ url('Addprice/add') }}" method="POST">
-    @csrf
+ <form class="form-horizontal" action="<?php echo e(url('Addprice/add')); ?>" method="POST">
+    <?php echo csrf_field(); ?>
     
     <!-- First Row (Name and CNIC) -->
     <div class="row">
@@ -102,8 +102,8 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <form action="" method="POST">
-                                @csrf
-                                @method('DELETE')
+                                <?php echo csrf_field(); ?>
+                                <?php echo method_field('DELETE'); ?>
                                 
                                 <table id="example" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
                                     <thead>
@@ -116,15 +116,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($Cropprice as $cropprice)
+                                        <?php $__currentLoopData = $Cropprice; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cropprice): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <tr>
                                             <td><input type="checkbox" name="ids[]" value=""></td>
-                                            <td>{{ $cropprice->id }}</td>
-                                            <td>{{ $cropprice->crop_price }}</td>
-                                            <td>{{ $cropprice->final_crop }}</td>
+                                            <td><?php echo e($cropprice->id); ?></td>
+                                            <td><?php echo e($cropprice->crop_price); ?></td>
+                                            <td><?php echo e($cropprice->final_crop); ?></td>
                                             <td>
                                                 <!-- Edit Button -->
-                                                <a href="{{ route('cropprice.edit', $cropprice->id) }}" class="btn btn-sm btn-primary">
+                                                <a href="<?php echo e(route('cropprice.edit', $cropprice->id)); ?>" class="btn btn-sm btn-primary">
                                                     <i class="fa fa-edit"></i> Edit
                                                 </a>
                                                 
@@ -135,7 +135,7 @@
                                                 </button>
                                             </td>
                                         </tr>
-                                        @endforeach
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </tbody>
                                 </table>
                             </form>
@@ -150,7 +150,9 @@
 
 
               
- @endsection
+ <?php $__env->stopSection(); ?>
 
 
 
+
+<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\durshal_cfp\abyana\resources\views/RegionManagments/Addprice.blade.php ENDPATH**/ ?>
