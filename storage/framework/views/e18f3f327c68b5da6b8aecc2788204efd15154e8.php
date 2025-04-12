@@ -1,6 +1,6 @@
-@extends('layout')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <head>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
@@ -27,8 +27,8 @@
                 <i class="fa fa-close"></i></button>
         </div>
         <div class="card-body">
-            <form class="form-horizontal" action="{{ route('AddDivsion/add') }}" method="POST">
-                @csrf
+            <form class="form-horizontal" action="<?php echo e(route('AddDivsion/add')); ?>" method="POST">
+                <?php echo csrf_field(); ?>
                 
                 <!-- First Row (Name and CNIC) -->
                 <div class="row">
@@ -83,13 +83,13 @@
                             </tr>
                         </thead>
                         <tbody id="division-data">
-                            @include('partials.divsion_data')
+                            <?php echo $__env->make('partials.divsion_data', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                         </tbody>
                     </table>
                 </div>
 
                 <div class="text-center mt-3">
-                    <button id="loadMore" class="btn btn-success" data-url="{{ $divsions->nextPageUrl() }}">
+                    <button id="loadMore" class="btn btn-success" data-url="<?php echo e($divsions->nextPageUrl()); ?>">
                         Next
                     </button>
                 </div>
@@ -101,7 +101,7 @@
 
 
               
- @endsection
+ <?php $__env->stopSection(); ?>
  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
@@ -169,7 +169,7 @@
         // 📥 Function to Fetch Data (Used for Search)
         function fetchData(page) {
             $.ajax({
-                url: "{{ route('AddDivsion') }}?page=" + page,
+                url: "<?php echo e(route('AddDivsion')); ?>?page=" + page,
                 type: "GET",
                 data: { search: searchQuery },
                 success: function(response) {
@@ -182,3 +182,5 @@
     });
 </script>
 
+
+<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\durshal_cfp\abyana\resources\views/RegionManagments/AddDivsion.blade.php ENDPATH**/ ?>
