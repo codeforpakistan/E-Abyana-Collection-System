@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use App\Models\Village;
+use App\Models\village;
 use App\Models\Outlet;
 use App\Models\Tehsil;
 use App\Models\District;
@@ -14,6 +14,8 @@ use App\Models\Farmer;
 use App\Models\Halqa;
 use App\Models\LandRecord;
 use App\Models\Cropprice;
+use App\Models\Minorcanal;
+use App\Models\Distributary;
 use DB;
 
 class FarmerLandRecord extends Controller
@@ -90,9 +92,52 @@ public function get_outlet($canal_id){
     $canals = Outlet::where('canal_id', $canal_id)->get();
     return response()->json($canals);
 }
+//---------------------------------------------------
+public function get_minor_canal1($canal_id){
+    $minor_canals = Minorcanal::where('canal_id', $canal_id)->get();
+    return response()->json($minor_canals);
+}
+public function get_outlet_by_minor($minor_id){
+    $outlets_by_minor = Outlet::where('minor_id', $minor_id)->get();
+    return response()->json($outlets_by_minor);
+}
+//----------------------------------------------------
+public function get_minor_canals_for_distri($canal_id){
+    $minor_canals_for_distri = Minorcanal::where('canal_id', $canal_id)->get();
+    return response()->json($minor_canals_for_distri);
+}
+public function get_distributories_by_minor($minor_id){
+    $distri_by_minor = Distributary::where('minor_id', $minor_id)->get();
+    return response()->json($distri_by_minor);
+}
+public function get_outlets_by_distributory($distri_id){
+    $outlets_by_distri = Outlet::where('distrib_id', $distri_id)->get();
+    return response()->json($outlets_by_distri);
+}
+
 
 public function storeFarmer(Request $request)
 {
+    if ($request->canalType == 'canal') {
+        $request->merge([
+            'outlet_id' => $request->canal_outlet_id,
+            'minor_id' => null,
+            'distri_id' => null,
+        ]);
+    } elseif ($request->canalType == 'minor_canal') {
+        $request->merge([
+            'outlet_id' => $request->minor_outlet_id,
+            'minor_id' => $request->canal_minor_id,
+            'distri_id' => null,
+        ]);
+    } elseif ($request->canalType == 'distributory') {
+        $request->merge([
+            'outlet_id' => $request->distri_outlet_id,
+            'minor_id' => $request->distri_minor_id,
+            'distri_id' => $request->distri_id,
+        ]);
+    }
+
     $validatedData = $request->validate([
         'khasra_number' => 'required|string|max:255',
         'tenant_name' => 'required|string|max:255',
@@ -100,7 +145,7 @@ public function storeFarmer(Request $request)
         'cultivators_info' => 'required|string|max:255',
         'snowing_date' => 'required|date',
         'land_assessment_marla' => 'required|string|max:255',
-        'land_assessment_kanal' =>'required|string|max:255',
+        'land_assessment_kanal' => 'required|string|max:255',
         'previous_crop' => 'required|string|max:255',
         'date' => 'required|date',
         'session_date' => 'required|string|max:255',
@@ -110,8 +155,8 @@ public function storeFarmer(Request $request)
         'area_kanal' => 'required|numeric|min:0',
         'double_crop_marla' => 'required|string|max:255',
         'double_crop_kanal' => 'required|string|max:255',
-        'identifable_area_marla' =>'required|string|max:255',
-        'identifable_area_kanal' =>'required|string|max:255',
+        'identifable_area_marla' => 'required|string|max:255',
+        'identifable_area_kanal' => 'required|string|max:255',
         'irrigated_area_marla' => 'required|numeric|min:0',
         'irrigated_area_kanal' => 'required|numeric|min:0',
         'land_quality' => 'required|string|max:255',
@@ -119,14 +164,17 @@ public function storeFarmer(Request $request)
         'village_id' => 'required|exists:villages,village_id',
         'irrigator_id' => 'required|exists:irrigators,id',
         'canal_id' => 'required|exists:canals,id',
+        'minor_id' => 'nullable|numeric|max:255',
+        'distri_id' => 'nullable|numeric|max:255',
         'crop_id' => 'required|exists:crops,id',
-        'outlet_id' => 'required|exists:outlets,id',
+        'outlet_id' => 'required|numeric|max:255',
         'finalcrop_id' => 'required|exists:cropprices,id',
         'crop_price' => 'required|string|max:255',
         'is_billed' => 'required|numeric|max:255',
         'review' => 'required|string|max:255',
         'status' => 'required|numeric|max:255',
     ]);
+
     LandRecord::create($validatedData);
     session()->flash('success', 'Data has been submitted successfully!');
     return redirect()->back();

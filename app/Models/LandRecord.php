@@ -38,11 +38,11 @@ class LandRecord extends Model
         'crop_price', 
         'irrigator_khata_number', 
         'identifable_area_kanal', 
-       
         'village_id', 
         'irrigator_id', 
-      
-        'canal_id', 
+        'canal_id',
+        'minor_id',
+        'distri_id',
         'crop_id', 
         'outlet_id',
         'finalcrop_id',

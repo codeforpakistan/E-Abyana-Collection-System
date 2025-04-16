@@ -572,7 +572,7 @@ Welcome to E ABYANA
     $(document).ready(function() {
         $('.select_search').select2();
         // Fetch Canals based on Division selection
-        $('#div_id').change(function() {
+       $('#div_id').change(function() {
             var division_id = $(this).val();
             $('#canal_id').empty().append('<option value="">Choose Canal</option>');
             $('#minor_id').empty().append('<option value="">Choose Minor Canal</option>');

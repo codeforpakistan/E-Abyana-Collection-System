@@ -48,11 +48,11 @@ return new class extends Migration
             $table->string('irrigated_area_kanal');
             $table->string('land_quality');
             $table->string('irrigator_khata_number');
-        
             $table->unsignedBigInteger('village_id');
             $table->unsignedBigInteger('irrigator_id');
-          
             $table->unsignedBigInteger('canal_id');
+            $table->unsignedBigInteger('minor_id')->nullable();
+            $table->unsignedBigInteger('distri_id')->nullable();
             $table->unsignedBigInteger('crop_id');
             $table->unsignedBigInteger('outlet_id');
     

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Mar 19, 2025 at 10:56 AM
--- Server version: 10.4.19-MariaDB
--- PHP Version: 8.0.6
+-- Host: 127.0.0.1
+-- Generation Time: Apr 17, 2025 at 01:48 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -67,7 +67,7 @@ INSERT INTO `assign_roles` (`id`, `role_id`, `permission_id`, `created_at`, `upd
 
 CREATE TABLE `canals` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `canal_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `canal_name` varchar(255) NOT NULL,
   `village_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -101,7 +101,12 @@ INSERT INTO `canals` (`id`, `canal_name`, `village_id`, `created_at`, `updated_a
 (15, 'canal amankot', 21, '2025-03-13 05:18:35', '2025-03-13 05:18:35', 1, 45, 40, 5, 6, 8),
 (16, 'canal mardan', 23, '2025-03-14 03:13:12', '2025-03-14 03:13:12', 2, 45, 40, 5, 6, 8),
 (17, 'tangi canal', 24, '2025-03-14 03:56:08', '2025-03-14 03:56:08', 1, 45, 40, 8, 6, 8),
-(18, 'Peshawar', 17, '2025-03-18 03:20:05', '2025-03-18 03:20:05', 1, 2, 2, 2, 22, 22);
+(18, 'Peshawar', 17, '2025-03-18 03:20:05', '2025-03-18 03:20:05', 1, 2, 2, 2, 22, 22),
+(19, 'canal hayatabad', 25, '2025-03-20 03:29:08', '2025-03-20 03:29:08', 1, 45, 40, 5, 6, 8),
+(20, 'canal hayatinad', 25, '2025-03-20 03:49:59', '2025-03-20 03:49:59', 1, 45, 40, 5, 6, 8),
+(21, 'canal hayat', 25, '2025-03-20 04:19:37', '2025-03-20 04:19:37', 1, 45, 40, 5, 6, 8),
+(22, 'Canal Mohmand', 26, '2025-03-20 05:40:01', '2025-03-20 05:40:01', 1, 3, 3, 3, 3, 3),
+(23, 'canal kangra', 14, '2025-03-21 13:11:19', '2025-03-21 13:11:19', 1, 45, 40, 5, 6, 8);
 
 -- --------------------------------------------------------
 
@@ -111,10 +116,10 @@ INSERT INTO `canals` (`id`, `canal_name`, `village_id`, `created_at`, `updated_a
 
 CREATE TABLE `cropprices` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `crop_price` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `crop_price` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `final_crop` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `final_crop` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -134,7 +139,7 @@ INSERT INTO `cropprices` (`id`, `crop_price`, `created_at`, `updated_at`, `final
 
 CREATE TABLE `crops` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `crop_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `crop_name` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -155,39 +160,41 @@ INSERT INTO `crops` (`id`, `crop_name`, `created_at`, `updated_at`) VALUES
 
 CREATE TABLE `cropsurveys` (
   `crop_survey_id` bigint(20) UNSIGNED NOT NULL,
-  `khasra_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tenant_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `khasra_number` varchar(255) NOT NULL,
+  `tenant_name` varchar(255) NOT NULL,
   `registration_date` date NOT NULL,
-  `cultivators_info` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `snowing_date` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `land_assessment_marla` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `land_assessment_kanal` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `previous_crop` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cultivators_info` text NOT NULL,
+  `snowing_date` text NOT NULL,
+  `land_assessment_marla` varchar(255) NOT NULL,
+  `land_assessment_kanal` varchar(255) NOT NULL,
+  `previous_crop` varchar(255) NOT NULL,
   `date` date NOT NULL,
-  `width` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `length` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `width` varchar(255) NOT NULL,
+  `length` varchar(255) NOT NULL,
   `area_marla` int(11) NOT NULL,
   `area_kanal` int(11) NOT NULL,
-  `double_crop_marla` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `double_crop_kanal` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `identifable_area_marla` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `identifable_area_kanal` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `irrigated_area_marla` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `irrigated_area_kanal` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `land_quality` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `irrigator_khata_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `double_crop_marla` varchar(255) NOT NULL,
+  `double_crop_kanal` varchar(255) NOT NULL,
+  `identifable_area_marla` varchar(255) NOT NULL,
+  `identifable_area_kanal` varchar(255) NOT NULL,
+  `irrigated_area_marla` varchar(255) NOT NULL,
+  `irrigated_area_kanal` varchar(255) NOT NULL,
+  `land_quality` varchar(255) NOT NULL,
+  `irrigator_khata_number` varchar(255) NOT NULL,
   `village_id` bigint(20) UNSIGNED NOT NULL,
   `irrigator_id` bigint(20) UNSIGNED NOT NULL,
   `canal_id` bigint(20) UNSIGNED NOT NULL,
+  `minor_id` bigint(20) DEFAULT NULL,
+  `distri_id` bigint(20) DEFAULT NULL,
   `crop_id` bigint(20) UNSIGNED NOT NULL,
   `outlet_id` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `session_date` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `session_date` varchar(50) DEFAULT NULL,
   `finalcrop_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `crop_price` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `crop_price` varchar(255) NOT NULL,
   `is_billed` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
-  `review` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `review` text DEFAULT NULL,
   `status` tinyint(3) UNSIGNED NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -195,23 +202,49 @@ CREATE TABLE `cropsurveys` (
 -- Dumping data for table `cropsurveys`
 --
 
-INSERT INTO `cropsurveys` (`crop_survey_id`, `khasra_number`, `tenant_name`, `registration_date`, `cultivators_info`, `snowing_date`, `land_assessment_marla`, `land_assessment_kanal`, `previous_crop`, `date`, `width`, `length`, `area_marla`, `area_kanal`, `double_crop_marla`, `double_crop_kanal`, `identifable_area_marla`, `identifable_area_kanal`, `irrigated_area_marla`, `irrigated_area_kanal`, `land_quality`, `irrigator_khata_number`, `village_id`, `irrigator_id`, `canal_id`, `crop_id`, `outlet_id`, `created_at`, `updated_at`, `session_date`, `finalcrop_id`, `crop_price`, `is_billed`, `review`, `status`) VALUES
-(1, '234', 'Saqib', '2025-02-27', 'Saqib', '2025-02-27', '0', '0', 'Maize', '2025-02-27', '120', '243', 3, 18, '0', '0', '0', '0', '0', '0', 'N/A', '0001', 14, 1, 4, 1, 5, '2025-02-27 02:59:55', '2025-02-27 03:17:19', '2025', 2, '55', 1, 'xen', 3),
-(2, '1234', 'Saqib', '2025-02-28', 'Saqib', '2025-02-28', '0', '0', 'Maize', '2025-02-28', '56', '34', 10, 4, '0', '0', '0', '0', '0', '0', 'N/A', '0001', 14, 1, 4, 2, 5, '2025-02-28 01:59:59', '2025-03-05 01:24:10', '2025', 1, '45', 0, 'collector', 3),
-(3, '123', 'abbas ali shah', '2025-03-04', 'abbas ali shah', '2025-03-04', '0', '0', 'Rice', '2025-03-04', '9', '89', 18, 4, '0', '0', '0', '0', '0', '0', 'N/A', '001', 14, 4, 5, 2, 6, '2025-03-04 06:26:37', '2025-03-05 01:23:27', '2025', 2, '60', 0, 'gg', 3),
-(4, '123', 'abbas ali shah', '2025-03-05', 'abbas ali shah', '2025-03-05', '0', '0', 'Maize', '2025-03-05', '90', '69', 19, 7, '0', '0', '0', '0', '0', '0', 'N/A', '00155', 14, 3, 5, 2, 6, '2025-03-05 01:21:42', '2025-03-05 01:27:56', '2025', 1, '60', 0, 'nn', 3),
-(5, '1234', 'abbas ali shah', '2025-03-05', 'abbas ali shah', '2025-03-05', '0', '0', 'makie', '2025-03-05', '78', '90', 8, 8, '0', '0', '0', '0', '0', '0', 'N/A', '00155', 14, 3, 5, 2, 6, '2025-03-05 01:26:56', '2025-03-14 01:56:03', '2025', 3, '75', 0, 'farward', 2),
-(6, '1234', 'mahnoor', '2025-03-05', 'mahnoor', '2025-03-05', '0', '0', 'Rice', '2025-03-05', '666', '55', 1, 36, '0', '0', '0', '0', '0', '0', 'N/A', '20202', 14, 5, 5, 2, 6, '2025-03-05 01:32:13', '2025-03-11 01:38:17', '2025', 2, '60', 0, 'g', 3),
-(7, '2228', 'mahnoor', '2025-03-05', 'mahnoor', '2025-03-05', '0', '0', 'Rice', '2025-03-05', '555', '666', 1, 61, '0', '0', '0', '0', '0', '0', 'N/A', '20202', 14, 5, 5, 2, 6, '2025-03-05 01:34:28', '2025-03-13 18:55:31', '2025', 2, '60', 0, 'tt', 2),
-(8, '99', 'Saqib', '2025-03-13', 'Saqib', '2025-03-13', '0', '0', 'makie', '2025-03-13', '8', '88', 16, 4, '0', '0', '0', '0', '0', '0', 'N/A', '0001', 14, 1, 4, 1, 5, '2025-03-13 18:53:50', '2025-03-13 18:54:13', '2025', 3, '75', 0, 'test', 1),
-(9, '222', 'hamza', '2025-03-14', 'hamza', '2025-03-14', '0', '0', 'Maize', '2025-03-14', '0', '0', 0, 0, '0', '0', '0', '0', '0', '0', 'N/A', '001', 21, 10, 14, 1, 10, '2025-03-14 00:56:55', '2025-03-18 03:11:34', '2025', 1, '60', 0, 'g', 2),
-(10, '6', 'Ghulam Shah s/o Ghandal Shah', '2025-03-14', 'Ghulam Shah s/o Ghandal Shah', '2025-03-14', '0', '0', 'Maize', '2025-03-14', '0', '0777', 17, 38, '0', '0', '0', '0', '0', '0', 'N/A', '8', 21, 9, 14, 1, 10, '2025-03-14 01:11:06', '2025-03-18 03:50:51', '2025', 1, '60', 0, 'reverse', 0),
-(11, '222', 'Ghulam Shah s/o Ghandal Shah', '2025-03-14', 'Ghulam Shah s/o Ghandal Shah', '2025-03-14', '0', '0', 'Rice', '2025-03-14', '0', '0', 0, 0, '0', '0', '0', '0', '0', '0', 'N/A', '7', 24, 15, 17, 2, 11, '2025-03-14 04:06:46', '2025-03-14 04:07:38', '2025', 2, '60', 0, 'bb', 1),
-(12, '222', 'Ghulam Shah s/o Ghandal Shah', '2025-03-14', 'Ghulam Shah s/o Ghandal Shah', '2025-03-14', '0', '0', 'Maize', '2025-03-14', '0', '0', 0, 0, '0', '0', '0', '0', '0', '0', 'N/A', '7', 24, 15, 17, 2, 11, '2025-03-14 04:07:10', '2025-03-14 04:07:25', '2025', 1, '60', 0, 'b', 1),
-(13, '345', 'Saqib', '2025-03-17', 'Saqib', '2025-03-17', '0', '0', 'Rice', '2025-03-17', '78', '56', 14, 6, '0', '0', '0', '0', '0', '0', 'N/A', '0001', 14, 1, 4, 2, 5, '2025-03-17 04:24:41', '2025-03-17 04:27:49', '2025', 2, '60', 0, 'farwarded', 1),
-(14, '222', 'abbas ali shah', '2025-03-18', 'abbas ali shah', '2025-03-18', '0', '0', 'Maize', '2025-03-18', '333', '1222', 15, 77, '0', '0', '0', '0', '0', '0', 'N/A', '001888', 14, 2, 5, 1, 6, '2025-03-18 03:12:37', '2025-03-18 03:17:22', '2025', 1, '60', 0, 'test', 1),
-(15, '1112', 'Shahzeb Siddiq', '2025-03-18', 'Shahzeb Siddiq', '2025-03-18', '12', '12', 'Maize', '2025-03-18', '30', '20', 10, 2, '0', '0', '0', '0', '0', '0', 'N/A', '121212', 17, 16, 18, 2, 12, '2025-03-18 03:27:07', '2025-03-18 03:29:06', '2025', 1, '60', 0, 'All check no issue found', 1),
-(16, '1212', 'Shahzeb Siddiq', '2025-03-18', 'Shahzeb Siddiq', '2025-03-18', '0', '0', 'Maize', '2025-03-18', '22', '33', 15, 2, '0', '0', '0', '0', '0', '0', 'N/A', '121212', 17, 16, 18, 1, 12, '2025-03-18 03:28:04', '2025-03-18 03:28:04', '2025', 1, '60', 0, 'Survey Added', 0);
+INSERT INTO `cropsurveys` (`crop_survey_id`, `khasra_number`, `tenant_name`, `registration_date`, `cultivators_info`, `snowing_date`, `land_assessment_marla`, `land_assessment_kanal`, `previous_crop`, `date`, `width`, `length`, `area_marla`, `area_kanal`, `double_crop_marla`, `double_crop_kanal`, `identifable_area_marla`, `identifable_area_kanal`, `irrigated_area_marla`, `irrigated_area_kanal`, `land_quality`, `irrigator_khata_number`, `village_id`, `irrigator_id`, `canal_id`, `minor_id`, `distri_id`, `crop_id`, `outlet_id`, `created_at`, `updated_at`, `session_date`, `finalcrop_id`, `crop_price`, `is_billed`, `review`, `status`) VALUES
+(1, '234', 'Saqib', '2025-02-27', 'Saqib', '2025-02-27', '0', '0', 'Maize', '2025-02-27', '120', '243', 3, 18, '0', '0', '0', '0', '0', '0', 'N/A', '0001', 14, 1, 4, NULL, NULL, 1, 5, '2025-02-27 02:59:55', '2025-03-25 03:00:57', '2025', 2, '55', 1, 'xen', 3),
+(2, '1234', 'Saqib', '2025-02-28', 'Saqib', '2025-02-28', '0', '0', 'Maize', '2025-02-28', '56', '34', 10, 4, '0', '0', '0', '0', '0', '0', 'N/A', '0001', 14, 1, 4, NULL, NULL, 2, 5, '2025-02-28 01:59:59', '2025-03-25 03:00:57', '2025', 1, '45', 1, 'collector', 3),
+(3, '123', 'abbas ali shah', '2025-03-04', 'abbas ali shah', '2025-03-04', '0', '0', 'Rice', '2025-03-04', '9', '89', 18, 4, '0', '0', '0', '0', '0', '0', 'N/A', '001', 14, 4, 5, NULL, NULL, 2, 6, '2025-03-04 06:26:37', '2025-03-05 01:23:27', '2025', 2, '60', 0, 'gg', 3),
+(4, '123', 'abbas ali shah', '2025-03-05', 'abbas ali shah', '2025-03-05', '0', '0', 'Maize', '2025-03-05', '90', '69', 19, 7, '0', '0', '0', '0', '0', '0', 'N/A', '00155', 14, 3, 5, NULL, NULL, 2, 6, '2025-03-05 01:21:42', '2025-03-25 05:24:58', '2025', 1, '60', 0, 'zilladar', 1),
+(5, '1234', 'abbas ali shah', '2025-03-05', 'abbas ali shah', '2025-03-05', '0', '0', 'makie', '2025-03-05', '78', '90', 8, 8, '0', '0', '0', '0', '0', '0', 'N/A', '00155', 14, 3, 5, NULL, NULL, 2, 6, '2025-03-05 01:26:56', '2025-03-22 12:57:23', '2025', 3, '75', 0, 'farwad', 3),
+(6, '1234', 'mahnoor', '2025-03-05', 'mahnoor', '2025-03-05', '0', '0', 'Rice', '2025-03-05', '666', '55', 1, 36, '0', '0', '0', '0', '0', '0', 'N/A', '20202', 14, 5, 5, NULL, NULL, 2, 6, '2025-03-05 01:32:13', '2025-03-11 01:38:17', '2025', 2, '60', 0, 'g', 3),
+(7, '2228', 'mahnoor', '2025-03-05', 'mahnoor', '2025-03-05', '0', '0', 'Rice', '2025-03-05', '555', '666', 1, 61, '0', '0', '0', '0', '0', '0', 'N/A', '20202', 14, 5, 5, NULL, NULL, 2, 6, '2025-03-05 01:34:28', '2025-03-22 13:37:16', '2025', 2, '60', 0, 'jj', 3),
+(8, '99', 'Saqib', '2025-03-13', 'Saqib', '2025-03-13', '0', '0', 'makie', '2025-03-13', '8', '88', 16, 4, '0', '0', '0', '0', '0', '0', 'N/A', '0001', 14, 1, 4, NULL, NULL, 1, 5, '2025-03-13 18:53:50', '2025-03-13 18:54:13', '2025', 3, '75', 0, 'test', 1),
+(9, '222', 'hamza', '2025-03-14', 'hamza', '2025-03-14', '0', '0', 'Maize', '2025-03-14', '0', '0', 0, 0, '0', '0', '0', '0', '0', '0', 'N/A', '001', 21, 10, 14, NULL, NULL, 1, 10, '2025-03-14 00:56:55', '2025-03-18 03:11:34', '2025', 1, '60', 0, 'g', 2),
+(10, '6', 'Ghulam Shah s/o Ghandal Shah', '2025-03-14', 'Ghulam Shah s/o Ghandal Shah', '2025-03-14', '0', '0', 'Maize', '2025-03-14', '0', '0777', 17, 38, '0', '0', '0', '0', '0', '0', 'N/A', '8', 21, 9, 14, NULL, NULL, 1, 10, '2025-03-14 01:11:06', '2025-03-22 12:39:41', '2025', 1, '60', 0, 'amankot', 1),
+(11, '222', 'Ghulam Shah s/o Ghandal Shah', '2025-03-14', 'Ghulam Shah s/o Ghandal Shah', '2025-03-14', '0', '0', 'Rice', '2025-03-14', '0', '0', 0, 0, '0', '0', '0', '0', '0', '0', 'N/A', '7', 24, 15, 17, NULL, NULL, 2, 11, '2025-03-14 04:06:46', '2025-03-22 13:37:27', '2025', 2, '60', 0, 'nn', 3),
+(12, '222', 'Ghulam Shah s/o Ghandal Shah', '2025-03-14', 'Ghulam Shah s/o Ghandal Shah', '2025-03-14', '0', '0', 'Maize', '2025-03-14', '0', '0', 0, 0, '0', '0', '0', '0', '0', '0', 'N/A', '7', 24, 15, 17, NULL, NULL, 2, 11, '2025-03-14 04:07:10', '2025-03-22 12:57:49', '2025', 1, '60', 0, 'jhgh', 3),
+(13, '345', 'Saqib', '2025-03-17', 'Saqib', '2025-03-17', '0', '0', 'Rice', '2025-03-17', '78', '56', 14, 6, '0', '0', '0', '0', '0', '0', 'N/A', '0001', 14, 1, 4, NULL, NULL, 2, 5, '2025-03-17 04:24:41', '2025-03-17 04:27:49', '2025', 2, '60', 0, 'farwarded', 1),
+(14, '222', 'abbas ali shah', '2025-03-18', 'abbas ali shah', '2025-03-18', '0', '0', 'Maize', '2025-03-18', '333', '1222', 15, 77, '0', '0', '0', '0', '0', '0', 'N/A', '001888', 14, 2, 5, NULL, NULL, 1, 6, '2025-03-18 03:12:37', '2025-03-22 12:56:46', '2025', 1, '60', 0, 'hjh', 3),
+(15, '1112', 'Shahzeb Siddiq', '2025-03-18', 'Shahzeb Siddiq', '2025-03-18', '12', '12', 'Maize', '2025-03-18', '30', '20', 10, 2, '0', '0', '0', '0', '0', '0', 'N/A', '121212', 17, 16, 18, NULL, NULL, 2, 12, '2025-03-18 03:27:07', '2025-03-18 03:29:06', '2025', 1, '60', 0, 'All check no issue found', 1),
+(16, '1212', 'Shahzeb Siddiq', '2025-03-18', 'Shahzeb Siddiq', '2025-03-18', '0', '0', 'Maize', '2025-03-18', '22', '33', 15, 2, '0', '0', '0', '0', '0', '0', 'N/A', '121212', 17, 16, 18, NULL, NULL, 1, 12, '2025-03-18 03:28:04', '2025-03-22 12:39:56', '2025', 1, '60', 0, 'gulber', 1),
+(17, '345', 'hamza tanngi', '2025-03-22', 'hamza tanngi', '2025-03-22', '0', '0', 'Rice', '2025-03-22', '89', '899', 8, 49, '0', '0', '0', '0', '0', '0', 'N/A', '90', 24, 17, 17, NULL, NULL, 1, 11, '2025-03-21 20:30:04', '2025-03-21 20:30:04', '2025', 2, '60', 0, 'Survey Added', 0),
+(18, '78', 'mahnoor tangii', '2025-03-22', 'mahnoor tangii', '2025-03-22', '0', '0', 'Maize', '2025-03-22', '9', '989', 18, 49, '0', '0', '0', '0', '0', '0', 'N/A', '990', 24, 18, 17, NULL, NULL, 2, 11, '2025-03-21 20:31:04', '2025-03-21 20:31:04', '2025', 1, '60', 0, 'Survey Added', 0),
+(19, '222', 'Ghulam Shah s/o Ghandal Shahhh', '2025-03-22', 'Ghulam Shah s/o Ghandal Shahhh', '2025-03-22', '0', '0', 'Rice', '2025-03-22', '090', '70', 0, 8, '0', '0', '0', '0', '0', '0', 'N/A', '0018', 24, 19, 17, NULL, NULL, 2, 11, '2025-03-22 12:38:38', '2025-03-25 04:25:49', '2025', 2, '60', 0, 'gh', 3),
+(20, '123', 'Ghulam Shah s/o Ghandal Shahhh', '2025-03-22', 'Ghulam Shah s/o Ghandal Shahhh', '2025-03-22', '0', '0', 'Rice', '2025-03-22', '0', '0', 0, 0, '0', '0', '0', '0', '0', '0', 'N/A', '0018', 24, 19, 17, NULL, NULL, 2, 11, '2025-03-22 12:52:19', '2025-03-22 20:52:29', '2025', 2, '60', 0, 'tangi', 1),
+(21, '123', 'Ghulam Shah s/o Ghandal Shahhh', '2025-03-22', 'Ghulam Shah s/o Ghandal Shahhh', '2025-03-22', '0', '0', 'makie', '2025-03-22', '98', '78', 16, 8, '0', '0', '0', '0', '0', '0', 'N/A', '0018', 24, 19, 17, NULL, NULL, 2, 11, '2025-03-22 12:53:11', '2025-03-25 02:33:59', '2025', 3, '75', 0, 'far', 1),
+(22, '222', 'saifoorh', '2025-03-22', 'saifoorh', '2025-03-22', '0', '0', 'Rice', '2025-03-22', '0', '0', 0, 0, '0', '0', '0', '0', '0', '0', 'N/A', '001', 8, 20, 18, NULL, NULL, 2, 12, '2025-03-22 13:15:41', '2025-03-22 13:36:54', '2025', 2, '60', 0, 'hh', 3),
+(23, '1239', 'saifoorh', '2025-03-22', 'saifoorh', '2025-03-22', '0', '0', 'makie', '2025-03-22', '98', '78', 16, 8, '0', '0', '0', '0', '0', '0', 'N/A', '001', 8, 20, 18, NULL, NULL, 2, 12, '2025-03-22 13:16:15', '2025-03-22 13:37:04', '2025', 3, '75', 0, 'nn', 3),
+(24, '555', 'abbas ali shah', '2025-03-23', 'abbas ali shah', '2025-03-23', '0', '0', 'Rice', '2025-03-23', '0', '0', 0, 0, '0', '0', '0', '0', '0', '0', 'N/A', '001', 14, 4, 5, NULL, NULL, 1, 6, '2025-03-22 20:32:34', '2025-03-22 20:34:33', '2025', 2, '60', 0, 'h', 3),
+(25, '123', 'abbas ali shah', '2025-03-23', 'abbas ali shah', '2025-03-23', '0', '0', 'Maize', '2025-03-23', '0', '0', 0, 0, '0', '0', '0', '0', '0', '0', 'N/A', '001', 14, 4, 5, NULL, NULL, 2, 6, '2025-03-22 20:33:02', '2025-03-25 05:02:30', '2025', 1, '60', 0, 'b', 3),
+(26, '1234', 'abbas ali shah', '2025-03-23', 'abbas ali shah', '2025-03-23', '0', '0', 'Maize', '2025-03-23', '0', '0', 0, 0, '0', '0', '0', '0', '0', '0', 'N/A', '001888', 14, 2, 5, NULL, NULL, 1, 6, '2025-03-22 20:34:06', '2025-03-25 05:01:53', '2025', 1, '60', 0, 'h', 1),
+(27, '999', 'ammar', '2025-03-23', 'ammar', '2025-03-23', '0', '0', 'Rice', '2025-03-23', '0', '090', 10, 4, '0', '0', '0', '0', '0', '0', 'N/A', '0013', 25, 24, 21, NULL, NULL, 2, 14, '2025-03-22 20:47:42', '2025-03-22 20:51:09', '2025', 2, '60', 0, 'peshawar', 1),
+(28, '6', 'abbas ali shah', '2025-03-23', 'abbas ali shah', '2025-03-23', '0', '0', 'Rice', '2025-03-23', '055', '055', 10, 5, '0', '0', '0', '0', '0', '0', 'N/A', '0019', 25, 25, 21, NULL, NULL, 2, 14, '2025-03-22 20:50:19', '2025-03-25 04:18:37', '2025', 2, '60', 0, 'gj', 3),
+(29, '4343', 'abbas ali shah', '2025-03-23', 'abbas ali shah', '2025-03-23', '0', '0', 'Maize', '2025-03-23', '0', '0', 0, 0, '0', '0', '0', '0', '0', '0', 'N/A', '0019', 25, 25, 21, NULL, NULL, 2, 14, '2025-03-22 20:50:44', '2025-03-22 20:55:23', '2025', 1, '60', 0, 'hh', 3),
+(30, '222', 'abbas ali shah', '2025-03-23', 'abbas ali shah', '2025-03-23', '0', '0', 'Rice', '2025-03-23', '0', '90', 10, 4, '0', '0', '0', '0', '0', '0', 'N/A', '0019', 25, 25, 21, NULL, NULL, 2, 14, '2025-03-22 20:55:03', '2025-03-25 02:42:35', '2025', 2, '60', 0, 'g', 1),
+(31, '222', 'mardan', '2025-03-23', 'mardan', '2025-03-23', '0', '0', 'Rice', '2025-03-23', '0', '99', 19, 4, '0', '0', '0', '0', '0', '0', 'N/A', '899', 23, 26, 16, NULL, NULL, 2, 15, '2025-03-22 21:11:46', '2025-03-22 21:23:01', '2025', 2, '60', 0, 'hh', 3),
+(32, '22299', 'mardan', '2025-03-23', 'mardan', '2025-03-23', '0', '0', 'makie', '2025-03-23', '0', '9090', 10, 454, '0', '0', '0', '0', '0', '0', 'N/A', '899', 23, 26, 16, NULL, NULL, 2, 15, '2025-03-22 21:12:11', '2025-03-22 21:20:53', '2025', 3, '75', 0, 'h', 2),
+(33, '989', 'abbas ali shah mardan', '2025-03-23', 'abbas ali shah mardan', '2025-03-23', '0', '0', 'makie', '2025-03-23', '0', '98', 18, 4, '0', '0', '0', '0', '0', '0', 'N/A', '0019', 23, 27, 16, NULL, NULL, 2, 15, '2025-03-22 21:13:02', '2025-03-22 21:21:10', '2025', 3, '75', 0, 'h', 1),
+(34, '2228', 'saifoor mardan', '2025-03-23', 'saifoor mardan', '2025-03-23', '0', '0', 'Maize', '2025-03-23', '0', '99', 19, 4, '0', '0', '0', '0', '0', '0', 'N/A', '00198', 23, 28, 16, NULL, NULL, 2, 15, '2025-03-22 21:18:37', '2025-03-22 21:18:37', '2025', 1, '60', 0, 'Survey Added', 0),
+(35, '222', 'ammar', '2025-03-25', 'ammar', '2025-03-25', '0', '0', 'Maize', '2025-03-25', '678', '37', 15, 35, '0', '0', '0', '0', '0', '0', 'N/A', '0013', 25, 24, 21, NULL, NULL, 2, 14, '2025-03-25 04:10:00', '2025-03-25 04:17:16', '2025', 1, '60', 0, 'hayatabad', 3),
+(36, '123', 'ammar', '2025-03-25', 'ammar', '2025-03-25', '0', '0', 'Maize', '2025-03-25', '78', '676', 14, 37, '0', '0', '0', '0', '0', '0', 'N/A', '0013', 25, 24, 21, NULL, NULL, 2, 14, '2025-03-25 04:10:34', '2025-03-25 04:21:03', '2025', 1, '60', 0, 'farward', 3),
+(37, '77777777777777777', 'Saqib updated', '2025-04-16', 'Saqib updated', '2025-04-16', '0', '0', 'Rice', '2025-04-16', '11', '11', 2, 1, '0', '0', '0', '0', '0', '0', 'N/A', '0001', 14, 1, 4, NULL, NULL, 1, NULL, '2025-04-16 14:42:45', '2025-04-16 14:42:45', '2025', 2, '60', 0, 'Survey Added', 0),
+(38, '6666666666666666', 'Saqib updated', '2025-04-16', 'Saqib updated', '2025-04-16', '0', '0', 'Maize', '2025-04-16', '11', '11', 2, 1, '0', '0', '0', '0', '0', '0', 'N/A', '0001', 14, 1, 4, NULL, NULL, 2, 4, '2025-04-16 18:33:57', '2025-04-16 18:33:57', '2025', 1, '60', 0, 'Survey Added', 0),
+(39, '555555555555', 'Saqib updated', '2025-04-16', 'Saqib updated', '2025-04-16', '0', '0', 'Maize', '2025-04-16', '12', '11', 3, 1, '0', '0', '0', '0', '0', '0', 'N/A', '0001', 14, 1, 4, NULL, NULL, 1, 1, '2025-04-16 18:41:02', '2025-04-16 18:41:02', '2025', 1, '60', 0, 'Survey Added', 0),
+(40, '11111111111', 'Saqib updated', '2025-04-16', 'Saqib updated', '2025-04-16', '0', '0', 'Maize', '2025-04-16', '1', '1', 2, 0, '0', '0', '0', '0', '0', '0', 'N/A', '0001', 14, 1, 4, 1, NULL, 1, 4, '2025-04-16 18:44:57', '2025-04-16 18:44:57', '2025', 1, '60', 0, 'Survey Added', 0),
+(41, '11111111111111111111111111111111', 'Saqib updated', '2025-04-16', 'Saqib updated', '2025-04-16', '0', '0', 'Maize', '2025-04-16', '11', '1', 12, 0, '0', '0', '0', '0', '0', '0', 'N/A', '0001', 14, 1, 4, NULL, NULL, 1, 5, '2025-04-16 18:45:53', '2025-04-16 18:45:53', '2025', 1, '60', 0, 'Survey Added', 0),
+(42, '2222222222', 'Saqib updated', '2025-04-16', 'Saqib updated', '2025-04-16', '0', '0', 'Maize', '2025-04-16', '0', '0', 0, 0, '0', '0', '0', '0', '0', '0', 'N/A', '0001', 14, 1, 4, 1, 1, 1, 3, '2025-04-16 18:46:58', '2025-04-16 18:46:58', '2025', 1, '60', 0, 'Survey Added', 0);
 
 -- --------------------------------------------------------
 
@@ -221,7 +254,7 @@ INSERT INTO `cropsurveys` (`crop_survey_id`, `khasra_number`, `tenant_name`, `re
 
 CREATE TABLE `distributaries` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
   `canal_id` bigint(20) UNSIGNED DEFAULT NULL,
   `div_id` bigint(20) UNSIGNED DEFAULT NULL,
   `minor_id` bigint(20) UNSIGNED DEFAULT NULL,
@@ -239,13 +272,16 @@ CREATE TABLE `distributaries` (
 --
 
 INSERT INTO `distributaries` (`id`, `name`, `canal_id`, `div_id`, `minor_id`, `no_outlet`, `no_outlet_ls`, `no_outlet_rs`, `total_no_cca`, `total_no_discharge_cusic`, `created_at`, `updated_at`) VALUES
-(1, 'uzair', 3, 1, 2, 48, 40, 5, 6, 8, '2025-03-09 14:40:08', '2025-03-09 14:40:08'),
+(1, 'uzair', 3, 1, 1, 48, 40, 5, 6, 8, '2025-03-09 14:40:08', '2025-03-09 14:40:08'),
 (2, 'change dist', 3, 1, 1, 45, 40, 5, 6, 8, '2025-03-11 02:40:52', '2025-03-12 03:52:27'),
 (3, 'canal distri', 9, 1, 6, 45, 40, 500, 6, 800000, '2025-03-11 04:42:16', '2025-03-12 02:53:31'),
 (4, 'distributaray', 14, 1, 7, 45, 40, 5, 6, 8, '2025-03-13 05:20:17', '2025-03-13 05:20:17'),
 (5, 'minor dist', 14, 1, 7, 45, 20, 28, 3, 8, '2025-03-14 00:55:24', '2025-03-14 00:55:24'),
 (6, 'tangi dist', 17, 1, 9, 45, 40, 5, 6, 8, '2025-03-14 04:00:02', '2025-03-14 04:00:02'),
-(7, 'Disty Peshawar', 18, 1, 10, 2, 3, 3, 32, 323, '2025-03-18 03:23:42', '2025-03-18 03:23:42');
+(7, 'Disty Peshawar', 18, 1, 10, 2, 3, 3, 32, 323, '2025-03-18 03:23:42', '2025-03-18 03:23:42'),
+(8, 'distry hayatabad', 19, 1, 11, 48, 20, 5, 6, 22, '2025-03-20 03:30:27', '2025-03-20 03:30:27'),
+(9, 'distry hayat', 21, 1, 13, 48, 40, 5, 6, 22, '2025-03-22 20:43:18', '2025-03-22 20:43:18'),
+(10, 'distry mardan', 16, 2, 14, 4550, 40, 5, 6, 22, '2025-03-22 21:10:35', '2025-03-22 21:10:35');
 
 -- --------------------------------------------------------
 
@@ -255,7 +291,7 @@ INSERT INTO `distributaries` (`id`, `name`, `canal_id`, `div_id`, `minor_id`, `n
 
 CREATE TABLE `districts` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `div_id` bigint(20) UNSIGNED NOT NULL
@@ -291,7 +327,7 @@ INSERT INTO `districts` (`id`, `name`, `created_at`, `updated_at`, `div_id`) VAL
 
 CREATE TABLE `divisions` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `divsion_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `divsion_name` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -341,11 +377,11 @@ INSERT INTO `divisions` (`id`, `divsion_name`, `created_at`, `updated_at`) VALUE
 
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) NOT NULL,
+  `connection` text NOT NULL,
+  `queue` text NOT NULL,
+  `payload` longtext NOT NULL,
+  `exception` longtext NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -357,16 +393,16 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `farmers` (
   `farmer_id` bigint(20) UNSIGNED NOT NULL,
-  `serial_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `serial_number` varchar(255) NOT NULL,
   `registration_date` date NOT NULL,
-  `assessment_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `patwari_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `owner_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tenant_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cultivators_info` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `assessment_number` varchar(255) NOT NULL,
+  `patwari_name` varchar(255) NOT NULL,
+  `owner_name` varchar(255) NOT NULL,
+  `tenant_name` varchar(255) NOT NULL,
+  `cultivators_info` text NOT NULL,
   `marla` int(11) DEFAULT NULL,
   `kanal` int(11) DEFAULT NULL,
-  `previous_crop` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `previous_crop` varchar(255) NOT NULL,
   `snowing_date` date NOT NULL,
   `village_id` bigint(20) UNSIGNED NOT NULL,
   `division_id` bigint(20) UNSIGNED NOT NULL,
@@ -375,8 +411,8 @@ CREATE TABLE `farmers` (
   `canal_id` bigint(20) UNSIGNED NOT NULL,
   `crop_id` bigint(20) UNSIGNED NOT NULL,
   `outlet_id` bigint(20) UNSIGNED NOT NULL,
-  `water_outlet` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `plat_boundary_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `water_outlet` varchar(255) NOT NULL,
+  `plat_boundary_number` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -396,7 +432,7 @@ INSERT INTO `farmers` (`farmer_id`, `serial_number`, `registration_date`, `asses
 
 CREATE TABLE `halqa` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `halqa_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `halqa_name` varchar(255) NOT NULL,
   `tehsil_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -430,7 +466,9 @@ INSERT INTO `halqa` (`id`, `halqa_name`, `tehsil_id`, `created_at`, `updated_at`
 (24, 'halqa yyy', 19, '2024-12-19 04:45:05', '2024-12-19 04:45:05'),
 (25, 'pabbi', 8, '2025-03-13 05:15:55', '2025-03-13 05:15:55'),
 (26, 'mardan halqa', 21, '2025-03-14 03:11:28', '2025-03-14 03:11:28'),
-(27, 'tangi village', 22, '2025-03-14 03:54:31', '2025-03-14 03:54:31');
+(27, 'tangi village', 22, '2025-03-14 03:54:31', '2025-03-14 03:54:31'),
+(28, 'peshawar am', 23, '2025-03-20 03:08:29', '2025-03-20 03:08:29'),
+(29, 'halqa hayat', 23, '2025-03-20 03:54:49', '2025-03-20 03:54:49');
 
 -- --------------------------------------------------------
 
@@ -441,37 +479,57 @@ INSERT INTO `halqa` (`id`, `halqa_name`, `tehsil_id`, `created_at`, `updated_at`
 CREATE TABLE `irrigators` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `village_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `div_id` bigint(20) UNSIGNED DEFAULT NULL,
   `canal_id` int(11) DEFAULT NULL,
-  `irrigator_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `irrigator_khata_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `irrigator_f_name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `irrigator_mobile_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `irrigator_name` varchar(255) NOT NULL,
+  `irrigator_khata_number` varchar(255) NOT NULL,
+  `irrigator_f_name` varchar(100) DEFAULT NULL,
+  `irrigator_mobile_number` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `cnic` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `cnic` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `irrigators`
 --
 
-INSERT INTO `irrigators` (`id`, `village_id`, `canal_id`, `irrigator_name`, `irrigator_khata_number`, `irrigator_f_name`, `irrigator_mobile_number`, `created_at`, `updated_at`, `cnic`) VALUES
-(1, 14, 4, 'Saqib updated', '0001', 'Sher Ali Khan', '0000001', '2025-02-27 02:21:54', '2025-03-17 04:27:03', NULL),
-(2, 14, 5, 'abbas ali shah', '001888', 'dddd', '03331234', '2025-02-28 05:23:03', '2025-02-28 05:23:03', NULL),
-(3, 14, 5, 'abbas ali shah', '00155', 'ddd', '03331234', '2025-02-28 05:36:10', '2025-02-28 05:36:10', '17301-2181940-9'),
-(4, 14, 5, 'abbas ali shah', '001', 'mian', '212121', '2025-03-04 06:25:44', '2025-03-04 06:25:44', '1510191586243'),
-(5, 14, 5, 'mahnoor', '20202', 'arbab', '03331234', '2025-03-05 01:30:07', '2025-03-05 01:30:07', '17301-2181940-9'),
-(6, 14, 5, 'Ghulam Shah s/o Ghandal Shah', '55', '333', '03331234', '2025-03-05 01:30:28', '2025-03-05 01:30:28', '17301-2181940-9'),
-(7, 14, 4, 'abbas ali shah test', '79', 'test', '2323232', '2025-03-13 02:49:09', '2025-03-13 02:49:09', '1510191586243'),
-(8, 14, 4, 'hamza test2', '0013', 'test2', '03331234', '2025-03-13 02:49:36', '2025-03-13 02:49:36', '1510191586243'),
-(9, 21, 14, 'Ghulam Shah s/o Ghandal Shah', '8', 'sher', '03331234', '2025-03-13 03:49:22', '2025-03-13 03:49:22', '5678798809658'),
-(10, 21, 14, 'hamza', '001', 'sher', '03331234', '2025-03-13 04:13:57', '2025-03-13 04:13:57', '1730189401458'),
-(11, 21, 14, 'saifoor', '1', 'shah', '2323232', '2025-03-13 04:14:24', '2025-03-13 04:14:24', '1730189401458'),
-(12, 23, 16, 'abbas', '001', 'g', '03331234', '2025-03-14 03:13:59', '2025-03-14 03:13:59', '5678798809658'),
-(13, 24, 17, 'saifoor', '001', 'gg', '90765', '2025-03-14 04:01:01', '2025-03-14 04:01:01', '17301-2181940-9'),
-(14, 24, 17, 'Ghulam Shah s/o Ghandal Shah', '9', 'hh', 'hhh', '2025-03-14 04:01:17', '2025-03-14 04:01:17', '17301-2181940-9'),
-(15, 24, 17, 'Ghulam Shah s/o Ghandal Shah', '7', 'gg', '2323232', '2025-03-14 04:06:03', '2025-03-14 04:06:03', '5678798809658'),
-(16, 17, 18, 'Shahzeb Siddiq', '121212', 'Siddiq Jan', '03334740006', '2025-03-18 03:24:50', '2025-03-18 03:24:50', '17301123456789');
+INSERT INTO `irrigators` (`id`, `village_id`, `div_id`, `canal_id`, `irrigator_name`, `irrigator_khata_number`, `irrigator_f_name`, `irrigator_mobile_number`, `created_at`, `updated_at`, `cnic`) VALUES
+(1, 14, NULL, 4, 'Saqib updated', '0001', 'Sher Ali Khan', '0000001', '2025-02-27 02:21:54', '2025-03-17 04:27:03', NULL),
+(2, 14, NULL, 5, 'abbas ali shah', '001888', 'dddd', '03331234', '2025-02-28 05:23:03', '2025-02-28 05:23:03', NULL),
+(3, 14, NULL, 5, 'abbas ali shah', '00155', 'ddd', '03331234', '2025-02-28 05:36:10', '2025-02-28 05:36:10', '17301-2181940-9'),
+(4, 14, NULL, 5, 'abbas ali shah', '001', 'mian', '212121', '2025-03-04 06:25:44', '2025-03-04 06:25:44', '1510191586243'),
+(5, 14, NULL, 5, 'mahnoor', '20202', 'arbab', '03331234', '2025-03-05 01:30:07', '2025-03-05 01:30:07', '17301-2181940-9'),
+(6, 14, NULL, 5, 'Ghulam Shah s/o Ghandal Shah', '55', '333', '03331234', '2025-03-05 01:30:28', '2025-03-05 01:30:28', '17301-2181940-9'),
+(7, 14, NULL, 4, 'abbas ali shah test', '79', 'test', '2323232', '2025-03-13 02:49:09', '2025-03-13 02:49:09', '1510191586243'),
+(8, 14, NULL, 4, 'hamza test2', '0013', 'test2', '03331234', '2025-03-13 02:49:36', '2025-03-13 02:49:36', '1510191586243'),
+(9, 21, NULL, 14, 'Ghulam Shah s/o Ghandal Shah', '8', 'sher', '03331234', '2025-03-13 03:49:22', '2025-03-13 03:49:22', '5678798809658'),
+(10, 21, NULL, 14, 'hamza', '001', 'sher', '03331234', '2025-03-13 04:13:57', '2025-03-13 04:13:57', '1730189401458'),
+(11, 21, NULL, 14, 'saifoor', '1', 'shah', '2323232', '2025-03-13 04:14:24', '2025-03-13 04:14:24', '1730189401458'),
+(12, 23, NULL, 16, 'abbas', '001', 'g', '03331234', '2025-03-14 03:13:59', '2025-03-14 03:13:59', '5678798809658'),
+(13, 24, NULL, 17, 'saifoor', '001', 'gg', '90765', '2025-03-14 04:01:01', '2025-03-14 04:01:01', '17301-2181940-9'),
+(14, 24, NULL, 17, 'Ghulam Shah s/o Ghandal Shah', '9', 'hh', 'hhh', '2025-03-14 04:01:17', '2025-03-14 04:01:17', '17301-2181940-9'),
+(15, 24, NULL, 17, 'Ghulam Shah s/o Ghandal Shah', '7', 'gg', '2323232', '2025-03-14 04:06:03', '2025-03-14 04:06:03', '5678798809658'),
+(16, 17, NULL, 18, 'Shahzeb Siddiq', '121212', 'Siddiq Jan', '03334740006', '2025-03-18 03:24:50', '2025-03-18 03:24:50', '17301123456789'),
+(17, 24, NULL, 17, 'hamza tanngi', '90', 'tangi', '212121998', '2025-03-21 20:27:32', '2025-03-21 20:27:32', '56787988096800'),
+(18, 24, NULL, 17, 'mahnoor tangii', '990', 'tangi yasir', '2323232989', '2025-03-21 20:28:10', '2025-03-21 20:28:10', '567879880968098'),
+(19, 24, NULL, 17, 'Ghulam Shah s/o Ghandal Shahhh', '0018', 's/o Ghandal Shahhh', '0333123488', '2025-03-22 12:37:39', '2025-03-22 12:37:39', '1720206497816887'),
+(20, 8, NULL, 18, 'saifoorh', '001', 'shg', '03331234', '2025-03-22 13:14:15', '2025-03-22 13:14:15', '56787988096589'),
+(21, 8, NULL, 18, 'saifoorh', '00190', 'hjh', '0333123498', '2025-03-22 13:15:02', '2025-03-22 13:15:02', '567879880965098'),
+(22, 25, NULL, 21, 'ammar', '001', 'sdd', '232323255', '2025-03-22 20:37:00', '2025-03-22 20:37:00', '17301894014544'),
+(23, 25, NULL, 21, 'babr ali', '0014', 'dfd', '03331234', '2025-03-22 20:37:33', '2025-03-22 20:37:33', '1730189401454'),
+(24, 25, NULL, 21, 'ammar', '0013', 'dd', '03331234', '2025-03-22 20:45:50', '2025-03-22 20:45:50', '567879880965'),
+(26, 23, NULL, 16, 'mardan', '899', '887', '989', '2025-03-22 21:07:46', '2025-03-22 21:07:46', '172020649700'),
+(27, 23, NULL, 16, 'abbas ali shah mardan', '0019', 'shah', '03331234', '2025-03-22 21:08:13', '2025-03-22 21:08:13', '172020649709'),
+(28, 23, NULL, 16, 'saifoor mardan', '00198', 'shah', '232323288', '2025-03-22 21:08:40', '2025-03-22 21:08:40', '1720206497065'),
+(29, 14, NULL, 16, 'mahnoor', '80', 'hjjh', '2323232990', '2025-03-28 13:44:42', '2025-03-28 13:44:42', '17301894085'),
+(30, 14, 1, 12, 'Ghulam Shah s/o Ghandal Shah', '98979', 'jgjgjgj', '03331234', '2025-03-28 13:53:58', '2025-03-28 13:53:58', '1730189478-00'),
+(31, 15, 2, 11, 'mahnoork', '00100', 'jjhhjj', '0333123409', '2025-03-29 13:05:52', '2025-03-29 13:05:52', '1730189409'),
+(32, 21, 1, 9, 'abbas ali shahtestjj', '7', 'hjh', '03331234', '2025-03-29 13:13:03', '2025-03-29 13:13:03', '1730189468'),
+(33, 21, 1, 10, 'abbas ali shah new', '00190', 'hjhhjh', '03331234009', '2025-03-29 13:15:49', '2025-03-29 13:15:49', '15101074378'),
+(34, 26, 1, 15, 'mahnoor new', '00100', 'hgjhjh', '033312340', '2025-03-29 13:28:20', '2025-03-29 13:28:20', '1739096546'),
+(35, 14, 1, 17, 'abbas ali shah', '00100', 'hhhh', '999', '2025-04-01 12:07:48', '2025-04-01 12:07:48', '151019158628987'),
+(36, 14, 1, 20, 'changed', '988', 'ggh', '97979', '2025-04-01 12:13:29', '2025-04-01 12:23:18', '1510191586897');
 
 -- --------------------------------------------------------
 
@@ -481,7 +539,7 @@ INSERT INTO `irrigators` (`id`, `village_id`, `canal_id`, `irrigator_name`, `irr
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -540,7 +598,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (54, '2025_03_10_042831_add_columns_to_outlets_table', 43),
 (56, '2025_03_19_074347_create_reviews_table', 44),
 (58, '2025_03_10_044908_add_columns_to_outlets_table', 45),
-(59, '2025_03_19_093616_create_review_table', 45);
+(59, '2025_03_19_093616_create_review_table', 45),
+(60, '2025_03_20_044051_add_columns_to_users_table', 46),
+(61, '2025_03_28_183443_add_div_id_to_irrigators_table', 47);
 
 -- --------------------------------------------------------
 
@@ -550,7 +610,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `minorcanals` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `minor_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `minor_name` varchar(255) NOT NULL,
   `canal_id` bigint(20) UNSIGNED DEFAULT NULL,
   `div_id` bigint(20) UNSIGNED DEFAULT NULL,
   `no_outlet` int(11) DEFAULT NULL,
@@ -567,7 +627,7 @@ CREATE TABLE `minorcanals` (
 --
 
 INSERT INTO `minorcanals` (`id`, `minor_name`, `canal_id`, `div_id`, `no_outlet`, `no_outlet_ls`, `no_outlet_rs`, `total_no_cca`, `total_no_discharge_cusic`, `created_at`, `updated_at`) VALUES
-(1, 'canal', 5, 1, 45, 40, 5, 6, 8, '2025-03-08 01:07:33', '2025-03-08 01:07:33'),
+(1, 'canal', 4, 1, 45, 40, 5, 6, 8, '2025-03-08 01:07:33', '2025-03-08 01:07:33'),
 (2, 'change', 5, 1, 48, 40, 8, 6, 8, '2025-03-08 01:09:00', '2025-03-12 00:54:46'),
 (3, 'canal', 5, 1, 45, 20, 28, 6, 8, '2025-03-08 01:10:11', '2025-03-08 01:10:11'),
 (4, 'canal', 2, 1, 45, 4000, 5, 6, 8, '2025-03-09 14:21:01', '2025-03-12 05:04:45'),
@@ -576,7 +636,11 @@ INSERT INTO `minorcanals` (`id`, `minor_name`, `canal_id`, `div_id`, `no_outlet`
 (7, 'canal minor', 14, 1, 45, 40, 5, 6, 8, '2025-03-13 05:19:35', '2025-03-13 05:19:35'),
 (8, 'minor amankot', 15, 1, 45, 45, 28, 3, 8, '2025-03-14 00:54:22', '2025-03-14 00:54:22'),
 (9, 'tangi canal', 17, 1, 45, 40, 8, 6, 3, '2025-03-14 03:59:22', '2025-03-14 03:59:22'),
-(10, 'Minor Peshawar', 18, 1, 2, 3, 3, 32, 32, '2025-03-18 03:21:17', '2025-03-18 03:22:15');
+(10, 'Minor Peshawar', 18, 1, 2, 3, 3, 32, 32, '2025-03-18 03:21:17', '2025-03-18 03:22:15'),
+(11, 'minor hayatabad', 19, 1, 45, 40, 5, 3, 8, '2025-03-20 03:29:49', '2025-03-20 03:29:49'),
+(12, 'minor hayatabad', 19, 1, 45, 40, 8, 6, 3, '2025-03-20 03:31:36', '2025-03-20 03:31:36'),
+(13, 'minor am', 21, 1, 45, 40, 5, 6, 8, '2025-03-22 20:40:14', '2025-03-22 20:40:14'),
+(14, 'minor mardan', 16, 2, 45, 40, 8, 6, 8, '2025-03-22 21:10:01', '2025-03-22 21:10:01');
 
 -- --------------------------------------------------------
 
@@ -586,7 +650,7 @@ INSERT INTO `minorcanals` (`id`, `minor_name`, `canal_id`, `div_id`, `no_outlet`
 
 CREATE TABLE `outlets` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `outlet_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `outlet_name` varchar(255) NOT NULL,
   `canal_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -606,7 +670,7 @@ INSERT INTO `outlets` (`id`, `outlet_name`, `canal_id`, `created_at`, `updated_a
 (1, 'peshawar', 2, '2024-12-19 02:54:46', '2024-12-19 02:54:46', NULL, NULL, 1, NULL, NULL, NULL),
 (2, 'peshawar', 2, '2024-12-20 04:34:17', '2024-12-20 04:34:17', NULL, NULL, 1, NULL, NULL, NULL),
 (3, 'swta', 1, '2024-12-20 04:36:39', '2024-12-20 04:36:39', NULL, NULL, 1, NULL, NULL, NULL),
-(4, 'Khan', 3, '2025-01-14 04:26:58', '2025-01-14 04:26:58', NULL, NULL, 1, NULL, NULL, NULL),
+(4, 'Khan', 3, '2025-01-14 04:26:58', '2025-01-14 04:26:58', NULL, 1, 1, NULL, NULL, NULL),
 (5, 'Outlet-1', 4, '2025-01-20 03:03:51', '2025-01-20 03:03:51', NULL, NULL, 1, NULL, NULL, NULL),
 (6, 'Outlet-01', 5, '2025-01-20 03:04:05', '2025-01-20 03:04:05', NULL, NULL, 1, NULL, NULL, NULL),
 (7, 'peshawar', 2, '2025-03-10 02:55:21', '2025-03-10 02:55:21', 1, 2, 1, 88, 8, 6),
@@ -614,7 +678,10 @@ INSERT INTO `outlets` (`id`, `outlet_name`, `canal_id`, `created_at`, `updated_a
 (9, 'peshawar', 9, '2025-03-11 04:44:19', '2025-03-11 04:44:19', 1, 6, 3, 777, 3, 6),
 (10, 'peshawar', 14, '2025-03-14 00:56:01', '2025-03-14 00:56:01', 1, 7, 5, 0, 8, 6),
 (11, 'tangi outlet', 17, '2025-03-14 04:05:16', '2025-03-14 04:05:16', 1, 9, 6, 33, 8, 6),
-(12, 'Outlet Peshawar', 18, '2025-03-18 03:25:48', '2025-03-18 03:25:48', 1, 10, 7, 32, 32, 2);
+(12, 'Outlet Peshawar', 18, '2025-03-18 03:25:48', '2025-03-18 03:25:48', 1, 10, 7, 32, 32, 2),
+(13, 'hayatbad outlet', 19, '2025-03-20 03:48:31', '2025-03-20 03:48:31', 1, 11, 8, 88, 8, 6),
+(14, 'peshawar hay outlet', 21, '2025-03-22 20:44:08', '2025-03-22 20:44:08', 1, 13, 9, 88, 8, 6),
+(15, 'mardan outlet', 16, '2025-03-22 21:11:12', '2025-03-22 21:11:12', 2, 14, 10, 88, 3, 6);
 
 -- --------------------------------------------------------
 
@@ -623,8 +690,8 @@ INSERT INTO `outlets` (`id`, `outlet_name`, `canal_id`, `created_at`, `updated_a
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -636,8 +703,8 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `patwari` (
   `patwari_id` bigint(20) UNSIGNED NOT NULL,
-  `patwari_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `patwari_cnic` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `patwari_name` varchar(255) NOT NULL,
+  `patwari_cnic` varchar(255) NOT NULL,
   `halqa_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -651,7 +718,7 @@ CREATE TABLE `patwari` (
 
 CREATE TABLE `permissions` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -679,11 +746,11 @@ INSERT INTO `permissions` (`id`, `name`, `created_at`, `updated_at`) VALUES
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_type` varchar(255) NOT NULL,
   `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `abilities` text DEFAULT NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -708,7 +775,7 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 
 CREATE TABLE `review` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `review_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `review_name` varchar(255) NOT NULL,
   `servey_id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -723,7 +790,7 @@ CREATE TABLE `review` (
 
 CREATE TABLE `roles` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -747,7 +814,7 @@ INSERT INTO `roles` (`id`, `name`, `created_at`, `updated_at`) VALUES
 
 CREATE TABLE `tehsils` (
   `tehsil_id` bigint(20) UNSIGNED NOT NULL,
-  `tehsil_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tehsil_name` varchar(255) NOT NULL,
   `district_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -779,7 +846,8 @@ INSERT INTO `tehsils` (`tehsil_id`, `tehsil_name`, `district_id`, `created_at`, 
 (19, 'chota lohor', 5, '2024-12-18 00:25:16', '2024-12-18 00:25:16'),
 (20, 'bb', 5, '2025-02-22 01:37:56', '2025-02-22 01:37:56'),
 (21, 'mardan tehsil', 6, '2025-03-14 03:11:03', '2025-03-14 03:11:03'),
-(22, 'tangii', 1, '2025-03-14 03:54:03', '2025-03-14 03:54:03');
+(22, 'tangii', 1, '2025-03-14 03:54:03', '2025-03-14 03:54:03'),
+(23, 'peshawar tehsil am', 7, '2025-03-20 03:07:51', '2025-03-20 03:07:51');
 
 -- --------------------------------------------------------
 
@@ -789,33 +857,40 @@ INSERT INTO `tehsils` (`tehsil_id`, `tehsil_name`, `district_id`, `created_at`, 
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `div_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `district_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `tehsil_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `halqa_id` bigint(20) UNSIGNED DEFAULT 0,
   `role_id` bigint(20) UNSIGNED NOT NULL,
-  `phone_number` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `phone_number` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `halqa_id`, `role_id`, `phone_number`) VALUES
-(1, 'Patwari', 'patwari@gmail.com', NULL, '$2y$10$PT10r7qjSD5AquLackEBsOSJJU4tEw6oSyvonU0i6ARbsPG6A3Dl.', NULL, '2024-12-15 08:48:27', '2024-12-15 08:48:27', 7, 12, '95468998'),
-(12, 'Admin', 'admin@gmail.com', NULL, '$2y$10$PT10r7qjSD5AquLackEBsOSJJU4tEw6oSyvonU0i6ARbsPG6A3Dl.', NULL, '2024-12-17 04:09:58', '2024-12-17 04:09:58', 0, 1, '03171443929'),
-(18, 'Zilladar', 'zilladar@gmail.com', NULL, '$2y$10$PT10r7qjSD5AquLackEBsOSJJU4tEw6oSyvonU0i6ARbsPG6A3Dl.', NULL, '2025-01-08 13:08:21', '2025-01-08 13:08:21', 7, 15, '03339163563'),
-(20, 'Deputy Collector', 'collector@gmail.com', NULL, '$2y$10$PT10r7qjSD5AquLackEBsOSJJU4tEw6oSyvonU0i6ARbsPG6A3Dl.', NULL, '2025-01-13 11:39:55', '2025-01-13 11:39:55', 7, 16, '12345'),
-(21, 'XEN', 'xen@gmail.com', NULL, '$2y$10$PT10r7qjSD5AquLackEBsOSJJU4tEw6oSyvonU0i6ARbsPG6A3Dl.', NULL, '2025-01-13 13:24:27', '2025-01-13 13:24:27', 7, 17, '234123'),
-(29, 'saqibPatwari', 'saqibpatwari@gmail.com', NULL, '$2y$10$vyBz9heLyrphK0hgbSwY1O3izU8Bplovs0srH.lNDmV98t62RiHfa', NULL, '2025-03-13 03:38:41', '2025-03-13 03:38:41', 10, 12, '88888'),
-(30, 'abspatwari', 'abs@gmail.com', NULL, '$2y$10$xoAQcodmyzY1Djerh4nuQem38cLw13YZnPWakvaELnMkaANkZmeym', NULL, '2025-03-13 05:23:17', '2025-03-13 05:23:17', 25, 12, '88888'),
-(32, 'test xen', 'testxen@email.com', NULL, '$2y$10$fQJI3LhpnCeaBnSESFpASOp6Zo7UW3yJS5bC7DStj7Cnu1XQO3.vW', NULL, '2025-03-17 02:41:29', '2025-03-17 02:41:29', NULL, 17, '88888'),
-(33, 'testxen', 'textxen@email.com', NULL, '$2y$10$OqPxlqWdeLKh/u69L.XWc..KUOK.Fb1YHR1f6uKWrJ/Nl0sqmS91y', NULL, '2025-03-17 03:01:52', '2025-03-17 03:01:52', 0, 17, '8888888'),
-(34, 'collector', 'collector123@email.com', NULL, '$2y$10$tZhswqrpDRVofWn7WnIQbu61OM/N4GzfIXe0/0Sy0qBhoR/S0XGpC', NULL, '2025-03-17 03:21:05', '2025-03-17 03:21:05', NULL, 16, '8888899');
+INSERT INTO `users` (`id`, `div_id`, `district_id`, `tehsil_id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `halqa_id`, `role_id`, `phone_number`) VALUES
+(1, NULL, NULL, NULL, 'Patwari', 'patwari@gmail.com', NULL, '$2y$10$PT10r7qjSD5AquLackEBsOSJJU4tEw6oSyvonU0i6ARbsPG6A3Dl.', NULL, '2024-12-15 08:48:27', '2025-03-21 14:50:02', 7, 12, '95468998'),
+(12, NULL, NULL, NULL, 'Admin', 'admin@gmail.com', NULL, '$2y$10$PT10r7qjSD5AquLackEBsOSJJU4tEw6oSyvonU0i6ARbsPG6A3Dl.', NULL, '2024-12-17 04:09:58', '2024-12-17 04:09:58', 0, 1, '03171443929'),
+(18, NULL, 1, 22, 'Zilladar', 'zilladar@gmail.com', NULL, '$2y$10$PT10r7qjSD5AquLackEBsOSJJU4tEw6oSyvonU0i6ARbsPG6A3Dl.', NULL, '2025-01-08 13:08:21', '2025-01-08 13:08:21', 7, 15, '03339163563'),
+(20, NULL, 1, NULL, 'Deputy Collector', 'collector@gmail.com', NULL, '$2y$10$PT10r7qjSD5AquLackEBsOSJJU4tEw6oSyvonU0i6ARbsPG6A3Dl.', NULL, '2025-01-13 11:39:55', '2025-01-13 11:39:55', 7, 16, '12345'),
+(21, 1, NULL, NULL, 'XEN', 'xen@gmail.com', NULL, '$2y$10$PT10r7qjSD5AquLackEBsOSJJU4tEw6oSyvonU0i6ARbsPG6A3Dl.', NULL, '2025-01-13 13:24:27', '2025-01-13 13:24:27', 7, 17, '234123'),
+(34, NULL, NULL, NULL, 'collector', 'collector123@email.com', NULL, '$2y$10$tZhswqrpDRVofWn7WnIQbu61OM/N4GzfIXe0/0Sy0qBhoR/S0XGpC', NULL, '2025-03-17 03:21:05', '2025-03-17 03:21:05', NULL, 16, '8888899'),
+(36, 1, 1, NULL, 'test6', 'abbastest@email.com', NULL, '$2y$10$6fLUuUitmppJ5/LovU61bOZDurrtsQqZAU7osSCJyt0DIKCvb85re', NULL, '2025-03-20 00:07:17', '2025-03-20 00:07:17', NULL, 15, '88888'),
+(37, NULL, NULL, NULL, 'test4', 'mianabb@gmail.com', NULL, '$2y$10$j80ZY52psM0QztXhM9hSGeSU8gHZUIVtDz1uANBddb81Ffaruwl6e', NULL, '2025-03-20 00:41:39', '2025-03-20 00:41:39', NULL, 1, '8888888'),
+(38, NULL, NULL, NULL, 'abbas', 'mianabbas@gmail.com', NULL, '$2y$10$Me0JDrEHOJQp9cFC/kEhTuFti/MOMZ2rxMN4l8ZuK1Ba4qi/Iu77.', NULL, '2025-03-20 00:44:22', '2025-03-20 00:44:22', NULL, 16, '88888'),
+(40, NULL, 7, 23, 'ammar', 'ammar@gmail.com', NULL, '$2y$10$psbC9pnZBKWHTTYLmX9fUufy2o2VfOYLgVVavwyvYKBTFZO/X/SJK', NULL, '2025-03-20 04:17:48', '2025-03-20 04:17:48', 28, 12, NULL),
+(41, NULL, NULL, NULL, 'shahzeb khan', 'shah.admin@gmail.com', NULL, '$2y$10$sQ7r9rKE6M9ihvIQX5OzlOiRZsQoUQu.M456H.LBJzpy7dh6/nOJ.', NULL, '2025-03-20 05:33:10', '2025-03-20 05:33:10', NULL, 1, '03333333'),
+(42, NULL, 6, 21, 'patwari mardan', 'patwari.mardan@gmail.com', NULL, '$2y$10$XoecZRC.aNQffWWbvQGqAOnzxqyFXFUsgLpaikvmAO0bRdOhNIkEm', NULL, '2025-03-20 05:34:42', '2025-03-20 05:34:42', 26, 12, '033333'),
+(43, NULL, 3, 14, 'shah test', 'shah.test@gmail.com', NULL, '$2y$10$2pe5Bld2wpByhKt3OcQzf.SKxwwOM5jIwgYaK2YeGeNf5N7JtMRMK', NULL, '2025-03-20 05:38:08', '2025-03-20 05:38:08', 12, 12, '03333333'),
+(44, NULL, 3, NULL, 'zilladar mohmand', 'zilladar.mohmand@gmail.com', NULL, '$2y$10$DsQuv5xRT.hTYz0wqsyRS.AJ7pW8/8dFD1KZUWEU6nYXuJmodBTPi', NULL, '2025-03-20 05:41:46', '2025-03-20 05:41:46', NULL, 15, '0333333');
 
 -- --------------------------------------------------------
 
@@ -826,7 +901,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 CREATE TABLE `villages` (
   `village_id` bigint(20) UNSIGNED NOT NULL,
   `halqa_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `village_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `village_name` varchar(255) NOT NULL,
   `tehsil_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -860,7 +935,9 @@ INSERT INTO `villages` (`village_id`, `halqa_id`, `village_name`, `tehsil_id`, `
 (21, 10, 'Amankot', 7, '2025-03-13 03:44:46', '2025-03-13 03:44:46'),
 (22, 10, 'kang', 8, '2025-03-13 05:27:04', '2025-03-13 05:27:04'),
 (23, 26, 'mardan village', 21, '2025-03-14 03:12:18', '2025-03-14 03:12:18'),
-(24, 27, 'tangii v', 22, '2025-03-14 03:55:23', '2025-03-14 03:55:23');
+(24, 27, 'tangii v', 22, '2025-03-14 03:55:23', '2025-03-14 03:55:23'),
+(25, 28, 'hayatabad am', 23, '2025-03-20 03:10:30', '2025-03-20 03:10:30'),
+(26, 12, 'village mohmand', 14, '2025-03-20 05:39:29', '2025-03-20 05:39:29');
 
 --
 -- Indexes for dumped tables
@@ -1046,7 +1123,7 @@ ALTER TABLE `assign_roles`
 -- AUTO_INCREMENT for table `canals`
 --
 ALTER TABLE `canals`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `cropprices`
@@ -1064,13 +1141,13 @@ ALTER TABLE `crops`
 -- AUTO_INCREMENT for table `cropsurveys`
 --
 ALTER TABLE `cropsurveys`
-  MODIFY `crop_survey_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `crop_survey_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `distributaries`
 --
 ALTER TABLE `distributaries`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `districts`
@@ -1100,31 +1177,31 @@ ALTER TABLE `farmers`
 -- AUTO_INCREMENT for table `halqa`
 --
 ALTER TABLE `halqa`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `irrigators`
 --
 ALTER TABLE `irrigators`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `minorcanals`
 --
 ALTER TABLE `minorcanals`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `outlets`
 --
 ALTER TABLE `outlets`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `patwari`
@@ -1160,19 +1237,19 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `tehsils`
 --
 ALTER TABLE `tehsils`
-  MODIFY `tehsil_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `tehsil_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `villages`
 --
 ALTER TABLE `villages`
-  MODIFY `village_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `village_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- Constraints for dumped tables

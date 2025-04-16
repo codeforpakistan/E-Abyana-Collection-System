@@ -132,8 +132,9 @@
 
 <?php $__env->stopSection(); ?>
 
-<?php $__env->startPush('scripts'); ?>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <script>
         function get_districts(element) {
             var divisionId = element.value;
@@ -158,6 +159,5 @@
             }
         }
     </script>
-<?php $__env->stopPush(); ?>
 
 <?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\durshal_cfp\abyana\resources\views/RegionManagments/AddTahsil.blade.php ENDPATH**/ ?>
