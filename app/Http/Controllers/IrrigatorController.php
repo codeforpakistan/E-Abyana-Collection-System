@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Irrigator;
 use Illuminate\Http\Request;
-use App\Models\Village;
+use App\Models\village;
 use App\Models\Outlet;
 use App\Models\Tehsil;
 use App\Models\District;
@@ -53,10 +53,10 @@ class IrrigatorController extends Controller
         $Irrigators = $query->paginate(6); // Show 10 records per page
     
         if ($halqa_id > 0) {
-            $villages = Village::where('halqa_id', '=', $halqa_id)->get();
+            $villages = village::where('halqa_id', '=', $halqa_id)->get();
             $Halqas = Halqa::where('id', '=', $halqa_id)->get();
         } else {
-            $villages = Village::all();
+            $villages = village::all();
             $Halqas = Halqa::all();
         }
     
@@ -152,7 +152,7 @@ public function Halqa($tehsilId)
 public function Village($halqaId)
 {
     // Fetch villages related to the Halqa ID
-    $villages = Village::where('halqa_id', $halqaId)->get(['village_id', 'village_name']);
+    $villages = village::where('halqa_id', $halqaId)->get(['village_id', 'village_name']);
 
     // Return the response as JSON
     return response()->json($villages);
@@ -204,7 +204,7 @@ public function destroy($id)
 public function editIrrigator($id)
 {
     $irrigator = Irrigator::findOrFail($id); // Fetch the exam by ID
-    $villages = Village::all();       // Fetch all levels for the dropdown
+    $villages = village::all();       // Fetch all levels for the dropdown
     return view('edit-irrigator', compact('irrigator', 'villages'));
 }
 public function update(Request $request, $id)

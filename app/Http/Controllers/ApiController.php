@@ -500,7 +500,7 @@ public function getHalqaData()
 
     public function getVillagesWithTehsil()
     {
-        $villages = Village::with('halqa')->get();
+        $villages = village::with('halqa')->get();
 
        
         return response()->json($villages);
@@ -523,7 +523,7 @@ public function getHalqaData()
     
         try {
             // Create the village
-            $village = Village::create([
+            $village = village::create([
                 'village_name' => $validatedData['village_name'],
         
                 'halqa_id' => $validatedData['halqa_id'],

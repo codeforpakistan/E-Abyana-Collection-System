@@ -22,7 +22,7 @@ class FarmerLandRecord extends Controller
 {public function LandRecord($id, $abs, $village_id, $canal_id, $div_id, Request $request)
 
     {
-        $villages = Village::find($village_id);
+        $villages = village::find($village_id);
 
         if (!$villages) {
             return redirect()->back()->withErrors(['error' => 'Village not found']);
