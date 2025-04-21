@@ -7,8 +7,8 @@
             onsubmit="return confirm('Are you sure?');" style="display: inline;">
             <?php echo csrf_field(); ?>
             <?php echo method_field('DELETE'); ?>
-            <button class="btn btn-sm btn-primary badge rounded-pill" type="submit">
-                <i class="fa fa-trash"></i>
+            <button class="btn btn-sm btn-primary" type="submit">
+                <i class="fa fa-trash"></i> Delete
             </button>
         </form>
     </td>

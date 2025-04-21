@@ -55,41 +55,45 @@
                             @foreach ($irrigator_surveys as $survey)
                                 <tr>
                                     <td>{{ $survey->village_name }}</td>
-                                    {{-- <td>{{ $survey->cultivators_info }}</td>
+                                    <td>{{ $survey->crop_name }}</td>
                                     <td>{{ $survey->final_crop }}</td>
-                                    <td>{{ $survey->crop_price }}</td> --}}
+                                    <td>{{ $survey->crop_price }}</td>
                                     <td>{{ $survey->date }}</td>
-                                    {{-- <td>{{ $survey->length }}</td>
-                                    <td>{{ $survey->width }}</td>
-                                    <td>{{ $survey->area_marla }}</td>
-                                    <td>{{ $survey->area_kanal }}</td> --}}
+                                    {{-- <td>
+                          
+                                        <strong>{{ $survey->water_source_type }}</strong><br>
+                                        @if ($survey->canal_name) Canal: {{ $survey->canal_name }}<br> @endif
+                                        @if ($survey->minor_name) Minor: {{ $survey->minor_name }}<br> @endif
+                                        @if ($survey->distributary_name) Distributary: {{ $survey->distributary_name }} @endif
+                                    </td> --}}
                                     <td class="align-middle text-center">
                                         <a href="{{ url('survey/view') }}/{{$survey->crop_survey_id}}">
                                             <button class="btn btn-success btn-sm" title="View"><i class="fa fa-eye"></i></button>
                                         </a>
-                                      <!--  <a href="{{url('survey_bill/view')}}/{{$survey->irrigator_id}}"><button class="btn btn-primary btn-sm" title="Bill"><i class="fa fa-print"></i></button></a> -->
-                                      @if (session('role_id')==1)
-                                      <form
-                                            action="{{ route('landservey.destroy', $survey->crop_survey_id) }}"
-                                            method="POST"
-                                            onsubmit="return confirm('Are you sure you want to delete this irrigator?');"
-                                            style="display: inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-danger btn-sm" title="Delete"><i class="fa fa-trash"></i></button>
-                                        </form>
+                                        
+                                        @if (session('role_id') == 1)
+                                            <form action="{{ route('landservey.destroy', $survey->crop_survey_id) }}"
+                                                  method="POST"
+                                                  onsubmit="return confirm('Are you sure you want to delete this irrigator?');"
+                                                  style="display: inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-danger btn-sm" title="Delete"><i class="fa fa-trash"></i></button>
+                                            </form>
                                         @endif
+                        
                                         <a href="{{ url('survey/patwari/forward') }}/{{$survey->crop_survey_id}}">
                                             <button class="btn btn-warning btn-sm" title="Forward"><i class="fa fa-arrow-right"></i></button>
                                         </a>
+                        
                                         <a href="{{ route('edit.survey', $survey->crop_survey_id) }}" class="btn btn-sm btn-primary">
                                             <i class="fa fa-edit"></i> Edit
-                                        </a> 
-                                        
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
+                        
                     </table>
                 </td>
             </tr>

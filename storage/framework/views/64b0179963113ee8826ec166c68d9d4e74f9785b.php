@@ -1,119 +1,102 @@
 <?php $__env->startSection('content'); ?>
 <div class="app-content">
-					<section class="section">
+    <section class="section">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-					    <!--page-header open-->
-						<div class="page-header pt-0">
-							<h4 class="page-title" style="color:#4880FF;">Dashboard</h4>
-							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a href="#" class="" style="color:#4880FF;">Home / Dashboard</a></li>
-							</ol>
-						</div>
-						<!--page-header closed-->
+        <!-- Page Header -->
+        <div class="page-header pt-0 mb-4">
+            <h4 class="page-title text-primary">Dashboard</h4>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#" class="text-primary">Home / Dashboard</a>
+                </li>
+            </ol>
+        </div>
 
-                        <!--row open-->
-                        <div class="row row-deck">
-							<div class="col-sm-12 col-lg-6 col-xl-3 col-md-6">
-								<div class="card text-center">
-									<div class="card-body  mb-0">
-									    <h5 class="mb-3">Data</h5>
-								   <!-- <input type="text" class="knob mb-0" value="80" data-thickness="0.2" data-width="90" data-height="90" data-fgColor="#4880FF"><br>
-										<span class="text-muted mt-3"><i class="fa fa-check-circle text-success mr-2"></i>80% Completed</span> -->
-											<div class="widget-3 mb-1">
-											<i class="icon icon-layers text-success"></i><br>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-12 col-lg-6 col-xl-3 col-md-6">
-								<div class="card text-center">
-									<div class="card-body  mb-0">
-									    <h5 class="mb-3">Data</h5>
-										<div class="widget-3 mb-1">
-											<i class="icon icon-layers text-orange"></i><br>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-12 col-lg-6 col-xl-3 col-md-6">
-								<div class="card text-center">
-									<div class="card-body  mb-0">
-									    <h5 class="mb-3">Data</h5>
-										<div class="widget-3 mb-1">
-											<i class="icon icon-layers text-orange"></i><br>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-12 col-lg-6 col-xl-3 col-md-6">
-								<div class="card text-center ">
-									<div class="card-body  mb-0">
-									    <h5 class="mb-3">Testing</h5>
-										<div class="widget-3 mb-1">
-											<i class="icon icon-layers text-orange"></i><br>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!--row closed-->
+        <!-- Stats Cards -->
+        <div class="row">
+            <div class="col-md-6 col-xl-3 mb-4">
+                <div class="card shadow border-0 rounded">
+                    <div class="card-body text-center">
+                        <i class="fa fa-users fa-2x text-success mb-2"></i>
+                        <h5>Total Irrigators</h5>
+                        <h3 class="text-success">20,000</h3>
+                    </div>
+                </div>
+            </div>
+			<div class="col-md-6 col-xl-3 mb-4">
+				<div class="card shadow border-0 rounded">
+					<div class="card-body text-center">
+						<i class="fa fa-coins fa-2x text-warning mb-2"></i> 
+						<h5>Total Payments</h5>
+						<h3 class="text-warning">PKR 200,000</h3>
 
-						<div class="row row-deck">
-						<div class="col-xl-4 col-lg-12">
-						<div class="card">
-									<div class="card-content">
-										<div class="card-body">
-											<div class="media mt-0 d-flex server">
-												<div class=" ml-0  mt-0 media-body text-left">
-													<h3 class="mb-2">Server1 </h3>
-													<h4 class=" mb-0 text-muted"><span class="text-primary"><i class="fe fe-arrow-up-circle "></i></span> Last 52 days Ago <span class="badge badge-primary mt-1 mb-1">Online</span></h4>
-												</div>
-												<div class="align-self-center">
-													<i class="fe fe-hard-drive icon text-primary float-right"></i>
-												</div>
-											</div>
-										</div>
-									</div>
-						</div>	
-						</div>
-
-						<div class="col-xl-4 col-lg-12">
-						<div class="card">
-									<div class="card-content">
-										<div class="card-body">
-											<div class="media mt-0 d-flex server">
-												<div class=" ml-0  mt-0 media-body text-left">
-													<h3 class="mb-2">Server1 </h3>
-													<h4 class=" mb-0 text-muted"><span class="text-primary"><i class="fe fe-arrow-up-circle "></i></span> Last 52 days Ago <span class="badge badge-primary mt-1 mb-1">Online</span></h4>
-												</div>
-												<div class="align-self-center">
-													<i class="fe fe-hard-drive icon text-primary float-right"></i>
-												</div>
-											</div>
-										</div>
-									</div>
-						</div>	
-						</div>
-
-						<div class="col-xl-4 col-lg-12">
-						<div class="card">
-									<div class="card-content">
-										<div class="card-body">
-											<div class="media mt-0 d-flex server">
-												<div class=" ml-0  mt-0 media-body text-left">
-													<h3 class="mb-2">Server1 </h3>
-													<h4 class=" mb-0 text-muted"><span class="text-primary"><i class="fe fe-arrow-up-circle "></i></span> Last 52 days Ago <span class="badge badge-primary mt-1 mb-1">Online</span></h4>
-												</div>
-												<div class="align-self-center">
-													<i class="fe fe-hard-drive icon text-primary float-right"></i>
-												</div>
-											</div>
-										</div>
-									</div>
-						</div>	
-						</div>
-                        </div>
-					</section>
+					</div>
 				</div>
- <?php $__env->stopSection(); ?>
+			</div>
+			
+
+            <div class="col-md-6 col-xl-3 mb-4">
+                <div class="card shadow border-0 rounded">
+                    <div class="card-body text-center">
+                        <i class="fa fa-check-circle fa-2x text-success mb-2"></i>
+                        <h5>Payments Collected</h5>
+                        <h3 class="text-success">100,000</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xl-3 mb-4">
+                <div class="card shadow border-0 rounded">
+                    <div class="card-body text-center">
+                        <i class="fa fa-clock fa-2x text-danger mb-2"></i>
+                        <h5>Payments Pending</h5>
+                        <h3 class="text-danger">100,000</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-3 mb-4">
+                <div class="card shadow border-0 rounded">
+                    <div class="card-body text-center">
+                        <i class="fa fa-tint fa-2x text-info mb-2"></i>
+                        <h5>Total Outlets</h5>
+                        <h3 class="text-info">30,000</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xl-3 mb-4">
+                <div class="card shadow border-0 rounded">
+                    <div class="card-body text-center">
+                        <i class="fa fa-water fa-2x text-primary mb-2"></i>
+                        <h5>Total Canals</h5>
+                        <h3 class="text-primary">100</h3>
+                    </div>
+                </div>
+            </div>
+			<div class="col-md-6 col-xl-3 mb-4">
+                <div class="card shadow border-0 rounded">
+                    <div class="card-body text-center">
+                        <i class="fa fa-water fa-2x text-primary mb-2"></i>
+                        <h5>Total Minors Canals</h5>
+                        <h3 class="text-primary">200</h3>
+                    </div>
+                </div>
+            </div>
+			<div class="col-md-6 col-xl-3 mb-4">
+                <div class="card shadow border-0 rounded">
+                    <div class="card-body text-center">
+                        <i class="fa fa-water fa-2x text-primary mb-2"></i>
+                        <h5>Total Distributaries Canals</h5>
+                        <h3 class="text-primary">200</h3>
+                    </div>
+                </div>
+            </div>
+          
+        </div>
+
+    </section>
+</div>
+<?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Applications/XAMPP/xamppfiles/htdocs/E-Abyana-Collection-System/resources/views/dashboard.blade.php ENDPATH**/ ?>

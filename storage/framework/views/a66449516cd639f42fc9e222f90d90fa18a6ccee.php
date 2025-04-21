@@ -3,10 +3,6 @@
     <head>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
-
-    
-    
-
     <div class="app-content">
 
         <section class="section">
@@ -396,10 +392,10 @@
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
-                        <div class="row">
+                     
                             <div class="form-group col-lg-6">
                                 <label class="form-label font-weight-bold" for="div_id">Select Division / ڈویژن</label>
-                                <select name="div_id" id="div_id" class="form-group form-control select_search" required>
+                                <select name="div_id" id="div_id" class="form-group form-control " required>
                                     <option value="">Choose Division / ڈویژن</option>
                                     <?php $__currentLoopData = $divsions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $divsion): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($divsion->id); ?>"><?php echo e($divsion->divsion_name); ?></option>
@@ -408,7 +404,7 @@
                             </div>
                             <div class="form-group col-lg-6">
                                 <label  class="form-label font-weight-bold" for="canal_id">Select Canal/ضلع</label>
-                                <select name="canal_id" id="canal_id" class="form-control" >
+                                <select name="canal_id" id="canal_id" class="form-control " >
                                     <option value="">Choose Canal/گاؤں</option>
                                     <?php $__currentLoopData = $canals; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $canal): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($canal->id); ?>"><?php echo e($canal->canal_name); ?></option>
@@ -417,7 +413,7 @@
                                 
                 
                             </div>
-                        </div>
+                    
                     <?php endif; ?>
                 </div>
                 <div class="row">

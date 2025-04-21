@@ -37,9 +37,33 @@
                 <div class="card-body">
                     <form class="form-horizontal" action="<?php echo e(url('LandRecord/add')); ?>" method="POST">
                         <?php echo csrf_field(); ?>
-
+                    
                         <!-- Farmer Details -->
-                        <h5 class="font-weight-bold text-primary mt-3">Land Survey/خسرہ گرداوری</h5>
+                        <!--<h5 class="font-weight-bold text-primary mt-3">Land Survey/خسرہ گرداوری</h5> -->
+                        <div class="row align-items-center" style="margin-top:-20px;">
+                          <!-- Left side: Heading -->
+                          <div class="col-md-6">
+                            <h5 class="font-weight-bold text-primary">Land Survey/خسرہ گرداوری</h5>
+                          </div>
+                        
+                          <!-- Right side: Radio Buttons -->
+                          <div class="col-md-6 text-right">
+                            <div class="form-check form-check-inline" style="border-bottom:1px solid gray;">
+                            <input class="form-check-input" type="radio" name="canalType" id="canal" value="canal" checked>
+                              <label class="form-check-label" for="canal">Canal</label>
+                            </div>
+                            <div class="form-check form-check-inline" style="border-bottom:1px solid gray;">
+                              <input class="form-check-input" type="radio" name="canalType" id="minorCanal" value="minor_canal">
+                              <label class="form-check-label" for="minorCanal">Minor Canal</label>
+                            </div>
+                            <div class="form-check form-check-inline" style="border-bottom:1px solid gray;">
+                              <input class="form-check-input" type="radio" name="canalType" id="distributory" value="distributory">
+                              <label class="form-check-label" for="distributory">Distributory</label>
+                            </div>
+                          </div>
+                        </div>
+
+
                         <div class="row">
                            <!-- <div class="form-group col-lg-3">
                                 <label for="div_id" class="form-label font-weight-bold">Select Divsion/ڈویژن</label>
@@ -78,7 +102,7 @@
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>  -->
-                            <div class="form-group col-lg-3">
+                            <div class="col-4">
                                 <label class="form-label font-weight-bold" for="div_id">Select Division / ڈویژن</label>
                                 <select name="div_id" id="div_id" class="form-group form-control" required readon>
                                    
@@ -87,31 +111,71 @@
                                     
                                 </select>
                             </div>
-                            <div class="col-md-3 form-group">
+                            <div class="col-4">
                                 <label class="form-label font-weight-bold">Select Village/گاؤں</label>
                                 <select name="village_id" class="form-control" required readonly>
                                         <option value="<?php echo e($villages->village_id); ?>"><?php echo e($villages->village_name); ?></option>
                                 </select>
                             </div>
-                            <div class="col-md-2 form-group">
+                            <div class="col-4">
                                 <label class="form-label font-weight-bold">Select canal/نہر</label>
                                 <select name="canal_id" id="canal_id" class="form-control" readonly onchange="get_outlets(this)">
                                         <option value="<?php echo e($canals->id); ?>"><?php echo e($canals->canal_name); ?></option>
                                 </select>
-                            </div>
-                            <div class="col-md-2 form-group">
+                        </div>
+                        </div>
+
+                        <div class="row" id="canal_radiobutton_show">
+                        <div class="col-12">
                                 <label class="form-label font-weight-bold">Outlet/موگیہ</label>
-                                <select name="outlet_id" id="outlet_id" class="form-control" required>
+                                <select name="canal_outlet_id" id="canal_outlet_id" class="form-control">
                                     <option value="">Choose Outlet</option>
                                 </select>
                             </div>
-                            
-                       
-                            <div class="col-md-2 mb-2">
+                        </div>
+
+                        <div class="row" id="minor_radiobutton_show">
+                        <div class="col-6">
+                                <label class="form-label font-weight-bold">Minor Canal</label>
+                                <select name="canal_minor_id" id="canal_minor_id" class="form-control">
+                                    <option value="">Choose Minor Canal</option>
+                                </select>
+                            </div>
+                        <div class="col-6">
+                                <label class="form-label font-weight-bold">Outlet/موگیہ</label>
+                                <select name="minor_outlet_id" id="minor_outlet_id" class="form-control">
+                                    <option value="">Choose Outlet</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row" id="distributory_radiobutton_show">
+                        <div class="col-4">
+                                <label class="form-label font-weight-bold">Minor Canal</label>
+                                <select name="distri_minor_id" id="distri_minor_id" class="form-control">
+                                    <option value="">Choose Minor Canal</option>
+                                </select>
+                            </div>
+                        <div class="col-4">
+                                <label class="form-label font-weight-bold">Distributory</label>
+                                <select name="distri_id" id="distri_id" class="form-control">
+                                    <option value="">Choose Distributory</option>
+                                </select>
+                            </div>
+                        <div class="col-4">
+                                <label class="form-label font-weight-bold">Outlet/موگیہ</label>
+                                <select name="distri_outlet_id" id="distri_outlet_id" class="form-control">
+                                    <option value="">Choose Outlet</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                        <div class="col-6">
                                 <label class="form-label font-weight-bold">Session Year</label>
                                 <input type="text" class="form-control" placeholder="Session Year" value="2025"name="session_date">
                             </div>
-                            <div class="col-md-3 form-group">
+                            <div class="col-6">
                                 <label class="form-label font-weight-bold">Crop Session /فصل</label>
                                 <select name="crop_id" id="crop_id" class="form-control" required>
                                     <option class="form-label font-weight-bold" value="">Choose Crop/فصل</option>
@@ -120,9 +184,6 @@
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
-                         
-                       
-                     
                         </div>
                         
                         <!-- Canal Information -->
@@ -345,21 +406,59 @@
     </section>
 </div>
 <?php $__env->stopSection(); ?>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+        const canalTypeRadios = document.getElementsByName('canalType');
         const canalDropdown = document.getElementById('canal_id');
-    
-        // Run only if the canal dropdown has a value
-        if (canalDropdown.value) {
+        // Hide all rows initially
+        document.getElementById('canal_radiobutton_show').style.display = 'none';
+        document.getElementById('minor_radiobutton_show').style.display = 'none';
+        document.getElementById('distributory_radiobutton_show').style.display = 'none';
+        // Show canal row by default
+        document.getElementById('canal_radiobutton_show').style.display = 'flex';
+        // Load canal outlets on page load
+        if (canalDropdown && canalDropdown.value) {
             get_outlets(canalDropdown.value);
         }
-    
-        // Update outlets when the user selects a different canal
-        canalDropdown.addEventListener('change', function () {
-            get_outlets(this.value);
+        // Handle radio button changes
+        canalTypeRadios.forEach(function (radio) {
+            radio.addEventListener('change', function () {
+                // Hide all rows
+                document.getElementById('canal_radiobutton_show').style.display = 'none';
+                document.getElementById('minor_radiobutton_show').style.display = 'none';
+                document.getElementById('distributory_radiobutton_show').style.display = 'none';
+
+                if (this.value === 'canal') {
+                    document.getElementById('canal_radiobutton_show').style.display = 'flex';
+                    get_outlets(canalDropdown.value);
+                } else if (this.value === 'minor_canal') {
+                    document.getElementById('minor_radiobutton_show').style.display = 'flex';
+                    get_minor_canals(canalDropdown.value);
+                } else if (this.value === 'distributory') {
+                    document.getElementById('distributory_radiobutton_show').style.display = 'flex';
+                    get_minor_canals_for_distributory(canalDropdown.value);
+                }
+            });
+        });
+        // Load outlets when minor is selected
+        $(document).on('change', '#minor_radiobutton_show select[name="canal_minor_id"]', function () {
+            const minorId = $(this).val();
+            get_outlets_from_minor(minorId);
+        });
+        // Load distributories and outlets when minor changes in distributory section
+        $(document).on('change', '#distributory_radiobutton_show select[name="distri_minor_id"]', function () {
+            const minorId = $(this).val();
+            get_distributories(minorId);
+        });
+
+        $(document).on('change', '#distributory_radiobutton_show select[name="distri_id"]', function () {
+            const distId = $(this).val();
+            get_outlets_from_distributory(distId);
         });
     });
-    
+
+    // Canal -> Outlets
     function get_outlets(canal_id) {
         if (canal_id) {
             $.ajax({
@@ -367,23 +466,128 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function (data) {
-                    console.log("Fetched outlets:", data); // Debugging
-                    $('#outlet_id').empty().append('<option value="">Choose Outlet</option>');
-    
+                    $('#canal_radiobutton_show select[name="canal_outlet_id"]').empty().append('<option value="">Choose Outlet</option>');
                     $.each(data, function (key, value) {
-                        $('#outlet_id').append('<option value="' + value.id + '">' + value.outlet_name + '</option>');
+                        $('#canal_radiobutton_show select[name="canal_outlet_id"]').append('<option value="' + value.id + '">' + value.outlet_name + '</option>');
                     });
                 },
                 error: function (xhr, status, error) {
                     console.error('Error fetching outlets:', error);
-                    alert('Could not fetch outlets. Check console for details.');
+                    alert('Could not fetch outlets.');
                 }
             });
-        } else {
-            $('#outlet_id').empty().append('<option value="">Choose Outlet</option>');
         }
     }
-    </script>
+
+    // Canal -> Minor Canals (for minor_canal)
+    function get_minor_canals(canal_id) {
+        if (canal_id) {
+            $.ajax({
+                url: '/get-minor-canals/' + canal_id,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    $('#minor_radiobutton_show select[name="canal_minor_id"]').empty().append('<option value="">Choose Minor Canal</option>');
+                    $('#minor_radiobutton_show select[name="minor_outlet_id"]').empty().append('<option value="">Choose Outlet</option>');
+                    $.each(data, function (key, value) {
+                        $('#minor_radiobutton_show select[name="canal_minor_id"]').append('<option value="' + value.id + '">' + value.minor_name + '</option>');
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching minor canals:', error);
+                    alert('Could not fetch minor canals.');
+                }
+            });
+        }
+    }
+
+    // Minor Canal -> Outlets
+    function get_outlets_from_minor(minor_id) {
+        if (minor_id) {
+            $.ajax({
+                url: '/get-outlets-by-minor/' + minor_id,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    $('#minor_radiobutton_show select[name="minor_outlet_id"]').empty().append('<option value="">Choose Outlet</option>');
+                    $.each(data, function (key, value) {
+                        $('#minor_radiobutton_show select[name="minor_outlet_id"]').append('<option value="' + value.id + '">' + value.outlet_name + '</option>');
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching outlets from minor:', error);
+                    alert('Could not fetch outlets for minor canal.');
+                }
+            });
+        }
+    }
+
+    // Canal -> Minor Canals (for distributory)
+    function get_minor_canals_for_distributory(canal_id) {
+        if (canal_id) {
+            $.ajax({
+                url: '/get-minor-canals-for-distri/' + canal_id,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    $('#distributory_radiobutton_show select[name="distri_minor_id"]').empty().append('<option value="">Choose Minor Canal</option>');
+                    $('#distributory_radiobutton_show select[name="distri_id"]').empty().append('<option value="">Choose Distributory</option>');
+                    $('#distributory_radiobutton_show select[name="distri_outlet_id"]').empty().append('<option value="">Choose Outlet</option>');
+                    $.each(data, function (key, value) {
+                        $('#distributory_radiobutton_show select[name="distri_minor_id"]').append('<option value="' + value.id + '">' + value.minor_name + '</option>');
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching minor canals for distributory:', error);
+                    alert('Could not fetch minor canals.');
+                }
+            });
+        }
+    }
+
+    // Minor Canal -> Distributories
+    function get_distributories(minor_id) {
+        if (minor_id) {
+            $.ajax({
+                url: '/get-distributories-by-minor/' + minor_id,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    $('#distributory_radiobutton_show select[name="distri_id"]').empty().append('<option value="">Choose Distributory</option>');
+                    $('#distributory_radiobutton_show select[name="distri_outlet_id"]').empty().append('<option value="">Choose Outlet</option>');
+                    $.each(data, function (key, value) {
+                        $('#distributory_radiobutton_show select[name="distri_id"]').append('<option value="' + value.id + '">' + value.name + '</option>');
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching distributories:', error);
+                    alert('Could not fetch distributories.');
+                }
+            });
+        }
+    }
+
+    // Distributory -> Outlets
+    function get_outlets_from_distributory(distri_id) {
+        if (distri_id) {
+            $.ajax({
+                url: '/get-outlets-by-distributory/' + distri_id,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    $('#distributory_radiobutton_show select[name="distri_outlet_id"]').empty().append('<option value="">Choose Outlet</option>');
+                    $.each(data, function (key, value) {
+                        $('#distributory_radiobutton_show select[name="distri_outlet_id"]').append('<option value="' + value.id + '">' + value.outlet_name + '</option>');
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching outlets from distributory:', error);
+                    alert('Could not fetch outlets for distributory.');
+                }
+            });
+        }
+    }
+</script>
     
 <script>
     function get_districts(element) {

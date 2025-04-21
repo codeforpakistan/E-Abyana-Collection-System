@@ -2,19 +2,34 @@
 <head>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+<?php if(session('success')): ?>
+    <?php $__env->startPush('scripts'); ?>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: "<?php echo e(session('success')); ?>",
+                confirmButtonText: 'OK'
+            });
+        </script>
+    <?php $__env->stopPush(); ?>
+<?php endif; ?>
 
+<?php if(session('error')): ?>
+    <?php $__env->startPush('scripts'); ?>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "<?php echo e(session('error')); ?>",
+                confirmButtonText: 'OK'
+            });
+        </script>
+    <?php $__env->stopPush(); ?>
+<?php endif; ?>
 <div class="app-content">
-    <section class="section">
-        <div class="page-header pt-0">
-            <h4 class="page-title font-weight-bold"></h4>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#" class="text-light-color">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Canals</li>
-            </ol>
-        </div>
-
-        <div id="simpleModal" class="fixed inset-0 bg-gray-400 bg-opacity-50 flex z-50 items-center justify-center hidden">
-            <div class="card shadow-sm w-[40vw]">
+<div id="simpleModal" class="fixed inset-0 bg-gray-400 bg-opacity-50 flex z-50 items-center justify-center hidden">
+            <div class="card shadow-sm w-[60vw]">
                 <div class="card-header bg-primary flex justify-between text-white">
                     <h4 class="font-weight-bold">Add New Canal</h4>
                     <button onclick="closeModal()" type="button" class="bg-white text-black h-[30px] w-[30px] rounded-[50px]">
@@ -25,9 +40,9 @@
                     <form class="form-horizontal" action="<?php echo e(route('AddCanal/add')); ?>" method="POST">
                         <?php echo csrf_field(); ?>
                     
-                        <div class="row">
-                            <div class="form-group col-lg-6">
-                                <label class="form-label font-weight-bold" for="village_id">Select Village</label>
+                        <div class="row" style="margin-top:-30px;">
+                            <div class="form-group col-4">
+                                <label class="form-label" for="village_id">Select Village</label>
                                 <select name="village_id" id="village_id" class="form-control" required>
                                     <option value="">Choose Village</option>
                                     <?php $__currentLoopData = $villages; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $village): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -36,8 +51,8 @@
                                 </select>
                             </div>
                     
-                            <div class="form-group col-lg-6">
-                                <label class="form-label font-weight-bold" for="div_id">Select Division / ڈویژن</label>
+                            <div class="form-group col-4">
+                                <label class="form-label" for="div_id">Select Division / ڈویژن</label>
                                 <select name="div_id" id="div_id" class="form-control" required>
                                     <option value="">Choose Division / ڈویژن</option>
                                     <?php $__currentLoopData = $divsions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $divsion): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -45,47 +60,42 @@
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
-                        </div>
-                    
-                        <div class="row">
-                            <div class="form-group col-lg-6">
-                                <label class="form-label font-weight-bold">Name of Canal</label>
-                                <input class="form-control form-control-lg" type="text" name="canal_name" required>
-                            </div>
-                    
-                            <div class="form-group col-lg-6">
-                                <label class="form-label font-weight-bold">No. of Outlets</label>
-                                <input class="form-control form-control-lg" type="text" name="no_outlet" required>
+                            <div class="form-group col-4">
+                                <label class="form-label">Name of Canal</label>
+                                <input class="form-control" type="text" name="canal_name" required>
                             </div>
                         </div>
                     
-                        <div class="row">
-                            <div class="form-group col-lg-6">
-                                <label class="form-label font-weight-bold">No. of Outlets (Left Side)</label>
-                                <input class="form-control form-control-lg" type="text" name="no_outlet_ls" required>
+                        <div class="row" style="margin-top:-10px;">
+                            <div class="form-group col-4">
+                                <label class="form-label">No. of Outlets</label>
+                                <input class="form-control" type="text" name="no_outlet" required>
                             </div>
-                    
-                            <div class="form-group col-lg-6">
-                                <label class="form-label font-weight-bold">No. of Outlets (Right Side)</label>
-                                <input class="form-control form-control-lg" type="text" name="no_outlet_rs" required>
+                            <div class="form-group col-4">
+                                <label class="form-label">No. of Outlets (LS)</label>
+                                <input class="form-control" type="text" name="no_outlet_ls" required>
+                            </div>
+                            <div class="form-group col-4">
+                                <label class="form-label">No. of Outlets (RS)</label>
+                                <input class="form-control" type="text" name="no_outlet_rs" required>
                             </div>
                         </div>
                     
-                        <div class="row">
+                        <div class="row" style="margin-top:-10px;">
                             <div class="form-group col-lg-6">
-                                <label class="form-label font-weight-bold">Total No. of CCA</label>
-                                <input class="form-control form-control-lg" type="text" name="total_no_cca" required>
+                                <label class="form-label">Total No. of CCA</label>
+                                <input class="form-control" type="text" name="total_no_cca" required>
                             </div>
                     
                             <div class="form-group col-lg-6">
-                                <label class="form-label font-weight-bold">Total No. of Discharge (Cusec)</label>
-                                <input class="form-control form-control-lg" type="text" name="total_no_discharge_cusic" required>
+                                <label class="form-label">Total No. of Discharge (Cusec)</label>
+                                <input class="form-control" type="text" name="total_no_discharge_cusic" required>
                             </div>
                         </div>
                     
                         <div class="row">
                             <div class="col-lg-12">
-                                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
                     </form>
@@ -93,7 +103,7 @@
                 </div>
             </div>
         </div> 
-
+    <section class="section">
         <div class="row">
             <div class="col-md-12">
                 <div class="card export-database">
@@ -110,12 +120,11 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Name Canal</th>
+                                        <th>Canal</th>
                                         <th>Division Name</th>
-                                        <th>Canal Name</th>
                                         <th>No Of Outlet</th>
-                                        <th>No. of Outlets (Left Side)</th>
-                                        <th>No. of Outlets (Right Side)</th>
+                                        <th>No. of Outlets (LS)</th>
+                                        <th>No. of Outlets (RS)</th>
                                         <th>Total No. of CCA</th>
                                         <th>Total No. of Discharge (Cusec)</th>
                                         <th>Action</th>
@@ -135,7 +144,7 @@
                                              <td><?php echo e($canal->no_outlet_rs); ?></td>
                                                <td><?php echo e($canal->total_no_cca); ?></td>
                                            <td><?php echo e($canal->total_no_discharge_cusic); ?></td>
-
+                                           
                                             <td>
                                                 <button class="btn btn-sm btn-danger">
                                                     <i class="fa fa-trash"></i> Delete

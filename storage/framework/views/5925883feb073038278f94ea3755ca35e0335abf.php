@@ -60,10 +60,37 @@
  <label class="form-label font-weight-bold">Session Year</label>
  <input class="form-control" type="text" value="<?php echo e($survey->session_date); ?>" readonly>
 </div>
-<div class="form-group col-4">
- <label class="form-label font-weight-bold">Canal</label>
- <input class="form-control" type="text" value="<?php echo e($survey->canal_name); ?>" readonly>
+<div class="row">
+    <?php if($waterSourceType === 'Canal'): ?>
+        <div class="form-group col-4">
+            <label class="form-label font-weight-bold">Canal</label>
+            <input class="form-control" type="text" value="<?php echo e($survey->canal_name); ?>" readonly>
+        </div>
+    <?php elseif($waterSourceType === 'Canal + Minor Canal'): ?>
+        <div class="form-group col-4">
+            <label class="form-label font-weight-bold">Canal</label>
+            <input class="form-control" type="text" value="<?php echo e($survey->canal_name); ?>" readonly>
+        </div>
+        <div class="form-group col-4">
+            <label class="form-label font-weight-bold">Minor Canal</label>
+            <input class="form-control" type="text" value="<?php echo e($survey->minor_name); ?>" readonly>
+        </div>
+    <?php elseif($waterSourceType === 'Distributary'): ?>
+        <div class="form-group col-4">
+            <label class="form-label font-weight-bold">Canal</label>
+            <input class="form-control" type="text" value="<?php echo e($survey->canal_name); ?>" readonly>
+        </div>
+        <div class="form-group col-4">
+            <label class="form-label font-weight-bold">Minor Canal</label>
+            <input class="form-control" type="text" value="<?php echo e($survey->minor_name); ?>" readonly>
+        </div>
+        <div class="form-group col-4">
+            <label class="form-label font-weight-bold">Distributary</label>
+            <input class="form-control" type="text" value="<?php echo e($survey->distributary_name); ?>" readonly>
+        </div>
+    <?php endif; ?>
 </div>
+
 <div class="form-group col-4">
  <label class="form-label font-weight-bold">Outlet</label>
  <input class="form-control" type="text" value="<?php echo e($survey->outlet_name); ?>" readonly>

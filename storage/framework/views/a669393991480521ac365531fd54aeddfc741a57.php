@@ -3,25 +3,30 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
 </head>
+<?php if(session('success')): ?>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: "<?php echo e(session('success')); ?>",
+                confirmButtonText: 'OK'
+            });
+        </script>
+    <?php endif; ?>
 
+    <?php if(session('error')): ?>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "<?php echo e(session('error')); ?>",
+                confirmButtonText: 'OK'
+            });
+        </script>
+    <?php endif; ?>
     
     
 <div class="app-content">
-
-    <section class="section">
-        <!--page-header open-->
-        <div class="page-header pt-0">
-            <h4 class="page-title font-weight-bold"></h4>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#" class="text-light-color"></a></li>
-                <li class="breadcrumb-item active" aria-current="page"></li>
-            </ol>
-        </div>
-        <!--page-header closed-->
-
-        <!--row open-->
-       
-
 <div id="simpleModal" class="fixed  inset-0 bg-gray-400 bg-opacity-50 flex z-50 items-center justify-center hidden">
   
     <div class="card shadow-sm w-[40vw]">
@@ -63,6 +68,13 @@
         </div>
     </div>
 </div> 
+    <section class="section">
+        <!--page-header closed-->
+
+        <!--row open-->
+       
+
+
 
 <div class="row">
     <div class="col-md-12">

@@ -277,7 +277,7 @@ public function ListBills()
 public function LandSurvey()
 {
     $halqa_id = session('halqa_id');
-($div_id = session('div_id')); // Get division ID from session
+    $div_id = session('div_id'); // Get division ID from session
 
     $query_survey = DB::table('cropsurveys')
         ->join('villages', 'cropsurveys.village_id', '=', 'villages.village_id')
@@ -287,6 +287,11 @@ public function LandSurvey()
         ->join('divisions', 'districts.div_id', '=', 'divisions.id') 
         ->join('irrigators', 'cropsurveys.irrigator_id', '=', 'irrigators.id')
         ->join('cropprices', 'cropsurveys.finalcrop_id', '=', 'cropprices.id')
+        ->join('crops', 'cropsurveys.crop_id', '=', 'crops.id')
+        ->join('outlets', 'cropsurveys.outlet_id', '=', 'outlets.id')
+        ->leftJoin('canals', 'cropsurveys.canal_id', '=', 'canals.id')
+        ->leftJoin('minorcanals', 'cropsurveys.minor_id', '=', 'minorcanals.id')
+        ->leftJoin('distributaries', 'cropsurveys.distri_id', '=', 'distributaries.id')
         ->select(
             'cropsurveys.irrigator_id',
             'irrigators.irrigator_name',
@@ -305,29 +310,48 @@ public function LandSurvey()
             'halqa.id as halqa_id',
             'tehsils.tehsil_name',
             'districts.name as district_name',
-            'divisions.divsion_name'
+            'divisions.divsion_name',
+            'crops.crop_name',
+            'outlets.outlet_name',
+            'canals.canal_name',
+            'minorcanals.minor_name',
+            'distributaries.name as distributary_name',
+            'cropsurveys.canal_id',
+            'cropsurveys.minor_id',
+            'cropsurveys.distri_id'
         )
-        ->where('cropsurveys.status', '=', 3); // Only fetch pending surveys
+        ->where('cropsurveys.status', '=', 0); // Only fetch pending surveys
 
-    // **1️⃣ If Admin (halqa_id = 0), show all records**
+    // Filter based on session values
     if ($halqa_id == 0 && $div_id == 0) {
-        // No additional filters needed, already fetching all records
-    }
-    // **2️⃣ If a Division Officer (div_id > 0), filter by division**
-    elseif ($div_id > 0) {
+        // Admin - show all
+    } elseif ($div_id > 0) {
         $query_survey->where('districts.div_id', '=', $div_id);
-    }
-    // **3️⃣ If Halqa Officer (halqa_id > 0), filter by halqa**
-    elseif ($halqa_id > 0) {
+    } elseif ($halqa_id > 0) {
         $query_survey->where('villages.halqa_id', '=', $halqa_id);
     }
 
-    // Execute query and group data by irrigator_id
     $survey_get = $query_survey->get();
+
+    // Optional: add water source type (like in viewSurvey)
+    $survey_get->transform(function ($item) {
+        if (!is_null($item->canal_id) && is_null($item->minor_id) && is_null($item->distri_id)) {
+            $item->water_source_type = 'Canal';
+        } elseif (!is_null($item->canal_id) && !is_null($item->minor_id) && is_null($item->distri_id)) {
+            $item->water_source_type = 'Canal + Minor Canal';
+        } elseif (!is_null($item->canal_id) && !is_null($item->minor_id) && !is_null($item->distri_id)) {
+            $item->water_source_type = 'Distributary';
+        } else {
+            $item->water_source_type = 'N/A';
+        }
+        return $item;
+    });
+
     $grouped_survey = $survey_get->groupBy('irrigator_id');
 
     return view('LandRecord.ListLandSurvey', compact('grouped_survey'));
 }
+
 
 
 public function IrrigatorsForApproval()
@@ -486,13 +510,16 @@ public function LandSurveyCollector()
 
 
 
-public function surveyView($id) {
+public function surveyView($id)
+{
     $survey = DB::table('cropsurveys')
         ->join('villages', 'cropsurveys.village_id', '=', 'villages.village_id')
         ->join('halqa', 'villages.halqa_id', '=', 'halqa.id')
         ->join('irrigators', 'cropsurveys.irrigator_id', '=', 'irrigators.id')
         ->join('cropprices', 'cropsurveys.finalcrop_id', '=', 'cropprices.id')
-        ->join('canals', 'cropsurveys.canal_id', '=', 'canals.id')
+        ->leftJoin('canals', 'cropsurveys.canal_id', '=', 'canals.id')
+        ->leftJoin('minorcanals', 'cropsurveys.minor_id', '=', 'minorcanals.id')
+        ->leftJoin('distributaries', 'cropsurveys.distri_id', '=', 'distributaries.id')
         ->join('crops', 'cropsurveys.crop_id', '=', 'crops.id')
         ->join('outlets', 'cropsurveys.outlet_id', '=', 'outlets.id')
         ->select(
@@ -530,14 +557,32 @@ public function surveyView($id) {
             'canals.canal_name',
             'crops.crop_name',
             'outlets.outlet_name',
+            'minorcanals.minor_name',
+            'distributaries.name as distributary_name',
+            'cropsurveys.canal_id',
+            'cropsurveys.minor_id',
+            'cropsurveys.distri_id'
         )
         ->where('cropsurveys.crop_survey_id', $id)
         ->first();
+
     if (!$survey) {
         return redirect()->back()->with('error', 'Survey not found.');
     }
-    return view('LandRecord.viewSurvey', compact('survey'));
+
+    // Determine water source type
+    $waterSourceType = '';
+    if (!is_null($survey->canal_id) && is_null($survey->minor_id) && is_null($survey->distri_id)) {
+        $waterSourceType = 'Canal';
+    } elseif (!is_null($survey->canal_id) && !is_null($survey->minor_id) && is_null($survey->distri_id)) {
+        $waterSourceType = 'Canal + Minor Canal';
+    } elseif (!is_null($survey->canal_id) && !is_null($survey->minor_id) && !is_null($survey->distri_id)) {
+        $waterSourceType = 'Distributary';
+    }
+
+    return view('LandRecord.viewSurvey', compact('survey', 'waterSourceType'));
 }
+
    
 
 

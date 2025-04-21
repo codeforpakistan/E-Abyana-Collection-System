@@ -49,36 +49,39 @@
                             <?php $__currentLoopData = $irrigator_surveys; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $survey): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
                                     <td><?php echo e($survey->village_name); ?></td>
-                                    
+                                    <td><?php echo e($survey->crop_name); ?></td>
+                                    <td><?php echo e($survey->final_crop); ?></td>
+                                    <td><?php echo e($survey->crop_price); ?></td>
                                     <td><?php echo e($survey->date); ?></td>
                                     
                                     <td class="align-middle text-center">
                                         <a href="<?php echo e(url('survey/view')); ?>/<?php echo e($survey->crop_survey_id); ?>">
                                             <button class="btn btn-success btn-sm" title="View"><i class="fa fa-eye"></i></button>
                                         </a>
-                                      <!--  <a href="<?php echo e(url('survey_bill/view')); ?>/<?php echo e($survey->irrigator_id); ?>"><button class="btn btn-primary btn-sm" title="Bill"><i class="fa fa-print"></i></button></a> -->
-                                      <?php if(session('role_id')==1): ?>
-                                      <form
-                                            action="<?php echo e(route('landservey.destroy', $survey->crop_survey_id)); ?>"
-                                            method="POST"
-                                            onsubmit="return confirm('Are you sure you want to delete this irrigator?');"
-                                            style="display: inline;">
-                                            <?php echo csrf_field(); ?>
-                                            <?php echo method_field('DELETE'); ?>
-                                            <button class="btn btn-danger btn-sm" title="Delete"><i class="fa fa-trash"></i></button>
-                                        </form>
+                                        
+                                        <?php if(session('role_id') == 1): ?>
+                                            <form action="<?php echo e(route('landservey.destroy', $survey->crop_survey_id)); ?>"
+                                                  method="POST"
+                                                  onsubmit="return confirm('Are you sure you want to delete this irrigator?');"
+                                                  style="display: inline;">
+                                                <?php echo csrf_field(); ?>
+                                                <?php echo method_field('DELETE'); ?>
+                                                <button class="btn btn-danger btn-sm" title="Delete"><i class="fa fa-trash"></i></button>
+                                            </form>
                                         <?php endif; ?>
+                        
                                         <a href="<?php echo e(url('survey/patwari/forward')); ?>/<?php echo e($survey->crop_survey_id); ?>">
                                             <button class="btn btn-warning btn-sm" title="Forward"><i class="fa fa-arrow-right"></i></button>
                                         </a>
+                        
                                         <a href="<?php echo e(route('edit.survey', $survey->crop_survey_id)); ?>" class="btn btn-sm btn-primary">
                                             <i class="fa fa-edit"></i> Edit
-                                        </a> 
-                                        
+                                        </a>
                                     </td>
                                 </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>
+                        
                     </table>
                 </td>
             </tr>

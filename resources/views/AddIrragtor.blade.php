@@ -396,10 +396,10 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="row">
+                     
                             <div class="form-group col-lg-6">
                                 <label class="form-label font-weight-bold" for="div_id">Select Division / ڈویژن</label>
-                                <select name="div_id" id="div_id" class="form-group form-control select_search" required>
+                                <select name="div_id" id="div_id" class="form-group form-control " required>
                                     <option value="">Choose Division / ڈویژن</option>
                                     @foreach($divsions as $divsion)
                                         <option value="{{ $divsion->id }}">{{ $divsion->divsion_name }}</option>
@@ -408,7 +408,7 @@
                             </div>
                             <div class="form-group col-lg-6">
                                 <label  class="form-label font-weight-bold" for="canal_id">Select Canal/ضلع</label>
-                                <select name="canal_id" id="canal_id" class="form-control" >
+                                <select name="canal_id" id="canal_id" class="form-control " >
                                     <option value="">Choose Canal/گاؤں</option>
                                     @foreach($canals as $canal)
                                         <option value="{{ $canal->id }}">{{ $canal->canal_name }}</option>
@@ -417,7 +417,7 @@
                                 
                 
                             </div>
-                        </div>
+                    
                     @endif
                 </div>
                 <div class="row">

@@ -1,38 +1,37 @@
 <?php $__env->startSection('content'); ?>
 
 
-<?php if(Session::has('success')): ?>
-    <script>
-        swal({
-            title: "Success!",
-            text: "<?php echo e(Session::get('success')); ?>",
-            icon: "success",
-            button: "OK",
-        });
-        
-    </script>
+<?php if(session('success')): ?>
+    <?php $__env->startPush('scripts'); ?>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: "<?php echo e(session('success')); ?>",
+                confirmButtonText: 'OK'
+            });
+        </script>
+    <?php $__env->stopPush(); ?>
 <?php endif; ?>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<?php if(session('error')): ?>
+    <?php $__env->startPush('scripts'); ?>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "<?php echo e(session('error')); ?>",
+                confirmButtonText: 'OK'
+            });
+        </script>
+    <?php $__env->stopPush(); ?>
+<?php endif; ?>
+
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
 
 
 <div class="app-content">
-  
-    <section class="section">
-        <!--page-header open-->
-        <div class="page-header pt-0">
-            <h4 class="page-title font-weight-bold"></h4>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#" class="text-light-color"></a></li>
-                <li class="breadcrumb-item active" aria-current="page"></li>
-            </ol>
-        </div>
-        <!--page-header closed-->
-
-        <!--row open-->
-      
-
 <div id="simpleModal" class="fixed  inset-0 bg-gray-400 bg-opacity-50 flex z-50 items-center justify-center hidden">
   
     <div class="card shadow-sm w-[40vw]">
@@ -49,7 +48,7 @@
             
                 <div class="row">
                     <!-- District Dropdown with Select2 -->
-                    <div class="form-group col-lg-12">
+                    <div class="form-group col-4">
                         <label class="form-label font-weight-bold" for="district_id">Select District/ضلع</label>
                         <select name="district_id" id="district_id" class="form-control select2" required onchange="get_tehsils(this)">
                             <option value="">Choose District</option>
@@ -60,7 +59,7 @@
                     </div>
             
                     <!-- Tehsil Dropdown -->
-                    <div class="form-group col-lg-12">
+                    <div class="form-group col-8">
                         <label class="form-label font-weight-bold" for="tehsil_id">Select Tehsil/تحصیل</label>
                         <select name="tehsil_id" id="tehsil_id" class="form-control" required>
                             <option value="">Choose Tehsil</option>
@@ -85,7 +84,7 @@
         </div>
     </div>
 </div> 
-
+    <section class="section">
         <div class="row">
             <div class="col-md-12">
                 <div class="card export-database">
@@ -123,8 +122,8 @@
                                             <td><?php echo e($halqa->district_name); ?></td>
                                             <td><?php echo e($halqa->divsion_name); ?></td>
                                             <td>
-                                                <button class="btn btn-sm btn-primary badge" type="submit">
-                                                    <i class="fa fa-trash"></i>
+                                                <button class="btn btn-sm btn-primary" type="submit">
+                                                    <i class="fa fa-trash"></i> Delete
                                                 </button>
                                             </td>
                                         </tr>
