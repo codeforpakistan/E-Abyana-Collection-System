@@ -67,7 +67,7 @@ INSERT INTO `assign_roles` (`id`, `role_id`, `permission_id`, `created_at`, `upd
 
 CREATE TABLE `canals` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `canal_name` varchar(255) NOT NULL,
+  `canal_name` varchar(150) NOT NULL,
   `village_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -116,10 +116,10 @@ INSERT INTO `canals` (`id`, `canal_name`, `village_id`, `created_at`, `updated_a
 
 CREATE TABLE `cropprices` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `crop_price` varchar(255) NOT NULL,
+  `crop_price` varchar(150) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `final_crop` varchar(255) NOT NULL
+  `final_crop` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -139,7 +139,7 @@ INSERT INTO `cropprices` (`id`, `crop_price`, `created_at`, `updated_at`, `final
 
 CREATE TABLE `crops` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `crop_name` varchar(255) NOT NULL,
+  `crop_name` varchar(150) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -160,27 +160,27 @@ INSERT INTO `crops` (`id`, `crop_name`, `created_at`, `updated_at`) VALUES
 
 CREATE TABLE `cropsurveys` (
   `crop_survey_id` bigint(20) UNSIGNED NOT NULL,
-  `khasra_number` varchar(255) NOT NULL,
-  `tenant_name` varchar(255) NOT NULL,
+  `khasra_number` varchar(150) NOT NULL,
+  `tenant_name` varchar(150) NOT NULL,
   `registration_date` date NOT NULL,
   `cultivators_info` text NOT NULL,
   `snowing_date` text NOT NULL,
-  `land_assessment_marla` varchar(255) NOT NULL,
-  `land_assessment_kanal` varchar(255) NOT NULL,
-  `previous_crop` varchar(255) NOT NULL,
+  `land_assessment_marla` varchar(150) NOT NULL,
+  `land_assessment_kanal` varchar(150) NOT NULL,
+  `previous_crop` varchar(150) NOT NULL,
   `date` date NOT NULL,
-  `width` varchar(255) NOT NULL,
-  `length` varchar(255) NOT NULL,
+  `width` varchar(150) NOT NULL,
+  `length` varchar(150) NOT NULL,
   `area_marla` int(11) NOT NULL,
   `area_kanal` int(11) NOT NULL,
-  `double_crop_marla` varchar(255) NOT NULL,
-  `double_crop_kanal` varchar(255) NOT NULL,
-  `identifable_area_marla` varchar(255) NOT NULL,
-  `identifable_area_kanal` varchar(255) NOT NULL,
-  `irrigated_area_marla` varchar(255) NOT NULL,
-  `irrigated_area_kanal` varchar(255) NOT NULL,
-  `land_quality` varchar(255) NOT NULL,
-  `irrigator_khata_number` varchar(255) NOT NULL,
+  `double_crop_marla` varchar(150) NOT NULL,
+  `double_crop_kanal` varchar(150) NOT NULL,
+  `identifable_area_marla` varchar(150) NOT NULL,
+  `identifable_area_kanal` varchar(150) NOT NULL,
+  `irrigated_area_marla` varchar(150) NOT NULL,
+  `irrigated_area_kanal` varchar(150) NOT NULL,
+  `land_quality` varchar(150) NOT NULL,
+  `irrigator_khata_number` varchar(150) NOT NULL,
   `village_id` bigint(20) UNSIGNED NOT NULL,
   `irrigator_id` bigint(20) UNSIGNED NOT NULL,
   `canal_id` bigint(20) UNSIGNED NOT NULL,
@@ -192,7 +192,7 @@ CREATE TABLE `cropsurveys` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `session_date` varchar(50) DEFAULT NULL,
   `finalcrop_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `crop_price` varchar(255) NOT NULL,
+  `crop_price` varchar(150) NOT NULL,
   `is_billed` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
   `review` text DEFAULT NULL,
   `status` tinyint(3) UNSIGNED NOT NULL DEFAULT 1
@@ -254,7 +254,7 @@ INSERT INTO `cropsurveys` (`crop_survey_id`, `khasra_number`, `tenant_name`, `re
 
 CREATE TABLE `distributaries` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `name` varchar(150) NOT NULL,
   `canal_id` bigint(20) UNSIGNED DEFAULT NULL,
   `div_id` bigint(20) UNSIGNED DEFAULT NULL,
   `minor_id` bigint(20) UNSIGNED DEFAULT NULL,
@@ -291,7 +291,7 @@ INSERT INTO `distributaries` (`id`, `name`, `canal_id`, `div_id`, `minor_id`, `n
 
 CREATE TABLE `districts` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `name` varchar(150) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `div_id` bigint(20) UNSIGNED NOT NULL
@@ -327,7 +327,7 @@ INSERT INTO `districts` (`id`, `name`, `created_at`, `updated_at`, `div_id`) VAL
 
 CREATE TABLE `divisions` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `divsion_name` varchar(255) NOT NULL,
+  `divsion_name` varchar(150) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -377,7 +377,7 @@ INSERT INTO `divisions` (`id`, `divsion_name`, `created_at`, `updated_at`) VALUE
 
 CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(255) NOT NULL,
+  `uuid` varchar(150) NOT NULL,
   `connection` text NOT NULL,
   `queue` text NOT NULL,
   `payload` longtext NOT NULL,
@@ -393,16 +393,16 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `farmers` (
   `farmer_id` bigint(20) UNSIGNED NOT NULL,
-  `serial_number` varchar(255) NOT NULL,
+  `serial_number` varchar(150) NOT NULL,
   `registration_date` date NOT NULL,
-  `assessment_number` varchar(255) NOT NULL,
-  `patwari_name` varchar(255) NOT NULL,
-  `owner_name` varchar(255) NOT NULL,
-  `tenant_name` varchar(255) NOT NULL,
+  `assessment_number` varchar(150) NOT NULL,
+  `patwari_name` varchar(150) NOT NULL,
+  `owner_name` varchar(150) NOT NULL,
+  `tenant_name` varchar(150) NOT NULL,
   `cultivators_info` text NOT NULL,
   `marla` int(11) DEFAULT NULL,
   `kanal` int(11) DEFAULT NULL,
-  `previous_crop` varchar(255) NOT NULL,
+  `previous_crop` varchar(150) NOT NULL,
   `snowing_date` date NOT NULL,
   `village_id` bigint(20) UNSIGNED NOT NULL,
   `division_id` bigint(20) UNSIGNED NOT NULL,
@@ -411,8 +411,8 @@ CREATE TABLE `farmers` (
   `canal_id` bigint(20) UNSIGNED NOT NULL,
   `crop_id` bigint(20) UNSIGNED NOT NULL,
   `outlet_id` bigint(20) UNSIGNED NOT NULL,
-  `water_outlet` varchar(255) NOT NULL,
-  `plat_boundary_number` varchar(255) NOT NULL,
+  `water_outlet` varchar(150) NOT NULL,
+  `plat_boundary_number` varchar(150) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -432,7 +432,7 @@ INSERT INTO `farmers` (`farmer_id`, `serial_number`, `registration_date`, `asses
 
 CREATE TABLE `halqa` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `halqa_name` varchar(255) NOT NULL,
+  `halqa_name` varchar(150) NOT NULL,
   `tehsil_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -481,13 +481,13 @@ CREATE TABLE `irrigators` (
   `village_id` bigint(20) UNSIGNED DEFAULT NULL,
   `div_id` bigint(20) UNSIGNED DEFAULT NULL,
   `canal_id` int(11) DEFAULT NULL,
-  `irrigator_name` varchar(255) NOT NULL,
-  `irrigator_khata_number` varchar(255) NOT NULL,
+  `irrigator_name` varchar(150) NOT NULL,
+  `irrigator_khata_number` varchar(150) NOT NULL,
   `irrigator_f_name` varchar(100) DEFAULT NULL,
-  `irrigator_mobile_number` varchar(255) NOT NULL,
+  `irrigator_mobile_number` varchar(150) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `cnic` varchar(255) DEFAULT NULL
+  `cnic` varchar(150) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -516,7 +516,7 @@ INSERT INTO `irrigators` (`id`, `village_id`, `div_id`, `canal_id`, `irrigator_n
 (19, 24, NULL, 17, 'Ghulam Shah s/o Ghandal Shahhh', '0018', 's/o Ghandal Shahhh', '0333123488', '2025-03-22 12:37:39', '2025-03-22 12:37:39', '1720206497816887'),
 (20, 8, NULL, 18, 'saifoorh', '001', 'shg', '03331234', '2025-03-22 13:14:15', '2025-03-22 13:14:15', '56787988096589'),
 (21, 8, NULL, 18, 'saifoorh', '00190', 'hjh', '0333123498', '2025-03-22 13:15:02', '2025-03-22 13:15:02', '567879880965098'),
-(22, 25, NULL, 21, 'ammar', '001', 'sdd', '232323255', '2025-03-22 20:37:00', '2025-03-22 20:37:00', '17301894014544'),
+(22, 25, NULL, 21, 'ammar', '001', 'sdd', '232323150', '2025-03-22 20:37:00', '2025-03-22 20:37:00', '17301894014544'),
 (23, 25, NULL, 21, 'babr ali', '0014', 'dfd', '03331234', '2025-03-22 20:37:33', '2025-03-22 20:37:33', '1730189401454'),
 (24, 25, NULL, 21, 'ammar', '0013', 'dd', '03331234', '2025-03-22 20:45:50', '2025-03-22 20:45:50', '567879880965'),
 (26, 23, NULL, 16, 'mardan', '899', '887', '989', '2025-03-22 21:07:46', '2025-03-22 21:07:46', '172020649700'),
@@ -539,7 +539,7 @@ INSERT INTO `irrigators` (`id`, `village_id`, `div_id`, `canal_id`, `irrigator_n
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) NOT NULL,
+  `migration` varchar(150) NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -610,7 +610,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `minorcanals` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `minor_name` varchar(255) NOT NULL,
+  `minor_name` varchar(150) NOT NULL,
   `canal_id` bigint(20) UNSIGNED DEFAULT NULL,
   `div_id` bigint(20) UNSIGNED DEFAULT NULL,
   `no_outlet` int(11) DEFAULT NULL,
@@ -650,7 +650,7 @@ INSERT INTO `minorcanals` (`id`, `minor_name`, `canal_id`, `div_id`, `no_outlet`
 
 CREATE TABLE `outlets` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `outlet_name` varchar(255) NOT NULL,
+  `outlet_name` varchar(150) NOT NULL,
   `canal_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -690,8 +690,8 @@ INSERT INTO `outlets` (`id`, `outlet_name`, `canal_id`, `created_at`, `updated_a
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) NOT NULL,
-  `token` varchar(255) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `token` varchar(150) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -703,8 +703,8 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `patwari` (
   `patwari_id` bigint(20) UNSIGNED NOT NULL,
-  `patwari_name` varchar(255) NOT NULL,
-  `patwari_cnic` varchar(255) NOT NULL,
+  `patwari_name` varchar(150) NOT NULL,
+  `patwari_cnic` varchar(150) NOT NULL,
   `halqa_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -718,7 +718,7 @@ CREATE TABLE `patwari` (
 
 CREATE TABLE `permissions` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `name` varchar(150) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -746,9 +746,9 @@ INSERT INTO `permissions` (`id`, `name`, `created_at`, `updated_at`) VALUES
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) NOT NULL,
+  `tokenable_type` varchar(150) NOT NULL,
   `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `name` varchar(150) NOT NULL,
   `token` varchar(64) NOT NULL,
   `abilities` text DEFAULT NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
@@ -775,7 +775,7 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 
 CREATE TABLE `review` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `review_name` varchar(255) NOT NULL,
+  `review_name` varchar(150) NOT NULL,
   `servey_id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -790,7 +790,7 @@ CREATE TABLE `review` (
 
 CREATE TABLE `roles` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `name` varchar(150) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -814,7 +814,7 @@ INSERT INTO `roles` (`id`, `name`, `created_at`, `updated_at`) VALUES
 
 CREATE TABLE `tehsils` (
   `tehsil_id` bigint(20) UNSIGNED NOT NULL,
-  `tehsil_name` varchar(255) NOT NULL,
+  `tehsil_name` varchar(150) NOT NULL,
   `district_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -860,10 +860,10 @@ CREATE TABLE `users` (
   `div_id` bigint(20) UNSIGNED DEFAULT NULL,
   `district_id` bigint(20) UNSIGNED DEFAULT NULL,
   `tehsil_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
+  `name` varchar(150) NOT NULL,
+  `email` varchar(150) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
+  `password` varchar(150) NOT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -901,7 +901,7 @@ INSERT INTO `users` (`id`, `div_id`, `district_id`, `tehsil_id`, `name`, `email`
 CREATE TABLE `villages` (
   `village_id` bigint(20) UNSIGNED NOT NULL,
   `halqa_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `village_name` varchar(255) NOT NULL,
+  `village_name` varchar(150) NOT NULL,
   `tehsil_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
