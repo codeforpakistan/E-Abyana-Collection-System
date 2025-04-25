@@ -6,14 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Outlet;
 use App\Models\Village;
-use App\Models\canal;
+use App\Models\Canal;
 use App\Models\Minorcanal;
 use App\Models\Distributary;
 use App\Models\Divsion;
 class CanalOutLet extends Controller
 {
     public function AddOutlet(){
-        $canals = canal::all(); 
+        $canals = Canal::all(); 
         $minors = Minorcanal::all();
      
         $divsions = Divsion::all();
