@@ -143,7 +143,7 @@ Route::put('/canals/{id}/update', [CanalController::class, 'update'])->name('upd
     Route::get('ListBills', [FarmerLandRecord::class, 'ListBills'])->name('');
 
     Route::get('/get-outlets/{canal_id}', [FarmerLandRecord::class, 'get_outlet']);
-    //Route::get('/get-districts/{divisionId}', [FarmerLandRecord::class, 'FarmerDistricts']);
+    Route::get('/get-districts/{divisionId}', [FarmerLandRecord::class, 'FarmerDistricts']);
     Route::get('/get-tehsils/{districtId}', [FarmerLandRecord::class, 'FarmerTehsils']);
     Route::get('ListIrrigator', [IrrigatorController::class, 'ListIrrigator']);
     
@@ -189,19 +189,11 @@ Route::put('/canals/{id}/update', [CanalController::class, 'update'])->name('upd
     Route::get('/get-tehsils/{districtId}', [IrrigatorController::class, 'Tehsils']);
     Route::get('/get-halqa/{tehsilId}', [IrrigatorController::class, 'Halqa']);
     Route::get('/halqa_for_users/{tehsilId}', [UserController::class, 'Halqa']);
-    //Route::get('/get-districts/{divisionId}', [FarmerLandRecord::class, 'FarmerDistricts']);
+    Route::get('/get-districts/{divisionId}', [FarmerLandRecord::class, 'FarmerDistricts']);
     Route::get('/get-tehsils/{districtId}', [FarmerLandRecord::class, 'FarmerTehsils']);
     Route::get('/get-village/{halqaId}', [IrrigatorController::class, 'Village']);
     Route::get('/get-tehsils/{districtId}', [HalqaController::class, 'getTehsils']);
     Route::get('/get-outlets/{canal_id}', [FarmerLandRecord::class, 'get_outlet']);
-
-    Route::get('/get-minor-canals/{canal_id}', [FarmerLandRecord::class, 'get_minor_canal1']);
-    Route::get('/get-outlets-by-minor/{minor_id}', [FarmerLandRecord::class, 'get_outlet_by_minor']);
-
-    Route::get('/get-minor-canals-for-distri/{canal_id}', [FarmerLandRecord::class, 'get_minor_canals_for_distri']);
-    Route::get('/get-distributories-by-minor/{minor_id}', [FarmerLandRecord::class, 'get_distributories_by_minor']);
-    Route::get('/get-outlets-by-distributory/{distri_id}', [FarmerLandRecord::class, 'get_outlets_by_distributory']);
-
     Route::get('edit-irrigator/{id}',[IrrigatorController::class,'editIrrigator'])->name('edit.irrigator');
 Route::put('/irrigators/{id}', [IrrigatorController::class, 'update'])->name('update.irrigator');
 Route::get('Addprice/edit/{id}', [PriceController::class, 'edit'])->name('cropprice.edit');
