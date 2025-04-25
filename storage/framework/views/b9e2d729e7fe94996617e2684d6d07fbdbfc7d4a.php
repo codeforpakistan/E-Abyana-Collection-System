@@ -76,17 +76,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
-            <?php if(session('success')): ?>
-                <script>
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success',
-                        text: "<?php echo e(session('success')); ?>",
-                        showConfirmButton: false,
-                        timer: 2000
-                    });
-                </script>
-            <?php endif; ?>
+          
 
             <?php if(session('error')): ?>
                 <script>

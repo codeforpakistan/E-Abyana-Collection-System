@@ -44,7 +44,8 @@
                         <div class="row" style="margin-top:-30px;">
                             <div class="form-group col-4">
                                 <label class="form-label" for="div_id">Select Division / ڈویژن</label>
-                                <select name="div_id" id="div_id" class="form-group form-control select_search" required>
+                                <!-- select_search -->
+                                <select name="div_id" id="div_id" class="form-group form-control" required>
                                     <option value="">Choose Division / ڈویژن</option>
                                     @foreach($divsions as $divsion)
                                         <option value="{{ $divsion->id }}">{{ $divsion->divsion_name }}</option>

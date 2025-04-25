@@ -49,9 +49,9 @@
               <!-- First Row (Name and CNIC) -->
               <div class="row">
                   <div class="form-group col-lg-12">
-                      <label  class="form-label font-weight-bold for="div_id">Select Division /ڈویژن</label>
+                      <label  class="form-label font-weight-bold" for="div_id">Select Division /ڈویژن</label>
                       <select name="div_id" id="div_id" class="form-control" required>
-                          <option class="form-label font-weight-bold value="">Choose Division /ڈویژن</option>
+                          <option class="form-label font-weight-bold" value="">Choose Division /ڈویژن</option>
                           @foreach($divsions as $divsion)
                               <option value="{{ $divsion->id }}">{{ $divsion->divsion_name }}</option>
                           @endforeach

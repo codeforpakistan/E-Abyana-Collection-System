@@ -76,17 +76,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
-            @if (session('success'))
-                <script>
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success',
-                        text: "{{ session('success') }}",
-                        showConfirmButton: false,
-                        timer: 2000
-                    });
-                </script>
-            @endif
+          
 
             @if (session('error'))
                 <script>

@@ -122,15 +122,15 @@ Welcome to E ABYANA
       </div>
      </form> -->
                 <ul class="navbar-nav ml-auto">
-                    <li class="dropdown dropdown-list-toggle d-none d-lg-block">
+                  <!--  <li class="dropdown dropdown-list-toggle d-none d-lg-block">
                         <a href="#" class="nav-link nav-link-lg full-screen-link">
                             <i class="fa fa-expand " id="fullscreen-button"></i>
                         </a>
-                    </li>
+                    </li> -->
                     <li class="dropdown"><a href="#" data-toggle="dropdown"
                             class="nav-link dropdown-toggle nav-link-lg d-flex">
                             <span class="mr-3 mt-2 d-none d-lg-block ">
-                                <span class="text-white">Hello,<span class="ml-1">
+                                <span class="text-white"><!--Hello,--><span class="ml-1">
                                         <?php if(session()->has('name')): ?>
                                             <?php echo e(session('name')); ?>
 
@@ -152,7 +152,7 @@ Welcome to E ABYANA
                                         Welcome to E ABYANA
                                     <?php endif; ?>
                                 </h5>
-                                <small class="text-overflow m-0"> Web Developer</small>
+                                <small class="text-overflow m-0">System User</small>
                             </div>
                             <!--<a class="dropdown-item" href="profile.html"><i class="mdi mdi-account-outline mr-2"></i> <span>My profile</span></a>
         <a class="dropdown-item" href="#"><i class="mdi mdi-settings mr-2"></i> <span>Settings</span></a>
@@ -539,12 +539,10 @@ Welcome to E ABYANA
                 timer: 3000, // Close after 3 seconds
                 showConfirmButton: false
                 <?php if(Session::has('success')): ?>
-                    <
-                    div class = "alert alert-success" >
+                   <div class = "alert alert-success" >
                     <?php echo e(Session::get('success')); ?>
 
-                        <
-                        /div>
+                    </div>
                 <?php endif; ?>
 
                 <?php if(Session::has('error')): ?>

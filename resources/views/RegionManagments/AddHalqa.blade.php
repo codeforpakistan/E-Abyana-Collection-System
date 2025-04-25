@@ -50,9 +50,10 @@
             
                 <div class="row">
                     <!-- District Dropdown with Select2 -->
-                    <div class="form-group col-4">
+                    <div class="form-group col-6">
                         <label class="form-label font-weight-bold" for="district_id">Select District/ضلع</label>
-                        <select name="district_id" id="district_id" class="form-control select2" required onchange="get_tehsils(this)">
+                        <!-- select2 -->
+                        <select name="district_id" id="district_id" class="form-control" required onchange="get_tehsils(this)">
                             <option value="">Choose District</option>
                             @foreach($districts as $district)
                                 <option value="{{ $district->id }}">{{ $district->name }}</option>
@@ -61,7 +62,7 @@
                     </div>
             
                     <!-- Tehsil Dropdown -->
-                    <div class="form-group col-8">
+                    <div class="form-group col-6">
                         <label class="form-label font-weight-bold" for="tehsil_id">Select Tehsil/تحصیل</label>
                         <select name="tehsil_id" id="tehsil_id" class="form-control" required>
                             <option value="">Choose Tehsil</option>

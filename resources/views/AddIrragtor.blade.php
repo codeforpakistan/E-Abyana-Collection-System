@@ -5,7 +5,182 @@
     <head>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
-    <div class="app-content">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-primary">
+          <h5 class="modal-title text-white" id="exampleModalLabel">Add Irrigator</h5>
+          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form id="add-irrigator-form" action="{{ url('AddIrragtor/add') }}" method="POST" class="form-horizontal">
+                @csrf
+                <div class="row">
+                    @if (session('halqa_id') <= 0)
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label class="form-label font-weight-bold" for="div_id">Select Division / ڈویژن</label>
+                             <!-- .select_search  - class for dropdown searching in div_id-->
+                            <select name="div_id" id="div_id" class="form-control" required>
+                                <option value="">Choose Division / ڈویژن</option>
+                                @foreach($divsions as $divsion)
+                                    <option value="{{ $divsion->id }}">{{ $divsion->divsion_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label  class="form-label font-weight-bold" for="canal_id">Select Canal/ضلع</label>
+                            <select name="canal_id" id="canal_id" class="form-control" >
+                                <option value="">Choose Canal/گاؤں</option>
+                                @foreach($canals as $canal)
+                                    <option value="{{ $canal->id }}">{{ $canal->canal_name }}</option>
+                                @endforeach
+                            </select>
+                            
+            
+                        </div>
+                    </div>
+                        <div class="form-group col-lg-3">
+                            <label class="form-label font-weight-bold" for="district_id">Select
+                                District/ضلع</label>
+                            <select name="district_id" id="district_id" class="form-control"
+                                onchange="get_tehsils(this)">
+                                <option value="">Choose District</option>
+                                @foreach ($districts as $district)
+                                    <option value="{{ $district->id }}">{{ $district->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label class="form-label font-weight-bold" for="tehsil_id">Select
+                                Tehsil/تحصیل</label>
+                            <select name="tehsil_id" id="tehsil_id" class="form-control"
+                                onchange="get_halqa(this)">
+                                <option value="">Choose Tehsil</option>
+                                @foreach ($tehsils as $tehsil)
+                                    <option value="{{ $tehsil->tehsil_id }}">{{ $tehsil->tehsil_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label class="form-label font-weight-bold" for="halqa_id">Select Halqa/حلقہ</label>
+                            <select name="halqa_id" id="halqa_id" class="form-control"
+                                onchange="get_village(this)">
+                                <option value="">Choose Halqa/حلقہ</option>
+                                @foreach ($Halqas as $Halqa)
+                                    <option value="{{ $Halqa->id }}">{{ $Halqa->halqa_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-6">
+                            <label class="form-label font-weight-bold" for="village_id">Select
+                                Village / گاؤں</label>
+                            <select name="village_id" id="village_id" class="form-control">
+                                <option value="">Choose Village/گاؤں</option>
+                                @foreach ($villages as $village)
+                                    <option value="{{ $village->village_id }}">{{ $village->village_name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        {{-- <div class="form-group col-6">
+                            <label class="form-label font-weight-bold" for="canal_id">Select Canal / نہر</label>
+                            <select name="canal_id" id="canal_id" class="form-control" required>
+                            <option value="">Choose Canal / نہر</option>
+                            </select>
+                        </div> --}}
+                     
+                    @endif
+                    @if (session('halqa_id') > 0)
+                        <div class="form-group col-lg-6">
+                            <label class="form-label font-weight-bold" for="halqa_id">Select Halqa/حلقہ</label>
+                            <select name="halqa_id" id="halqa_id" class="form-control" readonly
+                                onchange="get_village(this)">
+                                <option value="">Choose Halqa/حلقہ</option>
+                                @foreach ($Halqas as $Halqa)
+                                    <option value="{{ $Halqa->id }}">{{ $Halqa->halqa_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-6">
+                            <label class="form-label font-weight-bold" for="village_id">Select
+                                Village/گاؤں</label>
+                            <select name="village_id" id="village_id" class="form-control" required onchange="get_canals(this)">
+                                <option value="">Choose Village/گاؤں</option>
+                                @foreach ($villages as $village)
+                                    <option value="{{ $village->village_id }}">{{ $village->village_name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                     
+                            <div class="form-group col-lg-6">
+                                <label class="form-label font-weight-bold" for="div_id">Select Division / ڈویژن</label>
+                                <select name="div_id" id="div_id" class="form-control" required>
+                                    <option value="">Choose Division / ڈویژن</option>
+                                    @foreach($divsions as $divsion)
+                                        <option value="{{ $divsion->id }}">{{ $divsion->divsion_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label  class="form-label font-weight-bold" for="canal_id">Select Canal/ضلع</label>
+                                <select name="canal_id" id="canal_id" class="form-control " >
+                                    <option value="">Choose Canal/گاؤں</option>
+                                    @foreach($canals as $canal)
+                                        <option value="{{ $canal->id }}">{{ $canal->canal_name }}</option>
+                                    @endforeach
+                                </select>
+                                
+                
+                            </div>
+                    
+                    @endif
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label class="form-label font-weight-bold">Name Irrigator</label>
+                        <input class="form-control" type="text" id="" name="irrigator_name" 
+                        placeholder=" Enter Name Irrigator"
+                            required>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label class="form-label font-weight-bold">Khata Number</label>
+                        <input class="form-control" type="text" id="" name="irrigator_khata_number"
+                        placeholder=" Enter Khata Number"
+                            required>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label class="form-label font-weight-bold">Irrigator Father Name</label>
+                        <input class="form-control" type="text" id="" name="irrigator_f_name"
+                        placeholder=" Enter Khata Number"
+                            required>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label class="form-label font-weight-bold">Mobile Number</label>
+                        <input class="form-control" type="text" id="irrigator_mobile_number"
+                        placeholder=" Enter Mobile Number"
+                            name="irrigator_mobile_number" required>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label class="form-label font-weight-bold">Irrigator CNIC</label>
+                        <input class="form-control" type="text" id="cnic"
+                        placeholder=" Enter CNIC Number"
+                            name="cnic" required>
+                    </div>
+                </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+          <button type="button" id="submit-btn" class="btn btn-primary" onclick="submit_form()">+ Add Irrigator</button>
+        </div>
+       </form>
+      </div>
+    </div>
+  </div> 
+    <div class="app-content">   
 
         <section class="section">
 
@@ -287,180 +462,7 @@
         }
     }
 </script>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header bg-primary">
-          <h5 class="modal-title text-white" id="exampleModalLabel">Add Irrigator</h5>
-          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <form id="add-irrigator-form" action="{{ url('AddIrragtor/add') }}" method="POST" class="form-horizontal">
-                @csrf
-                <div class="row">
-                    @if (session('halqa_id') <= 0)
-                    <div class="row">
-                        <div class="form-group col-lg-6">
-                            <label class="form-label font-weight-bold" for="div_id">Select Division / ڈویژن</label>
-                            <select name="div_id" id="div_id" class="form-group form-control select_search" required>
-                                <option value="">Choose Division / ڈویژن</option>
-                                @foreach($divsions as $divsion)
-                                    <option value="{{ $divsion->id }}">{{ $divsion->divsion_name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label  class="form-label font-weight-bold" for="canal_id">Select Canal/ضلع</label>
-                            <select name="canal_id" id="canal_id" class="form-control" >
-                                <option value="">Choose Canal/گاؤں</option>
-                                @foreach($canals as $canal)
-                                    <option value="{{ $canal->id }}">{{ $canal->canal_name }}</option>
-                                @endforeach
-                            </select>
-                            
-            
-                        </div>
-                    </div>
-                        <div class="form-group col-lg-3">
-                            <label class="form-label font-weight-bold" for="district_id">Select
-                                District/ضلع</label>
-                            <select name="district_id" id="district_id" class="form-control"
-                                onchange="get_tehsils(this)">
-                                <option value="">Choose District</option>
-                                @foreach ($districts as $district)
-                                    <option value="{{ $district->id }}">{{ $district->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group col-lg-3">
-                            <label class="form-label font-weight-bold" for="tehsil_id">Select
-                                Tehsil/تحصیل</label>
-                            <select name="tehsil_id" id="tehsil_id" class="form-control"
-                                onchange="get_halqa(this)">
-                                <option value="">Choose Tehsil</option>
-                                @foreach ($tehsils as $tehsil)
-                                    <option value="{{ $tehsil->tehsil_id }}">{{ $tehsil->tehsil_name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group col-lg-3">
-                            <label class="form-label font-weight-bold" for="halqa_id">Select Halqa/حلقہ</label>
-                            <select name="halqa_id" id="halqa_id" class="form-control"
-                                onchange="get_village(this)">
-                                <option value="">Choose Halqa/حلقہ</option>
-                                @foreach ($Halqas as $Halqa)
-                                    <option value="{{ $Halqa->id }}">{{ $Halqa->halqa_name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group col-6">
-                            <label class="form-label font-weight-bold" for="village_id">Select
-                                Village / گاؤں</label>
-                            <select name="village_id" id="village_id" class="form-control">
-                                <option value="">Choose Village/گاؤں</option>
-                                @foreach ($villages as $village)
-                                    <option value="{{ $village->village_id }}">{{ $village->village_name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        {{-- <div class="form-group col-6">
-                            <label class="form-label font-weight-bold" for="canal_id">Select Canal / نہر</label>
-                            <select name="canal_id" id="canal_id" class="form-control" required>
-                            <option value="">Choose Canal / نہر</option>
-                            </select>
-                        </div> --}}
-                     
-                    @endif
-                    @if (session('halqa_id') > 0)
-                        <div class="form-group col-lg-6">
-                            <label class="form-label font-weight-bold" for="halqa_id">Select Halqa/حلقہ</label>
-                            <select name="halqa_id" id="halqa_id" class="form-control" readonly
-                                onchange="get_village(this)">
-                                <option value="">Choose Halqa/حلقہ</option>
-                                @foreach ($Halqas as $Halqa)
-                                    <option value="{{ $Halqa->id }}">{{ $Halqa->halqa_name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group col-6">
-                            <label class="form-label font-weight-bold" for="village_id">Select
-                                Village/گاؤں</label>
-                            <select name="village_id" id="village_id" class="form-control" required onchange="get_canals(this)">
-                                <option value="">Choose Village/گاؤں</option>
-                                @foreach ($villages as $village)
-                                    <option value="{{ $village->village_id }}">{{ $village->village_name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                     
-                            <div class="form-group col-lg-6">
-                                <label class="form-label font-weight-bold" for="div_id">Select Division / ڈویژن</label>
-                                <select name="div_id" id="div_id" class="form-group form-control " required>
-                                    <option value="">Choose Division / ڈویژن</option>
-                                    @foreach($divsions as $divsion)
-                                        <option value="{{ $divsion->id }}">{{ $divsion->divsion_name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group col-lg-6">
-                                <label  class="form-label font-weight-bold" for="canal_id">Select Canal/ضلع</label>
-                                <select name="canal_id" id="canal_id" class="form-control " >
-                                    <option value="">Choose Canal/گاؤں</option>
-                                    @foreach($canals as $canal)
-                                        <option value="{{ $canal->id }}">{{ $canal->canal_name }}</option>
-                                    @endforeach
-                                </select>
-                                
-                
-                            </div>
-                    
-                    @endif
-                </div>
-                <div class="row">
-                    <div class="form-group col-lg-6">
-                        <label class="form-label font-weight-bold">Name Irrigator</label>
-                        <input class="form-control" type="text" id="" name="irrigator_name" 
-                        placeholder=" Enter Name Irrigator"
-                            required>
-                    </div>
-                    <div class="form-group col-lg-6">
-                        <label class="form-label font-weight-bold">Khata Number</label>
-                        <input class="form-control" type="text" id="" name="irrigator_khata_number"
-                        placeholder=" Enter Khata Number"
-                            required>
-                    </div>
-                    <div class="form-group col-lg-6">
-                        <label class="form-label font-weight-bold">Irrigator Father Name</label>
-                        <input class="form-control" type="text" id="" name="irrigator_f_name"
-                        placeholder=" Enter Khata Number"
-                            required>
-                    </div>
-                    <div class="form-group col-lg-6">
-                        <label class="form-label font-weight-bold">Mobile Number</label>
-                        <input class="form-control" type="text" id="irrigator_mobile_number"
-                        placeholder=" Enter Mobile Number"
-                            name="irrigator_mobile_number" required>
-                    </div>
-                    <div class="form-group col-lg-12">
-                        <label class="form-label font-weight-bold">Irrigator CNIC</label>
-                        <input class="form-control" type="text" id="cnic"
-                        placeholder=" Enter CNIC Number"
-                            name="cnic" required>
-                    </div>
-                </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
-          <button type="button" id="submit-btn" class="btn btn-primary" onclick="submit_form()">+ Add Irrigator</button>
-        </div>
-       </form>
-      </div>
-    </div>
-  </div>
+
 
 <script>
     function submit_form() {
@@ -547,4 +549,4 @@
             }
         });
     });
-</script
+</script>
