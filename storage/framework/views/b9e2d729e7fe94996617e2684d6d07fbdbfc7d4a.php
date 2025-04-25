@@ -34,19 +34,27 @@
 <!-- Logo Row -->
 <div class="container-fluid mt-3">
     <div class="row align-items-center">
-        <div class="col d-flex align-items-center">
-        <img src="<?php echo e(asset('assets/img/avatar/logo.png')); ?>" alt="Left Logo" style="width:80px;">
-        <div class="ms-2" style="margin-top:-5px;">
-        <span class="fw-bold text-success" style="font-size:24px;">E-Abyana</span><br>
-        <span class="fw-bold text-primary" style="font-size:18px;">Irrigation Department KPK</span>
-        </div>
+        <!-- Left: E-Abyana Text and Logo -->
+        <div class="col-md-4 d-flex align-items-center">
+            <img src="<?php echo e(asset('assets/img/avatar/logo.png')); ?>" alt="Left Logo" style="width:80px;">
+            <div class="ms-2" style="margin-top:-5px;">
+                <span class="fw-bold text-success" style="font-size:20px;">E-Abyana</span><br>
+                <span class="fw-bold text-primary" style="font-size:14px;">Irrigation Department KPK</span>
+            </div>
         </div>
 
-        <div class="col-auto">
+        <!-- Center: New Logo -->
+        <div class="col-md-4 text-center">
+            <img src="<?php echo e(asset('assets/img/avatar/cfp_logo.png')); ?>" alt="Center Logo" style="width:160px;">
+        </div>
+
+        <!-- Right: KP Logo -->
+        <div class="col-md-4 text-end">
             <img src="<?php echo e(asset('assets/img/avatar/KP-Logo.png')); ?>" alt="Right Logo" style="width:80px;">
         </div>
     </div>
 </div>
+
 
 <!-- Login Form -->
 <div class="form-section">

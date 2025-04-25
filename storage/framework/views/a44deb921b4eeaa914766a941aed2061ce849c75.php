@@ -430,9 +430,7 @@ Welcome to E ABYANA
 
         <!--Footer-->
         <footer class="main-footer">
-            <div class="text-center">
-                copyright &copy; E-Abyana - Irrigation Department KPK. Developed  By <a href="https://www.kpitb.gov.pk/">KPITB</a>
-            </div>
+        <div class="text-center">copyright &copy; <strong>E-Abyana</strong> - Irrigation Department KPK.&nbsp;&nbsp;|&nbsp;&nbsp;Developed  By <a href="https://www.kpitb.gov.pk/">KPITB</a>&nbsp;&&nbsp;<a href="https://codeforpakistan.org/">CodeForPakistan</a></div>
         </footer>
         <!--/Footer-->
     </div>
