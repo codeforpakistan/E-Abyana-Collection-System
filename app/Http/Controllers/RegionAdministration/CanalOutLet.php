@@ -15,10 +15,8 @@ class CanalOutLet extends Controller
     public function AddOutlet(){
         $canals = Canal::all(); 
         $minors = Minorcanal::all();
-     
         $divsions = Divsion::all();
         $Distributaries = Distributary::all();
-
         $outlets = Outlet::with(['canal', 'division', 'minor','distributsry'])->paginate(5);
         return view('RegionManagments.CanalOutlet',compact('canals','outlets','divsions',
         'minors','minors','Distributaries'));

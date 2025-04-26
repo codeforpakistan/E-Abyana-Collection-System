@@ -116,11 +116,12 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Name Distributary</th>
+                                        <th>OutLet Name</th>
                                         <th>Division Name</th>
-                                        <th>Outlet Name</th>
+                                        <th>Canal Name</th>
                                         <th>Minor Name</th>
-                                    
+                                        <th>Distributroy</th>
+                                        <th>Beneficiaries</th>
                                         <th>Total No. of CCA</th>
                                         <th>Total No. of Discharge (Cusec)</th>
                                         <th>Action</th>
@@ -131,7 +132,8 @@
                                         @foreach($outlets as $canal)
                                         <tr>
                                             <td>{{ $canal->id }}</td>
-                                            <td>{{ $canal->	outlet_name }}</td>
+                                            <td>{{ $canal->outlet_name }}</td>
+                                            <td>{{ $canal->division->divsion_name ?? 'N/A' }}</td>
                                             <td>
                                                 @if($canal->canal)
                                                     {{ $canal->canal->canal_name }}
@@ -140,10 +142,10 @@
                                                 @endif
                                             </td>
                                             <td>{{ $canal->minor->minor_name ?? 'N/A' }}</td>
-
-                                          <td>{{ $canal->division->division_name ?? 'N/A' }}</td>
+                                            <td>{{ $canal->distributsry->name ?? 'N/A' }}</td>
+                                            <td>{{ $canal->beneficiaries ?? 'N/A' }}</td>
                                           
-                                               <td>{{ $canal->total_no_cca }}</td>
+                                            <td>{{ $canal->total_no_cca }}</td>
                                            <td>{{ $canal->total_no_discharge_cusic }}</td>
 
                                             <td>

@@ -19,7 +19,6 @@
                 @csrf
                 <div class="row">
                     @if (session('halqa_id') <= 0)
-                    <div class="row">
                         <div class="form-group col-lg-6">
                             <label class="form-label font-weight-bold" for="div_id">Select Division / ڈویژن</label>
                              <!-- .select_search  - class for dropdown searching in div_id-->
@@ -38,11 +37,8 @@
                                     <option value="{{ $canal->id }}">{{ $canal->canal_name }}</option>
                                 @endforeach
                             </select>
-                            
-            
                         </div>
-                    </div>
-                        <div class="form-group col-lg-3">
+                        <div class="form-group col-lg-4">
                             <label class="form-label font-weight-bold" for="district_id">Select
                                 District/ضلع</label>
                             <select name="district_id" id="district_id" class="form-control"
@@ -53,7 +49,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group col-lg-3">
+                        <div class="form-group col-lg-4">
                             <label class="form-label font-weight-bold" for="tehsil_id">Select
                                 Tehsil/تحصیل</label>
                             <select name="tehsil_id" id="tehsil_id" class="form-control"
@@ -64,7 +60,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group col-lg-3">
+                        <div class="form-group col-lg-4">
                             <label class="form-label font-weight-bold" for="halqa_id">Select Halqa/حلقہ</label>
                             <select name="halqa_id" id="halqa_id" class="form-control"
                                 onchange="get_village(this)">
@@ -74,7 +70,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group col-6">
+                        <div class="form-group col-12">
                             <label class="form-label font-weight-bold" for="village_id">Select
                                 Village / گاؤں</label>
                             <select name="village_id" id="village_id" class="form-control">

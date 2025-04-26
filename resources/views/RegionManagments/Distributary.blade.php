@@ -45,7 +45,8 @@
                             <!-- Division Selection -->
                             <div class="form-group col-3">
                                 <label class="form-label" for="div_id">Division / ڈویژن</label>
-                                <select name="div_id" id="div_id" class="form-control select_search"required>
+                                <!-- select_search -->
+                                <select name="div_id" id="div_id" class="form-control" required>
                                     <option value="">Choose Division / ڈویژن</option>
                                     @foreach($divsions as $divsion)
                                         <option value="{{ $divsion->id }}">{{ $divsion->divsion_name }}</option>
@@ -156,6 +157,7 @@
                                         <tr>
                                             <td>{{ $canal->id }}</td>
                                             <td>{{ $canal->name }}</td>
+                                            <td>{{ $canal->division->divsion_name ?? 'N/A' }}</td>
                                             <td>
                                                 @if($canal->canal)
                                                     {{ $canal->canal->canal_name }}
@@ -164,8 +166,6 @@
                                                 @endif
                                             </td>
                                             <td>{{ $canal->minor->minor_name ?? 'N/A' }}</td>
-
-                                          <td>{{ $canal->division->division_name ?? 'N/A' }}</td>
                                                 <td>{{ $canal->no_outlet }}</td>
                                              <td>{{ $canal->no_outlet_ls }}</td>
                                              <td>{{ $canal->no_outlet_rs }}</td>

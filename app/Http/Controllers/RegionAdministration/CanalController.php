@@ -71,8 +71,6 @@ class CanalController extends Controller
     public function Addminor(){
        
         $minorCanals = Minorcanal::with('canal', 'division')->paginate(5);
-
-
          $canals = Canal::all();
          $divsions = Divsion::all();
         return view('RegionManagments.AddMinor-Canal',compact('divsions','canals','minorCanals'));
@@ -99,7 +97,6 @@ class CanalController extends Controller
     public function AddDistributary(){
         
         $Distributaries = Distributary::with(['canal', 'division', 'minor'])->paginate(5);
-
         $minors = Minorcanal::all();
          $canals = Canal::all();
          $divsions = Divsion::all();

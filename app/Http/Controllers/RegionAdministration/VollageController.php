@@ -5,7 +5,7 @@ namespace App\Http\Controllers\RegionAdministration;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Tehsil;
-use App\Models\Village;
+use App\Models\village;
 use App\Models\Halqa;
 use DB;
 
@@ -55,7 +55,7 @@ public function StoreVillage(Request $request)
     ]);
 
     // Create a new Tehsil record
-    Village::create([
+    village::create([
         'village_name' => $request->village_name, // Match form input with column name
         'tehsil_id' => $request->tehsil_id,
         'halqa_id' => $request->halqa_id,

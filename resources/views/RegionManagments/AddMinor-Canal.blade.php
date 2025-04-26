@@ -134,6 +134,7 @@
                                         <tr>
                                             <td>{{ $canal->id }}</td>
                                             <td>{{ $canal->minor_name }}</td>
+                                            <td>{{ $canal->division->divsion_name ?? 'N/A' }}</td>
                                             <td>
                                                 @if($canal->canal)
                                                     {{ $canal->canal->canal_name }}
@@ -142,8 +143,8 @@
                                                 @endif
                                             </td>
                                     
-                                          <td>{{ $canal->division->division_name ?? 'N/A' }}</td>
-                                                <td>{{ $canal->no_outlet }}</td>
+                                          
+                                            <td>{{ $canal->no_outlet }}</td>
                                              <td>{{ $canal->no_outlet_ls }}</td>
                                              <td>{{ $canal->no_outlet_rs }}</td>
                                                <td>{{ $canal->total_no_cca }}</td>
