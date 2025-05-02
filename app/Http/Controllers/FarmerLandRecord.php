@@ -906,6 +906,7 @@ public function surveyBillView($id) {
             // Single record fields from related tables
             'irrigators.id', 
             'irrigators.irrigator_name', 
+            'irrigators.irrigator_f_name', 
             'irrigators.irrigator_khata_number',
             'cropprices.final_crop', 
             'villages.village_name',
@@ -976,8 +977,10 @@ public function surveyBillApprovalView($id) {
             // Single record fields from related tables
             'irrigators.id', 
             'irrigators.irrigator_name', 
+            'irrigators.irrigator_f_name', 
             'irrigators.irrigator_khata_number',
             'cropprices.final_crop', 
+            'cropsurveys.session_date',
             'villages.village_name',
             'halqa.halqa_name',
             'canals.canal_name',

@@ -82,7 +82,7 @@ $nextMonthDate = $date->format('d-m-Y');
               <span><strong>Name</strong></span>
               <p>{{$relatedData->irrigator_name}}</p>
               <span><strong>Fathar Name</strong></span>
-              <p>Sher Ali Khan</p>
+              <p>{{$relatedData->irrigator_f_name}}</p>
               <span><strong>Khata No</strong></span>
               <p>{{$relatedData->irrigator_khata_number}}</p>
             </div>
@@ -106,7 +106,7 @@ $nextMonthDate = $date->format('d-m-Y');
               <span><strong>Village</strong></span>
               <p>{{$relatedData->village_name}}</p>
               <span><strong>Crop Season</strong></span>
-              <p>{{$relatedData->crop_name}}-2024</p>
+              <p>{{$relatedData->crop_name}}-{{$relatedData->session_date}}</p>
             </div>
           </div>
         </div>
@@ -202,11 +202,11 @@ $nextMonthDate = $date->format('d-m-Y');
                      </div>
                      <div class="bill_due_date mr-1 text-center" style="height:50px; width:80px; border:1px solid gray;">
                       <p style="margin:0px;"><strong>Due Date</strong></p>
-                      <p style="margin:0px;">{{$today}}</p>
+                      <p style="margin:0px;">{{$nextMonthDate}}</p>
                      </div>
                      <div class="abyana mr-1 text-center" style="height:50px; width:80px; border:1px solid gray;">
                       <p style="margin:0px;"><strong>Abyana</strong></p>
-                      <p style="margin:0px;">{{number_format($total_amount+440, 2)}}</p>
+                      <p style="margin:0px;">{{number_format($total_amount, 2)}}</p>
                      </div>
                      <div class="arrears mr-1 text-center" style="height:50px; width:80px; border:1px solid gray;">
                       <p style="margin:0px;"><strong>Arrear</strong></p>
@@ -214,7 +214,7 @@ $nextMonthDate = $date->format('d-m-Y');
                      </div>
                      <div class="total mr-1 text-center" style="height:50px; width:80px; border:1px solid gray;">
                       <p style="margin:0px;"><strong>Total</strong></p>
-                      <p style="margin:0px;">{{number_format($total_amount+440, 2)}}</p>
+                      <p style="margin:0px;">{{number_format($total_amount, 2)}}</p>
                      </div>
                  </div>
              </div>
@@ -234,11 +234,11 @@ $nextMonthDate = $date->format('d-m-Y');
           <tr>
             <td>1000000000{{$relatedData->id}}</td>
             <td>{{$relatedData->irrigator_name}}</td>
-            <td>Sher Ali Khan</td>
+            <td>{{$relatedData->irrigator_f_name}}</td>
             <td>{{$relatedData->irrigator_khata_number}}</td>
             <td>{{$relatedData->canal_name}}</td>
             <td>{{$relatedData->outlet_name}}</td>
-            <td>{{$relatedData->crop_name}}-2024</td>
+            <td>{{$relatedData->crop_name}}-{{$relatedData->session_date}}</td>
           </tr>
         </table>
         <hr>
