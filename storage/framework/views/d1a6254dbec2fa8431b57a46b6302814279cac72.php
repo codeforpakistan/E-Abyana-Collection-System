@@ -63,7 +63,7 @@
                         <select name="div_id" id="div_id" class="form-control">
                             <option value="">Choose Division</option>
                             <?php $__currentLoopData = $divsions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $division): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($division->id); ?>"><?php echo e($division->division_name); ?></option>
+                                <option value="<?php echo e($division->id); ?>"><?php echo e($division->divsion_name); ?></option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>

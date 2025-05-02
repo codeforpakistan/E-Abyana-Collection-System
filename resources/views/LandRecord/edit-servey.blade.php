@@ -31,7 +31,7 @@
                     <h4><strong>Edit Survey Details</strong></h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('survey.update', $survey->id) }}" method="POST">
+                    <form action="{{--route('survey.update', $survey->id) --}}" method="POST">
                         @csrf
                         @method('PUT')
                         <fieldset class="customLegend">

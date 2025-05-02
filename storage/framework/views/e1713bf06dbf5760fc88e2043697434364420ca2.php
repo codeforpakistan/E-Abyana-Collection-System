@@ -61,14 +61,14 @@
                             </select>
                         </div>
                         <div class="form-group col-lg-4">
-                            <label class="form-label font-weight-bold" for="halqa_id">Select Halqa/حلقہ</label>
-                            <select name="halqa_id" id="halqa_id" class="form-control"
+                        <label class="form-label font-weight-bold" for="halqa_id">Select Halqa/حلقہ</label>
+                        <select name="halqa_id" id="halqa_id" class="form-control"
                                 onchange="get_village(this)">
                                 <option value="">Choose Halqa/حلقہ</option>
                                 <?php $__currentLoopData = $Halqas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $Halqa): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option value="<?php echo e($Halqa->id); ?>"><?php echo e($Halqa->halqa_name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            </select>
+                        </select>
                         </div>
                         <div class="form-group col-12">
                             <label class="form-label font-weight-bold" for="village_id">Select
@@ -83,7 +83,6 @@
                             </select>
                         </div>
                         
-                     
                     <?php endif; ?>
                     <?php if(session('halqa_id') > 0): ?>
                         <div class="form-group col-lg-6">

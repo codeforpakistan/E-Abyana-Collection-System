@@ -19,9 +19,9 @@ use App\Models\Distributary;
 use DB;
 
 class FarmerLandRecord extends Controller
-{public function LandRecord($id, $abs, $village_id, $canal_id, $div_id, Request $request)
-
-    {
+{
+public function LandRecord($id, $abs, $village_id, $canal_id, $div_id, Request $request)
+{
         $villages = village::find($village_id);
 
         if (!$villages) {
@@ -32,6 +32,7 @@ class FarmerLandRecord extends Controller
         $districts = District::all();
         $tehsils = Tehsil::all();
         $divsions = Divsion::all();
+        $divsions1 = Divsion::where('id', $div_id)->first();
         $canals = Canal::where('id', $canal_id)->first();
         $crops = Crop::all();
         $Outlets = Outlet::all();
@@ -43,6 +44,7 @@ class FarmerLandRecord extends Controller
             'districts',
             'tehsils',
             'divsions',
+            'divsions1',
             'canals',
             'crops',
             'Outlets',
@@ -51,17 +53,18 @@ class FarmerLandRecord extends Controller
             'cropprice'
         ));
     }
-    public function EditSurvey($id)
+public function EditSurvey($id)
 {
-    $survey = Farmer::findOrFail($id); // Fetch the exam by ID
+    $survey = Farmer::findOrFail($id);
     $districts = District::all();
     $tehsils = Tehsil::all();
     $divsions = Divsion::all();
-
+    $villages = village::all();
     $crops = Crop::all();
     $Outlets = Outlet::all();
     $Halqas = Halqa::all();
-    $cropprice = Cropprice::all();       // Fetch all levels for the dropdown
+    $cropprice = Cropprice::all(); 
+    $canals = Canal::all();
     return view('LandRecord.edit-servey', compact(
         'villages',
         'districts',

@@ -40,11 +40,11 @@
                         <thead>
                             <tr>
                                 <th>Village</th>
-                                {{-- <th>Farmer</th>
+                                <th>Farmer</th>
                                 <th>Crop</th>
-                                <th>Rate</th> --}}
+                                <th>Rate</th>
                                 <th>Date</th>
-                                {{-- <th>Length</th>
+                               {{-- <th>Length</th>
                                 <th>Width</th>
                                 <th>Marla</th>
                                 <th>Kanal</th> --}}
@@ -59,7 +59,7 @@
                                     <td>{{ $survey->final_crop }}</td>
                                     <td>{{ $survey->crop_price }}</td>
                                     <td>{{ $survey->date }}</td>
-                                    {{-- <td>
+                                    {{--<td>
                           
                                         <strong>{{ $survey->water_source_type }}</strong><br>
                                         @if ($survey->canal_name) Canal: {{ $survey->canal_name }}<br> @endif

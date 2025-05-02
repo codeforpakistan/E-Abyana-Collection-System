@@ -61,14 +61,14 @@
                             </select>
                         </div>
                         <div class="form-group col-lg-4">
-                            <label class="form-label font-weight-bold" for="halqa_id">Select Halqa/حلقہ</label>
-                            <select name="halqa_id" id="halqa_id" class="form-control"
+                        <label class="form-label font-weight-bold" for="halqa_id">Select Halqa/حلقہ</label>
+                        <select name="halqa_id" id="halqa_id" class="form-control"
                                 onchange="get_village(this)">
                                 <option value="">Choose Halqa/حلقہ</option>
                                 @foreach ($Halqas as $Halqa)
                                     <option value="{{ $Halqa->id }}">{{ $Halqa->halqa_name }}</option>
                                 @endforeach
-                            </select>
+                        </select>
                         </div>
                         <div class="form-group col-12">
                             <label class="form-label font-weight-bold" for="village_id">Select
@@ -87,7 +87,6 @@
                             <option value="">Choose Canal / نہر</option>
                             </select>
                         </div> --}}
-                     
                     @endif
                     @if (session('halqa_id') > 0)
                         <div class="form-group col-lg-6">
