@@ -99,9 +99,9 @@ public function StoreIrrgator(Request $request)
     $validated = $request->validate([
         'irrigator_name' => 'required|string|max:255',
         'irrigator_khata_number' => 'required|string|max:255',
-        'cnic' => 'required|string|max:255',
+        'cnic' => 'nullable|string|max:255',
         'irrigator_f_name' => 'required|string|max:255',
-        'irrigator_mobile_number' => 'required|string|max:255',
+        'irrigator_mobile_number' => 'nullable|string|max:255',
         'village_id' => 'required|exists:villages,village_id',
         'canal_id' => 'required|exists:canals,id',
         'div_id' => 'required|exists:divisions,id',

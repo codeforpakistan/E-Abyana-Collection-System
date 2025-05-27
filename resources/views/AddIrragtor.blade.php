@@ -157,13 +157,13 @@
                         <label class="form-label font-weight-bold">Mobile Number</label>
                         <input class="form-control" type="text" id="irrigator_mobile_number"
                         placeholder=" Enter Mobile Number"
-                            name="irrigator_mobile_number" required>
+                            name="irrigator_mobile_number">
                     </div>
                     <div class="form-group col-lg-12">
                         <label class="form-label font-weight-bold">Irrigator CNIC</label>
                         <input class="form-control" type="text" id="cnic"
                         placeholder=" Enter CNIC Number"
-                            name="cnic" required>
+                            name="cnic">
                     </div>
                 </div>
         </div>

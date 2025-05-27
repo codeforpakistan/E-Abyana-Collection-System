@@ -181,7 +181,7 @@
                         <div class="row">
                         <div class="col-6">
                                 <label class="form-label font-weight-bold urdu-text">Session Year / فصلی سال</label>
-                                <input type="text" class="form-control" placeholder="Session Year" value="2025"name="session_date">
+                                <input type="text" class="form-control" placeholder="Session Year" value="2024-25"name="session_date">
                             </div>
                             <div class="col-6">
                                 <label class="form-label font-weight-bold urdu-text">Crop Session /فصل</label>
@@ -195,18 +195,18 @@
                         </div>
                         
                         <!-- Canal Information -->
-                        <h5 class="font-weight-bold text-primary mt-3">Farmer & Land Registration Form</h5>
+                        <h5 class="font-weight-bold text-primary mt-3 urdu-text">Farmer & Land Registration Form / کاشتکار و زمین کی رجسٹریشن فارم</h5>
                         <div class="form-group row">
                             <div class="col-md-4 mb-2">
-                                <label class="form-label font-weight-bold"><span>(1) </span>Khasra Number /نمبر خسرہ </label>
-                                <input type="text" class="form-control" placeholder="Khasra Number /نمبر خسرہ" name="khasra_number">
+                                <label class="form-label font-weight-bold urdu-text"><span>(1) </span>Khasra Number /نمبر خسرہ </label>
+                                <input type="text" class="form-control urdu-text" placeholder="Khasra Number /نمبر خسرہ" name="khasra_number" required>
                             </div>
                             <div class="col-md-4 mb-2">
-                                <label class="form-label font-weight-bold"><span>(2) </span>Irrigator Khata Number</label>
+                                <label class="form-label font-weight-bold urdu-text"><span>(2) </span>Irrigator Khata Number / خاتہ نمبر</label>
                                 <input type="text" class="form-control" placeholder="Khata Number" name="irrigator_khata_number" readonly value="{{$survey->irrigator_khata_number}}">
                             </div>
                             <div class="col-md-4 mb-2">
-                                <label class="form-label font-weight-bold"><span>(3) </span>Name Irrigator</label>
+                                <label class="form-label font-weight-bold urdu-text"><span>(3) </span>Name Irrigator / کاشتکار نام</label>
                                 <input type="text" class="form-control" placeholder="Khasra Assessment Number/نمبر خسرہ بندوبست" readonly name="irrigator_name" value="{{$survey->irrigator_name}}">
                             </div>
                             <div class="col-md-4 mb-2" style="display:none;">
@@ -214,38 +214,38 @@
                                 <input type="text" class="form-control" placeholder="" name="irrigator_id" value="{{$survey->id}}">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold"><span>(4) </span>Tenant Name / نام مالگزار بقید ولدیت  
+                                <label class="form-label font-weight-bold urdu-text"><span>(4) </span>Tenant Name / نام مالگزار بقید ولدیت  
                                 </label>
                                 <input type="text" class="form-control" placeholder="Tenant Name/نام مالگزار بقید ولدیت  " name="tenant_name" value="{{$survey->irrigator_name}}">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold"><span>(5) </span>Entry Date/تاریخ اندراج</label>
+                                <label class="form-label font-weight-bold urdu-text"><span>(5) </span>Entry Date /تاریخ اندراج</label>
                                 <input type="date" class="form-control" value="<?php echo date("Y-m-d");?>" placeholder="Entry Date/تاریخ اندراج " name="registration_date">
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold"><span>(6) </span>Cultivator Name/ نام کاشتکار بقید ولدیت وقومیت وسکونت  
+                                <label class="form-label font-weight-bold urdu-text"><span>(6) </span>Cultivator Name/ نام کاشتکار بقید ولدیت وقومیت وسکونت  
                                 </label>
                                 <input type="text" class="form-control" placeholder="Cultivator's Information / نام کاشتکار بقید ولدیت وقومیت وسکونت  
                                 " name="cultivators_info" value="{{$survey->irrigator_name}}">
                             </div>
                             <div class="col-md-6 mb-6">
-                            <label class="form-label font-weight-bold"><span>(7) </span> Sowing Date / تاریخ تخمریزی</label>
+                            <label class="form-label font-weight-bold urdu-text"><span>(7) </span> Sowing Date / تاریخ تخمریزی</label>
                             <input type="date" class="form-control" value="<?php echo date("Y-m-d");?>" placeholder="Sowing Date / تاریخ تخمریزی" name="snowing_date">
                         </div>
                         </div>
-                        <h5 class="font-weight-bold text-primary mt-3">Crop Type Registration/انداراج جنس شدکار
+                        <h5 class="font-weight-bold text-primary mt-3 urdu-text">Crop Type Registration/انداراج جنس شدکار
                         </h5>
                         <div class="form-group row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold"><span>(8) </span>Land Assessment Marla /اراضی تخمینہ  
+                                <label class="form-label font-weight-bold urdu-text"><span>(8) </span>Land Assessment Marla /اراضی تخمینہ  
                                 </label>
                                 <input type="text" class="form-control" placeholder="Marla/مرلہ  
                                 " name="land_assessment_marla" value="0">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold"><span>(9) </span>Land Assessment Kanal / اراضی تخمینہ  
+                                <label class="form-label font-weight-bold urdu-text"><span>(9) </span>Land Assessment Kanal / اراضی تخمینہ  
                             </label>
                             <input type="text" class="form-control" placeholder="Kanal/کنال" value="0" name="land_assessment_kanal">
                             </div>
@@ -253,7 +253,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12 mb-12">
-                                <label class="form-label font-weight-bold"><span>(10) </span> Previous Crop Name with Grade / نام جنس جو پہلے بوئی گئی بمعہ درجہ</label>
+                                <label class="form-label font-weight-bold urdu-text"><span>(10) </span> Previous Crop Name with Grade / نام جنس جو پہلے بوئی گئی بمعہ درجہ</label>
                                 <select name="previous_crop" id="previous_crop" class="form-control">
                                     <option class="form-label font-weight-bold" value="">Choose Crop/فصل</option>
                                     @foreach($cropprice as $crop)
@@ -262,45 +262,45 @@
                                 </select>
                             </div>
                         </div>
-                        <h5 class="font-weight-bold text-primary mt-3">Final Measurement/پیمائش پختہ
+                        <h5 class="font-weight-bold text-primary mt-3 urdu-text">Final Measurement /پیمائش پختہ
                         </h5>
                         <div class="form-group row">
                             <div class="col-md-4 mb-3">
-                                <label class="form-label font-weight-bold"><span>(11) </span>Date/تاریخ  
+                                <label class="form-label font-weight-bold urdu-text"><span>(11) </span>Date/تاریخ  
                                 </label>
                                 <input type="date" class="form-control" value="<?php echo date("Y-m-d");?>" placeholder="Date/تاریخ" name="date">
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label class="form-label font-weight-bold"><span>(12) </span>Length/طول (Karam/کرم)
+                                <label class="form-label font-weight-bold urdu-text"><span>(12) </span>Length/طول (Karam/کرم)
  
                                 </label>
                                 <input type="text" class="form-control" value="0" placeholder="Length/طول  
                                 " name="length" id="length">
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label class="form-label font-weight-bold"><span>(13) </span>Width/عرض (Karam/کرم)</label>
+                                <label class="form-label font-weight-bold urdu-text"><span>(13) </span>Width/عرض (Karam/کرم)</label>
                                 <input type="text" class="form-control" placeholder="Width/عرض" value="0" name="width" id="width">
                             </div>
                         </div>
-                        <h5 class="font-weight-bold text-primary mt-3">Area/رقبہ
+                        <h5 class="font-weight-bold text-primary mt-3 urdu-text">Area/رقبہ
 
                         </h5>
                         <div class="form-group row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold"><span>(14) </span>Marla/مرلہ    
+                                <label class="form-label font-weight-bold urdu-text"><span>(14) </span>Marla/مرلہ    
                                 </label>
                                 <input type="text" class="form-control" value="0" placeholder="Marla/مرلہ" name="area_marla" id="marla" readonly>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold"><span>(15) </span> Kanal/کنال  
+                                <label class="form-label font-weight-bold urdu-text"><span>(15) </span> Kanal/کنال  
                             </label>
                             <input type="text" class="form-control" placeholder="Kanal/کنال" value="0" name="area_kanal" id="kanal" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6 form-group">
-                                <label class="form-label font-weight-bold"><span>(16) </span> Crop/فصل</label>
-                                <select name="finalcrop_id" id="finalcrop_id" class="form-control" >
+                                <label class="form-label font-weight-bold urdu-text"><span>(16) </span> Crop /فصل</label>
+                                <select name="finalcrop_id" id="finalcrop_id" class="form-control" required>
                                     <option class="form-label font-weight-bold" value="">Choose Crop/فصل</option>
                                     @foreach($cropprice as $crop)
                                         <option value="{{ $crop->id }}" data-price="{{ $crop->crop_price }}" data-name="{{ $crop->final_crop }}">{{ $crop->final_crop }}</option>
@@ -308,51 +308,51 @@
                                 </select>
                             </div>
                             <div class="col-md-6 form-group">
-                                <label class="form-label font-weight-bold"><span>(17) </span> Rate</label>
+                                <label class="form-label font-weight-bold urdu-text"><span>(17) </span> Rate / نرخ</label>
                                 <input type="number" step="0.1" name="crop_price" id="crop_price" value="0" class="form-control" readonly>
                             </div>
                         </div>
 
                         <!-- Land Details -->
                     
-                        <h5 class="font-weight-bold text-primary mt-3">Land Replanting/اراضی دوبارہ کاشت
+                        <h5 class="font-weight-bold text-primary mt-3 urdu-text">Land Replanting / اراضی دوبارہ کاشت
 
 
                         </h5>
                         <div class="form-group row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold"><span>(18) </span>Marla/مرلہ    
+                                <label class="form-label font-weight-bold urdu-text"><span>(18) </span>Marla/مرلہ    
                                 </label>
                                 <input type="text" class="form-control" value="0" placeholder="Marla/مرلہ    
 
                                 " name="replanting_marla">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold"><span>(19) </span>Kanal/کنال  
+                                <label class="form-label font-weight-bold urdu-text"><span>(19) </span>Kanal/کنال  
                             </label>
                             <input type="text" class="form-control" placeholder="Kanal/کنال  " value="0" name="replanting_kanal">
                             </div>
                         </div>
-                        <h5 class="font-weight-bold text-primary mt-3">Double Crop Land/اراضی دو فصلی
+                        <h5 class="font-weight-bold text-primary mt-3 urdu-text">Double Crop Land /اراضی دو فصلی
 
 
 
                         </h5>
                         <div class="form-group row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold"><span>(20) </span>Marla/مرلہ    
+                                <label class="form-label font-weight-bold urdu-text"><span>(20) </span>Marla/مرلہ    
                                 </label>
                                 <input type="text" class="form-control" value="0" placeholder="Marla/مرلہ    
 
                                 "name="double_crop_marla">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold"><span>(21) </span>Kanal/کنال  
+                                <label class="form-label font-weight-bold urdu-text"><span>(21) </span>Kanal/کنال  
                             </label>
                             <input type="text" class="form-control" value="0" placeholder="Kanal/کنال  "name="double_crop_kanal">
                             </div>
                         </div>
-                        <h5 class="font-weight-bold text-primary mt-3">Irrigated Area / مجرائی رقبہ
+                        <h5 class="font-weight-bold text-primary mt-3 urdu-text">Irrigated Area / مجرائی رقبہ
 
 
 
@@ -360,28 +360,28 @@
                         </h5>
                         <div class="form-group row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold"><span>(22) </span>Marla/مرلہ    
+                                <label class="form-label font-weight-bold urdu-text"><span>(22) </span>Marla/مرلہ    
                                 </label>
                                 <input type="text" class="form-control" value="0" placeholder="Marla/مرلہ    
 
                                 "name="irrigated_area_marla">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold"><span>(23) </span>Kanal/کنال  
+                                <label class="form-label font-weight-bold urdu-text"><span>(23) </span>Kanal/کنال  
                             </label>
                             <input type="text" class="form-control" value="0" placeholder="Kanal/کنال" name="irrigated_area_kanal">
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold"><span>(24) </span>Identifiable Area Marla/قابل شناخت رقبہ مرلہ
+                                <label class="form-label font-weight-bold urdu-text"><span>(24) </span>Identifiable Area Marla/قابل شناخت رقبہ مرلہ
                                 </label>
                                 <input type="text" class="form-control" value="0" placeholder="Marla/مرلہ    
 
                                 "name="identifable_area_marla">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold"><span>(25) </span>Identifiable Area Kanal/قابل شناخت رقبہ کنال
+                                <label class="form-label font-weight-bold urdu-text"><span>(25) </span>Identifiable Area Kanal/قابل شناخت رقبہ کنال
                             </label>
                             <input type="text" class="form-control" value="0" placeholder="Kanal/کنال" name="identifable_area_kanal">
                             </div>
@@ -389,7 +389,7 @@
 
                         <div class="form-group row">
                             <div class="col-md-12 mb-12">
-                                <label class="form-label font-weight-bold"><span>(26) </span>Land Quality/کیفیت
+                                <label class="form-label font-weight-bold urdu-text"><span>(26) </span>Land Quality/کیفیت
                                 </label>
                                 <input type="text" class="form-control" value="N/A" placeholder="Land Quality/کیفیت" name="land_quality">
                                 <input type="number" name="is_billed" value="0" style="display:none;">
@@ -402,7 +402,7 @@
                       
                         <div class="row">
                             <div class="col-lg-12">
-                                <button type="submit" class="btn btn-primary btn-lg rounded-pill mr-1">Submit</button>
+                                <button type="submit" class="btn btn-primary btn-lg rounded-pill mr-1">Submit / <span class="urdu-text">درج کریں</span></button>
 
                                 </button>
                             </div>
