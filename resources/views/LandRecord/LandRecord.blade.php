@@ -3,6 +3,12 @@
 @section('content')
 <head>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .urdu-text {
+          font-family: 'Noto Nastaliq Urdu', serif;
+          /*direction: rtl; */
+        }
+    </style>
 </head>
 
 <div class="app-content">
@@ -34,7 +40,7 @@
         <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
             <div class="card shadow-sm">
                 <div class="card-header bg-primary text-white text-center">
-                    <h4 class="font-weight-bold">Land Survey/خسرہ گرداوری</h4>
+                    <h4 class="font-weight-bold urdu-text">Land Survey/خسرہ گرداوری</h4>
                 </div>
                 <div class="card-body">
                     <form class="form-horizontal" action="{{ url('LandRecord/add') }}" method="POST">
@@ -45,7 +51,7 @@
                         <div class="row align-items-center" style="margin-top:-20px;">
                           <!-- Left side: Heading -->
                           <div class="col-md-6">
-                            <h5 class="font-weight-bold text-primary">Land Survey/خسرہ گرداوری</h5>
+                            <h5 class="font-weight-bold text-primary urdu-text">Land Survey/خسرہ گرداوری</h5>
                           </div>
                         
                           <!-- Right side: Radio Buttons -->
@@ -105,7 +111,7 @@
                                 </select>
                             </div>  -->
                             <div class="col-4">
-                                <label class="form-label font-weight-bold" for="div_id">Select Division / ڈویژن</label>
+                                <label class="form-label font-weight-bold urdu-text" for="div_id">Select Division / ڈویژن</label>
                                 <select name="div_id" id="div_id" class="form-group form-control" required readon>
                                    
         
@@ -114,13 +120,13 @@
                                 </select>
                             </div>
                             <div class="col-4">
-                                <label class="form-label font-weight-bold">Select Village/گاؤں</label>
+                                <label class="form-label font-weight-bold urdu-text">Select Village/گاؤں</label>
                                 <select name="village_id" class="form-control" required readonly>
                                         <option value="{{ $villages->village_id }}">{{ $villages->village_name }}</option>
                                 </select>
                             </div>
                             <div class="col-4">
-                                <label class="form-label font-weight-bold">Select canal/نہر</label>
+                                <label class="form-label font-weight-bold urdu-text">Select canal/نہر</label>
                                 <select name="canal_id" id="canal_id" class="form-control" readonly onchange="get_outlets(this)">
                                         <option value="{{ $canals->id }}">{{ $canals->canal_name }}</option>
                                 </select>
@@ -129,7 +135,7 @@
 
                         <div class="row" id="canal_radiobutton_show">
                         <div class="col-12">
-                                <label class="form-label font-weight-bold">Outlet/موگیہ</label>
+                                <label class="form-label font-weight-bold urdu-text">Outlet/موگیہ</label>
                                 <select name="canal_outlet_id" id="canal_outlet_id" class="form-control">
                                     <option value="">Choose Outlet</option>
                                 </select>
@@ -138,13 +144,13 @@
 
                         <div class="row" id="minor_radiobutton_show">
                         <div class="col-6">
-                                <label class="form-label font-weight-bold">Minor Canal</label>
+                                <label class="form-label font-weight-bold urdu-text">Minor Canal / چھوٹی نہر</label>
                                 <select name="canal_minor_id" id="canal_minor_id" class="form-control">
                                     <option value="">Choose Minor Canal</option>
                                 </select>
                             </div>
                         <div class="col-6">
-                                <label class="form-label font-weight-bold">Outlet/موگیہ</label>
+                                <label class="form-label font-weight-bold urdu-text">Outlet/موگیہ</label>
                                 <select name="minor_outlet_id" id="minor_outlet_id" class="form-control">
                                     <option value="">Choose Outlet</option>
                                 </select>
@@ -153,19 +159,19 @@
 
                         <div class="row" id="distributory_radiobutton_show">
                         <div class="col-4">
-                                <label class="form-label font-weight-bold">Minor Canal</label>
+                                <label class="form-label font-weight-bold urdu-text">Minor Canal / چھوٹی نہر</label>
                                 <select name="distri_minor_id" id="distri_minor_id" class="form-control">
                                     <option value="">Choose Minor Canal</option>
                                 </select>
                             </div>
                         <div class="col-4">
-                                <label class="form-label font-weight-bold">Distributory</label>
+                                <label class="form-label font-weight-bold urdu-text">Distributory / شقہ</label>
                                 <select name="distri_id" id="distri_id" class="form-control">
                                     <option value="">Choose Distributory</option>
                                 </select>
                             </div>
                         <div class="col-4">
-                                <label class="form-label font-weight-bold">Outlet/موگیہ</label>
+                                <label class="form-label font-weight-bold urdu-text">Outlet/موگیہ</label>
                                 <select name="distri_outlet_id" id="distri_outlet_id" class="form-control">
                                     <option value="">Choose Outlet</option>
                                 </select>
@@ -174,11 +180,11 @@
 
                         <div class="row">
                         <div class="col-6">
-                                <label class="form-label font-weight-bold">Session Year</label>
+                                <label class="form-label font-weight-bold urdu-text">Session Year / فصلی سال</label>
                                 <input type="text" class="form-control" placeholder="Session Year" value="2025"name="session_date">
                             </div>
                             <div class="col-6">
-                                <label class="form-label font-weight-bold">Crop Session /فصل</label>
+                                <label class="form-label font-weight-bold urdu-text">Crop Session /فصل</label>
                                 <select name="crop_id" id="crop_id" class="form-control" required>
                                     <option class="form-label font-weight-bold" value="">Choose Crop/فصل</option>
                                     @foreach($crops as $crop)
@@ -265,14 +271,14 @@
                                 <input type="date" class="form-control" value="<?php echo date("Y-m-d");?>" placeholder="Date/تاریخ" name="date">
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label class="form-label font-weight-bold"><span>(12) </span>Length/طول (Marla)
+                                <label class="form-label font-weight-bold"><span>(12) </span>Length/طول (Karam/کرم)
  
                                 </label>
                                 <input type="text" class="form-control" value="0" placeholder="Length/طول  
                                 " name="length" id="length">
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label class="form-label font-weight-bold"><span>(13) </span>Width/عرض (Marla)</label>
+                                <label class="form-label font-weight-bold"><span>(13) </span>Width/عرض (Karam/کرم)</label>
                                 <input type="text" class="form-control" placeholder="Width/عرض" value="0" name="width" id="width">
                             </div>
                         </div>
@@ -684,7 +690,7 @@
         function calculateArea() {
         const length = parseFloat(document.getElementById('length').value) || 0;
         const width = parseFloat(document.getElementById('width').value) || 0;
-        const total = (length + width) / 20;
+        const total = (length * width) / 20;
         const kanal = Math.floor(total);
         const marla = Math.round((total - kanal) * 20);
         document.getElementById('kanal').value = kanal;

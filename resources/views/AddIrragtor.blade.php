@@ -260,7 +260,7 @@
                                                         <td class="align-middle text-center">
                                                             <a href="{{ route('LandRecord.ListLandSurvey', ['id' => $Irrigator->id, 'abs' => $Irrigator->irrigator_khata_number, 'village_id' => $Irrigator->village_id, 'canal_id' => $Irrigator->canal_id,'div_id' => $Irrigator->div_id]) }}">
                                                                 <button class="btn btn-sm btn-primary" type="button">
-                                                                    <span><i class="fa fa-plus"></i></span> Add Survey
+                                                                    <span><i class="fa fa-plus"></i></span> Add Land Survey <span style="font-family: 'Noto Nastaliq Urdu', serif;">(خسرہ گرداوری)</span>
                                                                 </button>
                                                             </a>
                                                             

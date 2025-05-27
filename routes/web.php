@@ -204,13 +204,12 @@ Route::put('/canals/{id}/update', [CanalController::class, 'update'])->name('upd
 
     Route::get('edit-irrigator/{id}',[IrrigatorController::class,'editIrrigator'])->name('edit.irrigator');
     Route::put('/irrigators/{id}', [IrrigatorController::class, 'update'])->name('update.irrigator');
-Route::get('Addprice/edit/{id}', [PriceController::class, 'edit'])->name('cropprice.edit');
-Route::post('Addprice/update/{id}', [PriceController::class, 'update'])->name('cropprice.update');
+    Route::get('Addprice/edit/{id}', [PriceController::class, 'edit'])->name('cropprice.edit');
+    Route::post('Addprice/update/{id}', [PriceController::class, 'update'])->name('cropprice.update');
 
 
 Route::get('listforwardedpatwari', [FarmerLandRecord::class, 'forwardedpatwari'])->name('listforwardedpatwari');
 Route::get('listforwardedzilladar', [FarmerLandRecord::class, 'forwardedzilladar'])->name('listforwardedzilladar');
 Route::get('listforwardedcollertor', [FarmerLandRecord::class, 'forwardedcollector'])->name('listforwardedcollertor');
-
 
 });
