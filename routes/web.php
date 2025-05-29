@@ -211,5 +211,6 @@ Route::put('/canals/{id}/update', [CanalController::class, 'update'])->name('upd
 Route::get('listforwardedpatwari', [FarmerLandRecord::class, 'forwardedpatwari'])->name('listforwardedpatwari');
 Route::get('listforwardedzilladar', [FarmerLandRecord::class, 'forwardedzilladar'])->name('listforwardedzilladar');
 Route::get('listforwardedcollertor', [FarmerLandRecord::class, 'forwardedcollector'])->name('listforwardedcollertor');
+Route::get('/irrigators/search', [IrrigatorController::class, 'Search'])->name('irrigator.search');
 
 });

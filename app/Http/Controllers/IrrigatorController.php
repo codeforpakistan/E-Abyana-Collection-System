@@ -50,7 +50,7 @@ class IrrigatorController extends Controller
         }
     
         // Use paginate instead of get() to enable pagination
-        $Irrigators = $query->paginate(6); // Show 10 records per page
+        $Irrigators = $query->paginate(50); // Show 10 records per page
     
         if ($halqa_id > 0) {
             $villages = village::where('halqa_id', '=', $halqa_id)->get();

@@ -24,6 +24,10 @@
                 <div class="card export-database">
                     <div class="card-header">
                         <h4>Irrigator/</h4>
+                        <div id="irrigators-container">
+                            @include('ListIrrigator')
+                        </div>
+                        
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
