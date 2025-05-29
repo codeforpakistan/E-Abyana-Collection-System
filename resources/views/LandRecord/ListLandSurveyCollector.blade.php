@@ -99,6 +99,9 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <div class="mt-3">
+                        {{ $Irrigators->links() }}
+                    </div>
                 </td>
             </tr>
         @endforeach

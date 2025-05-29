@@ -89,7 +89,7 @@ class IrrigatorController extends Controller
             return view('partials.irrigators_list', compact('Irrigators'))->render();
         }
     
-        $Irrigators = $query->paginate(6);
+        $Irrigators = $query->paginate(60);
         return view('AddIrragtor', compact('Irrigators'));
     }
     
