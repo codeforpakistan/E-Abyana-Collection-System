@@ -181,7 +181,7 @@
                         <div class="row">
                         <div class="col-6">
                                 <label class="form-label font-weight-bold urdu-text">Session Year / فصلی سال</label>
-                                <input type="text" class="form-control" placeholder="Session Year" value="2025"name="session_date">
+                                <input type="text" class="form-control" placeholder="Session Year" value="2024-25"name="session_date">
                             </div>
                             <div class="col-6">
                                 <label class="form-label font-weight-bold urdu-text">Crop Session /فصل</label>
@@ -199,7 +199,7 @@
                         <div class="form-group row">
                             <div class="col-md-4 mb-2">
                                 <label class="form-label font-weight-bold urdu-text"><span>(1) </span>Khasra Number /نمبر خسرہ </label>
-                                <input type="text" class="form-control urdu-text" placeholder="Khasra Number /نمبر خسرہ" name="khasra_number">
+                                <input type="text" class="form-control urdu-text" placeholder="Khasra Number /نمبر خسرہ" name="khasra_number" required>
                             </div>
                             <div class="col-md-4 mb-2">
                                 <label class="form-label font-weight-bold urdu-text"><span>(2) </span>Irrigator Khata Number / خاتہ نمبر</label>
@@ -300,7 +300,7 @@
                         <div class="form-group row">
                             <div class="col-md-6 form-group">
                                 <label class="form-label font-weight-bold urdu-text"><span>(16) </span> Crop /فصل</label>
-                                <select name="finalcrop_id" id="finalcrop_id" class="form-control" >
+                                <select name="finalcrop_id" id="finalcrop_id" class="form-control" required>
                                     <option class="form-label font-weight-bold" value="">Choose Crop/فصل</option>
                                     <?php $__currentLoopData = $cropprice; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $crop): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($crop->id); ?>" data-price="<?php echo e($crop->crop_price); ?>" data-name="<?php echo e($crop->final_crop); ?>"><?php echo e($crop->final_crop); ?></option>

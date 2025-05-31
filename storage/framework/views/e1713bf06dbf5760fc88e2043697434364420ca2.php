@@ -543,4 +543,5 @@
         });
     });
 </script>
+
 <?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\durshal_cfp\abyana\resources\views/AddIrragtor.blade.php ENDPATH**/ ?>
