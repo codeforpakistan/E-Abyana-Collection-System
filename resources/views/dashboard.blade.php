@@ -80,7 +80,7 @@
                 <div class="card shadow border-0 rounded">
                     <div class="card-body text-center">
                         <i class="fa fa-water fa-2x text-primary mb-2"></i>
-                        <h5>Total Minors Canals</h5>
+                        <h5>Total Distributaries</h5>
                         <h3 class="text-primary">200</h3>
                     </div>
                 </div>
@@ -89,7 +89,7 @@
                 <div class="card shadow border-0 rounded">
                     <div class="card-body text-center">
                         <i class="fa fa-water fa-2x text-primary mb-2"></i>
-                        <h5>Total Distributaries Canals</h5>
+                        <h5>Total Minors / Branches</h5>
                         <h3 class="text-primary">200</h3>
                     </div>
                 </div>

@@ -58,45 +58,58 @@
 </div>
 </div>
 <div class="row">
-<div class="form-group col-4">
- <label class="form-label font-weight-bold">Session Year</label>
- <input class="form-control" type="text" value="{{$survey->session_date}}" readonly>
-</div>
-<div class="row">
     @if ($waterSourceType === 'Canal')
-        <div class="form-group col-4">
-            <label class="form-label font-weight-bold">Canal</label>
-            <input class="form-control" type="text" value="{{ $survey->canal_name }}" readonly>
-        </div>
-    @elseif ($waterSourceType === 'Canal + Minor Canal')
-        <div class="form-group col-4">
-            <label class="form-label font-weight-bold">Canal</label>
-            <input class="form-control" type="text" value="{{ $survey->canal_name }}" readonly>
-        </div>
-        <div class="form-group col-4">
-            <label class="form-label font-weight-bold">Minor Canal</label>
-            <input class="form-control" type="text" value="{{ $survey->minor_name }}" readonly>
-        </div>
-    @elseif ($waterSourceType === 'Distributary')
+    <div class="form-group col-4">
+    <label class="form-label font-weight-bold">Session Year</label>
+   <input class="form-control" type="text" value="{{$survey->session_date}}" readonly>
+   </div>
         <div class="form-group col-4">
             <label class="form-label font-weight-bold">Canal</label>
             <input class="form-control" type="text" value="{{ $survey->canal_name }}" readonly>
         </div>
         <div class="form-group col-4">
-            <label class="form-label font-weight-bold">Minor Canal</label>
-            <input class="form-control" type="text" value="{{ $survey->minor_name }}" readonly>
-        </div>
-        <div class="form-group col-4">
-            <label class="form-label font-weight-bold">Distributary</label>
-            <input class="form-control" type="text" value="{{ $survey->distributary_name }}" readonly>
-        </div>
-    @endif
-</div>
-
-<div class="form-group col-4">
  <label class="form-label font-weight-bold">Outlet</label>
  <input class="form-control" type="text" value="{{$survey->outlet_name}}" readonly>
 </div>
+    @elseif ($waterSourceType === 'Canal + Minor Canal')
+        <div class="form-group col-3">
+    <label class="form-label font-weight-bold">Session Year</label>
+   <input class="form-control" type="text" value="{{$survey->session_date}}" readonly>
+   </div>
+        <div class="form-group col-3">
+            <label class="form-label font-weight-bold">Canal</label>
+            <input class="form-control" type="text" value="{{ $survey->canal_name }}" readonly>
+        </div>
+        <div class="form-group col-3">
+            <label class="form-label font-weight-bold">Distributory</label>
+            <input class="form-control" type="text" value="{{ $survey->minor_name }}" readonly>
+        </div>
+                <div class="form-group col-3">
+ <label class="form-label font-weight-bold">Outlet</label>
+ <input class="form-control" type="text" value="{{$survey->outlet_name}}" readonly>
+</div>
+    @elseif ($waterSourceType === 'Distributary')
+        <div class="form-group col-2">
+    <label class="form-label font-weight-bold">Session Year</label>
+   <input class="form-control" type="text" value="{{$survey->session_date}}" readonly>
+   </div>
+        <div class="form-group col-2">
+            <label class="form-label font-weight-bold">Canal</label>
+            <input class="form-control" type="text" value="{{ $survey->canal_name }}" readonly>
+        </div>
+        <div class="form-group col-3">
+            <label class="form-label font-weight-bold">Distributory</label>
+            <input class="form-control" type="text" value="{{ $survey->minor_name }}" readonly>
+        </div>
+        <div class="form-group col-3">
+            <label class="form-label font-weight-bold">Minor/Branch</label>
+            <input class="form-control" type="text" value="{{ $survey->distributary_name }}" readonly>
+        </div>
+                        <div class="form-group col-2">
+ <label class="form-label font-weight-bold">Outlet</label>
+ <input class="form-control" type="text" value="{{$survey->outlet_name}}" readonly>
+</div>
+    @endif
 </div>
 </fieldset>
 <br><br>

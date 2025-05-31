@@ -100,14 +100,16 @@
                         </tbody>
                     </table>
                     <div class="mt-3">
-                        {{ $Irrigators->links() }}
+                     
                     </div>
                 </td>
             </tr>
         @endforeach
     </tbody>
 </table>
-     <!-- <table id="example" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
+     <!-- 
+ $Irrigators->links()
+     <table id="example" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
         <thead class="table-primary text-center align-middle">
             <tr>
                 <th rowspan="3" class="align-middle">ID</th>

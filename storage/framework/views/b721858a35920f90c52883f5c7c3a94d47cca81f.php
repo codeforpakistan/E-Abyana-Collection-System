@@ -88,8 +88,8 @@ $nextMonthDate = $date->format('d-m-Y');
             </div>
 
             <div class="col-md-4 col-sm-4">
-              <span><strong>Canal</strong></span>
-              <p><?php echo e($relatedData->canal_name); ?></p>
+             <!-- <span><strong>Canal</strong></span>
+              <p><?php echo e($relatedData->canal_name); ?></p> -->
               <span><strong>Outlet</strong></span>
               <p><?php echo e($relatedData->outlet_name); ?></p>
               <span><strong>Division</strong></span>
@@ -227,7 +227,7 @@ $nextMonthDate = $date->format('d-m-Y');
             <th>Name</th>
             <th>F Name</th>
             <th>Khata No</th>
-            <th>Canal</th>
+           <!-- <th>Canal</th> -->
             <th>Outlet</th>
             <th>Crop Season</th>
           </tr>
@@ -236,7 +236,7 @@ $nextMonthDate = $date->format('d-m-Y');
             <td><?php echo e($relatedData->irrigator_name); ?></td>
             <td><?php echo e($relatedData->irrigator_f_name); ?></td>
             <td><?php echo e($relatedData->irrigator_khata_number); ?></td>
-            <td><?php echo e($relatedData->canal_name); ?></td>
+           <!-- <td><?php echo e($relatedData->canal_name); ?></td> -->
             <td><?php echo e($relatedData->outlet_name); ?></td>
             <td><?php echo e($relatedData->crop_name); ?>-<?php echo e($relatedData->session_date); ?></td>
           </tr>

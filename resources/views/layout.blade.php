@@ -98,6 +98,7 @@
 
             <!--nav open-->
             <nav class="navbar navbar-expand-lg main-navbar">
+                <a href="#" data-toggle="sidebar" class="nav-link nav-link toggle"><i class="fa fa-reorder"></i></a>
                 <a class="header-brand" href="index.html">
                     <p>
                         <header>
@@ -184,7 +185,7 @@ Welcome to E ABYANA
                                     Welcome to E ABYANA
                                 @endif
                             </h6>
-                            <span class="text-muted app-sidebar__user-name text-sm"> Web Developer</span>
+                            <span class="text-muted app-sidebar__user-name text-sm">Irrigation Department</span>
                         </div>
                     </div>
                 </div>
@@ -307,9 +308,9 @@ Welcome to E ABYANA
                             <li><a class="slide-item" href="{{ route('AddVillage') }}"><span>Village (موضع)</span></a></li>
                             <li><a class="slide-item" href="{{ route('AddCanal') }}"><span>Add Canal (نہر)</span></a>
                             </li>
-                            <li><a class="slide-item" href="{{ route('AddMinor-Canal') }}"><span>Add Minor Canal (نہر)</span></a>
+                            <li><a class="slide-item" href="{{ route('AddMinor-Canal') }}"><span>Add Distry (شاخ نہر)</span></a>
                             </li>
-                            <li><a class="slide-item" href="{{ route('Distributary') }}"><span>Add Distributary  </span></a>
+                            <li><a class="slide-item" href="{{ route('Distributary') }}"><span>Add Minor / Branch (فرعی نہر)</span></a>
                             </li>
                             <li><a class="slide-item" href="{{ route('CanalOutlet') }}"><span>Outlet (آؤٹ لیٹ)</span></a></li>
                             {{-- <li><a class="slide-item" href="{{ route('AddCrop') }}"><span>Add Crop</span></a></li> --}}

@@ -9,7 +9,7 @@
 <div id="simpleModal" class="fixed inset-0 bg-gray-400 bg-opacity-50 flex z-50 items-center justify-center hidden">
             <div class="card shadow-sm w-[60vw]">
                 <div class="card-header bg-primary flex justify-between text-white">
-                    <h4 class="font-weight-bold">Add Outlet Canal</h4>
+                    <h4 class="font-weight-bold">Add Outlet</h4>
                     <button onclick="closeModal()" type="button" class="bg-white text-black h-[30px] w-[30px] rounded-[50px]">
                         <i class="fa fa-close"></i>
                     </button>
@@ -40,7 +40,7 @@
                                 </select>
                             </div> 
                             <div class="form-group col-4">
-                                <label class="form-label" for="minor_id">Select Minor Canal / چھوٹا نہر</label>
+                                <label class="form-label" for="minor_id">Select Distributary/ تقسیم نہر</label>
                                 <select name="minor_id" id="minor_id" class="form-control" required>
                                     <option value="">Choose Minor Canal</option>
                                     @foreach($minors as $minor)
@@ -53,7 +53,7 @@
                         <div class="row" style="margin-top:-10px;">
                             <!-- Distributary Selection -->
                             <div class="form-group col-4">
-                                <label class="form-label" for="distrib_id">Select Distributary/ تقسیم نہر</label>
+                                <label class="form-label" for="distrib_id">Select Minor Canal / چھوٹا نہر</label>
                                 <select name="distrib_id" id="distrib_id" class="form-control" required>
                                     <option value="">Choose Distributary</option>
                                     @foreach($Distributaries as $Distributarie)
@@ -119,8 +119,8 @@
                                         <th>OutLet Name</th>
                                         <th>Division Name</th>
                                         <th>Canal Name</th>
-                                        <th>Minor Name</th>
                                         <th>Distributroy</th>
+                                        <th>Minor Name</th>
                                         <th>Beneficiaries</th>
                                         <th>Total No. of CCA</th>
                                         <th>Total No. of Discharge (Cusec)</th>

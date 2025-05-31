@@ -95,15 +95,15 @@
 </div>
 </div>
 <div class="row">
-<div class="form-group col-4">
+<div class="form-group col-6">
  <label class="form-label font-weight-bold">Session Year</label>
  <input class="form-control" type="text" value="{{$survey->session_date}}" readonly>
 </div>
-<div class="form-group col-4">
+<!-- <div class="form-group col-4">
  <label class="form-label font-weight-bold">Canal</label>
  <input class="form-control" type="text" value="{{$survey->canal_name}}" readonly>
-</div>
-<div class="form-group col-4">
+</div> -->
+<div class="form-group col-6">
  <label class="form-label font-weight-bold">Outlet</label>
  <input class="form-control" type="text" value="{{$survey->outlet_name}}" readonly>
 </div>

@@ -62,11 +62,11 @@
                             </div>
                             <div class="form-check form-check-inline" style="border-bottom:1px solid gray;">
                               <input class="form-check-input" type="radio" name="canalType" id="minorCanal" value="minor_canal">
-                              <label class="form-check-label" for="minorCanal">Minor Canal</label>
+                              <label class="form-check-label" for="minorCanal">Distributory</label>
                             </div>
                             <div class="form-check form-check-inline" style="border-bottom:1px solid gray;">
                               <input class="form-check-input" type="radio" name="canalType" id="distributory" value="distributory">
-                              <label class="form-check-label" for="distributory">Distributory</label>
+                              <label class="form-check-label" for="distributory">Minor Canal</label>
                             </div>
                           </div>
                         </div>
@@ -144,9 +144,9 @@
 
                         <div class="row" id="minor_radiobutton_show">
                         <div class="col-6">
-                                <label class="form-label font-weight-bold urdu-text">Minor Canal / چھوٹی نہر</label>
+                                <label class="form-label font-weight-bold urdu-text">Distributory / شقہ</label>
                                 <select name="canal_minor_id" id="canal_minor_id" class="form-control">
-                                    <option value="">Choose Minor Canal</option>
+                                    <option value="">Choose Distributory / شقہ</option>
                                 </select>
                             </div>
                         <div class="col-6">
@@ -159,15 +159,15 @@
 
                         <div class="row" id="distributory_radiobutton_show">
                         <div class="col-4">
-                                <label class="form-label font-weight-bold urdu-text">Minor Canal / چھوٹی نہر</label>
+                                <label class="form-label font-weight-bold urdu-text">Distributory / شقہ</label>
                                 <select name="distri_minor_id" id="distri_minor_id" class="form-control">
-                                    <option value="">Choose Minor Canal</option>
+                                    <option value="">Distributory / شقہ</option>
                                 </select>
                             </div>
                         <div class="col-4">
-                                <label class="form-label font-weight-bold urdu-text">Distributory / شقہ</label>
+                                <label class="form-label font-weight-bold urdu-text">Minor Canal / چھوٹی نہر</label>
                                 <select name="distri_id" id="distri_id" class="form-control">
-                                    <option value="">Choose Distributory</option>
+                                    <option value="">Minor Canal / چھوٹی نہر</option>
                                 </select>
                             </div>
                         <div class="col-4">
@@ -474,7 +474,7 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function (data) {
-                    $('#canal_radiobutton_show select[name="canal_outlet_id"]').empty().append('<option value="">Choose Outlet</option>');
+                    $('#canal_radiobutton_show select[name="canal_outlet_id"]').empty().append('<option value="">Choose Outlet / موگہ</option>');
                     $.each(data, function (key, value) {
                         $('#canal_radiobutton_show select[name="canal_outlet_id"]').append('<option value="' + value.id + '">' + value.outlet_name + '</option>');
                     });
@@ -495,8 +495,8 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function (data) {
-                    $('#minor_radiobutton_show select[name="canal_minor_id"]').empty().append('<option value="">Choose Minor Canal</option>');
-                    $('#minor_radiobutton_show select[name="minor_outlet_id"]').empty().append('<option value="">Choose Outlet</option>');
+                    $('#minor_radiobutton_show select[name="canal_minor_id"]').empty().append('<option value="">Choose Distributory / شقہ</option>');
+                    $('#minor_radiobutton_show select[name="minor_outlet_id"]').empty().append('<option value="">Choose Outlet / موگہ</option>');
                     $.each(data, function (key, value) {
                         $('#minor_radiobutton_show select[name="canal_minor_id"]').append('<option value="' + value.id + '">' + value.minor_name + '</option>');
                     });
@@ -517,7 +517,7 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function (data) {
-                    $('#minor_radiobutton_show select[name="minor_outlet_id"]').empty().append('<option value="">Choose Outlet</option>');
+                    $('#minor_radiobutton_show select[name="minor_outlet_id"]').empty().append('<option value="">Choose Outlet / موگہ</option>');
                     $.each(data, function (key, value) {
                         $('#minor_radiobutton_show select[name="minor_outlet_id"]').append('<option value="' + value.id + '">' + value.outlet_name + '</option>');
                     });
@@ -538,9 +538,9 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function (data) {
-                    $('#distributory_radiobutton_show select[name="distri_minor_id"]').empty().append('<option value="">Choose Minor Canal</option>');
-                    $('#distributory_radiobutton_show select[name="distri_id"]').empty().append('<option value="">Choose Distributory</option>');
-                    $('#distributory_radiobutton_show select[name="distri_outlet_id"]').empty().append('<option value="">Choose Outlet</option>');
+                    $('#distributory_radiobutton_show select[name="distri_minor_id"]').empty().append('<option value="">Choose Distributory / شقہ</option>');
+                    $('#distributory_radiobutton_show select[name="distri_id"]').empty().append('<option value="">Choose Minor Canal / چھوٹی نہر</option>');
+                    $('#distributory_radiobutton_show select[name="distri_outlet_id"]').empty().append('<option value="">Choose Outlet / موگہ</option>');
                     $.each(data, function (key, value) {
                         $('#distributory_radiobutton_show select[name="distri_minor_id"]').append('<option value="' + value.id + '">' + value.minor_name + '</option>');
                     });

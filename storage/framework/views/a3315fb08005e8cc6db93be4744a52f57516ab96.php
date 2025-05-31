@@ -33,7 +33,7 @@
 <div id="simpleModal" class="fixed inset-0 bg-gray-400 bg-opacity-50 flex z-50 items-center justify-center hidden">
             <div class="card shadow-sm w-[60vw]">
                 <div class="card-header bg-primary flex justify-between text-white">
-                    <h4 class="font-weight-bold">Add Distributary Canal</h4>
+                    <h4 class="font-weight-bold">Add Minor Canal / Branch</h4>
                     <button onclick="closeModal()" type="button" class="bg-white text-black h-[30px] w-[30px] rounded-[50px]">
                         <i class="fa fa-close"></i>
                     </button>
@@ -65,7 +65,7 @@
                                 </select>
                             </div> 
                             <div class="form-group col-3">
-                                <label class="form-label" for="minor_id">Minor Canal / چھوٹا نہر</label>
+                                <label class="form-label" for="minor_id">Distributory / شاخ نہر</label>
                                 <select name="minor_id" id="minor_id" class="form-control" required>
                                     <option value="">Choose Minor Canal</option>
                                     <?php $__currentLoopData = $minors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $minor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -74,7 +74,7 @@
                                 </select>
                             </div> 
                             <div class="form-group col-3">
-                                <label class="form-label">Distributary Name</label>
+                                <label class="form-label">Minor Canal / Branch</label>
                                 <input class="form-control" type="text" name="name" required>
                             </div>
                         </div>
@@ -128,7 +128,7 @@
             <div class="col-md-12">
                 <div class="card export-database">
                     <div class="card-header d-flex justify-content-between">
-                        <h4><strong>Distributary List</strong></h4>
+                        <h4><strong>Minor Canal / Branch List</strong></h4>
                         <button onclick="openModal()" type="button" class="btn btn-primary">
                             <i class="fa fa-plus"></i>
                         </button>
@@ -139,10 +139,10 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Name Distributary</th>
+                                        <th>Minor / Branch Name</th>
                                         <th>Division Name</th>
                                         <th>Canal Name</th>
-                                        <th>Minor Name</th>
+                                        <th>Distry Name</th>
                                         <th>No Of Outlet</th>
                                         <th>No. of Outlets (Left Side)</th>
                                         <th>No. of Outlets (Right Side)</th>

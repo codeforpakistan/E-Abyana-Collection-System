@@ -33,7 +33,7 @@
 <div id="simpleModal" class="fixed inset-0 bg-gray-400 bg-opacity-50 flex z-50 items-center justify-center hidden">
             <div class="card shadow-sm w-[60vw]">
                 <div class="card-header bg-primary flex justify-between text-white">
-                    <h4 class="font-weight-bold">Add Minor Canal</h4>
+                    <h4 class="font-weight-bold">Add Distributory</h4>
                     <button onclick="closeModal()" type="button" class="bg-white text-black h-[30px] w-[30px] rounded-[50px]">
                         <i class="fa fa-close"></i>
                     </button>
@@ -62,7 +62,7 @@
                                 </select>
                             </div>
                             <div class="form-group col-4">
-                                <label class="form-label">Name of Minor</label>
+                                <label class="form-label">Name of Distributory</label>
                                 <input class="form-control" type="text" name="minor_name" required>
                             </div>
                         </div>
@@ -106,7 +106,7 @@
             <div class="col-md-12">
                 <div class="card export-database">
                     <div class="card-header d-flex justify-content-between">
-                        <h4><strong>Minor List</strong></h4>
+                        <h4><strong>Distributory List</strong></h4>
                         <button onclick="openModal()" type="button" class="btn btn-primary">
                             <i class="fa fa-plus"></i> 
                         </button>
@@ -117,7 +117,7 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Minor Canal</th>
+                                        <th>Distributory</th>
                                         <th>Division Name</th>
                                         <th>Canal Name</th>
                                         <th>No Of Outlet</th>
