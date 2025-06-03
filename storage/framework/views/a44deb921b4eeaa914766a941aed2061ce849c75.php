@@ -203,8 +203,8 @@ Welcome to E ABYANA
                 <?php if(session('role_id')!=15 && session('role_id')!=16 && session('role_id')!=17): ?> 
                     <li class="slide">
                         <a class="side-menu__item" data-toggle="slide" href="#">
-                            <i class="side-menu__icon fas fa-tractor"></i> <!-- Change this to a working icon -->
-                            <span class="side-menu__label">Manage Irrigator</span>
+                            <i class="side-menu__icon fas fa-user-friends"></i> <!-- Change this to a working icon -->
+                            <span class="side-menu__label">Manage Irrigators</span>
                             <span class=""></span>
                         </a>
                         <ul class="slide-menu">
@@ -228,7 +228,7 @@ Welcome to E ABYANA
 
                     <li class="slide">
                         <a class="side-menu__item" data-toggle="slide" href="#">
-                            <i class="side-menu__icon fas fa-file-alt"></i>
+                            <i class="side-menu__icon fas fa-clipboard-list"></i>
                             <span class="side-menu__label">Manage Surveys</span>
                         </a>
                         <ul class="slide-menu">
@@ -253,7 +253,7 @@ Welcome to E ABYANA
                     <?php if(session('role_id') == 17 || session('role_id') == 1): ?> 
                     <li class="slide">
                         <a class="side-menu__item" data-toggle="slide" href="<?php echo e(url('dashboard')); ?>">
-                        <i class="side-menu__icon fas fa-receipt"></i>
+                        <i class="side-menu__icon fas fa-file-invoice-dollar"></i>
                             <span class="side-menu__label">Manage Bills</span>
                         </a>
                         <ul class="slide-menu">
@@ -263,6 +263,19 @@ Welcome to E ABYANA
                         </ul>
                     </li>
                     <?php endif; ?>
+                    <?php if(session('role_id') == 17 || session('role_id') == 1 || session('role_id') == 16): ?> 
+                    <li class="slide">
+                        <a class="side-menu__item" data-toggle="slide" href="<?php echo e(url('dashboard')); ?>">
+                        <i class="side-menu__icon fas fa-file-invoice"></i>
+                            <span class="side-menu__label">Reports</span>
+                        </a>
+                        <ul class="slide-menu">
+                          
+                            <li><a class="slide-item" href="<?php echo e(url('ReportViewKhatoni')); ?>"><span> Khatoni Report</span></a></li>
+                            <li><a class="slide-item" href="<?php echo e(url('ListIrrigatorsForBills')); ?>"><span> Ghoswara Report</span></a></li>
+                        </ul>
+                    </li>
+                     <?php endif; ?>
                   <!--  <li class="slide">
                         <a class="side-menu__item" data-toggle="slide" href="#">
                             <i class="side-menu__icon fas fa-seedling"></i> 
