@@ -1,0 +1,42 @@
+.input-lg {
+	height: 46px;
+	padding: 10px 16px;
+	font-size: 18px;
+	line-height: 1.3333333;
+	border-radius: 6px;
+}
+.input-sm {
+	height: 30px;
+	padding: 5px 10px;
+	font-size: 12px;
+	line-height: 1.5;
+	border-radius: 3px;
+}
+.input-group-addon {
+	padding: 6px 12px;
+	font-size: 14px;
+	font-weight: 400;
+	color: #888a8a;
+	text-align: center;
+	background-color: #eee;
+	border: 1px solid #e6eaea;
+	border-radius: 4px;
+}
+.input-group .input-group-addon {
+	border-radius: 0;
+	border-color: #e6eaea;
+	background-color: #fff;
+}
+.input-group-text, select.form-control:not([size]):not([multiple]), .form-control:not(.form-control-sm):not(.form-control-lg) {
+	line-height: 18px;
+}
+.input-group-text {
+	border: 1px solid #e6eaea;
+	color: #d8dede;
+}
+.input-group>.custom-select:not(:last-child), .input-group>.form-control:not(:last-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: initial;
+    border-bottom-right-radius: initial;
+}

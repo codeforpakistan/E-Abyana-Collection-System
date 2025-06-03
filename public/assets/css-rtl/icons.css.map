@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AACA,OAAO,CAAC,iEAAI;AACZ,OAAO,CAAC,oDAAI;AACZ,OAAO,CAAC,kDAAI;AACZ,OAAO,CAAC,yDAAI;AACZ,OAAO,CAAC,uDAAI;AACZ,OAAO,CAAC,uEAAI;AACZ,OAAO,CAAC,0DAAI;AACZ,OAAO,CAAC,mEAAI;AACZ,OAAO,CAAC,+CAAI;AACZ,OAAO,CAAC,iDAAI;AACZ,OAAO,CAAC,yDAAI;AACZ,OAAO,CAAC,0CAAI",
+    "sources": [
+        "icons.scss"
+    ],
+    "names": [],
+    "file": "icons.css"
+}

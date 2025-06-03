@@ -1,0 +1,202 @@
+/*
+ * FullCalendar
+ * ----------------------
+ */
+
+ .fc-toolbar h2 {
+	font-size: 16px;
+	margin-top: 4px;
+}
+.fc-view {
+	border-color: #e6eaea;
+	>table {
+		border-color: #e6eaea;
+		tr, td {
+			border-color: #e6eaea;
+		}
+		th {
+			border-color: #e6eaea;
+			color: #7a7d7d !important;
+			font-weight: 500;
+			padding: 10px;
+		}
+	}
+	color: #7a7d7d !important;
+	font-weight: 500;
+	padding: 10px;
+}
+@media (max-width: 320px) {
+	.fc-view>table th, #calendar-1 .calendar-header th {
+		padding: 10px 2px !important;
+	}
+	.signup {
+		font-size: 15px;
+	}
+}
+@media (max-width: 480px) {
+	.fc-view>table th {
+		font-size: 10px;
+		padding: 10px 5px;
+	}
+	.fc-list-table td {
+		padding: 8px 4px;
+		font-size: 12px;
+	}
+	.sidenav-toggled .main-wrapper .side-menu .side-menu__item .nav-badge {
+		position: initial !important;
+	}
+}
+.fc-view-container>.fc-view {
+	padding: 0;
+}
+.fc-view {
+	color: #666;
+	text-align: right;
+	>table td {
+		color: #666;
+		text-align: right;
+	}
+}
+.fc-unthemed td.fc-today {
+	background-color: #e6eaea;
+}
+.fc button .fc-icon {
+	top: -0.09em;
+}
+.fc-basic-view {
+	.fc-day-number, .fc-week-number {
+		padding: 10px;
+	}
+}
+.fc-day-grid-event .fc-content {
+	padding: 5px 10px;
+	-webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+}
+tr:first-child>td>.fc-day-grid-event {
+	margin-bottom: 10px;
+}
+.fc-state-default {
+	border-radius: 3px;
+	background-color: #e6eaea;
+	background-image: none;
+	border: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	text-transform: capitalize;
+	font-weight: 400;
+}
+.fc button {
+	height: auto;
+	padding: 10px 15px;
+	text-shadow: none;
+	border-radius: 0;
+	&.fc-state-active {
+		background-color: $primary;
+		color: $white;
+	}
+}
+/*-- min Calendar ---*/
+
+#cldr {
+	margin-left: 0;
+	margin-right: 0;
+	width: 355px !important;
+}
+#calendar_weekdays div {
+	display: inline-block;
+	vertical-align: top;
+}
+#calendar_content, #calendar_weekdays, #calendar_header {
+	position: relative;
+	width: 355px !important;
+	float: left;
+	z-index: 10;
+}
+#calendar_weekdays div, #calendar_content div {
+	width: 50px !important;
+	height: 45px !important;
+	line-height: 50px !important;
+	overflow: hidden;
+	text-align: center;
+	background-color: $white;
+	color: #888a8a;
+}
+#calendar_weekdays div {
+	color: $primary !important;
+}
+#calendar_content div {
+	float: left;
+	&:hover {
+		background-color: #f0f0f5;
+	}
+	&.blank {
+		background-color: $white;
+	}
+}
+#calendar_header {
+	zoom: 1;
+	filter: alpha(opacity=70);
+	opacity: 1;
+}
+#calendar_content div.today {
+	zoom: 1;
+	filter: alpha(opacity=70);
+	opacity: 1;
+	color: $white;
+	background: $primary !important;
+}
+#calendar_header {
+	width: 100%;
+	height: 37px;
+	text-align: center;
+	background-color: $white !important;
+	border-bottom: 1px solid #e6eaea;
+	padding: 15px 0;
+	height: 55.5714px !important;
+	h1 {
+		font-size: 1.5em;
+		color: #7a7d7d;
+		float: left;
+		width: 70%;
+	}
+}
+#cldr i[class^=fa] {
+	color: #7a7d7d;
+	float: left;
+	width: 15%;
+	line-height: 26px !important;
+}
+@media (min-width: 1200px) and (max-width: 1370px) {
+	.fc button {
+		font-size: 0.65rem !important;
+	}
+}
+@media (min-width: 1200px) and (max-width: 1500px) {
+	#calendar .fc-toolbar h2 {
+		font-size: 11px;
+		margin-top: 7px;
+	}
+}
+@media (min-width: 768px) and (max-width: 992px) {
+	#calendar .fc-toolbar h2 {
+		font-size: 11px;
+		margin-top: 7px;
+	}
+	.fc button {
+		font-size: 0.65rem !important;
+	}
+}
+@media (max-width: 505px) {
+	.calendar-header th {
+		font-size: 10px !important;
+	}
+}
+@media (max-width: 320px) {
+	.calendar-header th {
+		font-size: 9px !important;
+	}
+	.nested-media .media {
+		display: block;
+	}
+}

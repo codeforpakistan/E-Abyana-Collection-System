@@ -1,0 +1,23 @@
+.carouseltransparent {
+	content: '';
+	background: rgba(0, 0, 0, 0.4);
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+#carousel-caption .carousel-caption {
+	position: absolute;
+	right: 15%;
+	bottom: 28%;
+	left: 15%;
+}
+@media (max-width: 1024px) and (min-width: 992px) {
+	#carousel-caption .carousel-caption {
+		position: absolute;
+		right: 15%;
+		bottom: 13%;
+		left: 15%;
+	}
+}

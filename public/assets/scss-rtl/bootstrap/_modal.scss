@@ -1,0 +1,20 @@
+/*
+ * Modal
+ * ----------------------
+ */
+
+ .modal-header {
+	border-bottom: none;
+	border-bottom: 1px solid #e6eaea;
+	h5 {
+		font-size: 18px;
+	}
+}
+.modal-footer {
+	border-top: 1px solid #e6eaea;
+}
+.modal-content {
+	border: none;
+	-webkit-box-shadow: 0 0 40px rgba(0, 0, 0, 0.05);
+	box-shadow: 0 0 40px rgba(0, 0, 0, 0.05);
+}
