@@ -20,6 +20,26 @@ use DB;
 
 class FarmerLandRecord extends Controller
 {
+    public function dashboard()
+    {
+        $totalIrrigators = DB::table('irrigators')->count();
+        $totalCanals = DB::table('canals')->count();
+        $totalDistry = DB::table('minorcanals')->count();
+        $totalMinor = DB::table('distributaries')->count();
+        $totalOutlets = DB::table('outlets')->count();
+
+        $totalCropSurveyAmount = DB::table('cropsurveys')
+            ->where('is_billed', 1)
+            ->whereNotNull('area_marla')
+            ->whereNotNull('area_kanal')
+            ->where('area_marla', '!=', '')
+            ->where('area_kanal', '!=', '')
+            ->selectRaw('SUM(((area_marla / 20) + area_kanal) * crop_price) as total')
+         ->value('total');
+        $totalCropSurveyAmount = $totalCropSurveyAmount > 0 ? $totalCropSurveyAmount : 0;
+
+        return view('dashboard', compact('totalIrrigators', 'totalCanals','totalDistry','totalMinor', 'totalOutlets','totalCropSurveyAmount'));
+    }
 public function LandRecord($id, $abs, $village_id, $canal_id, $div_id, Request $request)
 {
         $villages = village::find($village_id);

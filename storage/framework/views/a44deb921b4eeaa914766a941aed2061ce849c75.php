@@ -211,7 +211,11 @@ Welcome to E ABYANA
                             <li>
                                 <a class="slide-item" href="<?php echo e(route('AddIrragtor')); ?>">
 
+<<<<<<< HEAD
                                     <i class="fas fa-seedling"></i> <!-- Replace with the appropriate icon class -->
+=======
+                                     <!-- Replace with the appropriate icon class -->
+>>>>>>> dev1-saqib
                                     <span>Add Irrigator</span>
                                 </a>
                             </li>

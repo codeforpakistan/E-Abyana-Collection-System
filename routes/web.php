@@ -29,13 +29,8 @@ Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 // Grouping protected routes
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', function () {
-        return view('dashboard');
-    });
-
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    });
+    Route::get('/', [FarmerLandRecord::class, 'dashboard']);
+    Route::get('/dashboard', [FarmerLandRecord::class, 'dashboard'])->name('dashboard');
 
     Route::get('/table', function () {
         return view('table');

@@ -207,8 +207,6 @@ Welcome to E ABYANA
                         <ul class="slide-menu">
                             <li>
                                 <a class="slide-item" href="{{ route('AddIrragtor') }}">
-
-                                    <i class="fas fa-seedling"></i> <!-- Replace with the appropriate icon class -->
                                     <span>Add Irrigator</span>
                                 </a>
                             </li>
