@@ -1263,4 +1263,53 @@ public function forwardedcollector()
 
     return view('LandRecord.listforwardedcollector', compact('grouped_survey'));
 }
+//************************ REPORTS ************************************************/
+public function ReportViewNaksha5()
+{
+    $dropdown_divisions = DB::table('divisions')
+        ->select('divisions.id', 'divisions.divsion_name')
+        ->join('irrigators', 'irrigators.div_id', '=', 'divisions.id')
+        ->join('cropsurveys', 'cropsurveys.irrigator_id', '=', 'irrigators.id')
+        ->groupBy('divisions.id', 'divisions.divsion_name')
+        ->get();
+    
+    $dropdown_session_year = DB::table('cropsurveys')
+        ->select('session_date')
+        ->distinct()
+        ->orderBy('session_date', 'desc')
+        ->get();
+
+    return view('Reports.DemandReport', compact('dropdown_divisions', 'dropdown_session_year'));
+}
+
+public function ReportNaksha5Data(Request $request)
+{
+    $division_id = $request->division_id;
+    $session_year = $request->session_year;
+
+    $records = DB::table('cropsurveys')
+        ->join('irrigators', 'irrigators.id', '=', 'cropsurveys.irrigator_id')
+        ->join('divisions', 'divisions.id', '=', 'irrigators.div_id')
+        ->where('irrigators.div_id', $division_id)
+        ->where('cropsurveys.session_date', $session_year)
+        ->where('cropsurveys.status', 3)
+        ->where('cropsurveys.is_billed', 1)
+        ->select(
+            'divisions.id as division_id',
+            'divisions.divsion_name',
+            'cropsurveys.crop_id',
+            DB::raw('SUM((cropsurveys.area_kanal + (cropsurveys.area_marla / 20)) / 8) as total_acres'),
+            DB::raw('SUM(cropsurveys.crop_price) as total_abyana')
+        )
+        ->groupBy('divisions.id', 'divisions.divsion_name', 'cropsurveys.crop_id')
+        ->get();
+
+    // Structure results grouped by division
+    $grouped = $records->groupBy('division_id');
+
+    return response()->json([
+        'html' => view('Reports.PartialDemandReport', compact('grouped'))->render()
+    ]);
+}
+
 }

@@ -245,7 +245,7 @@ Welcome to E ABYANA
                     </li>
                     @if (session('role_id') == 17 || session('role_id') == 1) 
                     <li class="slide">
-                        <a class="side-menu__item" data-toggle="slide" href="{{ url('dashboard') }}">
+                        <a class="side-menu__item" data-toggle="slide">
                         <i class="side-menu__icon fas fa-file-invoice-dollar"></i>
                             <span class="side-menu__label">Manage Bills</span>
                         </a>
@@ -258,14 +258,15 @@ Welcome to E ABYANA
                     @endif
                     @if (session('role_id') == 17 || session('role_id') == 1 || session('role_id') == 16) 
                     <li class="slide">
-                        <a class="side-menu__item" data-toggle="slide" href="{{ url('dashboard') }}">
+                        <a class="side-menu__item" data-toggle="slide">
                         <i class="side-menu__icon fas fa-file-invoice"></i>
                             <span class="side-menu__label">Reports</span>
                         </a>
                         <ul class="slide-menu">
-                          
-                            <li><a class="slide-item" href="{{ url('ReportViewKhatoni') }}"><span> Khatoni Report</span></a></li>
-                            <li><a class="slide-item" href="{{ url('ListIrrigatorsForBills') }}"><span> Ghoswara Report</span></a></li>
+                            <li><a class="slide-item" href="{{ url('ReportViewNaksha5') }}"><span> Naksha No 5</span></a></li>
+                            <li><a class="slide-item" href="{{ url('ReportViewJinswaar') }}"><span> Jinswaar</span></a></li>
+                            <li><a class="slide-item" href="{{ url('ReportViewMoqabilataan') }}"><span> Moqabilataan</span></a></li>
+                             <li><a class="slide-item" href="{{ url('ReportViewParhtaal') }}"><span> Naksha Parhtaal</span></a></li>
                         </ul>
                     </li>
                      @endif
@@ -301,7 +302,7 @@ Welcome to E ABYANA
 
                     @if (session('role_id')==1)
                     <li class="slide">
-                        <a class="side-menu__item" data-toggle="slide" href="#">
+                        <a class="side-menu__item" data-toggle="slide">
                             <i class="side-menu__icon fa fa-cog"></i> <!-- Settings icon -->
                             <span class="side-menu__label">Setting</span>
                             <span class="badge badge-orange nav-badge"></span>
