@@ -179,9 +179,15 @@
                         </div>
 
                         <div class="row">
+                            <?php
+                            $currentYear = date('Y');
+                            $sessionStart = $currentYear - 1;
+                            $sessionEnd = $currentYear;
+                            $sessionValue = $sessionStart . '-' . substr($sessionEnd, -2);
+                            ?>
                         <div class="col-6">
                                 <label class="form-label font-weight-bold urdu-text">Session Year / فصلی سال</label>
-                                <input type="text" class="form-control" placeholder="Session Year" value="2024-25"name="session_date">
+                                <input type="text" class="form-control" placeholder="Session Year" value="<?php echo e($sessionValue); ?>" name="session_date">
                             </div>
                             <div class="col-6">
                                 <label class="form-label font-weight-bold urdu-text">Crop Session /فصل</label>

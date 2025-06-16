@@ -208,4 +208,8 @@ Route::get('listforwardedzilladar', [FarmerLandRecord::class, 'forwardedzilladar
 Route::get('listforwardedcollertor', [FarmerLandRecord::class, 'forwardedcollector'])->name('listforwardedcollertor');
 Route::get('/irrigators/search', [IrrigatorController::class, 'Search'])->name('irrigator.search');
 
+//************************ REPORTS ************************************************/
+Route::get('ReportViewNaksha5', [FarmerLandRecord::class, 'ReportViewNaksha5'])->name('ReportViewNaksha5');
+Route::post('ReportNaksha5Data', [FarmerLandRecord::class, 'ReportNaksha5Data'])->name('ReportNaksha5Data');
+
 });
