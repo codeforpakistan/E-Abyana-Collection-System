@@ -8,6 +8,7 @@ use App\Models\Canal;
 use App\Models\Divsion;
 use App\Models\village;
 use App\Models\Minorcanal;
+use App\Models\CanalBranch;
 use App\Models\Distributary;
 
 class CanalController extends Controller
@@ -249,5 +250,36 @@ public function updatedistributary(Request $request, $id)
     return redirect()->route('Distributary')->with('success', 'Distributary updated successfully');
 }
 
+public function Addbranch(){
+       
+    $branches = CanalBranch::with(['canal', 'division', 'minor', 'distributary'])->get();
+
+
+ 
+    $canals = Canal::all(); 
+    $minors = Minorcanal::all();
+    $divsions = Divsion::all();
+    $Distributaries = Distributary::all();
+    return view('RegionManagments.AddBranch',compact('divsions','canals','minors','Distributaries','branches'));
+}
+public function store(Request $request)
+{
+
+
+    CanalBranch::create([
+        'branch_name' => $request->branch_name,
+        'canal_id' => $request->canal_id,
+        'div_id' => $request->div_id,
+        'minor_id' => $request->minor_id,
+        'distrib_id' => $request->distrib_id,
+        'no_outlet' => $request->no_outlet,
+        'no_outlet_ls' => $request->no_outlet_ls,
+        'no_outlet_rs' => $request->no_outlet_rs,
+        'total_no_cca' => $request->total_no_cca,
+        'total_no_discharge_cusic' => $request->total_no_discharge_cusic,
+    ]);
+
+    return redirect()->back()->with('success', 'Canal Branch inserted successfully!');
+}
 
 }

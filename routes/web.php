@@ -176,6 +176,7 @@ Route::put('/canals/{id}/update', [CanalController::class, 'update'])->name('upd
     Route::get('Edituser/{id}',[UserController::class,'editUser'])->name('edit.user');
     Route::delete('/AddDivsion/{id}', [DivsionController::class, 'destroy'])->name('AddDivsion.destroy');
     Route::delete('/irrigators/{id}', [IrrigatorController::class, 'destroy'])->name('irrigators.destroy');
+    Route::get('AddBranch', [CanalController::class, 'AddBranch'])->name('AddBranch');
 
     Route::get('/irrigators', [IrrigatorController::class, 'AddIrrigator'])->name('irrigators.search');
 
@@ -207,5 +208,8 @@ Route::get('listforwardedpatwari', [FarmerLandRecord::class, 'forwardedpatwari']
 Route::get('listforwardedzilladar', [FarmerLandRecord::class, 'forwardedzilladar'])->name('listforwardedzilladar');
 Route::get('listforwardedcollertor', [FarmerLandRecord::class, 'forwardedcollector'])->name('listforwardedcollertor');
 Route::get('/irrigators/search', [IrrigatorController::class, 'Search'])->name('irrigator.search');
+Route::post('Canalbranch/add', [CanalController::class, 'store'])->name('Canalbranch/add');
+Route::get('Canalbranch', [CanalController::class, 'Addbranch'])->name('Canalbranch/Addbranch');
+
 
 });
