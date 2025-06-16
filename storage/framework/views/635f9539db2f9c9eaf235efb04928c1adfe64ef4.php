@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 <div class="app-content">
     <section class="section">
@@ -22,7 +20,7 @@
                     <div class="card-body text-center">
                         <i class="fa fa-users fa-2x text-success mb-2"></i>
                         <h5>Total Irrigators</h5>
-                        <h3 class="text-success">20,000</h3>
+                        <h3 class="text-success mt-2"><strong><?php echo e($totalIrrigators > 0 ? $totalIrrigators : 0); ?></strong></h3>
                     </div>
                 </div>
             </div>
@@ -31,7 +29,7 @@
 					<div class="card-body text-center">
 						<i class="fa fa-coins fa-2x text-warning mb-2"></i> 
 						<h5>Total Payments</h5>
-						<h3 class="text-warning">PKR 200,000</h3>
+						<h3 class="text-warning mt-2"><strong>RS: <?php echo e(number_format($totalCropSurveyAmount, 1)); ?></strong></h3>
 
 					</div>
 				</div>
@@ -43,7 +41,7 @@
                     <div class="card-body text-center">
                         <i class="fa fa-check-circle fa-2x text-success mb-2"></i>
                         <h5>Payments Collected</h5>
-                        <h3 class="text-success">100,000</h3>
+                        <h3 class="text-success mt-2"><strong>RS: 0</strong></h3>
                     </div>
                 </div>
             </div>
@@ -53,7 +51,7 @@
                     <div class="card-body text-center">
                         <i class="fa fa-clock fa-2x text-danger mb-2"></i>
                         <h5>Payments Pending</h5>
-                        <h3 class="text-danger">100,000</h3>
+                        <h3 class="text-danger mt-2"><strong>RS: <?php echo e(number_format($totalCropSurveyAmount, 1)); ?></strong></h3>
                     </div>
                 </div>
             </div>
@@ -62,7 +60,7 @@
                     <div class="card-body text-center">
                         <i class="fa fa-tint fa-2x text-info mb-2"></i>
                         <h5>Total Outlets</h5>
-                        <h3 class="text-info">30,000</h3>
+                        <h3 class="text-info mt-2"><strong><?php echo e($totalOutlets > 0 ? $totalOutlets : 0); ?></strong></h3>
                     </div>
                 </div>
             </div>
@@ -72,7 +70,7 @@
                     <div class="card-body text-center">
                         <i class="fa fa-water fa-2x text-primary mb-2"></i>
                         <h5>Total Canals</h5>
-                        <h3 class="text-primary">100</h3>
+                        <h3 class="text-primary mt-2"><strong><?php echo e($totalCanals > 0 ? $totalCanals : 0); ?></strong></h3>
                     </div>
                 </div>
             </div>
@@ -80,8 +78,8 @@
                 <div class="card shadow border-0 rounded">
                     <div class="card-body text-center">
                         <i class="fa fa-water fa-2x text-primary mb-2"></i>
-                        <h5>Total Minors Canals</h5>
-                        <h3 class="text-primary">200</h3>
+                        <h5>Total Distributaries</h5>
+                        <h3 class="text-primary mt-2"><strong><?php echo e($totalDistry > 0 ? $totalDistry : 0); ?></strong></h3>
                     </div>
                 </div>
             </div>
@@ -89,8 +87,8 @@
                 <div class="card shadow border-0 rounded">
                     <div class="card-body text-center">
                         <i class="fa fa-water fa-2x text-primary mb-2"></i>
-                        <h5>Total Distributaries Canals</h5>
-                        <h3 class="text-primary">200</h3>
+                        <h5>Total Minors / Branches</h5>
+                        <h3 class="text-primary mt-2"><strong><?php echo e($totalMinor > 0 ? $totalMinor : 0); ?></strong></h3>
                     </div>
                 </div>
             </div>

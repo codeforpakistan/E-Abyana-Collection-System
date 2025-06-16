@@ -325,6 +325,7 @@ Welcome to E ABYANA
                             <li><a class="slide-item" href="{{ route('Distributary') }}"><span>Add Minor / Branch (فرعی نہر)</span></a>
                             </li>
                             <li><a class="slide-item" href="{{ route('CanalOutlet') }}"><span>Outlet (آؤٹ لیٹ)</span></a></li>
+                            <li><a class="slide-item" href="{{ route('AddBranch') }}"><span>Branch</span></a></li>
                             {{-- <li><a class="slide-item" href="{{ route('AddCrop') }}"><span>Add Crop</span></a></li> --}}
                             <li><a class="slide-item" href="{{ route('Addprice') }}"><span>Add Crop Price</span></a>
                             </li>
