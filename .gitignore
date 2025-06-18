@@ -1,0 +1,9 @@
+# Ignore Laravel cache, logs, and compiled files
+/storage/framework/*
+!/storage/framework/.gitignore
+
+/storage/logs/*
+!/storage/logs/.gitignore
+
+/bootstrap/cache/*
+!/bootstrap/cache/.gitignore
