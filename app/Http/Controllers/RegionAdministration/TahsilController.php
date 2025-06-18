@@ -58,6 +58,14 @@ public function deletetehsil(Request $request)
        }
        return redirect()->back()->with('error', 'No districts selected.');
    }
-   
+   public function edittehsil($id)
+{
+    $tehsil = Tehsil::findOrFail($id);
+    $divsions = Divsion::all();
+    $districts = District::where('div_id', $tehsil->div_id)->get();
+
+    return view('RegionManagments.edit-tehsil', compact('tehsil', 'divsions', 'districts'));
+}
+
 
 }

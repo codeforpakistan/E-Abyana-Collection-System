@@ -64,9 +64,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('AddDistrict', [DistrictController::class, 'AddDistrict'])->name('AddDistrict');
     Route::post('AddDistrict/add', [DistrictController::class, 'StoreDistrict'])->name('AddDistrict.add');
     Route::delete('deletedistrict', [DistrictController::class, 'delete'])->name('district.delete');
+    Route::get('district/edit/{id}', [DistrictController::class, 'edit'])->name('district.edit');
+    Route::put('district/update/{id}', [DistrictController::class, 'update'])->name('district.update');
 
     Route::delete('districts/delete', [DistrictController::class, 'deleteMultiple'])->name('districts.delete');
     Route::delete('tehsil/delete', [TahsilController::class, 'deletetehsil'])->name('tehsil.delete');
+    Route::get('tehsil/edit/{id}', [TahsilController::class, 'edittehsil'])->name('tehsil.edit');
+
+
     Route::post('CanalOutlet/add', [CanalOutLet::class, 'storeOutlet'])->name('CanalOutlet/add');
     Route::get('AddVillage', [VollageController::class, 'AddVillage'])->name('AddVillage');
     Route::post('AddVillage/add', [VollageController::class, 'StoreVillage'])->name('AddVillage/add');

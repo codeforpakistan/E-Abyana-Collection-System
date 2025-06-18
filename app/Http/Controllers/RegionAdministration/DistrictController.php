@@ -47,7 +47,28 @@ class DistrictController extends Controller
        }
        return redirect()->back()->with('error', 'No districts selected.');
    }
-   
+   public function edit($id)
+{
+    $district = District::findOrFail($id);
+    $divsions = Divsion::all();
+    return view('RegionManagments.edit-district', compact('district', 'divsions'));
+}
+
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'div_id' => 'required|integer',
+        'name' => 'required|string|max:255',
+    ]);
+
+    $district = District::findOrFail($id);
+    $district->div_id = $request->div_id;
+    $district->name = $request->name;
+
+    $district->save();
+
+    return redirect()->route('AddDistrict')->with('success', 'District updated successfully!');
+}
 
     
     

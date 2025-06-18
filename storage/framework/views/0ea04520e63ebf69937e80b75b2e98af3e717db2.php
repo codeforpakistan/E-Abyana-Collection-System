@@ -123,6 +123,10 @@
                                                 <button class="btn btn-sm btn-primary" type="button" onclick="confirmDelete(<?php echo e($district->id); ?>)">
                                                     <i class="fa fa-trash"></i> Delete
                                                 </button>
+                                                <a href="<?php echo e(route('district.edit', $district->id)); ?>" class="btn btn-sm btn-primary">
+                                                    <i class="fa fa-edit"></i> Edit
+                                                </a>
+                                                
                                             </td>
                                         </tr>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
