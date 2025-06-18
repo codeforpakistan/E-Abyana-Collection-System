@@ -210,12 +210,6 @@ Welcome to E ABYANA
                         <ul class="slide-menu">
                             <li>
                                 <a class="slide-item" href="<?php echo e(route('AddIrragtor')); ?>">
-
-<<<<<<< HEAD
-                                    <i class="fas fa-seedling"></i> <!-- Replace with the appropriate icon class -->
-=======
-                                     <!-- Replace with the appropriate icon class -->
->>>>>>> dev1-saqib
                                     <span>Add Irrigator</span>
                                 </a>
                             </li>
@@ -252,7 +246,7 @@ Welcome to E ABYANA
                     </li>
                     <?php if(session('role_id') == 17 || session('role_id') == 1): ?> 
                     <li class="slide">
-                        <a class="side-menu__item" data-toggle="slide" href="<?php echo e(url('dashboard')); ?>">
+                        <a class="side-menu__item" data-toggle="slide">
                         <i class="side-menu__icon fas fa-file-invoice-dollar"></i>
                             <span class="side-menu__label">Manage Bills</span>
                         </a>
@@ -265,14 +259,15 @@ Welcome to E ABYANA
                     <?php endif; ?>
                     <?php if(session('role_id') == 17 || session('role_id') == 1 || session('role_id') == 16): ?> 
                     <li class="slide">
-                        <a class="side-menu__item" data-toggle="slide" href="<?php echo e(url('dashboard')); ?>">
+                        <a class="side-menu__item" data-toggle="slide">
                         <i class="side-menu__icon fas fa-file-invoice"></i>
                             <span class="side-menu__label">Reports</span>
                         </a>
                         <ul class="slide-menu">
-                          
-                            <li><a class="slide-item" href="<?php echo e(url('ReportViewKhatoni')); ?>"><span> Khatoni Report</span></a></li>
-                            <li><a class="slide-item" href="<?php echo e(url('ListIrrigatorsForBills')); ?>"><span> Ghoswara Report</span></a></li>
+                            <li><a class="slide-item" href="<?php echo e(url('ReportViewNaksha5')); ?>"><span> Naksha No 5</span></a></li>
+                            <li><a class="slide-item" href="<?php echo e(url('ReportViewJinswaar')); ?>"><span> Jinswaar</span></a></li>
+                            <li><a class="slide-item" href="<?php echo e(url('ReportViewMoqabilataan')); ?>"><span> Moqabilataan</span></a></li>
+                             <li><a class="slide-item" href="<?php echo e(url('ReportViewParhtaal')); ?>"><span> Naksha Parhtaal</span></a></li>
                         </ul>
                     </li>
                      <?php endif; ?>
@@ -308,7 +303,7 @@ Welcome to E ABYANA
 
                     <?php if(session('role_id')==1): ?>
                     <li class="slide">
-                        <a class="side-menu__item" data-toggle="slide" href="#">
+                        <a class="side-menu__item" data-toggle="slide">
                             <i class="side-menu__icon fa fa-cog"></i> <!-- Settings icon -->
                             <span class="side-menu__label">Setting</span>
                             <span class="badge badge-orange nav-badge"></span>
@@ -333,6 +328,7 @@ Welcome to E ABYANA
                             <li><a class="slide-item" href="<?php echo e(route('Distributary')); ?>"><span>Add Minor / Branch (فرعی نہر)</span></a>
                             </li>
                             <li><a class="slide-item" href="<?php echo e(route('CanalOutlet')); ?>"><span>Outlet (آؤٹ لیٹ)</span></a></li>
+                            <li><a class="slide-item" href="<?php echo e(route('AddBranch')); ?>"><span>Branch</span></a></li>
                             
                             <li><a class="slide-item" href="<?php echo e(route('Addprice')); ?>"><span>Add Crop Price</span></a>
                             </li>
