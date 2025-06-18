@@ -46,7 +46,7 @@
                         <h4 class="font-weight-bold mb-0">Edit District</h4>
                     </div>
                     <div class="card-body">
-                        <form class="form-horizontal" action="" method="POST">
+                        <form class="form-horizontal" action="<?php echo e(route('tehsil.update', $tehsil->tehsil_id)); ?>" method="POST">
                             <?php echo csrf_field(); ?>
                             <?php echo method_field('PUT'); ?>
                         
@@ -71,10 +71,11 @@
                                     <select name="district_id" id="district_id" class="form-control" required>
                                         <option value="">Choose District / ضلع</option>
                                         <?php $__currentLoopData = $districts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $district): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($district->id); ?>" <?php echo e($district->id == $tehsil->district_id ? 'selected' : ''); ?>>
-                                                <?php echo e($district->name); ?>
+                                        <option value="<?php echo e($district->id); ?>" <?php echo e($district->id == $tehsil->district_id ? 'selected' : ''); ?>>
+                                            <?php echo e($district->name); ?>
 
-                                            </option>
+                                        </option>
+                                        
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                 </div>

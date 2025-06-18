@@ -48,7 +48,7 @@
                         <h4 class="font-weight-bold mb-0">Edit District</h4>
                     </div>
                     <div class="card-body">
-                        <form class="form-horizontal" action="" method="POST">
+                        <form class="form-horizontal" action="{{ route('tehsil.update', $tehsil->tehsil_id) }}" method="POST">
                             @csrf
                             @method('PUT')
                         

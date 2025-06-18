@@ -71,6 +71,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('tehsil/delete', [TahsilController::class, 'deletetehsil'])->name('tehsil.delete');
     Route::get('tehsil/edit/{id}', [TahsilController::class, 'edittehsil'])->name('tehsil.edit');
 
+Route::post('tehsil/update/{id}', [TahsilController::class, 'updatetehsil'])->name('tehsil.update');
 
     Route::post('CanalOutlet/add', [CanalOutLet::class, 'storeOutlet'])->name('CanalOutlet/add');
     Route::get('AddVillage', [VollageController::class, 'AddVillage'])->name('AddVillage');

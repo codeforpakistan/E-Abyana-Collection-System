@@ -66,6 +66,22 @@ public function deletetehsil(Request $request)
 
     return view('RegionManagments.edit-tehsil', compact('tehsil', 'divsions', 'districts'));
 }
+public function updatetehsil(Request $request, $id)
+{
+    $request->validate([
+        'div_id' => 'required',
+        'district_id' => 'required',
+        'tehsil_name' => 'required|string|max:255',
+    ]);
+
+    $tehsil = Tehsil::findOrFail($id);
+    $tehsil->div_id = $request->div_id;
+    $tehsil->district_id = $request->district_id;
+    $tehsil->tehsil_name = $request->tehsil_name;
+    $tehsil->save();
+
+    return redirect()->back()->with('success', 'Tehsil updated successfully!');
+}
 
 
 }
