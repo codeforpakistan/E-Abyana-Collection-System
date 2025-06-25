@@ -16,6 +16,9 @@ use App\Models\LandRecord;
 use App\Models\Cropprice;
 use App\Models\Minorcanal;
 use App\Models\Distributary;
+use App\Models\CanalBranch;
+use App\Models\PriceRevenue;
+
 use DB;
 
 class FarmerLandRecord extends Controller
@@ -58,6 +61,17 @@ public function LandRecord($id, $abs, $village_id, $canal_id, $div_id, Request $
         $Outlets = Outlet::all();
         $Halqas = Halqa::all();
         $cropprice = Cropprice::all();
+        $PriceRevenue = PriceRevenue::all();
+
+        $priceRateData = [];
+        foreach ($PriceRevenue as $rate) {
+            $priceRateData[$rate->crop_type] = [
+                'flow' => $rate->flow,
+                'LIS' => $rate->LIS,
+                't_well' => $rate->t_well,
+                'jhallar' => $rate->jhallar,
+            ];
+        }
     
         return view('LandRecord.LandRecord', compact(
             'villages',
@@ -70,7 +84,10 @@ public function LandRecord($id, $abs, $village_id, $canal_id, $div_id, Request $
             'Outlets',
             'Halqas',
             'survey',
-            'cropprice'
+            'cropprice',
+            'PriceRevenue',
+            'priceRateData'
+
         ));
     }
 public function EditSurvey($id)
@@ -138,6 +155,15 @@ public function get_outlets_by_distributory($distri_id){
     return response()->json($outlets_by_distri);
 }
 
+public function get_branches_by_distributory($distri_id){
+    $branches_by_distri = CanalBranch::where('distrib_id', $distri_id)->get();
+    return response()->json($branches_by_distri);
+}
+public function get_outlet_by_branch($branch_id){
+    $outlet_by_branch = Outlet::where('branch_id', $branch_id)->get();
+    return response()->json($outlet_by_branch);
+}
+
 
 public function storeFarmer(Request $request)
 {
@@ -189,6 +215,7 @@ public function storeFarmer(Request $request)
         'canal_id' => 'required|exists:canals,id',
         'minor_id' => 'nullable|numeric|max:255',
         'distri_id' => 'nullable|numeric|max:255',
+        'branch_id' => 'nullable|numeric|max:255',
         'crop_id' => 'required|exists:crops,id',
         'outlet_id' => 'required|numeric|max:255',
         'finalcrop_id' => 'required|exists:cropprices,id',

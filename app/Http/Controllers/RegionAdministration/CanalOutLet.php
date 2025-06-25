@@ -10,6 +10,8 @@ use App\Models\Canal;
 use App\Models\Minorcanal;
 use App\Models\Distributary;
 use App\Models\Divsion;
+use App\Models\CanalBranch;
+
 class CanalOutLet extends Controller
 {
     public function AddOutlet(){
@@ -17,9 +19,10 @@ class CanalOutLet extends Controller
         $minors = Minorcanal::all();
         $divsions = Divsion::all();
         $Distributaries = Distributary::all();
-        $outlets = Outlet::with(['canal', 'division', 'minor','distributsry'])->paginate(5);
+        $CanalBranch = CanalBranch::all();
+        $outlets = Outlet::with(['canal', 'division', 'minor','distributsry','CanalBranch'])->paginate(5);
         return view('RegionManagments.CanalOutlet',compact('canals','outlets','divsions',
-        'minors','minors','Distributaries'));
+        'minors','Distributaries','CanalBranch'));
     
 }
 
@@ -36,11 +39,12 @@ public function storeOutlet(Request $request)
         'canal_id' => $request->canal_id,
         'minor_id' => $request->minor_id,
         'distrib_id' => $request->distrib_id,
+        'branch_id' => $request->branch_id,
         'div_id' => $request->div_id,
 
     ]);
 
-    return redirect()->back()->with('success', 'Canal outlet created successfully!');
+    return redirect()->back()->with('success', 'Outlet created successfully!');
 }
 public function getCanals($division_id)
 {
@@ -59,5 +63,12 @@ public function getDistributaries($minor_id)
     $distributaries = Distributary::where('minor_id', $minor_id)->get();
     return response()->json($distributaries);
 }
+
+public function getBranches($minor_id)
+{
+    $branches = CanalBranch::where('distrib_id', $minor_id)->get();
+    return response()->json($branches);
+}
+
 
 }

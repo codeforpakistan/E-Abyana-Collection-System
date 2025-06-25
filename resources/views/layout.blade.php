@@ -322,13 +322,14 @@ Welcome to E ABYANA
                             </li>
                             <li><a class="slide-item" href="{{ route('AddMinor-Canal') }}"><span>Add Distry (شاخ نہر)</span></a>
                             </li>
-                            <li><a class="slide-item" href="{{ route('Distributary') }}"><span>Add Minor / Branch (فرعی نہر)</span></a>
+                            <li><a class="slide-item" href="{{ route('Distributary') }}"><span>Add Minor (فرعی نہر)</span></a>
                             </li>
+                            <li><a class="slide-item" href="{{ route('AddBranch') }}"><span>Branch (برانچ)</span></a></li>
                             <li><a class="slide-item" href="{{ route('CanalOutlet') }}"><span>Outlet (آؤٹ لیٹ)</span></a></li>
-                            <li><a class="slide-item" href="{{ route('AddBranch') }}"><span>Branch</span></a></li>
+                            
                             {{-- <li><a class="slide-item" href="{{ route('AddCrop') }}"><span>Add Crop</span></a></li> --}}
-                            <li><a class="slide-item" href="{{ route('Addprice') }}"><span>Add Crop Price</span></a>
-                            </li>
+                            <li><a class="slide-item" href="{{ route('Addprice') }}"><span>Add Crops</span></a></li>
+                             <li><a class="slide-item" href="{{ route('Addrates') }}"><span>Revenue Model</span></a></li>
                         </ul>
                 </li>
                 <li class="slide">

@@ -17,6 +17,7 @@ class Outlet extends Model
         'minor_id',
         'div_id',
         'distrib_id',
+        'branch_id',
         'beneficiaries',
         'total_no_discharge_cusic',
         'total_no_cca',
@@ -39,5 +40,9 @@ class Outlet extends Model
     public function distributsry()
     {
         return $this->belongsTo(Distributary::class, 'distrib_id', 'id');
+    }
+     public function CanalBranch()
+    {
+        return $this->belongsTo(CanalBranch::class, 'branch_id', 'id');
     }
 }

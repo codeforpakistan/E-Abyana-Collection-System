@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('cropprices', function (Blueprint $table) {
             $table->id();
-            $table->string('crop_price'); 
             $table->timestamps();
         });
     }

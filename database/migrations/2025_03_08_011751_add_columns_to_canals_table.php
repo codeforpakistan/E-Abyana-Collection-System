@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('canals', function (Blueprint $table) {
+            $table->string('c_type');
             $table->unsignedBigInteger('div_id')->nullable();
             $table->integer('no_outlet')->nullable();
             $table->integer('no_outlet_ls')->nullable();
@@ -32,7 +33,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('canals', function (Blueprint $table) {
-            $table->dropColumn(['div_id', 'no_outlet', 'no_outlet_ls', 'no_outlet_rs', 'total_no_cca', 'total_no_discharge_cusic']);
+            $table->dropColumn(['c_type','div_id', 'no_outlet', 'no_outlet_ls', 'no_outlet_rs', 'total_no_cca', 'total_no_discharge_cusic']);
         });
     
     }

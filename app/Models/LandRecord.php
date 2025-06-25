@@ -43,6 +43,7 @@ class LandRecord extends Model
         'canal_id',
         'minor_id',
         'distri_id',
+        'branch_id',
         'crop_id', 
         'outlet_id',
         'finalcrop_id',

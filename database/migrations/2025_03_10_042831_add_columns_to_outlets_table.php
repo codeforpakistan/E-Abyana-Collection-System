@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('div_id')->nullable();
             $table->unsignedBigInteger('minor_id')->nullable();
             $table->unsignedBigInteger('distrib_id')->nullable();
+            $table->unsignedBigInteger('branch_id')->nullable();
             $table->integer('beneficiaries')->nullable();
             $table->integer('total_no_discharge_cusic')->nullable();
             $table->integer('total_no_cca')->nullable();
@@ -32,7 +33,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('outlets', function (Blueprint $table) {
-            $table->dropColumn(['div_id', 'canal_id', 'minor_id', 'distrib_id', 'beneficiaries', 'total_no_discharge_cusic','total_no_cca']);
+            $table->dropColumn(['div_id', 'canal_id', 'minor_id', 'distrib_id','branch_id', 'beneficiaries', 'total_no_discharge_cusic','total_no_cca']);
         });
     }
 };

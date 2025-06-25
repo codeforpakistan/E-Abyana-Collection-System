@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('canals', function (Blueprint $table) {
             $table->id();
             $table->string('canal_name'); 
-            $table->unsignedBigInteger('village_id');
+            $table->unsignedBigInteger('village_id')->nullable(); 
             $table->timestamps();
         });
     }

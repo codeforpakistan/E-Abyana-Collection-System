@@ -43,9 +43,9 @@
                         @csrf
                     
                         <div class="row" style="margin-top:-30px;">
-                            <div class="form-group col-4">
+                            <div class="form-group col-4" style="display:none;">
                                 <label class="form-label" for="village_id">Select Village</label>
-                                <select name="village_id" id="village_id" class="form-control" required>
+                                <select name="village_id" id="village_id" class="form-control">
                                     <option value="">Choose Village</option>
                                     @foreach($villages as $village)
                                         <option value="{{ $village->village_id }}">{{ $village->village_name }}</option>
@@ -65,6 +65,16 @@
                             <div class="form-group col-4">
                                 <label class="form-label">Name of Canal</label>
                                 <input class="form-control" type="text" name="canal_name" required>
+                            </div>
+                             <div class="form-group col-4">
+                                <label class="form-label" for="c_type">Canal Water Type</label>
+                                <select name="c_type" id="c_type" class="form-control">
+                                    <option value="">Choose Water Type</option>
+                                    <option value="flow">Flow</option>
+                                    <option value="LIS">LIS</option>
+                                    <option value="t_well">T/Well</option>
+                                    <option value="jhallar">Jhallar</option>
+                                </select>
                             </div>
                         </div>
                     

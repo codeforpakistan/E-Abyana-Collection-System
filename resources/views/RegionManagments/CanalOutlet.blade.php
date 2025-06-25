@@ -41,8 +41,8 @@
                             </div> 
                             <div class="form-group col-4">
                                 <label class="form-label" for="minor_id">Select Distributary/ تقسیم نہر</label>
-                                <select name="minor_id" id="minor_id" class="form-control" required>
-                                    <option value="">Choose Minor Canal</option>
+                                <select name="minor_id" id="minor_id" class="form-control">
+                                    <option value="">Choose Distributary Canal</option>
                                     @foreach($minors as $minor)
                                         <option value="{{ $minor->id }}">{{ $minor->minor_name }}</option>
                                     @endforeach
@@ -52,20 +52,29 @@
                     
                         <div class="row" style="margin-top:-10px;">
                             <!-- Distributary Selection -->
-                            <div class="form-group col-4">
-                                <label class="form-label" for="distrib_id">Select Minor Canal / چھوٹا نہر</label>
-                                <select name="distrib_id" id="distrib_id" class="form-control" required>
-                                    <option value="">Choose Distributary</option>
+                            <div class="form-group col-3">
+                                <label class="form-label" for="distrib_id">Select Minor / چھوٹا نہر</label>
+                                <select name="distrib_id" id="distrib_id" class="form-control">
+                                    <option value="">Choose Minor</option>
                                     @foreach($Distributaries as $Distributarie)
                                         <option value="{{ $Distributarie->id }}">{{ $Distributarie->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group col-4">
+                            <div class="form-group col-3">
+                                <label class="form-label" for="branch_id">Select Branch / برانچ</label>
+                                <select name="branch_id" id="branch_id" class="form-control">
+                                    <option value="">Choose Branch</option>
+                                    @foreach($CanalBranch as $CanalBranch)
+                                        <option value="{{ $CanalBranch->id }}">{{ $CanalBranch->branch_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group col-3">
                                 <label class="form-label">Name Outlet</label>
                                 <input class="form-control" type="text" name="outlet_name" required>
                             </div>
-                            <div class="form-group col-4">
+                            <div class="form-group col-3">
                                 <label class="form-label">	Total No CCA</label>
                                 <input class="form-control" type="number" name="total_no_cca" required>
                             </div>
@@ -120,7 +129,8 @@
                                         <th>Division Name</th>
                                         <th>Canal Name</th>
                                         <th>Distributroy</th>
-                                        <th>Minor Name</th>
+                                        <th>Minor</th>
+                                        <th>Branch</th>
                                         <th>Beneficiaries</th>
                                         <th>Total No. of CCA</th>
                                         <th>Total No. of Discharge (Cusec)</th>
@@ -143,6 +153,7 @@
                                             </td>
                                             <td>{{ $canal->minor->minor_name ?? 'N/A' }}</td>
                                             <td>{{ $canal->distributsry->name ?? 'N/A' }}</td>
+                                            <td>{{ $canal->CanalBranch->branch_name ?? 'N/A' }}</td>
                                             <td>{{ $canal->beneficiaries ?? 'N/A' }}</td>
                                           
                                             <td>{{ $canal->total_no_cca }}</td>
@@ -240,6 +251,26 @@ $(document).ready(function() {
                     $('#distrib_id').html('<option value="">Choose Distributary</option>');
                     $.each(data, function(key, value) {
                         $('#distrib_id').append('<option value="'+ value.id +'">'+ value.name +'</option>');
+                    });
+                }
+            });
+        }
+    });
+
+        // Load branches when Minor Canal is selected
+    $('#distrib_id').change(function() {
+        var distrib_id = $(this).val();
+        $('#branch_id').html('<option value="">Loading...</option>');
+
+        if (distrib_id) {
+            $.ajax({
+                url: '/get-branches/' + distrib_id,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $('#branch_id').html('<option value="">Choose Branches</option>');
+                    $.each(data, function(key, value) {
+                        $('#branch_id').append('<option value="'+ value.id +'">'+ value.branch_name +'</option>');
                     });
                 }
             });

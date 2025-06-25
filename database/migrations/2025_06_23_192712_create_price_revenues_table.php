@@ -13,10 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('canals', function (Blueprint $table) {
+        Schema::create('price_revenues', function (Blueprint $table) {
             $table->id();
-            $table->string('canal_name'); 
-            $table->unsignedBigInteger('village_id')->nullable(); 
+            $table->enum('crop_type', ['Cash Crop', 'Non-Cash Crop']);
+            $table->float('flow', 10, 2);
+            $table->float('LIS', 10, 2);
+            $table->float('t_well', 10, 2);
+            $table->float('jhallar', 10, 2);
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('canals');
+        Schema::dropIfExists('price_revenues');
     }
 };

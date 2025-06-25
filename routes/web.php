@@ -80,6 +80,7 @@ Route::post('tehsil/update/{id}', [TahsilController::class, 'updatetehsil'])->na
     Route::get('AddCrop', [CropController::class, 'AddCrop'])->name('AddCrop');
     Route::post('AddCrop/add', [CropController::class, 'storeCrop'])->name('AddCrop/add');
     Route::post('Addprice/add', [PriceController::class, 'Storeprice'])->name('Addprice/add');
+    Route::post('Addrates/add', [PriceController::class, 'Storerates'])->name('Addrates/add');
     Route::get('AddTahsil', [TahsilController::class, 'AddTahsil'])->name('AddTahsil');
     Route::post('AddTahsil/add', [TahsilController::class, 'StoreTehsil'])->name('AddTahsil/add');
     
@@ -102,7 +103,8 @@ Route::post('tehsil/update/{id}', [TahsilController::class, 'updatetehsil'])->na
     Route::get('/get-canals/{division_id}', [CanalOutLet::class, 'getCanals']);
     Route::get('/get-minors/{canal_id}', [CanalOutLet::class, 'getMinors']);
     Route::get('/get-distributaries/{minor_id}', [CanalOutLet::class, 'getDistributaries']);
-    
+
+    Route::get('/get-branches/{minor_id}', [CanalOutLet::class, 'getBranches']);
 
 
     Route::get('AddFarmer', [FarmerController::class, 'AddFarmer'])->name('AddFarmer');
@@ -111,6 +113,7 @@ Route::post('tehsil/update/{id}', [TahsilController::class, 'updatetehsil'])->na
     Route::get('AddRoles', [RulesController::class, 'Add'])->name('AddRoles');
     Route::post('AddRoles/add', [RulesController::class, 'storeRoles'])->name('AddRoles.add');
     Route::get('Addprice', [PriceController::class, 'Addprice'])->name('Addprice');
+    Route::get('Addrates', [PriceController::class, 'Addrates'])->name('Addrates');
     Route::get('AddPermission', [PermissionController::class, 'AddPermission']);
     Route::post('AddPermission/add', [PermissionController::class, 'storepermission'])->name('AddPermission.add');
 
@@ -203,10 +206,15 @@ Route::put('/canals/{id}/update', [CanalController::class, 'update'])->name('upd
     Route::get('/get-minor-canals-for-distri/{canal_id}', [FarmerLandRecord::class, 'get_minor_canals_for_distri']);
     Route::get('/get-distributories-by-minor/{minor_id}', [FarmerLandRecord::class, 'get_distributories_by_minor']);
     Route::get('/get-outlets-by-distributory/{distri_id}', [FarmerLandRecord::class, 'get_outlets_by_distributory']);
+    Route::get('/get-branches-by-distributory/{distri_id}', [FarmerLandRecord::class, 'get_branches_by_distributory']);
+    Route::get('/get-outlet-by-branch/{branch_id}', [FarmerLandRecord::class, 'get_outlet_by_branch']);
+    
 
     Route::get('edit-irrigator/{id}',[IrrigatorController::class,'editIrrigator'])->name('edit.irrigator');
     Route::put('/irrigators/{id}', [IrrigatorController::class, 'update'])->name('update.irrigator');
     Route::get('Addprice/edit/{id}', [PriceController::class, 'edit'])->name('cropprice.edit');
+    Route::get('rates/edit/{id}', [PriceController::class, 'rates_edit'])->name('rates.edit');
+    Route::post('rates/update/{id}', [PriceController::class, 'rates_update'])->name('rates.update');
     Route::post('Addprice/update/{id}', [PriceController::class, 'update'])->name('cropprice.update');
 
 

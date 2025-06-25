@@ -1,9 +1,23 @@
-# Ignore Laravel cache, logs, and compiled files
+# Ignore compiled files in storage/framework, but keep folder structure
 /storage/framework/*
 !/storage/framework/.gitignore
+!/storage/framework/sessions/
+!/storage/framework/views/
+!/storage/framework/cache/
 
+/storage/framework/sessions/*
+!/storage/framework/sessions/.gitignore
+
+/storage/framework/views/*
+!/storage/framework/views/.gitignore
+
+/storage/framework/cache/*
+!/storage/framework/cache/.gitignore
+
+# Ignore log files, but keep the logs folder
 /storage/logs/*
 !/storage/logs/.gitignore
 
+# Ignore compiled files in bootstrap/cache, but keep the folder
 /bootstrap/cache/*
 !/bootstrap/cache/.gitignore

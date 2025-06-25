@@ -67,12 +67,16 @@
                             <div class="form-check form-check-inline" style="border-bottom:1px solid gray;">
                               <input class="form-check-input" type="radio" name="canalType" id="distributory" value="distributory">
                               <label class="form-check-label" for="distributory">Minor Canal</label>
+                              <!-- Branch Checkbox -->&nbsp;&nbsp;
+                              <input class="form-check-input" type="checkbox" id="branchCheckbox" name="branch" value="branch">
+                              <label class="form-check-label" for="branchCheckbox">Branch</label>
+                              <!-- ********************************* -->
                             </div>
                           </div>
                         </div>
 
 
-                        <div class="row">
+                        
                            <!-- <div class="form-group col-lg-3">
                                 <label for="div_id" class="form-label font-weight-bold">Select Divsion/ڈویژن</label>
                                 <select  id="div_id" class="form-control" required onchange="get_districts(this)">
@@ -110,6 +114,7 @@
                                     @endforeach
                                 </select>
                             </div>  -->
+                            <div class="row">
                             <div class="col-4">
                                 <label class="form-label font-weight-bold urdu-text" for="div_id">Select Division / ڈویژن</label>
                                 <select name="div_id" id="div_id" class="form-group form-control" required readon>
@@ -127,6 +132,7 @@
                             </div>
                             <div class="col-4">
                                 <label class="form-label font-weight-bold urdu-text">Select canal/نہر</label>
+                                <input type="hidden" id="c_type" name="c_type" value="{{ $canals->c_type }}" />
                                 <select name="canal_id" id="canal_id" class="form-control" readonly onchange="get_outlets(this)">
                                         <option value="{{ $canals->id }}">{{ $canals->canal_name }}</option>
                                 </select>
@@ -170,6 +176,12 @@
                                     <option value="">Minor Canal / چھوٹی نہر</option>
                                 </select>
                             </div>
+                        <div class="col-4" id="branch_dropdown_div" style="display: none;">
+                          <label class="form-label font-weight-bold urdu-text">Branch / شاخ</label>
+                          <select name="branch_id" id="branch_id" class="form-control">
+                              <option value="">Choose Branch / شاخ</option>
+                          </select>
+                         </div>
                         <div class="col-4">
                                 <label class="form-label font-weight-bold urdu-text">Outlet/موگیہ</label>
                                 <select name="distri_outlet_id" id="distri_outlet_id" class="form-control">
@@ -309,7 +321,7 @@
                                 <select name="finalcrop_id" id="finalcrop_id" class="form-control" required>
                                     <option class="form-label font-weight-bold" value="">Choose Crop/فصل</option>
                                     @foreach($cropprice as $crop)
-                                        <option value="{{ $crop->id }}" data-price="{{ $crop->crop_price }}" data-name="{{ $crop->final_crop }}">{{ $crop->final_crop }}</option>
+                                        <option value="{{ $crop->id }}" data-type="{{ $crop->crop_type }}" data-name="{{ $crop->final_crop }}">{{ $crop->final_crop }} - {{$crop->crop_type}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -425,6 +437,8 @@
     document.addEventListener("DOMContentLoaded", function () {
         const canalTypeRadios = document.getElementsByName('canalType');
         const canalDropdown = document.getElementById('canal_id');
+        const branchCheckbox = document.getElementById('branchCheckbox');
+        const branchDropdownDiv = document.getElementById('branch_dropdown_div');
         // Hide all rows initially
         document.getElementById('canal_radiobutton_show').style.display = 'none';
         document.getElementById('minor_radiobutton_show').style.display = 'none';
@@ -455,6 +469,18 @@
                 }
             });
         });
+        // Handle checkbox show/hide logic
+branchCheckbox.addEventListener('change', function () {
+    const isMinorCanalSelected = document.getElementById('distributory').checked;
+    if (this.checked && isMinorCanalSelected) {
+        branchDropdownDiv.style.display = 'block';
+        const distId = document.getElementById('distri_id').value;
+        get_branches_from_distributory(distId); // optional: load based on selected distributory
+    } else {
+        branchDropdownDiv.style.display = 'none';
+        $('#branch_id').empty().append('<option value="">Choose Branch / شاخ</option>');
+    }
+});
         // Load outlets when minor is selected
         $(document).on('change', '#minor_radiobutton_show select[name="canal_minor_id"]', function () {
             const minorId = $(this).val();
@@ -466,9 +492,27 @@
             get_distributories(minorId);
         });
 
+        // Also listen for changes in distributory dropdown to reload branches if checkbox is checked
         $(document).on('change', '#distributory_radiobutton_show select[name="distri_id"]', function () {
             const distId = $(this).val();
             get_outlets_from_distributory(distId);
+            if (branchCheckbox.checked) {
+                get_branches_from_distributory(distId);
+            }
+        });
+
+        $(document).on('change', '#distributory_radiobutton_show select[name="distri_id"]', function () {
+            const distId = $(this).val();
+           if (!branchCheckbox.checked) { 
+            get_outlets_from_distributory(distId);
+        }
+        });
+
+         $(document).on('change', '#distributory_radiobutton_show select[name="branch_id"]', function () {
+            const branch_id = $(this).val();
+            if (branchCheckbox.checked) {
+            get_outlet_from_branch(branch_id);
+            }
         });
     });
 
@@ -581,6 +625,28 @@
         }
     }
 
+    function get_branches_from_distributory(distri_id) {
+    if (distri_id) {
+        $.ajax({
+            url: '/get-branches-by-distributory/' + distri_id,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                $('#branch_id').empty().append('<option value="">Choose Branch / شاخ</option>');
+                $.each(data, function (key, value) {
+                    $('#branch_id').append('<option value="' + value.id + '">' + value.branch_name + '</option>');
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching branches:', error);
+                alert('Could not fetch branches.');
+            }
+        });
+    }
+
+    
+}
+
     // Distributory -> Outlets
     function get_outlets_from_distributory(distri_id) {
         if (distri_id) {
@@ -601,6 +667,29 @@
             });
         }
     }
+
+    function get_outlet_from_branch(branch_id) {
+    if (branch_id) {
+        $.ajax({
+            url: '/get-outlet-by-branch/' + branch_id,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                $('#distri_outlet_id').empty().append('<option value="">Choose Branch123 / شاخ</option>');
+                $.each(data, function (key, value) {
+                    $('#distri_outlet_id').append('<option value="' + value.id + '">' + value.outlet_name + '</option>');
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching outlet:', error);
+                alert('Could not fetch outlet.');
+            }
+        });
+    }
+
+    
+}
+
 </script>
     
 <script>
@@ -666,43 +755,59 @@
         }
     }
     </script>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
+<script>
+    var priceRateData = @json($priceRateData);
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
         const previousCropSelect = document.getElementById('previous_crop');
         const finalCropSelect = document.getElementById('finalcrop_id');
         const priceInput = document.getElementById('crop_price');
+        const canalType = document.getElementById('c_type').value;
 
-        function synchronizeDropdowns() {
-            const selectedCropName = previousCropSelect.value;
+        // When user selects from "Previous Crop", reflect the same in "Final Crop"
+        previousCropSelect.addEventListener('change', function () {
+            const selectedPrevCrop = this.value;
+
+            // Loop through final crop options and match by data-name
             for (let i = 0; i < finalCropSelect.options.length; i++) {
                 const option = finalCropSelect.options[i];
-                if (option.getAttribute('data-name') === selectedCropName) {
+                const dataName = option.getAttribute('data-name');
+
+                if (dataName === selectedPrevCrop) {
                     finalCropSelect.selectedIndex = i;
-                    const price = option.getAttribute('data-price');
-                    priceInput.value = price ? price : 0;
-                    return;
+                    finalCropSelect.dispatchEvent(new Event('change')); // Trigger rate calculation
+                    break;
                 }
             }
-            finalCropSelect.selectedIndex = 0;
-            priceInput.value = 0;
-        }
-        previousCropSelect.addEventListener('change', synchronizeDropdowns);
-        finalCropSelect.addEventListener('change', function () {
-            const selectedOption = finalCropSelect.options[finalCropSelect.selectedIndex];
-            const price = selectedOption.getAttribute('data-price');
-            priceInput.value = price ? price : 0;
         });
 
+        // When "Final Crop" changes, calculate and show per kanal rate
+        finalCropSelect.addEventListener('change', function () {
+            const selectedOption = this.options[this.selectedIndex];
+            const cropType = selectedOption.getAttribute('data-type');
+
+            if (cropType && priceRateData[cropType] && priceRateData[cropType][canalType]) {
+                const perAcreRate = priceRateData[cropType][canalType];
+                const perKanalRate = perAcreRate / 8;
+                priceInput.value = perKanalRate.toFixed(0);
+            } else {
+                priceInput.value = 0;
+            }
+        });
+
+        // Area calculation based on length/width
         function calculateArea() {
-        const length = parseFloat(document.getElementById('length').value) || 0;
-        const width = parseFloat(document.getElementById('width').value) || 0;
-        const total = (length * width) / 20;
-        const kanal = Math.floor(total);
-        const marla = Math.round((total - kanal) * 20);
-        document.getElementById('kanal').value = kanal;
-        document.getElementById('marla').value = marla;
-    }
-    document.getElementById('length').addEventListener('input', calculateArea);
-    document.getElementById('width').addEventListener('input', calculateArea);
+            const length = parseFloat(document.getElementById('length').value) || 0;
+            const width = parseFloat(document.getElementById('width').value) || 0;
+            const total = (length * width) / 20;
+            const kanal = Math.floor(total);
+            const marla = Math.round((total - kanal) * 20);
+            document.getElementById('kanal').value = kanal;
+            document.getElementById('marla').value = marla;
+        }
+
+        document.getElementById('length').addEventListener('input', calculateArea);
+        document.getElementById('width').addEventListener('input', calculateArea);
     });
 </script>

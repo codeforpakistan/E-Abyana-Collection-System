@@ -56,7 +56,8 @@ class CanalController extends Controller
         // Create a new Canal record
         Canal::create([
             'canal_name' => $request->canal_name,
-            'village_id' => $request->village_id,
+           // 'village_id' => $request->village_id,
+           'c_type' => $request->c_type,
             'div_id' => $request->div_id,
             'no_outlet' => $request->no_outlet,
             'no_outlet_ls' => $request->no_outlet_ls,

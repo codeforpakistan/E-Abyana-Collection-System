@@ -53,6 +53,7 @@ return new class extends Migration
             $table->unsignedBigInteger('canal_id');
             $table->unsignedBigInteger('minor_id')->nullable();
             $table->unsignedBigInteger('distri_id')->nullable();
+             $table->unsignedBigInteger('branch_id')->nullable();
             $table->unsignedBigInteger('crop_id');
             $table->unsignedBigInteger('outlet_id');
     

@@ -14,6 +14,7 @@ class Canal extends Model
     protected $fillable = [
         'canal_name',
         'village_id',
+        'c_type',
         'div_id',
         'no_outlet',
         'no_outlet_ls',
