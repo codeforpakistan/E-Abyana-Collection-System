@@ -60,7 +60,7 @@
                             <h4 class="font-weight-bold">Edit Distributary</h4> <!-- Updated to reflect Employer data -->
                         </div>
                         <div class="card-body">
-                            <form class="form-horizontal" action="{{ route('editdist', $distributary->id) }}" method="POST">
+                            <form class="form-horizontal" action="{{ route('updatedist', $distributary->id) }}" method="POST">
                                 @csrf
                                 @method('PUT') <!-- Required for updates -->
                             

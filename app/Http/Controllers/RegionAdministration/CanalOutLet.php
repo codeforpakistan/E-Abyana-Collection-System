@@ -10,6 +10,7 @@ use App\Models\Canal;
 use App\Models\Minorcanal;
 use App\Models\Distributary;
 use App\Models\Divsion;
+use DB;
 class CanalOutLet extends Controller
 {
     public function AddOutlet(){
@@ -59,5 +60,34 @@ public function getDistributaries($minor_id)
     $distributaries = Distributary::where('minor_id', $minor_id)->get();
     return response()->json($distributaries);
 }
+public function edit($id)
+{
+    $outlet = Outlet::findOrFail($id);
+    $divsions = Divsion::all();
+    $canals = Canal::all();
+    $minors = Minorcanal::all();
+    $Distributaries = Distributary::all();
+
+    return view('RegionManagments.edit-outlet', compact('outlet', 'divsions', 'canals', 'minors', 'Distributaries'));
+}
+public function update(Request $request, $id)
+{
+    $validated = $request->validate([
+        'div_id' => 'required',
+        'canal_id' => 'required',
+        'minor_id' => 'required',
+        'distrib_id' => 'required',
+        'outlet_name' => 'required|string|max:255',
+        'total_no_cca' => 'required|numeric',
+        'beneficiaries' => 'required|string|max:255',
+        'total_no_discharge_cusic' => 'required|numeric',
+    ]);
+
+    $outlet = Outlet::findOrFail($id);
+    $outlet->update($validated);
+
+    return redirect()->back()->with('success', 'Outlet updated successfully');
+}
+
 
 }

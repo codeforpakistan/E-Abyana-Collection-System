@@ -951,16 +951,16 @@ a:not(.btn-social-icon):not(.btn-social):not(.page-link) .fab {
 }
 
 .btn-primary:focus {
-    background-color: #5d5ad2 !important;
+    background-color: #4880FF !important;
 }
 
 .btn-primary:focus:active {
-    background-color: #5d5ad2 !important;
+    background-color: #4880FF !important;
 }
 
 .btn-primary:active,
 .btn-primary:hover {
-    background-color: #5d5ad2 !important;
+    background-color: #4880FF !important;
 }
 
 .btn-primary.disabled,

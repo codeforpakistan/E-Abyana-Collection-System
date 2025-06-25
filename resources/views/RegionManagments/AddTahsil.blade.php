@@ -50,7 +50,7 @@
                             @endforeach
                         </select>
                     </div>
-
+            
                     <div class="form-group col-6">
                         <label class="form-label font-weight-bold" for="district_id">Select District/ضلع</label>
                         <select name="district_id" id="district_id" class="form-control" required>
@@ -140,27 +140,40 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
-    <script>
-        function get_districts(element) {
-            var divisionId = element.value;
+ 
+<script>
+    function get_districts(element) {
+        var divisionId = element.value;
 
-            if (divisionId) {
-                $.ajax({
-                    url: '/get-districts/' + divisionId,
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function (data) {
-                        $('#district_id').empty().append('<option value="">Choose District</option>');
-                        $.each(data, function (key, value) {
-                            $('#district_id').append('<option value="' + value.id + '">' + value.name + '</option>');
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error fetching districts:', error);
-                    }
-                });
-            } else {
-                $('#district_id').empty().append('<option value="">Choose District</option>');
-            }
+        if (divisionId) {
+            $.ajax({
+                url: '/get-districts/' + divisionId,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    let districtSelect = $('#district_id');
+                    districtSelect.empty().append('<option value="">Choose District</option>');
+
+                    // If you want to reset selected district on change
+                    let selectedDistrict = null;
+
+                    $.each(data, function (key, value) {
+                        districtSelect.append('<option value="' + value.id + '">' + value.name + '</option>');
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching districts:', error);
+                }
+            });
+        } else {
+            $('#district_id').empty().append('<option value="">Choose District</option>');
         }
-    </script>
+    }
+    let selectedDistrict = $('#selected_district_id').val();
+
+$.each(data, function (key, value) {
+    const selected = (value.id == selectedDistrict) ? 'selected' : '';
+    districtSelect.append('<option value="' + value.id + '" ' + selected + '>' + value.name + '</option>');
+});
+
+</script>

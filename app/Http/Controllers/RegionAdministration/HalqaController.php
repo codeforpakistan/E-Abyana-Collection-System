@@ -67,5 +67,14 @@ public function storeHalqa(Request $request)
 
     return redirect()->back()->with('success', 'Halqa created successfully!');
 }
+public function edithalqa($id)
+{
+    $halqa = Halqa::findOrFail($id);
+    $districts = District::all();
+    $tehsils = Tehsil::where('district_id', $halqa->district_id)->get();
+
+    return view('RegionManagments.edit-halqa', compact('halqa', 'districts', 'tehsils'));
+}
+
 
 }

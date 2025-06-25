@@ -70,8 +70,9 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('districts/delete', [DistrictController::class, 'deleteMultiple'])->name('districts.delete');
     Route::delete('tehsil/delete', [TahsilController::class, 'deletetehsil'])->name('tehsil.delete');
     Route::get('tehsil/edit/{id}', [TahsilController::class, 'edittehsil'])->name('tehsil.edit');
+    Route::get('/get-districts/{division_id}', [DistrictController::class, 'getByDivision']);
 
-Route::post('tehsil/update/{id}', [TahsilController::class, 'updatetehsil'])->name('tehsil.update');
+Route::put('tehsil/update/{id}', [TahsilController::class, 'updatetehsil'])->name('tehsil.update');
 
     Route::post('CanalOutlet/add', [CanalOutLet::class, 'storeOutlet'])->name('CanalOutlet/add');
     Route::get('AddVillage', [VollageController::class, 'AddVillage'])->name('AddVillage');
@@ -84,10 +85,11 @@ Route::post('tehsil/update/{id}', [TahsilController::class, 'updatetehsil'])->na
     Route::post('AddTahsil/add', [TahsilController::class, 'StoreTehsil'])->name('AddTahsil/add');
     
     Route::get('/minor-canals/edit/{id}', [CanalController::class, 'editminor'])->name('editminor');
-    Route::put('/minor-canals/update/{id}', [CanalController::class, 'updateminor'])->name('updateMinorCanal');
+    Route::put('/updateMinorCanal/{id}', [CanalController::class, 'updateminor'])->name('updateMinorCanal');
     Route::put('/Distributary/update/{id}', [CanalController::class, 'updatedistributary'])->name('updatedist');
-
+    
     Route::get('/minor-dis/edit/{id}', [CanalController::class, 'editdistributary'])->name('editdist');
+    Route::get('/updatedist/update/{id}', [CanalController::class, 'updatedistributary'])->name('updatedist');
     Route::get('AddCanal', [CanalController::class, 'AddCanal'])->name('AddCanal');
     Route::get('AddMinor-Canal', [CanalController::class, 'Addminor'])->name('AddMinor-Canal');
     Route::get('Distributary', [CanalController::class, 'AddDistributary'])->name('Distributary');
@@ -97,6 +99,9 @@ Route::post('tehsil/update/{id}', [TahsilController::class, 'updatetehsil'])->na
     Route::get('CanalOutlet', [CanalOutLet::class, 'AddOutlet'])->name('CanalOutlet');
     Route::get('AddDivsion', [DivsionController::class, 'AddDivsion'])->name('AddDivsion');
     Route::post('AddDivsion/add', [DivsionController::class, 'StoreDivsion'])->name('AddDivsion/add');
+
+    Route::get('/outlets/edit/{id}', [CanalOutLet::class, 'edit'])->name('outlet.edit');
+    Route::put('/outlets/update/{id}', [CanalOutLet::class, 'update'])->name('outlet.update');
 
 
     Route::get('/get-canals/{division_id}', [CanalOutLet::class, 'getCanals']);
@@ -119,9 +124,11 @@ Route::post('tehsil/update/{id}', [TahsilController::class, 'updatetehsil'])->na
 
     Route::get('AddUser', [UserController::class, 'AddUser']);
     Route::post('AddUser/add', [UserController::class, 'storeUser'])->name('AddUser.add');
+Route::get('/get-tehsils/{district_id}', [YourController::class, 'getTehsils']);
 
     Route::get('AddHalqa', [HalqaController::class, 'Addhalqa'])->name('AddHalqa');
     Route::post('AddHalqa/add', [HalqaController::class, 'storeHalqa'])->name('AddHalqa.add');
+    Route::get('/halqa/{id}/edit', [HalqaController::class, 'edithalqa'])->name('halqa.edit');
 
     Route::get('AddPatwari', [ControllerPatwari::class, 'AddPatwari']);
 

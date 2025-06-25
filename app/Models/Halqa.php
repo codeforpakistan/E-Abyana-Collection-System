@@ -9,7 +9,7 @@ class Halqa extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'halqa_id';
+    protected $primaryKey = 'id';
     protected $table = 'halqa';
 
     protected $fillable = [

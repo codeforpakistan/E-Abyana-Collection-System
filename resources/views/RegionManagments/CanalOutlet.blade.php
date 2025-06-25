@@ -152,6 +152,12 @@
                                                 <button class="btn btn-sm btn-danger">
                                                     <i class="fa fa-trash"></i> Delete
                                                 </button>
+                                                <td>
+                                                    <a href="{{ url('/outlets/edit/' . $canal->id) }}" class="btn btn-sm btn-info">
+                                                        <i class="fa fa-edit"></i> Edit
+                                                    </a>
+                                                </td>
+                                                
                                             </td>
                                         </tr>
                                         @endforeach 

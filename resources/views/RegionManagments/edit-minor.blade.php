@@ -60,9 +60,11 @@
                             <h4 class="font-weight-bold">Edit Distributary</h4> <!-- Updated to reflect Employer data -->
                         </div>
                         <div class="card-body">
-                            <form class="form-horizontal" action="{{ route('updateMinorCanal', $minorCanal->id) }}" method="POST">
+                            <form action="{{ route('updateMinorCanal', $minorCanal->id) }}" method="POST">
                                 @csrf
-                                @method('PUT') 
+                                @method('PUT')
+                            
+                            
 
                                 <div class="row">
                                     <div class="form-group col-lg-6">
