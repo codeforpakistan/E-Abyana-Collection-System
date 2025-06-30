@@ -92,29 +92,167 @@ public function LandRecord($id, $abs, $village_id, $canal_id, $div_id, Request $
     }
 public function EditSurvey($id)
 {
-    $survey = Farmer::findOrFail($id);
-    $districts = District::all();
-    $tehsils = Tehsil::all();
-    $divsions = Divsion::all();
-    $villages = village::all();
-    $crops = Crop::all();
-    $Outlets = Outlet::all();
-    $Halqas = Halqa::all();
-    $cropprice = Cropprice::all(); 
-    $canals = Canal::all();
-    return view('LandRecord.edit-servey', compact(
-        'villages',
-        'districts',
-        'tehsils',
-        'divsions',
-        'canals',
-        'crops',
-        'Outlets',
-        'Halqas',
-        'survey',
-        'cropprice'
-    ));
+    $session_crops = Crop::all();
+    $crop_details = Cropprice::all();
+     $PriceRevenue = PriceRevenue::all();
+
+        $priceRateData = [];
+        foreach ($PriceRevenue as $rate) {
+            $priceRateData[$rate->crop_type] = [
+                'flow' => $rate->flow,
+                'LIS' => $rate->LIS,
+                't_well' => $rate->t_well,
+                'jhallar' => $rate->jhallar,
+            ];
+        }
+    $survey = DB::table('cropsurveys')
+        ->join('villages', 'cropsurveys.village_id', '=', 'villages.village_id')
+        ->join('halqa', 'villages.halqa_id', '=', 'halqa.id')
+        ->join('irrigators', 'cropsurveys.irrigator_id', '=', 'irrigators.id')
+        ->join('cropprices', 'cropsurveys.finalcrop_id', '=', 'cropprices.id')
+        ->leftJoin('canals', 'cropsurveys.canal_id', '=', 'canals.id')
+        ->leftJoin('minorcanals', 'cropsurveys.minor_id', '=', 'minorcanals.id')
+        ->leftJoin('distributaries', 'cropsurveys.distri_id', '=', 'distributaries.id')
+        ->leftJoin('canal_branch', 'cropsurveys.branch_id', '=', 'canal_branch.id')
+        ->join('outlets', 'cropsurveys.outlet_id', '=', 'outlets.id')
+        ->join('crops', 'cropsurveys.crop_id', '=', 'crops.id')
+        ->select(
+            'cropsurveys.crop_survey_id', 
+            'cropsurveys.irrigator_id', 
+            'irrigators.irrigator_name', 
+            'irrigators.irrigator_khata_number', 
+            'cropsurveys.cultivators_info', 
+            'cropprices.id as final_crop_id', 
+            'cropprices.final_crop', 
+            'cropprices.crop_type', 
+            'cropsurveys.crop_price', 
+            'cropsurveys.date', 
+            'cropsurveys.width', 
+            'cropsurveys.length', 
+            'cropsurveys.area_marla', 
+            'cropsurveys.area_kanal',
+            'cropsurveys.session_date',
+            'cropsurveys.created_at',
+            
+            'cropsurveys.khasra_number',
+            'cropsurveys.tenant_name',
+            'cropsurveys.registration_date',
+            'cropsurveys.snowing_date',
+            'cropsurveys.land_assessment_marla',
+            'cropsurveys.land_assessment_kanal',
+            'cropsurveys.previous_crop',
+            'cropsurveys.double_crop_marla',
+            'cropsurveys.double_crop_kanal',
+            'cropsurveys.identifable_area_marla',
+            'cropsurveys.identifable_area_kanal',
+            'cropsurveys.irrigated_area_marla',
+            'cropsurveys.irrigated_area_kanal',
+            'cropsurveys.land_quality',
+
+           
+            'villages.village_name',
+            'halqa.halqa_name',
+            'canals.id as canal_id',
+            'canals.canal_name',
+            'canals.c_type as canal_type',
+            'crops.id as session_crop_id',
+            'crops.crop_name as session_crop_name',
+            'outlets.outlet_name',
+            'minorcanals.minor_name',
+            'distributaries.name as distributary_name',
+            'canal_branch.id as branch_id',
+            'canal_branch.branch_name',
+            'cropsurveys.canal_id',
+            'cropsurveys.minor_id',
+            'cropsurveys.distri_id'
+        )
+        ->where('cropsurveys.crop_survey_id', $id)
+        ->first();
+
+    if (!$survey) {
+        return redirect()->back()->with('error', 'Survey not found.');
+    }
+
+    // Determine water source type
+    $waterSourceType = '';
+    if (!is_null($survey->canal_id) && is_null($survey->minor_id) && is_null($survey->distri_id)) {
+        $waterSourceType = 'Canal';
+    } elseif (!is_null($survey->canal_id) && !is_null($survey->minor_id) && is_null($survey->distri_id)) {
+        $waterSourceType = 'Canal + Minor Canal';
+    } elseif (!is_null($survey->canal_id) && !is_null($survey->minor_id) && !is_null($survey->distri_id) && is_null($survey->branch_id)) {
+        $waterSourceType = 'Distributary';
+    } elseif (!is_null($survey->canal_id) && !is_null($survey->minor_id) && !is_null($survey->distri_id) && !is_null($survey->branch_id)) {
+        $waterSourceType = 'Branch';
+    }
+
+    return view('LandRecord.edit-servey', compact('survey', 'waterSourceType','session_crops','crop_details','PriceRevenue','priceRateData'));
 }
+
+public function UpdateSurvey(Request $request, $crop_survey_id){
+
+try {
+        $crop_survey = LandRecord::findOrFail($crop_survey_id);
+
+        // Validate required and optional fields
+       $validatedData = $request->validate([
+            'crop_id' => 'required',
+            'khasra_number' => 'required',
+            'tenant_name' => 'required',
+            'registration_date' => 'required',
+            'cultivators_info' => 'required',
+            'snowing_date' => 'required',
+        
+            'land_assessment_marla' => 'required',
+            'land_assessment_kanal' => 'required',
+            'previous_crop' => 'required',
+        
+            'date' => 'nullable',
+            'length' => 'nullable',
+            'width' => 'nullable',
+            'area_marla' => 'nullable',
+            'area_kanal' => 'nullable',
+        
+            'finalcrop_id' => 'required',
+            'crop_price' => 'required',
+        
+            'double_crop_marla' => 'nullable',
+            'double_crop_kanal' => 'nullable',
+        
+            'irrigated_area_marla' => 'nullable',
+            'irrigated_area_kanal' => 'nullable',
+        
+            'identifable_area_marla' => 'nullable',
+            'identifable_area_kanal' => 'nullable',
+        
+            'land_quality' => 'nullable',
+        ]);
+
+        // Set default values for nullable fields
+        $validatedData['length'] = $request->input('length', 0);
+        $validatedData['width'] = $request->input('width', 0);
+        $validatedData['area_marla'] = $request->input('area_marla', 0);
+        $validatedData['area_kanal'] = $request->input('area_kanal', 0);
+        $validatedData['double_crop_marla'] = $request->input('double_crop_marla', 0);
+        $validatedData['double_crop_kanal'] = $request->input('double_crop_kanal', 0);
+        $validatedData['irrigated_area_marla'] = $request->input('irrigated_area_marla', 0);
+        $validatedData['irrigated_area_kanal'] = $request->input('irrigated_area_kanal', 0);
+        $validatedData['identifable_area_marla'] = $request->input('identifable_area_marla', 0);
+        $validatedData['identifable_area_kanal'] = $request->input('identifable_area_kanal', 0);
+        $validatedData['land_quality'] = $request->input('land_quality', 'N/A');
+
+        // Update survey
+        $crop_survey->update($validatedData);
+
+        // Redirect with success
+        return redirect()->route('edit.survey', ['id' => $crop_survey_id])
+                         ->with('success', 'Details Updated successfully!');
+    } catch (\Exception $e) {
+        // Redirect with error
+        return redirect()->back()->with('error', 'Somthing Went Wrong!, Try Again Error: ' . $e->getMessage());
+    }
+
+}
+
 public function FarmerDistricts($divisionId)
 {
     $districts = District::where('div_id', $divisionId)->get();
@@ -196,12 +334,12 @@ public function storeFarmer(Request $request)
         'land_assessment_marla' => 'required|string|max:255',
         'land_assessment_kanal' => 'required|string|max:255',
         'previous_crop' => 'required|string|max:255',
-        'date' => 'required|date',
+        'date' => 'nullable|date',
         'session_date' => 'required|string|max:255',
-        'width' => 'required|numeric|min:0',
-        'length' => 'required|numeric|min:0',
+        'width' => 'numeric|min:0',
+        'length' => 'numeric|min:0',
         'area_marla' => 'nullable|numeric|min:0',
-        'area_kanal' => 'required|numeric|min:0',
+        'area_kanal' => 'nullable|numeric|min:0',
         'double_crop_marla' => 'required|string|max:255',
         'double_crop_kanal' => 'required|string|max:255',
         'identifable_area_marla' => 'required|string|max:255',
@@ -218,8 +356,8 @@ public function storeFarmer(Request $request)
         'branch_id' => 'nullable|numeric|max:255',
         'crop_id' => 'required|exists:crops,id',
         'outlet_id' => 'required|numeric|max:255',
-        'finalcrop_id' => 'required|exists:cropprices,id',
-        'crop_price' => 'required|string|max:255',
+        'finalcrop_id' => 'nullable|exists:cropprices,id',
+        'crop_price' => 'nullable|string|max:255',
         'is_billed' => 'required|numeric|max:255',
         'review' => 'required|string|max:255',
         'status' => 'required|numeric|max:255',
@@ -1307,6 +1445,24 @@ public function ReportViewNaksha5()
     return view('Reports.DemandReport', compact('dropdown_divisions', 'dropdown_session_year'));
 }
 
+public function ReportViewJinswaar()
+{
+    $dropdown_divisions = DB::table('divisions')
+        ->select('divisions.id', 'divisions.divsion_name')
+        ->join('irrigators', 'irrigators.div_id', '=', 'divisions.id')
+        ->join('cropsurveys', 'cropsurveys.irrigator_id', '=', 'irrigators.id')
+        ->groupBy('divisions.id', 'divisions.divsion_name')
+        ->get();
+    
+    $dropdown_session_year = DB::table('cropsurveys')
+        ->select('session_date')
+        ->distinct()
+        ->orderBy('session_date', 'desc')
+        ->get();
+
+    return view('Reports.JinswaarReport', compact('dropdown_divisions', 'dropdown_session_year'));
+}
+
 public function ReportNaksha5Data(Request $request)
 {
     $division_id = $request->division_id;
@@ -1337,4 +1493,84 @@ public function ReportNaksha5Data(Request $request)
     ]);
 }
 
+public function ReportJinswaarData(Request $request)
+{
+    $division_id = $request->division_id;
+    $session_year = $request->session_year;
+
+    $records = DB::table('cropsurveys')
+        ->leftJoin('canals', 'canals.id', '=', 'cropsurveys.canal_id')
+        ->leftJoin('minorcanals', 'minorcanals.id', '=', 'cropsurveys.minor_id')
+        ->leftJoin('distributaries', 'distributaries.id', '=', 'cropsurveys.distri_id')
+        ->leftJoin('canal_branch', 'canal_branch.id', '=', 'cropsurveys.branch_id')
+        ->leftJoin('outlets', 'outlets.id', '=', 'cropsurveys.outlet_id')
+        ->leftJoin('crops', 'crops.id', '=', 'cropsurveys.crop_id')
+        ->leftJoin('cropprices', 'cropprices.id', '=', 'cropsurveys.finalcrop_id')
+        ->leftJoin('divisions', 'divisions.id', '=', 'canals.div_id')
+        ->where('cropsurveys.status', 3)
+        ->where('cropsurveys.is_billed', 1)
+        ->where('canals.div_id', $division_id)
+        ->where('cropsurveys.session_date', $session_year)
+        ->select(
+            'divisions.divsion_name',
+            'outlets.outlet_name',
+            'cropprices.final_crop as final_crop',
+            'crops.crop_name as season',
+            'canals.canal_name',
+            'minorcanals.minor_name',
+            'distributaries.name as distry_name',
+            'canal_branch.branch_name',
+            DB::raw('
+                CASE 
+                    WHEN cropsurveys.canal_id IS NOT NULL AND cropsurveys.minor_id IS NULL AND cropsurveys.distri_id IS NULL AND cropsurveys.branch_id IS NULL THEN canals.canal_name
+                    WHEN cropsurveys.canal_id IS NOT NULL AND cropsurveys.minor_id IS NOT NULL AND cropsurveys.distri_id IS NULL AND cropsurveys.branch_id IS NULL THEN minorcanals.minor_name
+                    WHEN cropsurveys.canal_id IS NOT NULL AND cropsurveys.minor_id IS NOT NULL AND cropsurveys.distri_id IS NOT NULL AND cropsurveys.branch_id IS NULL THEN distributaries.name
+                    WHEN cropsurveys.canal_id IS NOT NULL AND cropsurveys.minor_id IS NOT NULL AND cropsurveys.distri_id IS NOT NULL AND cropsurveys.branch_id IS NOT NULL THEN canal_branch.branch_name
+                    ELSE "Unknown"
+                END as channel_name
+            '),
+            DB::raw('SUM(((cropsurveys.area_kanal * 20) + cropsurveys.area_marla) / 160) as total_acres'),
+            DB::raw('SUM(((cropsurveys.crop_price / 8) * ((cropsurveys.area_kanal * 20) + cropsurveys.area_marla) / 160)) as total_abyana')
+        )
+        ->groupBy(
+            'divisions.divsion_name',
+            'outlets.outlet_name',
+            'cropprices.final_crop',
+            'crops.crop_name',
+            'canals.canal_name',
+            'minorcanals.minor_name',
+            'distributaries.name',
+            'canal_branch.branch_name',
+            'cropsurveys.canal_id',
+            'cropsurveys.minor_id',
+            'cropsurveys.distri_id',
+            'cropsurveys.branch_id'
+        )
+        ->get();
+
+    // Group by division for frontend rendering
+    $grouped = $records->groupBy('divsion_name');
+
+    return response()->json([
+        'html' => view('Reports.PartialJinswaarReport', compact('grouped'))->render()
+    ]);
+}
+
+public function ReportViewMoqabilataan()
+{
+    $dropdown_divisions = DB::table('divisions')
+        ->select('divisions.id', 'divisions.divsion_name')
+        ->join('irrigators', 'irrigators.div_id', '=', 'divisions.id')
+        ->join('cropsurveys', 'cropsurveys.irrigator_id', '=', 'irrigators.id')
+        ->groupBy('divisions.id', 'divisions.divsion_name')
+        ->get();
+    
+    $dropdown_session_year = DB::table('cropsurveys')
+        ->select('session_date')
+        ->distinct()
+        ->orderBy('session_date', 'desc')
+        ->get();
+
+    return view('Reports.MoqabilataanReport', compact('dropdown_divisions', 'dropdown_session_year'));
+}
 }

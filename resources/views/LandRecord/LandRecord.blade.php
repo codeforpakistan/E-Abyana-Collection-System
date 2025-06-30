@@ -117,7 +117,7 @@
                             <div class="row">
                             <div class="col-4">
                                 <label class="form-label font-weight-bold urdu-text" for="div_id">Select Division / ڈویژن</label>
-                                <select name="div_id" id="div_id" class="form-group form-control" required readon>
+                                <select name="div_id" id="div_id" class="form-group form-control" required readonly>
                                    
         
                                         <option value="{{ $divsions1->id }}">{{ $divsions1->divsion_name }}</option>
@@ -131,7 +131,7 @@
                                 </select>
                             </div>
                             <div class="col-4">
-                                <label class="form-label font-weight-bold urdu-text">Select canal/نہر</label>
+                                <label class="form-label font-weight-bold urdu-text">Select Canal/نہر</label>
                                 <input type="hidden" id="c_type" name="c_type" value="{{ $canals->c_type }}" />
                                 <select name="canal_id" id="canal_id" class="form-control" readonly onchange="get_outlets(this)">
                                         <option value="{{ $canals->id }}">{{ $canals->canal_name }}</option>
@@ -202,7 +202,7 @@
                                 <input type="text" class="form-control" placeholder="Session Year" value="{{ $sessionValue }}" name="session_date">
                             </div>
                             <div class="col-6">
-                                <label class="form-label font-weight-bold urdu-text">Crop Session /فصل</label>
+                                <label class="form-label font-weight-bold urdu-text">Crop Session /فصل&nbsp;&nbsp;<span style="color:red;">*</span></label>
                                 <select name="crop_id" id="crop_id" class="form-control" required>
                                     <option class="form-label font-weight-bold" value="">Choose Crop/فصل</option>
                                     @foreach($crops as $crop)
@@ -216,7 +216,7 @@
                         <h5 class="font-weight-bold text-primary mt-3 urdu-text">Farmer & Land Registration Form / کاشتکار و زمین کی رجسٹریشن فارم</h5>
                         <div class="form-group row">
                             <div class="col-md-4 mb-2">
-                                <label class="form-label font-weight-bold urdu-text"><span>(1) </span>Khasra Number /نمبر خسرہ </label>
+                                <label class="form-label font-weight-bold urdu-text"><span>(1) </span>Khasra Number /نمبر خسرہ&nbsp;&nbsp;<span style="color:red;">*</span></label>
                                 <input type="text" class="form-control urdu-text" placeholder="Khasra Number /نمبر خسرہ" name="khasra_number" required>
                             </div>
                             <div class="col-md-4 mb-2">
@@ -271,7 +271,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12 mb-12">
-                                <label class="form-label font-weight-bold urdu-text"><span>(10) </span> Previous Crop Name with Grade / نام جنس جو پہلے بوئی گئی بمعہ درجہ</label>
+                                <label class="form-label font-weight-bold urdu-text"><span>(10) </span> Previous Crop Name with Grade / نام جنس جو پہلے بوئی گئی بمعہ درجہ&nbsp;&nbsp;<span style="color:red;">*</span></label>
                                 <select name="previous_crop" id="previous_crop" class="form-control">
                                     <option class="form-label font-weight-bold" value="">Choose Crop/فصل</option>
                                     @foreach($cropprice as $crop)
@@ -286,7 +286,7 @@
                             <div class="col-md-4 mb-3">
                                 <label class="form-label font-weight-bold urdu-text"><span>(11) </span>Date/تاریخ  
                                 </label>
-                                <input type="date" class="form-control" value="<?php echo date("Y-m-d");?>" placeholder="Date/تاریخ" name="date">
+                                <input type="date" class="form-control"  placeholder="Date/تاریخ" name="date">
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label class="form-label font-weight-bold urdu-text"><span>(12) </span>Length/طول (Karam/کرم)
@@ -317,7 +317,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6 form-group">
-                                <label class="form-label font-weight-bold urdu-text"><span>(16) </span> Crop /فصل</label>
+                                <label class="form-label font-weight-bold urdu-text"><span>(16) </span> Crop /فصل&nbsp;&nbsp;<span style="color:red;">*</span></label>
                                 <select name="finalcrop_id" id="finalcrop_id" class="form-control" required>
                                     <option class="form-label font-weight-bold" value="">Choose Crop/فصل</option>
                                     @foreach($cropprice as $crop)

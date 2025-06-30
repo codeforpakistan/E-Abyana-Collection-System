@@ -105,7 +105,7 @@
             <label class="form-label font-weight-bold">Minor/Branch</label>
             <input class="form-control" type="text" value="{{ $survey->distributary_name }}" readonly>
         </div>
-                        <div class="form-group col-2">
+        <div class="form-group col-2">
  <label class="form-label font-weight-bold">Outlet</label>
  <input class="form-control" type="text" value="{{$survey->outlet_name}}" readonly>
 </div>

@@ -28,17 +28,17 @@ return new class extends Migration
             $table->string('land_assessment_marla');
             $table->string('land_assessment_kanal');
             $table->string('previous_crop');
-            $table->date('date');
-            $table->string('width');
-            $table->string('length');
+            $table->date('date')->nullable();
+            $table->string('width')->nullable();
+            $table->string('length')->nullable();
           
        
            
         
           
-            $table->integer('area_marla');
-            $table->integer('area_kanal');
-            $table->string('final_crop');
+            $table->integer('area_marla')->nullable();
+            $table->integer('area_kanal')->nullable();
+            $table->string('final_crop')->nullable(); //maybe final_crop_id
       
             $table->string('double_crop_marla');
             $table->string('double_crop_kanal');

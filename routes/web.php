@@ -177,6 +177,7 @@ Route::put('/canals/{id}/update', [CanalController::class, 'update'])->name('upd
     Route::post('survey_bill/view_multiple', [FarmerLandRecord::class, 'surveyBillMultiple'])->name('survey_bill.view_multiple');
     Route::get('ListIrrigatorsForApprovals', [FarmerLandRecord::class, 'IrrigatorsForApproval'])->name('ListIrrigatorsForApprovals');
     Route::get('edit-servey/{id}',[FarmerLandRecord::class,'EditSurvey'])->name('edit.survey');
+    Route::put('/update-servey/{crop_survey_id}', [FarmerLandRecord::class, 'UpdateSurvey'])->name('update.survey');
     Route::get('ListIrrigatorsForBills', [FarmerLandRecord::class, 'IrrigatorsForBills']);
     Route::delete('/landservey/{id}', [FarmerLandRecord::class, 'destroy'])->name('landservey.destroy');
     Route::delete('/AddUser/{id}', [UserController::class, 'destroy'])->name('AddUser.destroy');
@@ -229,5 +230,11 @@ Route::get('Canalbranch', [CanalController::class, 'Addbranch'])->name('Canalbra
 //************************ REPORTS ************************************************/
 Route::get('ReportViewNaksha5', [FarmerLandRecord::class, 'ReportViewNaksha5'])->name('ReportViewNaksha5');
 Route::post('ReportNaksha5Data', [FarmerLandRecord::class, 'ReportNaksha5Data'])->name('ReportNaksha5Data');
+
+Route::get('ReportViewJinswaar', [FarmerLandRecord::class, 'ReportViewJinswaar'])->name('ReportViewJinswaar');
+Route::post('ReportJinswaarData', [FarmerLandRecord::class, 'ReportJinswaarData'])->name('ReportJinswaarData');
+
+Route::get('ReportViewMoqabilataan', [FarmerLandRecord::class, 'ReportViewMoqabilataan'])->name('ReportViewMoqabilataan');
+Route::post('ReportMoqabilataanData', [FarmerLandRecord::class, 'ReportMoqabilataanData'])->name('ReportMoqabilataanData');
 
 });

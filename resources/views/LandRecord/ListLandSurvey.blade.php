@@ -14,7 +14,7 @@
       <div class="col-md-12">
       <div class="card export-database">
       <div class="card-header">
-      <h3><strong>Survey List</strong></h3>
+      <h3><strong>Land Survey List</strong></h3>
       <!-- <p>Halqa ID: {{ session('halqa_id') }}</p> -->
       </div>
       <div class="card-body">
@@ -40,7 +40,7 @@
                         <thead>
                             <tr>
                                 <th>Village</th>
-                                <th>Farmer</th>
+                                <th>Session</th>
                                 <th>Crop</th>
                                 <th>Rate</th>
                                 <th>Date</th>
@@ -71,16 +71,14 @@
                                             <button class="btn btn-success btn-sm" title="View"><i class="fa fa-eye"></i></button>
                                         </a>
                                         
-                                        @if (session('role_id') == 1)
-                                            <form action="{{ route('landservey.destroy', $survey->crop_survey_id) }}"
+                                        <form action="{{ route('landservey.destroy', $survey->crop_survey_id) }}"
                                                   method="POST"
                                                   onsubmit="return confirm('Are you sure you want to delete this irrigator?');"
                                                   style="display: inline;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-danger btn-sm" title="Delete"><i class="fa fa-trash"></i></button>
-                                            </form>
-                                        @endif
+                                        </form>
                         
                                         <a href="{{ url('survey/patwari/forward') }}/{{$survey->crop_survey_id}}">
                                             <button class="btn btn-warning btn-sm" title="Forward"><i class="fa fa-arrow-right"></i></button>

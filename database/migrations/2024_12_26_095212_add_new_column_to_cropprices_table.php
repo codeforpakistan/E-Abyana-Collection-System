@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('cropprices', function (Blueprint $table) {
-            $table->string('final_crop'); 
+            $table->string('final_crop')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('cropprices', function (Blueprint $table) {
-            $table->dropColumn('final_crop'); 
+            $table->dropColumn('final_crop')->nullable(); 
         });
     }
 };
