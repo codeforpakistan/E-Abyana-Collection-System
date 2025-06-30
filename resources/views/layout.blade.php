@@ -264,7 +264,7 @@ Welcome to E ABYANA
                             <li><a class="slide-item" href="{{ url('ReportViewNaksha5') }}"><span> Naksha No 5</span></a></li>
                             <li><a class="slide-item" href="{{ url('ReportViewJinswaar') }}"><span> Jinswaar</span></a></li>
                             <li><a class="slide-item" href="{{ url('ReportViewMoqabilataan') }}"><span> Moqabilataan</span></a></li>
-                             <li><a class="slide-item" href="{{ url('ReportViewParhtaal') }}"><span> Naksha Parhtaal</span></a></li>
+                             <li><a class="slide-item" href="{{ url('ReportViewNakhshaParthal') }}"><span> Naksha Parhtaal</span></a></li>
                         </ul>
                     </li>
                      @endif

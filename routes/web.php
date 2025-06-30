@@ -237,4 +237,7 @@ Route::post('ReportJinswaarData', [FarmerLandRecord::class, 'ReportJinswaarData'
 Route::get('ReportViewMoqabilataan', [FarmerLandRecord::class, 'ReportViewMoqabilataan'])->name('ReportViewMoqabilataan');
 Route::post('ReportMoqabilataanData', [FarmerLandRecord::class, 'ReportMoqabilataanData'])->name('ReportMoqabilataanData');
 
+Route::get('ReportViewNakhshaParthal', [FarmerLandRecord::class, 'ReportViewNakhshaParthal'])->name('ReportViewNakhshaParthal');
+Route::post('ReportNakhshaParthalData', [FarmerLandRecord::class, 'ReportNakhshaParthalData'])->name('ReportNakhshaParthalData');
+
 });
