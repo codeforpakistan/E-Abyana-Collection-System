@@ -1573,4 +1573,116 @@ public function ReportViewMoqabilataan()
 
     return view('Reports.MoqabilataanReport', compact('dropdown_divisions', 'dropdown_session_year'));
 }
+
+public function ReportMoqabilataanData(Request $request)
+{
+    $division_id = $request->division_id;
+    $session_year_base = $request->session_year_base;
+    $session_year_compare = $request->session_year_compare;
+
+    // Query for Base Year
+    $baseRecords = DB::table('cropsurveys')
+        ->leftJoin('canals', 'canals.id', '=', 'cropsurveys.canal_id')
+        ->leftJoin('minorcanals', 'minorcanals.id', '=', 'cropsurveys.minor_id')
+        ->leftJoin('distributaries', 'distributaries.id', '=', 'cropsurveys.distri_id')
+        ->leftJoin('canal_branch', 'canal_branch.id', '=', 'cropsurveys.branch_id')
+        ->leftJoin('outlets', 'outlets.id', '=', 'cropsurveys.outlet_id')
+        ->leftJoin('crops', 'crops.id', '=', 'cropsurveys.crop_id')
+        ->leftJoin('cropprices', 'cropprices.id', '=', 'cropsurveys.finalcrop_id')
+        ->leftJoin('divisions', 'divisions.id', '=', 'canals.div_id')
+        ->where('cropsurveys.status', 3)
+        ->where('cropsurveys.is_billed', 1)
+        ->where('canals.div_id', $division_id)
+        ->where('cropsurveys.session_date', $session_year_base)
+        ->select(
+            DB::raw('
+                CASE 
+                    WHEN cropsurveys.canal_id IS NOT NULL AND cropsurveys.minor_id IS NULL AND cropsurveys.distri_id IS NULL AND cropsurveys.branch_id IS NULL THEN canals.canal_name
+                    WHEN cropsurveys.canal_id IS NOT NULL AND cropsurveys.minor_id IS NOT NULL AND cropsurveys.distri_id IS NULL AND cropsurveys.branch_id IS NULL THEN minorcanals.minor_name
+                    WHEN cropsurveys.canal_id IS NOT NULL AND cropsurveys.minor_id IS NOT NULL AND cropsurveys.distri_id IS NOT NULL AND cropsurveys.branch_id IS NULL THEN distributaries.name
+                    WHEN cropsurveys.canal_id IS NOT NULL AND cropsurveys.minor_id IS NOT NULL AND cropsurveys.distri_id IS NOT NULL AND cropsurveys.branch_id IS NOT NULL THEN canal_branch.branch_name
+                    ELSE "Unknown"
+                END as channel_name
+            '),
+            'cropprices.final_crop as crop_name',
+            DB::raw('SUM(((cropsurveys.area_kanal * 20) + cropsurveys.area_marla) / 160) as total_acres_base'),
+            DB::raw('SUM(((cropsurveys.crop_price * 8) * ((cropsurveys.area_kanal * 20) + cropsurveys.area_marla) / 160)) as total_abyana_base')
+        )
+        ->groupBy('channel_name', 'cropprices.final_crop')
+        ->get()
+        ->keyBy(fn($item) => $item->channel_name . '||' . $item->crop_name);
+
+    // Query for Compared Year
+    $compareRecords = DB::table('cropsurveys')
+        ->leftJoin('canals', 'canals.id', '=', 'cropsurveys.canal_id')
+        ->leftJoin('minorcanals', 'minorcanals.id', '=', 'cropsurveys.minor_id')
+        ->leftJoin('distributaries', 'distributaries.id', '=', 'cropsurveys.distri_id')
+        ->leftJoin('canal_branch', 'canal_branch.id', '=', 'cropsurveys.branch_id')
+        ->leftJoin('outlets', 'outlets.id', '=', 'cropsurveys.outlet_id')
+        ->leftJoin('crops', 'crops.id', '=', 'cropsurveys.crop_id')
+        ->leftJoin('cropprices', 'cropprices.id', '=', 'cropsurveys.finalcrop_id')
+        ->leftJoin('divisions', 'divisions.id', '=', 'canals.div_id')
+        ->where('cropsurveys.status', 3)
+        ->where('cropsurveys.is_billed', 1)
+        ->where('canals.div_id', $division_id)
+        ->where('cropsurveys.session_date', $session_year_compare)
+        ->select(
+            DB::raw('
+                CASE 
+                    WHEN cropsurveys.canal_id IS NOT NULL AND cropsurveys.minor_id IS NULL AND cropsurveys.distri_id IS NULL AND cropsurveys.branch_id IS NULL THEN canals.canal_name
+                    WHEN cropsurveys.canal_id IS NOT NULL AND cropsurveys.minor_id IS NOT NULL AND cropsurveys.distri_id IS NULL AND cropsurveys.branch_id IS NULL THEN minorcanals.minor_name
+                    WHEN cropsurveys.canal_id IS NOT NULL AND cropsurveys.minor_id IS NOT NULL AND cropsurveys.distri_id IS NOT NULL AND cropsurveys.branch_id IS NULL THEN distributaries.name
+                    WHEN cropsurveys.canal_id IS NOT NULL AND cropsurveys.minor_id IS NOT NULL AND cropsurveys.distri_id IS NOT NULL AND cropsurveys.branch_id IS NOT NULL THEN canal_branch.branch_name
+                    ELSE "Unknown"
+                END as channel_name
+            '),
+            'cropprices.final_crop as crop_name',
+            DB::raw('SUM(((cropsurveys.area_kanal * 20) + cropsurveys.area_marla) / 160) as total_acres_compare'),
+            DB::raw('SUM(((cropsurveys.crop_price * 8) * ((cropsurveys.area_kanal * 20) + cropsurveys.area_marla) / 160)) as total_abyana_compare')
+        )
+        ->groupBy('channel_name', 'cropprices.final_crop')
+        ->get()
+        ->keyBy(fn($item) => $item->channel_name . '||' . $item->crop_name);
+
+    // Merge and Compare
+    $merged = [];
+
+    $allKeys = $baseRecords->keys()->merge($compareRecords->keys())->unique();
+
+    foreach ($allKeys as $key) {
+        $base = $baseRecords[$key] ?? null;
+        $compare = $compareRecords[$key] ?? null;
+
+        $merged[] = [
+            'channel_name' => $base->channel_name ?? $compare->channel_name,
+            'crop_name' => $base->crop_name ?? $compare->crop_name,
+            'total_acres_base' => $base->total_acres_base ?? 0,
+            'total_acres_compare' => $compare->total_acres_compare ?? 0,
+            'total_abyana_base' => $base->total_abyana_base ?? 0,
+            'total_abyana_compare' => $compare->total_abyana_compare ?? 0,
+        ];
+    }
+
+    return response()->json([
+        'html' => view('Reports.PartialMoqabilataanReport', ['records' => $merged])->render()
+    ]);
+}
+
+public function ReportViewNakhshaParthal()
+{
+    $dropdown_divisions = DB::table('divisions')
+        ->select('divisions.id', 'divisions.divsion_name')
+        ->join('irrigators', 'irrigators.div_id', '=', 'divisions.id')
+        ->join('cropsurveys', 'cropsurveys.irrigator_id', '=', 'irrigators.id')
+        ->groupBy('divisions.id', 'divisions.divsion_name')
+        ->get();
+
+    return view('Reports.NakhshaParthalReport', compact('dropdown_divisions'));
+}
+
+public function ReportNakhshaParthalData()
+{
+    
+}
+
 }
