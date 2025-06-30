@@ -1530,7 +1530,7 @@ public function ReportJinswaarData(Request $request)
                 END as channel_name
             '),
             DB::raw('SUM(((cropsurveys.area_kanal * 20) + cropsurveys.area_marla) / 160) as total_acres'),
-            DB::raw('SUM(((cropsurveys.crop_price / 8) * ((cropsurveys.area_kanal * 20) + cropsurveys.area_marla) / 160)) as total_abyana')
+            DB::raw('SUM(((cropsurveys.crop_price * 8) * ((cropsurveys.area_kanal * 20) + cropsurveys.area_marla) / 160)) as total_abyana')
         )
         ->groupBy(
             'divisions.divsion_name',

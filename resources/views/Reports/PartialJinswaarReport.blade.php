@@ -20,8 +20,8 @@
         <td>{{ $record->outlet_name }}</td>
         <td>{{ ucfirst($record->season) }}</td>
         <td>{{ $record->final_crop }}</td>
-        <td>{{ number_format($record->total_acres, 2) }}</td>
-        <td>{{ number_format($record->total_abyana, 2) }}</td>
+        <td>{{ number_format($record->total_acres, 1) }}&nbsp;Acres</td>
+        <td>RS:&nbsp;{{ number_format($record->total_abyana, 1) }}</td>
     </tr>
     @endforeach
 @endforeach
