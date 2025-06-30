@@ -1,104 +1,93 @@
 @extends('layout')
 
 @section('content')
-<head>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-
 <div class="app-content">
-    <section class="section">
-
-        {{-- SweetAlert for messages --}}
-        @if (session('success'))
-            <script>
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: "{{ session('success') }}",
-                    confirmButtonText: 'OK'
-                });
-            </script>
-        @endif
-
-        @if (session('error'))
-            <script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: "{{ session('error') }}",
-                    confirmButtonText: 'OK'
-                });
-            </script>
-        @endif
-
-        <!-- Page Header -->
-        <div class="page-header pt-0">
-            <h4 class="page-title font-weight-bold">Edit District</h4>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#" class="text-light-color">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Edit District</li>
-            </ol>
+    <div class="card shadow-sm w-[60vw]">
+        <div class="card-header bg-primary text-white">
+            <h4>Edit Tehsil</h4>
         </div>
+        <div class="card-body">
+            <form action="{{ route('tehsil.update', $tehsil->tehsil_id) }}" method="POST">
+                @csrf
+                @method('PUT')
 
-        <!-- Centered Form Row -->
-        <div class="row justify-content-center" style="margin-top: 80px;">
-            <div class="col-md-6">
-                <div class="card shadow-sm">
-                    <div class="card-header bg-primary text-white">
-                        <h4 class="font-weight-bold mb-0">Edit District</h4>
+                <div class="row">
+                    <!-- Division -->
+                    <div class="form-group col-6">
+                        <label for="div_id">Select Division / ڈویژن</label>
+                        <select name="div_id" id="div_id" class="form-control" onchange="get_districts(this)" required>
+                            <option value="">Choose Division</option>
+                            @foreach($divisions as $div)
+                                <option value="{{ $div->id }}" {{ $div->id == $tehsil->district->div_id ? 'selected' : '' }}>
+                                    {{ $div->divsion_name }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
-                    <div class="card-body">
-                        <form class="form-horizontal" action="{{ route('tehsil.update', $tehsil->tehsil_id) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                        
-                            <div class="row">
-                                <!-- Division Selection -->
-                                <div class="form-group col-6">
-                                    <label class="form-label font-weight-bold" for="div_id">Select Division / ڈویژن</label>
-                                    <select name="div_id" id="div_id" class="form-control" required onchange="get_districts(this)">
-                                        <option value="">Choose Division / ڈویژن</option>
-                                        @foreach($divsions as $divsion)
-                                            <option value="{{ $divsion->id }}" {{ $divsion->id == $tehsil->div_id ? 'selected' : '' }}>
-                                                {{ $divsion->divsion_name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                        
-                                <!-- District Selection -->
-                                <div class="form-group col-6">
-                                    <label class="form-label font-weight-bold" for="district_id">Select District / ضلع</label>
-                                    <select name="district_id" id="district_id" class="form-control" required>
-                                        <option value="">Choose District / ضلع</option>
-                                        @foreach($districts as $district)
-                                            <option value="{{ $district->id }}" {{ $district->id == $tehsil->district_id ? 'selected' : '' }}>
-                                                {{ $district->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                        
-                                <!-- Tehsil Name -->
-                                <div class="form-group col-lg-12">
-                                    <label class="form-label font-weight-bold">Tehsil Name / نام تحصیل</label>
-                                    <input class="form-control form-control-lg" type="text" name="tehsil_name" value="{{ $tehsil->tehsil_name }}" required>
-                                </div>
-                            </div>
-                        
-                            <!-- Submit Button -->
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <button type="submit" class="btn btn-success btn-lg">Update</button>
-                                </div>
-                            </div>
-                        </form>
-                        
+
+                    <!-- District -->
+                    <div id="get_districts" class="form-group col-lg-6">                        <label for="district_id">Select District / ضلع</label>
+                        <select name="district_id" id="district_id" class="form-control" required>
+               
+
+                            <option value="">Choose District</option>
+                            @foreach($districts as $district)
+                                <option value="{{ $district->id }}" {{ $district->id == $tehsil->district_id ? 'selected' : '' }}>
+                                    {{ $district->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Tehsil Name -->
+                    <div class="form-group col-lg-12">
+                        <label>Tehsil Name / نام تحصیل</label>
+                        <input type="text" name="tehsil_name" class="form-control" value="{{ $tehsil->tehsil_name }}" required>
                     </div>
                 </div>
-            </div>
-        </div>
 
-    </section>
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary">Update Tehsil</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+
 @endsection
+
+
+<script>
+function get_districts(element) {
+    var divisionId = element.value;
+    var selectedDistrictId = $('#selected_district_id').val(); // only applies during edit
+
+    if (divisionId) {
+        $.ajax({
+            url: '/get-districts/' + divisionId,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                var districtSelect = $('#district_id');
+                districtSelect.empty(); // 💡 clears old options
+                districtSelect.append('<option value="">Choose District</option>');
+
+                $.each(data, function (index, district) {
+                    let isSelected = district.id == selectedDistrictId ? 'selected' : '';
+                    districtSelect.append('<option value="' + district.id + '" ' + isSelected + '>' + district.name + '</option>');
+                });
+
+                // clear pre-selected district after first load
+                $('#selected_district_id').val('');
+            },
+            error: function (xhr) {
+                console.error('Error fetching districts:', xhr);
+            }
+        });
+    } else {
+        $('#district_id').empty().append('<option value="">Choose District</option>');
+    }
+}
+
+</script>
+

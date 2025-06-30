@@ -69,8 +69,11 @@ public function update(Request $request, $id)
 
     return redirect()->route('AddDistrict')->with('success', 'District updated successfully!');
 }
+public function getByDivision($division_id)
+{
+    $districts = District::where('div_id', $division_id)->get();
 
-    
-    
+    return response()->json($districts);
+}
     
 }

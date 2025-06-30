@@ -128,6 +128,9 @@
                                                 <button class="btn btn-sm btn-primary" type="submit">
                                                     <i class="fa fa-trash"></i> Delete
                                                 </button>
+                                                <a href="{{ route('halqa.edit', $halqa->id) }}" class="btn btn-sm btn-primary">
+                                                    <i class="fa fa-edit"></i> Edit
+                                                </a>
                                             </td>
                                         </tr>
                                         @endforeach

@@ -61,27 +61,31 @@ public function deletetehsil(Request $request)
    public function edittehsil($id)
 {
     $tehsil = Tehsil::findOrFail($id);
-    $divsions = Divsion::all();
-    $districts = District::where('div_id', $tehsil->div_id)->get();
+    $divisions = Divsion::all();
+    $districts = District::all();
 
-    return view('RegionManagments.edit-tehsil', compact('tehsil', 'divsions', 'districts'));
+    return view('RegionManagments.edit-tehsil', compact('tehsil', 'divisions', 'districts'));
 }
+
 public function updatetehsil(Request $request, $id)
 {
-    $request->validate([
-        'div_id' => 'required',
-        'district_id' => 'required',
-        'tehsil_name' => 'required|string|max:255',
-    ]);
+
 
     $tehsil = Tehsil::findOrFail($id);
-    $tehsil->div_id = $request->div_id;
+
     $tehsil->district_id = $request->district_id;
     $tehsil->tehsil_name = $request->tehsil_name;
     $tehsil->save();
 
-    return redirect()->back()->with('success', 'Tehsil updated successfully!');
+    return redirect()->route('AddTahsil')->with('success', 'District updated successfully!');
 }
+public function getByDivision($division_id)
+{
+    $districts = District::where('div_id', $division_id)->get();
+
+    return response()->json($districts);
+}
+
 
 
 }

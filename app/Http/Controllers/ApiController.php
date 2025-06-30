@@ -552,7 +552,7 @@ public function storeIrrigator(Request $request)
         $validated = $request->validate([
             'irrigator_name' => 'required|string|max:255',
             'irrigator_khata_number' => 'required|string|max:255',
-             'irrigator_khata_number' => 'required|string|unique:irrigators,irrigator_khata_number',
+            //  'irrigator_khata_number' => 'required|string|unique:irrigators,irrigator_khata_number',
             'irrigator_mobile_number' => 'required|string|max:255',
             'village_id' => 'required|exists:villages,village_id', 
         ], [
