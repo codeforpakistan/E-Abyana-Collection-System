@@ -71,7 +71,7 @@ public function edithalqa($id)
 {
     $halqa = Halqa::findOrFail($id);
     $districts = District::all();
-    $tehsils = Tehsil::where('district_id', $halqa->district_id)->get();
+    $tehsils = Tehsil::all();
 
     return view('RegionManagments.edit-halqa', compact('halqa', 'districts', 'tehsils'));
 }
