@@ -30,9 +30,9 @@
                             </select>
                         </div>
                         <div class="form-group col-lg-6">
-                            <label  class="form-label font-weight-bold" for="canal_id">Select Canal/ضلع</label>
+                            <label  class="form-label font-weight-bold" for="canal_id">Select Canal / نہر</label>
                             <select name="canal_id" id="canal_id" class="form-control" >
-                                <option value="">Choose Canal/گاؤں</option>
+                                <option value="">Choose Canal / نہر</option>
                                 @foreach($canals as $canal)
                                     <option value="{{ $canal->id }}">{{ $canal->canal_name }}</option>
                                 @endforeach
@@ -40,10 +40,10 @@
                         </div>
                         <div class="form-group col-lg-4">
                             <label class="form-label font-weight-bold" for="district_id">Select
-                                District/ضلع</label>
+                                District / ضلع</label>
                             <select name="district_id" id="district_id" class="form-control"
                                 onchange="get_tehsils(this)">
-                                <option value="">Choose District</option>
+                                <option value="">Choose District / ضلع</option>
                                 @foreach ($districts as $district)
                                     <option value="{{ $district->id }}">{{ $district->name }}</option>
                                 @endforeach
@@ -51,20 +51,20 @@
                         </div>
                         <div class="form-group col-lg-4">
                             <label class="form-label font-weight-bold" for="tehsil_id">Select
-                                Tehsil/تحصیل</label>
+                                Tehsil / تحصیل</label>
                             <select name="tehsil_id" id="tehsil_id" class="form-control"
                                 onchange="get_halqa(this)">
-                                <option value="">Choose Tehsil</option>
+                                <option value="">Choose Tehsil / تحصیل</option>
                                 @foreach ($tehsils as $tehsil)
                                     <option value="{{ $tehsil->tehsil_id }}">{{ $tehsil->tehsil_name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group col-lg-4">
-                        <label class="form-label font-weight-bold" for="halqa_id">Select Halqa/حلقہ</label>
+                        <label class="form-label font-weight-bold" for="halqa_id">Select Halqa / حلقہ</label>
                         <select name="halqa_id" id="halqa_id" class="form-control"
                                 onchange="get_village(this)">
-                                <option value="">Choose Halqa/حلقہ</option>
+                                <option value="">Choose Halqa / حلقہ</option>
                                 @foreach ($Halqas as $Halqa)
                                     <option value="{{ $Halqa->id }}">{{ $Halqa->halqa_name }}</option>
                                 @endforeach
@@ -74,7 +74,7 @@
                             <label class="form-label font-weight-bold" for="village_id">Select
                                 Village / گاؤں</label>
                             <select name="village_id" id="village_id" class="form-control">
-                                <option value="">Choose Village/گاؤں</option>
+                                <option value="">Choose Village / گاؤں</option>
                                 @foreach ($villages as $village)
                                     <option value="{{ $village->village_id }}">{{ $village->village_name }}
                                     </option>
@@ -90,10 +90,10 @@
                     @endif
                     @if (session('halqa_id') > 0)
                         <div class="form-group col-lg-6">
-                            <label class="form-label font-weight-bold" for="halqa_id">Select Halqa/حلقہ</label>
+                            <label class="form-label font-weight-bold" for="halqa_id">Select Halqa /حلقہ</label>
                             <select name="halqa_id" id="halqa_id" class="form-control" readonly
                                 onchange="get_village(this)">
-                                <option value="">Choose Halqa/حلقہ</option>
+                                <option value="">Choose Halqa /حلقہ</option>
                                 @foreach ($Halqas as $Halqa)
                                     <option value="{{ $Halqa->id }}">{{ $Halqa->halqa_name }}</option>
                                 @endforeach
@@ -101,9 +101,9 @@
                         </div>
                         <div class="form-group col-6">
                             <label class="form-label font-weight-bold" for="village_id">Select
-                                Village/گاؤں</label>
+                                Village / گاؤں</label>
                             <select name="village_id" id="village_id" class="form-control" required onchange="get_canals(this)">
-                                <option value="">Choose Village/گاؤں</option>
+                                <option value="">Choose Village / گاؤں</option>
                                 @foreach ($villages as $village)
                                     <option value="{{ $village->village_id }}">{{ $village->village_name }}
                                     </option>
@@ -121,9 +121,9 @@
                                 </select>
                             </div>
                             <div class="form-group col-lg-6">
-                                <label  class="form-label font-weight-bold" for="canal_id">Select Canal/ضلع</label>
+                                <label  class="form-label font-weight-bold" for="canal_id">Select Canal / نہر</label>
                                 <select name="canal_id" id="canal_id" class="form-control " >
-                                    <option value="">Choose Canal/گاؤں</option>
+                                    <option value="">Choose Canal / نہر</option>
                                     @foreach($canals as $canal)
                                         <option value="{{ $canal->id }}">{{ $canal->canal_name }}</option>
                                     @endforeach
@@ -228,12 +228,12 @@
                                                         <!--<th><input type="checkbox" id="select-all"></th> -->
                                                         <th>#</th>
                                                         <th>Irrigator Name</th>
-                                                        <th>CNIC</th>
                                                         <th>Khata No</th>
-                                                        {{-- <th>Mobile No</th> --}}
-                                                      
-                                                        {{-- <th>Village Name</th> --}}
+                                                        <th>Village Name</th>
                                                         {{-- <th>Halqa /حلقہ</th> --}}
+                                                        {{-- <th>CNIC</th> --}}
+                                                        {{-- <th>Mobile No</th> --}}
+                                                        
                                                         <!-- <th>Tehsil Name</th>
                                                         <th>District Name</th>
                                                         <th>Divsion</th> -->
@@ -247,10 +247,10 @@
                                                             <!-- <td><input type="checkbox" name="ids[]" value=""></td> -->
                                                             <td>{{ $Irrigator->id }}</td>
                                                             <td>{{ $Irrigator->irrigator_name }}</td>
-                                                            <td>{{ $Irrigator->cnic}}</td>
                                                             <td>{{ $Irrigator->irrigator_khata_number }}</td>
+                                                            {{-- <td>{{ $Irrigator->cnic}}</td> --}}
                                                             {{-- <td>{{ $Irrigator->irrigator_mobile_number }}</td> --}}
-                                                            {{-- <td>{{ $Irrigator->village_name }}</td> --}}
+                                                            <td>{{ $Irrigator->village_name }}</td>
                                                             {{-- <td>{{ $Irrigator->halqa_name }}</td> --}}
                                                             <!--  <td>{{ $Irrigator->tehsil_name }}</td>
                                                         <td>{{ $Irrigator->district_name }}</td>

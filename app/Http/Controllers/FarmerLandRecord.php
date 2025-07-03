@@ -1291,6 +1291,26 @@ public function surveyApproveMultiple(Request $request) {
     }
 }
 
+public function surveyForwardMultiple(Request $request) {
+    $irrigatorIds = $request->input('irrigator_ids');
+
+    if (empty($irrigatorIds)) {
+        return response()->json(['success' => false, 'message' => 'No Surveys selected!']);
+    }
+
+    try {
+        LandRecord::whereIn('crop_survey_id', $irrigatorIds)
+            ->update([
+                'status' => 1,
+                'review' => 'Forwarded by Patwari'
+            ]);
+
+        return response()->json(['success' => true, 'message' => 'Forwarding successful for the selected records!']);
+    } catch (\Exception $e) {
+        return response()->json(['success' => false, 'message' => 'Database update failed!']);
+    }
+}
+
 public function destroy($id)
 {
     $landRecord = LandRecord::findOrFail($id);

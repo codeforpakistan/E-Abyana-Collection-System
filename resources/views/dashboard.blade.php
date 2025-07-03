@@ -29,8 +29,8 @@
 			<div class="col-md-6 col-xl-3 mb-4">
 				<div class="card shadow border-0 rounded">
 					<div class="card-body text-center">
-						<i class="fa fa-coins fa-2x text-warning mb-2"></i> {{-- Changed icon --}}
-						<h5>Total Payments</h5>
+						<i class="fa fa-coins fa-2x text-warning mb-2"></i>
+						<h5>Billing Amount</h5>
 						<h3 class="text-warning mt-2"><strong>RS: {{number_format($totalCropSurveyAmount, 1)}}</strong></h3>
 
 					</div>
@@ -42,7 +42,7 @@
                 <div class="card shadow border-0 rounded">
                     <div class="card-body text-center">
                         <i class="fa fa-check-circle fa-2x text-success mb-2"></i>
-                        <h5>Payments Collected</h5>
+                        <h5>Amount Collected</h5>
                         <h3 class="text-success mt-2"><strong>RS: 0</strong></h3>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                 <div class="card shadow border-0 rounded">
                     <div class="card-body text-center">
                         <i class="fa fa-clock fa-2x text-danger mb-2"></i>
-                        <h5>Payments Pending</h5>
+                        <h5>Amount Pending</h5>
                         <h3 class="text-danger mt-2"><strong>RS: {{number_format($totalCropSurveyAmount, 1)}}</strong></h3>
                     </div>
                 </div>

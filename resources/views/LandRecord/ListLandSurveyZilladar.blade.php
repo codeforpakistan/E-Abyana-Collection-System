@@ -61,14 +61,14 @@
                         <thead>
                             <tr>
                                 <th>Village</th>
-                                {{-- <th>Farmer</th>
+                           {{-- <th>Farmer</th> --}}
                                 <th>Crop</th>
-                                <th>Rate</th> --}}
+                                <th>Rate</th>
                                 <th>Date</th>
                                 {{-- <th>Length</th> --}}
-                                {{-- <th>Width</th>
+                                {{-- <th>Width</th> --}}
                                 <th>Marla</th>
-                                <th>Kanal</th> --}}
+                                <th>Kanal</th> 
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -76,14 +76,14 @@
                             @foreach ($irrigator_surveys as $survey)
                                 <tr>
                                     <td>{{ $survey->village_name }}</td>
-                                    {{-- <td>{{ $survey->cultivators_info }}</td>
+                                    {{-- <td>{{ $survey->cultivators_info }}</td> --}}
                                     <td>{{ $survey->final_crop }}</td>
-                                    <td>{{ $survey->crop_price }}</td> --}}
+                                    <td>{{ $survey->crop_price }}</td>
                                     <td>{{ $survey->date }}</td>
                                     {{-- <td>{{ $survey->length }}</td>
-                                    <td>{{ $survey->width }}</td>
+                                    <td>{{ $survey->width }}</td> --}}
                                     <td>{{ $survey->area_marla }}</td>
-                                    <td>{{ $survey->area_kanal }}</td> --}}
+                                    <td>{{ $survey->area_kanal }}</td>
                                     <td class="align-middle text-center">
                                         <a href="{{ url('survey/view') }}/{{$survey->crop_survey_id}}">
                                             <button class="btn btn-primary btn-sm" title="View"><i class="fa fa-eye"></i></button>

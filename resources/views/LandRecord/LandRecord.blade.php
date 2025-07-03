@@ -141,7 +141,7 @@
 
                         <div class="row" id="canal_radiobutton_show">
                         <div class="col-12">
-                                <label class="form-label font-weight-bold urdu-text">Outlet/موگیہ</label>
+                                <label class="form-label font-weight-bold urdu-text">Outlet/موگہ</label>
                                 <select name="canal_outlet_id" id="canal_outlet_id" class="form-control">
                                     <option value="">Choose Outlet</option>
                                 </select>
@@ -156,7 +156,7 @@
                                 </select>
                             </div>
                         <div class="col-6">
-                                <label class="form-label font-weight-bold urdu-text">Outlet/موگیہ</label>
+                                <label class="form-label font-weight-bold urdu-text">Outlet/موگہ</label>
                                 <select name="minor_outlet_id" id="minor_outlet_id" class="form-control">
                                     <option value="">Choose Outlet</option>
                                 </select>
@@ -183,7 +183,7 @@
                           </select>
                          </div>
                         <div class="col-4">
-                                <label class="form-label font-weight-bold urdu-text">Outlet/موگیہ</label>
+                                <label class="form-label font-weight-bold urdu-text">Outlet/موگہ</label>
                                 <select name="distri_outlet_id" id="distri_outlet_id" class="form-control">
                                     <option value="">Choose Outlet</option>
                                 </select>
@@ -284,8 +284,7 @@
                         </h5>
                         <div class="form-group row">
                             <div class="col-md-4 mb-3">
-                                <label class="form-label font-weight-bold urdu-text"><span>(11) </span>Date/تاریخ  
-                                </label>
+                                <label class="form-label font-weight-bold urdu-text"><span>(11) </span>Date/تاریخ</label>
                                 <input type="date" class="form-control"  placeholder="Date/تاریخ" name="date">
                             </div>
                             <div class="col-md-4 mb-3">
@@ -351,55 +350,59 @@
                             <input type="text" class="form-control" placeholder="Kanal/کنال  " value="0" name="replanting_kanal">
                             </div>
                         </div>
-                        <h5 class="font-weight-bold text-primary mt-3 urdu-text">Double Crop Land /اراضی دو فصلی
-
-
-
-                        </h5>
+                        <h5 class="font-weight-bold text-primary mt-3 urdu-text">Double Crop Land /اراضی دو فصلی</h5>
                         <div class="form-group row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold urdu-text"><span>(20) </span>Marla/مرلہ    
+                            <div class="col-md-3 mb-3">
+                            <label class="form-label font-weight-bold urdu-text"><span>(20) </span>Date / تاریخ تخمریزی</label>
+                            <input type="date" class="form-control"  placeholder="Date/تاریخ" name="double_date">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label font-weight-bold urdu-text">(21) Double Crop / دو فصلی</label>
+                                <select name="double_crop" id="double_crop" class="form-control">
+                                    <option class="form-label font-weight-bold" value="">Choose Double Crop / دو فصلی فصل </option>
+                                    @foreach($cropprice as $crop)
+                                        <option value="{{ $crop->final_crop }}">{{ $crop->final_crop }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label font-weight-bold urdu-text"><span>(22) </span>Marla/مرلہ    
                                 </label>
                                 <input type="text" class="form-control" value="0" placeholder="Marla/مرلہ    
 
                                 "name="double_crop_marla">
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold urdu-text"><span>(21) </span>Kanal/کنال  
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label font-weight-bold urdu-text"><span>(23) </span>Kanal/کنال  
                             </label>
                             <input type="text" class="form-control" value="0" placeholder="Kanal/کنال  "name="double_crop_kanal">
                             </div>
                         </div>
-                        <h5 class="font-weight-bold text-primary mt-3 urdu-text">Irrigated Area / مجرائی رقبہ
-
-
-
-
-                        </h5>
+                        <h5 class="font-weight-bold text-primary mt-3 urdu-text">Irrigated Area / مجرائی رقبہ</h5>
                         <div class="form-group row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold urdu-text"><span>(22) </span>Marla/مرلہ    
+                                <label class="form-label font-weight-bold urdu-text"><span>(24) </span>Marla/مرلہ    
                                 </label>
                                 <input type="text" class="form-control" value="0" placeholder="Marla/مرلہ    
 
                                 "name="irrigated_area_marla">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold urdu-text"><span>(23) </span>Kanal/کنال  
+                                <label class="form-label font-weight-bold urdu-text"><span>(25) </span>Kanal/کنال  
                             </label>
                             <input type="text" class="form-control" value="0" placeholder="Kanal/کنال" name="irrigated_area_kanal">
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold urdu-text"><span>(24) </span>Identifiable Area Marla/قابل شناخت رقبہ مرلہ
+                                <label class="form-label font-weight-bold urdu-text"><span>(26) </span>Identifiable Area Marla/قابل شناخت رقبہ مرلہ
                                 </label>
                                 <input type="text" class="form-control" value="0" placeholder="Marla/مرلہ    
 
                                 "name="identifable_area_marla">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold urdu-text"><span>(25) </span>Identifiable Area Kanal/قابل شناخت رقبہ کنال
+                                <label class="form-label font-weight-bold urdu-text"><span>(27) </span>Identifiable Area Kanal/قابل شناخت رقبہ کنال
                             </label>
                             <input type="text" class="form-control" value="0" placeholder="Kanal/کنال" name="identifable_area_kanal">
                             </div>
@@ -407,7 +410,7 @@
 
                         <div class="form-group row">
                             <div class="col-md-12 mb-12">
-                                <label class="form-label font-weight-bold urdu-text"><span>(26) </span>Land Quality/کیفیت
+                                <label class="form-label font-weight-bold urdu-text"><span>(28) </span>Land Quality/کیفیت
                                 </label>
                                 <input type="text" class="form-control" value="N/A" placeholder="Land Quality/کیفیت" name="land_quality">
                                 <input type="number" name="is_billed" value="0" style="display:none;">
@@ -611,7 +614,7 @@ branchCheckbox.addEventListener('change', function () {
                 type: 'GET',
                 dataType: 'json',
                 success: function (data) {
-                    $('#distributory_radiobutton_show select[name="distri_id"]').empty().append('<option value="">Choose Distributory</option>');
+                    $('#distributory_radiobutton_show select[name="distri_id"]').empty().append('<option value="">Choose Minor</option>');
                     $('#distributory_radiobutton_show select[name="distri_outlet_id"]').empty().append('<option value="">Choose Outlet</option>');
                     $.each(data, function (key, value) {
                         $('#distributory_radiobutton_show select[name="distri_id"]').append('<option value="' + value.id + '">' + value.name + '</option>');
@@ -675,7 +678,7 @@ branchCheckbox.addEventListener('change', function () {
             type: 'GET',
             dataType: 'json',
             success: function (data) {
-                $('#distri_outlet_id').empty().append('<option value="">Choose Branch123 / شاخ</option>');
+                $('#distri_outlet_id').empty().append('<option value="">Choose Branch / شاخ</option>');
                 $.each(data, function (key, value) {
                     $('#distri_outlet_id').append('<option value="' + value.id + '">' + value.outlet_name + '</option>');
                 });
