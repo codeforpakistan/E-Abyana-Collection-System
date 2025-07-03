@@ -181,6 +181,7 @@ Route::put('/canals/{id}/update', [CanalController::class, 'update'])->name('upd
     Route::get('survey_bill/approve/view/{id}', [FarmerLandRecord::class, 'surveyBillApprovalView']);
     Route::get('survey_bill/approve/{irrigator_id}', [FarmerLandRecord::class, 'surveyApproved']);
     Route::post('survey_bill/approve_multiple', [FarmerLandRecord::class, 'surveyApproveMultiple'])->name('survey_bill.approve_multiple');
+    Route::post('survey/forward_multiple', [FarmerLandRecord::class, 'surveyForwardMultiple'])->name('survey_forward.multiple');
     Route::post('survey_bill/view_multiple', [FarmerLandRecord::class, 'surveyBillMultiple'])->name('survey_bill.view_multiple');
     Route::get('ListIrrigatorsForApprovals', [FarmerLandRecord::class, 'IrrigatorsForApproval'])->name('ListIrrigatorsForApprovals');
     Route::get('edit-servey/{id}',[FarmerLandRecord::class,'EditSurvey'])->name('edit.survey');

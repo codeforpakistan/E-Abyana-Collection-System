@@ -6,6 +6,11 @@
     #example th{
         padding: 4px !important;
     }
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
 </style>
 </head>
 <div class="app-content">
@@ -19,6 +24,10 @@
       </div>
       <div class="card-body">
       <div class="table-responsive">
+        <div class="button-container">
+         <button id="check-all" class="btn btn-warning btn-sm"><strong>Check All</strong></button>
+         <button id="forward-selected" class="btn btn-success btn-sm" style="display: none;"><i class="fa fa-arrow-right"></i><strong> Forward All</strong></button>
+        </div>
       <table id="example" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
     <thead class="table-primary text-center align-middle">
         <tr>
@@ -39,6 +48,7 @@
                     <table class="table table-sm table-bordered">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>Village</th>
                                 <th>Session</th>
                                 <th>Crop</th>
@@ -53,7 +63,14 @@
                         </thead>
                         <tbody>
                             @foreach ($irrigator_surveys as $survey)
-                                <tr>
+                            @php
+                                $invalid = is_null($survey->date) || $survey->area_kanal <= 0;
+                            @endphp
+
+                          <tr @if($invalid) style="background-color: #FFFFE0;" @endif>
+                                     <td class="text-center align-middle">
+                                         <input type="checkbox" class="survey-checkbox" value="{{ $survey->crop_survey_id }}">
+                                     </td>
                                     <td>{{ $survey->village_name }}</td>
                                     <td>{{ $survey->crop_name }}</td>
                                     <td>{{ $survey->final_crop }}</td>
@@ -80,8 +97,13 @@
                                                 <button class="btn btn-danger btn-sm" title="Delete"><i class="fa fa-trash"></i></button>
                                         </form>
                         
-                                        <a href="{{ url('survey/patwari/forward') }}/{{$survey->crop_survey_id}}">
-                                            <button class="btn btn-warning btn-sm" title="Forward"><i class="fa fa-arrow-right"></i></button>
+                                        <a href="{{ $invalid ? '#' : url('survey/patwari/forward') . '/' . $survey->crop_survey_id }}">
+                                            <button class="btn btn-warning btn-sm 
+                                                           @if($invalid) disabled opacity-50 @endif"
+                                                    title="{{ $invalid ? 'Disabled' : 'Forward' }}"
+                                                    @if($invalid) disabled @endif>
+                                                <i class="fa fa-arrow-right"></i>
+                                            </button>
                                         </a>
                         
                                         <a href="{{ route('edit.survey', $survey->crop_survey_id) }}" class="btn btn-sm btn-primary">
@@ -105,4 +127,71 @@
     </div> 
 </section>  
 </div>    
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const checkAllButton = document.getElementById('check-all');
+        const approveSelectedButton = document.getElementById('forward-selected');
+        const checkboxes = document.querySelectorAll('.survey-checkbox');
+
+        checkAllButton.addEventListener('click', function () {
+            const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+            checkboxes.forEach(checkbox => checkbox.checked = !allChecked);
+            checkAllButton.textContent = allChecked ? 'Check All' : 'Uncheck All';
+            toggleApproveButton();
+        });
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', toggleApproveButton);
+        });
+
+        function toggleApproveButton() {
+            const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+            approveSelectedButton.style.display = anyChecked ? 'inline-block' : 'none';
+        }
+
+        approveSelectedButton.addEventListener('click', function () {
+            const selectedIrrigators = Array.from(checkboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+
+            if (selectedIrrigators.length === 0) {
+                Swal.fire('Error', 'No Survey selected!', 'error');
+                return;
+            }
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You are about to forward the selected surveys!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Forward',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch("{{ route('survey_forward.multiple') }}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        },
+                        body: JSON.stringify({ irrigator_ids: selectedIrrigators })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire('Success', data.message, 'success').then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire('Error', data.message, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire('Error', 'Something went wrong!', 'error');
+                    });
+                }
+            });
+        });
+    });
+</script>
  @endsection

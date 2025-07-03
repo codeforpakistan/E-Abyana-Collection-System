@@ -28,27 +28,27 @@ class ApiController extends Controller
 {
 public function make_login(Request $request)
 {
-    // Validate incoming request
+    // Validate input
     $request->validate([
         'email' => 'required|email',
-        'password' => 'required'
+        'password' => 'required',
     ]);
 
-   
-    $user = User::where('email', $request->email)->first();
-
-    // Check if user exists and password matches
-    if (!$user || !Hash::check($request->password, $user->password)) {
+    // Attempt login using Laravel Auth
+    if (!Auth::attempt($request->only('email', 'password'))) {
         return response()->json([
             'status' => 'error',
-            'message' => 'Invalid email or password',
-        ], 401); // Unauthorized response
+            'message' => 'Invalid credentials',
+        ], 401);
     }
 
-    // Generate a token for the user
+    // Auth successful
+    $user = Auth::user();
+
+    // Create token for API
     $token = $user->createToken('api-token')->plainTextToken;
 
-    // Return success response with user data and token
+    // Return user data and token
     return response()->json([
         'status' => 'success',
         'message' => 'Login successful',
@@ -58,6 +58,9 @@ public function make_login(Request $request)
             'email' => $user->email,
             'halqa_id' => $user->halqa_id,
             'role_id' => $user->role_id,
+            'district_id' => $user->district_id,
+            'div_id' => $user->div_id,
+            'tehsil_id' => $user->tehsil_id,
         ],
         'token' => $token,
     ], 200);
@@ -552,7 +555,7 @@ public function storeIrrigator(Request $request)
         $validated = $request->validate([
             'irrigator_name' => 'required|string|max:255',
             'irrigator_khata_number' => 'required|string|max:255',
-            //  'irrigator_khata_number' => 'required|string|unique:irrigators,irrigator_khata_number',
+             'irrigator_khata_number' => 'required|string|unique:irrigators,irrigator_khata_number',
             'irrigator_mobile_number' => 'required|string|max:255',
             'village_id' => 'required|exists:villages,village_id', 
         ], [
@@ -561,16 +564,29 @@ public function storeIrrigator(Request $request)
             'village_id.exists' => 'The selected village does not exist.',
         ]);
 
-        // Store in the database
-        $irrigator = Irrigator::create($validated);
+    // Check for duplicate khata number within the same village
+    $duplicate = Irrigator::where('irrigator_khata_number', $request->irrigator_khata_number)
+        ->where('village_id', $request->village_id)
+        ->exists();
 
-        // Return a JSON response
+    if ($duplicate) {
         return response()->json([
-            'success' => true,
-            'message' => 'Data has been submitted successfully.',
-            'data' => $irrigator,
-        ], 201); // 201 indicates resource creation
+            'success' => false,
+            'error' => 'The irrigator with the same khata number already exists in this village.'
+        ], 422);
     }
+
+    // Store the data
+    $irrigator = Irrigator::create($validated);
+
+    // Return response
+    return response()->json([
+        'success' => true,
+        'message' => 'Data has been submitted successfully.',
+        'data' => $irrigator,
+    ], 201);
+}
+
     // public function getIrrigators(Request $request)
     // {
      
