@@ -18,6 +18,10 @@ use App\Models\Irrigator;
 use App\Models\Crop;
 use App\Models\LandRecord;
 use App\Models\Cropprice;
+use App\Models\Distributary;
+use App\Models\Minorcanal;
+use App\Models\CanalBranch;
+
 use DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -1221,6 +1225,105 @@ public function getSurveyBill($id)
             'relatedData' => $relatedData,
         ], 200);
     }
-
+    public function apiGetMinors(Request $request)
+    {
+        // Optional filtering
+        $query = Minorcanal::query();
+    
+        if ($request->has('canal_id')) {
+            $query->where('canal_id', $request->canal_id);
+        }
+    
+        if ($request->has('div_id')) {
+            $query->where('div_id', $request->div_id);
+        }
+    
+        $minors = $query->get();
+    
+        return response()->json([
+            'status' => true,
+            'message' => 'Minor canals fetched successfully.',
+            'data' => $minors
+        ]);
+    }
+    
+    public function apiGetDistributaries(Request $request)
+    {
+        $query = Distributary::query();
+    
+        // Optional filters
+        if ($request->has('canal_id')) {
+            $query->where('canal_id', $request->canal_id);
+        }
+    
+        if ($request->has('minor_id')) {
+            $query->where('minor_id', $request->minor_id);
+        }
+    
+        if ($request->has('div_id')) {
+            $query->where('div_id', $request->div_id);
+        }
+    
+        $distributaries = $query->get();
+    
+        return response()->json([
+            'status' => true,
+            'message' => 'Distributaries fetched successfully.',
+            'data' => $distributaries
+        ]);
+    }
+    
+    public function apiGetCanalBranches(Request $request)
+    {
+        $query = CanalBranch::query();
+    
+        // Optional filters
+        if ($request->has('canal_id')) {
+            $query->where('canal_id', $request->canal_id);
+        }
+    
+        if ($request->has('div_id')) {
+            $query->where('div_id', $request->div_id);
+        }
+    
+        if ($request->has('minor_id')) {
+            $query->where('minor_id', $request->minor_id);
+        }
+    
+        if ($request->has('distrib_id')) {
+            $query->where('distrib_id', $request->distrib_id);
+        }
+    
+        $branches = $query->get();
+    
+        return response()->json([
+            'status' => true,
+            'message' => 'Canal branches fetched successfully.',
+            'data' => $branches
+        ]);
+    }
+    
+    public function apiGetCanals(Request $request)
+    {
+        $query = Canal::query();
+    
+        // Optional filters
+        if ($request->has('div_id')) {
+            $query->where('div_id', $request->div_id);
+        }
+    
+        if ($request->has('c_type')) {
+            $query->where('c_type', $request->c_type);
+        }
+    
+        $canals = $query->get();
+    
+        return response()->json([
+            'status' => true,
+            'message' => 'Canals fetched successfully.',
+            'data' => $canals
+        ]);
+    }
+    
 }
 
