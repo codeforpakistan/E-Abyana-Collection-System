@@ -81,6 +81,12 @@ Route::post('/storesurvey', [ApiController::class, 'storesurvey']);
 
 Route::match(['get', 'post',], 'crops', [ApiController::class, 'manageCrop']);
 Route::match(['get', 'put', 'delete'], 'crops/{id?}', [ApiController::class, 'manageCrop']);
+Route::get('/minor-canals', [ApiController::class, 'apiGetMinors']);
+
+Route::get('/distributaries', [ApiController::class, 'apiGetDistributaries']);
+Route::get('/canal-branches', [ApiController::class, 'apiGetCanalBranches']);
+Route::get('/canals', [ApiController::class, 'apiGetCanals']);
+
 // Route::get('/outlets', [ApiController::class, 'getOutlets']);
 
 

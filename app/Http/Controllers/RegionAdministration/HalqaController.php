@@ -46,6 +46,8 @@ public function getTehsils($districtId)
     return response()->json($tehsils);
 }
 
+
+
 public function storeHalqa(Request $request)
 {
     // Validate the incoming request

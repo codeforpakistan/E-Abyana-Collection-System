@@ -127,7 +127,6 @@ Route::put('tehsil/update/{id}', [TahsilController::class, 'updatetehsil'])->nam
 
     Route::get('AddUser', [UserController::class, 'AddUser']);
     Route::post('AddUser/add', [UserController::class, 'storeUser'])->name('AddUser.add');
-Route::get('/get-tehsils/{district_id}', [YourController::class, 'getTehsils']);
 
     Route::get('AddHalqa', [HalqaController::class, 'Addhalqa'])->name('AddHalqa');
     Route::post('AddHalqa/add', [HalqaController::class, 'storeHalqa'])->name('AddHalqa.add');
