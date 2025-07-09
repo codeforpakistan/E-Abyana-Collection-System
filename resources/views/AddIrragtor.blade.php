@@ -4,6 +4,8 @@
 
     <head>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.css" />
+    <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
     </head>
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -143,7 +145,7 @@
                     </div>
                     <div class="form-group col-lg-6">
                         <label class="form-label font-weight-bold">Khata Number</label>
-                        <input class="form-control" type="text" id="" name="irrigator_khata_number"
+                        <input class="form-control" type="number" id="" name="irrigator_khata_number"
                         placeholder=" Enter Khata Number"
                             required>
                     </div>
@@ -213,91 +215,19 @@
       </button>
 
 </div> 
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <form action="{{ route('tehsil.delete') }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-
-                                            <table id="example"
-                                                class="table table-bordered border-t0 key-buttons text-nowrap w-100">
-                                                <thead>
-                                                    <tr>
-                                                        <!--<th><input type="checkbox" id="select-all"></th> -->
-                                                        <th>#</th>
-                                                        <th>Irrigator Name</th>
-                                                        <th>Khata No</th>
-                                                        <th>Village Name</th>
-                                                        {{-- <th>Halqa /حلقہ</th> --}}
-                                                        {{-- <th>CNIC</th> --}}
-                                                        {{-- <th>Mobile No</th> --}}
-                                                        
-                                                        <!-- <th>Tehsil Name</th>
-                                                        <th>District Name</th>
-                                                        <th>Divsion</th> -->
-
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($Irrigators as $Irrigator)
-                                                        <tr>
-                                                            <!-- <td><input type="checkbox" name="ids[]" value=""></td> -->
-                                                            <td>{{ $Irrigator->id }}</td>
-                                                            <td>{{ $Irrigator->irrigator_name }}</td>
-                                                            <td>{{ $Irrigator->irrigator_khata_number }}</td>
-                                                            {{-- <td>{{ $Irrigator->cnic}}</td> --}}
-                                                            {{-- <td>{{ $Irrigator->irrigator_mobile_number }}</td> --}}
-                                                            <td>{{ $Irrigator->village_name }}</td>
-                                                            {{-- <td>{{ $Irrigator->halqa_name }}</td> --}}
-                                                            <!--  <td>{{ $Irrigator->tehsil_name }}</td>
-                                                        <td>{{ $Irrigator->district_name }}</td>
-                                                        
-                                                        <td>{{ $Irrigator->divsion_name }}</td> -->
-
-                                                        <td class="align-middle text-center">
-                                                            <a href="{{ route('LandRecord.ListLandSurvey', ['id' => $Irrigator->id, 'abs' => $Irrigator->irrigator_khata_number, 'village_id' => $Irrigator->village_id, 'canal_id' => $Irrigator->canal_id,'div_id' => $Irrigator->div_id]) }}">
-                                                                <button class="btn btn-sm btn-primary" type="button">
-                                                                    <span><i class="fa fa-plus"></i></span> Add Land Survey <span style="font-family: 'Noto Nastaliq Urdu', serif;">(خسرہ گرداوری)</span>
-                                                                </button>
-                                                            </a>
-                                                            
-                                                                    <form
-                                                                        action="{{ route('irrigators.destroy', $Irrigator->id) }}"
-                                                                        method="POST"
-                                                                        onsubmit="return confirm('Are you sure you want to delete this irrigator?');"
-                                                                        style="display: inline;">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button class="btn btn-sm btn-primary"
-                                                                            type="submit">
-                                                                            <i class="fa fa-trash"></i> Delete
-                                                                        </button>
-                                                                    </form>
-                                                                    <a href="{{ route('edit.irrigator', $Irrigator->id) }}" class="btn btn-sm btn-primary">
-                                                                        <i class="fa fa-edit"></i> Edit</a> 
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                         
-
-
-
-
-
-
-
-                                            
-                                            <div class="mt-3">
-                                                {{ $Irrigators->links() }}
-                                            </div>
-                                            </fle>
-                                    </div>
-                                </div>
+                        <div class="card-body p-1">
+                        <div class="row border-bottom p-1">
+                            <div class="col-12 mb-2">
+                                <label>Select Village</label>
+                                <select id="villageFilter" class="form-control">
+                                    @foreach ($villages as $village)
+                                        <option value="{{ $village->village_id }}">{{ $village->village_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div id="loader" style="display: none; text-align: center; font-weight: bold;">Loading...</div>
+                            <div class="table-responsive mt-2">
                             </div>
                         </div>
                     </div>
@@ -466,8 +396,10 @@
             console.error('Form not found!');
             return;
         }
+
         const formData = new FormData(form);
         const actionUrl = form.getAttribute('action');
+
         fetch(actionUrl, {
             method: 'POST',
             body: new URLSearchParams(formData),
@@ -475,41 +407,52 @@
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
         })
-            .then((response) => {
-                if (!response.ok) {
-                    return response.json().then((data) => {
-                        throw new Error(data.message || 'An error occurred');
-                    });
+        .then(async (response) => {
+            const data = await response.json();
+
+            if (!response.ok) {
+                // Check for duplicate khata (422 error)
+                if (response.status === 422 && data.error) {
+                    throw new Error(data.error);  // Laravel sends 'error' for duplicate
                 }
-                return response.json();
-            })
-            .then((data) => {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Irrigator Added!',
-                    text: data.message,
-                    timer: 2000,
-                    showConfirmButton: false,
-                });
-            document.querySelector('[name="irrigator_name"]').value = '';
-            document.querySelector('[name="irrigator_khata_number"]').value = '';
-            document.querySelector('[name="irrigator_f_name"]').value = '';
-            document.querySelector('[name="irrigator_mobile_number"]').value = '';
-            })
-            .catch((error) => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Something Went Wrong, Try Again.',
-                    text: error.message || 'An error occurred',
-                    confirmButtonText: 'OK',
-                });
-            document.querySelector('[name="irrigator_name"]').value = '';
-            document.querySelector('[name="irrigator_khata_number"]').value = '';
-            document.querySelector('[name="irrigator_f_name"]').value = '';
-            document.querySelector('[name="irrigator_mobile_number"]').value = '';
+
+                // Other validation errors (like missing required fields)
+                if (response.status === 422 && data.errors) {
+                    // Combine all validation messages
+                    const messages = Object.values(data.errors).flat().join('\n');
+                    throw new Error(messages);
+                }
+
+                // General error
+                throw new Error(data.error || 'Something went wrong. Please try again.');
+            }
+
+            // Success
+            Swal.fire({
+                icon: 'success',
+                title: 'Irrigator Added!',
+                text: data.success || 'Record saved successfully.',
+                timer: 2000,
+                showConfirmButton: false,
             });
+
+            // Clear form fields
+            ['irrigator_name', 'irrigator_khata_number', 'irrigator_f_name', 'irrigator_mobile_number'].forEach(name => {
+                const input = document.querySelector(`[name="${name}"]`);
+                if (input) input.value = '';
+            });
+        })
+        .catch((error) => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.message || 'Something went wrong.',
+                confirmButtonText: 'OK',
+            });
+        });
     }
 </script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         $('#exampleModal').on('hidden.bs.modal', function () {
@@ -518,9 +461,48 @@
         });
     });
 </script>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
+ let table = new DataTable('#example123', {
+            pageLength: 100
+        });
+
+        $('#villageFilter').on('change', function () {
+            let village_id = $(this).val();
+
+            // Show loader and hide table
+            $('#loader').show();
+            $('#example123').hide();
+
+            $.ajax({
+                url: "{{ route('AddIrragtor') }}",
+                type: "GET",
+                data: { village_id: village_id },
+                success: function (data) {
+                    if ($.fn.DataTable.isDataTable('#example123')) {
+                        $('#example123').DataTable().destroy();
+                    }
+
+                    $('.table-responsive').html(data);
+
+                    new DataTable('#example123', {
+                        pageLength: 100
+                    });
+
+                    // Hide loader and show new table
+                    $('#loader').hide();
+                    $('#example123').show();
+                },
+                error: function () {
+                    $('#loader').hide();
+                    alert('Failed to load irrigators.');
+                }
+            });
+        });
+
+        // Trigger change on page load
+        $('#villageFilter').trigger('change');
 
         $('#div_id').change(function() {
             var div_id = $(this).val();

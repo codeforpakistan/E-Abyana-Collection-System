@@ -190,7 +190,6 @@ Welcome to E ABYANA
                     </div>
                 </div>
                 <ul class="side-menu">
-
                 <li class="slide">
                         <a class="side-menu__item" data-toggle="slide" href="{{ url('dashboard') }}">
                             <i class="side-menu__icon fas fa-home"></i>

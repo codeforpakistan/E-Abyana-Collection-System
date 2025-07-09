@@ -14,16 +14,19 @@ use App\Models\CanalBranch;
 
 class CanalOutLet extends Controller
 {
-    public function AddOutlet(){
-        $canals = Canal::all(); 
-        $minors = Minorcanal::all();
-        $divsions = Divsion::all();
-        $Distributaries = Distributary::all();
-        $CanalBranch = CanalBranch::all();
-        $outlets = Outlet::with(['canal', 'division', 'minor','distributsry','CanalBranch'])->paginate(5);
-        return view('RegionManagments.CanalOutlet',compact('canals','outlets','divsions',
-        'minors','Distributaries','CanalBranch'));
-    
+public function AddOutlet(){
+    $canals = Canal::all(); 
+    $minors = Minorcanal::all();
+    $divsions = Divsion::all();
+    $Distributaries = Distributary::all();
+    $CanalBranch = CanalBranch::all();
+
+    // Fetch all outlets without pagination
+    $outlets = Outlet::with(['canal', 'division', 'minor', 'distributsry', 'CanalBranch'])->get();
+
+    return view('RegionManagments.CanalOutlet', compact(
+        'canals', 'outlets', 'divsions', 'minors', 'Distributaries', 'CanalBranch'
+    ));
 }
 
 public function storeOutlet(Request $request)

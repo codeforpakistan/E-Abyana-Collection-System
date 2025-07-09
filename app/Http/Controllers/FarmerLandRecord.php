@@ -225,6 +225,7 @@ try {
             'identifable_area_kanal' => 'nullable',
         
             'land_quality' => 'nullable',
+            'patwari_user_id' => 'required|numeric|max:255',
         ]);
 
         // Set default values for nullable fields
@@ -361,6 +362,7 @@ public function storeFarmer(Request $request)
         'is_billed' => 'required|numeric|max:255',
         'review' => 'required|string|max:255',
         'status' => 'required|numeric|max:255',
+        'patwari_user_id' => 'required|numeric|max:255',
     ]);
 
     LandRecord::create($validatedData);
@@ -419,16 +421,28 @@ public function surveyReviewReverseCollector(Request $request, $crop_survey_id)
 }
 public function surveyReviewForwardPatwari(Request $request, $crop_survey_id)
 {
+    $role_id = session('role_id'); 
+    $user_id = session('id'); 
+    
     $validatedData = $request->validate([
         'review' => 'required|string|max:255',
     ]);
+
     $cropsurvey = LandRecord::findOrFail($crop_survey_id);
     $cropsurvey->review = $validatedData['review'];
     $cropsurvey->status = 1;
+
+    // Only update patwari_user_id if role_id is 12
+    if ($role_id == 12) {
+        $cropsurvey->patwari_user_id = $user_id;
+    }
+
     $cropsurvey->save();
+
     session()->flash('success', 'Survey review has been updated successfully!');
     return redirect()->route('ListLandSurvey');
 }
+
 
 
 public function ListBills()
@@ -465,7 +479,9 @@ public function ListBills()
 public function LandSurvey()
 {
     $halqa_id = session('halqa_id');
-    $div_id = session('div_id'); // Get division ID from session
+    $div_id = session('div_id');
+
+    $villages = $halqa_id > 0 ? village::where('halqa_id', $halqa_id)->get() : village::all();
 
     $query_survey = DB::table('cropsurveys')
         ->join('villages', 'cropsurveys.village_id', '=', 'villages.village_id')
@@ -492,6 +508,7 @@ public function LandSurvey()
             'cropsurveys.date',
             'cropsurveys.width',
             'cropsurveys.length',
+            'cropsurveys.session_date',
             'cropsurveys.area_marla',
             'cropsurveys.area_kanal',
             'cropsurveys.status',
@@ -537,9 +554,8 @@ public function LandSurvey()
 
     $grouped_survey = $survey_get->groupBy('irrigator_id');
 
-    return view('LandRecord.ListLandSurvey', compact('grouped_survey'));
+    return view('LandRecord.ListLandSurvey', compact('grouped_survey','villages'));
 }
-
 
 
 public function IrrigatorsForApproval()
@@ -1292,6 +1308,8 @@ public function surveyApproveMultiple(Request $request) {
 }
 
 public function surveyForwardMultiple(Request $request) {
+    $role_id = session('role_id'); 
+    $user_id = session('id'); 
     $irrigatorIds = $request->input('irrigator_ids');
 
     if (empty($irrigatorIds)) {
@@ -1299,11 +1317,19 @@ public function surveyForwardMultiple(Request $request) {
     }
 
     try {
+        // Base update data
+        $updateData = [
+            'status' => 1,
+            'review' => 'Forwarded by Patwari'
+        ];
+
+        // Conditionally add patwari_user_id if user_id is 12
+        if ($role_id == 12) {
+            $updateData['patwari_user_id'] = $user_id;
+        }
+
         LandRecord::whereIn('crop_survey_id', $irrigatorIds)
-            ->update([
-                'status' => 1,
-                'review' => 'Forwarded by Patwari'
-            ]);
+            ->update($updateData);
 
         return response()->json(['success' => true, 'message' => 'Forwarding successful for the selected records!']);
     } catch (\Exception $e) {

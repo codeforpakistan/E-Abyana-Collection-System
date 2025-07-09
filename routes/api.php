@@ -81,6 +81,24 @@ Route::post('/storesurvey', [ApiController::class, 'storesurvey']);
 
 Route::match(['get', 'post',], 'crops', [ApiController::class, 'manageCrop']);
 Route::match(['get', 'put', 'delete'], 'crops/{id?}', [ApiController::class, 'manageCrop']);
+Route::get('/minor-canals', [ApiController::class, 'apiGetMinors']);
+
+Route::get('/distributaries_by_canal/{canal_id}', [ApiController::class, 'apiGetDistributariesByCanal']);
+Route::get('/minor_by_distry/{minor_id}', [ApiController::class, 'apiGetMinorByDistry']);
+Route::get('/branch_by_minor/{distrib_id}', [ApiController::class, 'apiGetBranchByMinor']);
+
+Route::get('/outlet_by_canal/{canal_id}', [ApiController::class, 'apiGetOutletByCanal']);
+Route::get('/outlet_by_distry/{minor_id}', [ApiController::class, 'apiGetOutletByDistry']);
+Route::get('/outlet_by_minor/{distrib_id}', [ApiController::class, 'apiGetOutletByMinor']);
+Route::get('/outlet_by_branch/{branch_id}', [ApiController::class, 'apiGetOutletByBranch']);
+
+Route::get('/croplist', [ApiController::class, 'apiGetcroplist']);
+Route::get('/revenuemodel', [ApiController::class, 'apiGetrevenueModel']);
+
+Route::get('/distributaries', [ApiController::class, 'apiGetDistributaries']);
+Route::get('/canal-branches', [ApiController::class, 'apiGetCanalBranches']);
+Route::get('/canals', [ApiController::class, 'apiGetCanals']);
+
 // Route::get('/outlets', [ApiController::class, 'getOutlets']);
 
 

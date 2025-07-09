@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('is_billed')->default(0)->after('crop_price'); // Corrected as a tiny integer for 0/1 values
             $table->text('review')->nullable()->after('is_billed'); // Allows null for review
             $table->unsignedTinyInteger('status')->default(1)->after('review'); // Default status as 1
+            $table->unsignedInteger('patwari_user_id')->after('status'); 
         });
     }
 
@@ -31,6 +32,7 @@ return new class extends Migration
             $table->dropColumn('is_billed');
             $table->dropColumn('review');
             $table->dropColumn('status');
+            $table->dropColumn('patwari_user_id');
         });
     }
 };

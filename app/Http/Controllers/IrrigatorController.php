@@ -14,60 +14,62 @@ use App\Models\Halqa;
 use DB;
 class IrrigatorController extends Controller
 {
-    public function AddIrrigator()
-    {
-        $halqa_id = session('halqa_id'); // Get the halqa_id from the session
-    
-        // Build the Irrigators query
-        $query = DB::table('irrigators')
-            ->join('villages', 'irrigators.village_id', '=', 'villages.village_id')
-            ->join('halqa', 'villages.halqa_id', '=', 'halqa.id')
-            ->join('tehsils', 'halqa.tehsil_id', '=', 'tehsils.tehsil_id')
-            ->join('districts', 'tehsils.district_id', '=', 'districts.id')
-            ->join('divisions', 'districts.div_id', '=', 'divisions.id')
-            ->select(
-                'irrigators.id', 
-                'irrigators.irrigator_name', 
-                'irrigators.irrigator_khata_number', 
-                'irrigators.cnic', 
-                'irrigators.irrigator_mobile_number', 
-                'irrigators.canal_id', 
-                'villages.village_id AS village_id',
-                'villages.village_name AS village_name',
-                'villages.halqa_id',
-                'halqa.halqa_name AS halqa_name',
-                'tehsils.tehsil_id AS tehsil_id',
-                'tehsils.tehsil_name AS tehsil_name',
-                'districts.id AS district_id',
-                'districts.name AS district_name',
-                'divisions.id AS div_id',
-                'divisions.divsion_name AS divsion_name'
-            );
-    
-        // Apply condition if halqa_id is present in the session
-        if ($halqa_id > 0) {
-            $query->where('villages.halqa_id', '=', $halqa_id);
-        }
-    
-        // Use paginate instead of get() to enable pagination
-        $Irrigators = $query->paginate(50); // Show 10 records per page
-    
-        if ($halqa_id > 0) {
-            $villages = village::where('halqa_id', '=', $halqa_id)->get();
-            $Halqas = Halqa::where('id', '=', $halqa_id)->get();
-        } else {
-            $villages = village::all();
-            $Halqas = Halqa::all();
-        }
-    
-        $districts = District::all();
-        $tehsils = Tehsil::all();
-        $divsions = Divsion::all();
-        $canals = Canal::all();
-        // Return the view with paginated data
-        return view('AddIrragtor', compact('villages', 'canals', 'districts', 'tehsils', 'divsions', 'Halqas', 'Irrigators'));
+public function AddIrrigator(Request $request)
+{
+    $halqa_id = session('halqa_id');
+    $village_id = $request->get('village_id');
+
+    $query = DB::table('irrigators')
+        ->join('villages', 'irrigators.village_id', '=', 'villages.village_id')
+        ->join('halqa', 'villages.halqa_id', '=', 'halqa.id')
+        ->join('tehsils', 'halqa.tehsil_id', '=', 'tehsils.tehsil_id')
+        ->join('districts', 'tehsils.district_id', '=', 'districts.id')
+        ->join('divisions', 'districts.div_id', '=', 'divisions.id')
+        ->select(
+            'irrigators.id',
+            'irrigators.irrigator_name',
+            'irrigators.irrigator_khata_number',
+            'irrigators.cnic',
+            'irrigators.irrigator_mobile_number',
+            'irrigators.canal_id',
+            'villages.village_id AS village_id',
+            'villages.village_name AS village_name',
+            'villages.halqa_id',
+            'halqa.halqa_name AS halqa_name',
+            'tehsils.tehsil_id AS tehsil_id',
+            'tehsils.tehsil_name AS tehsil_name',
+            'districts.id AS district_id',
+            'districts.name AS district_name',
+            'divisions.id AS div_id',
+            'divisions.divsion_name AS divsion_name'
+        );
+
+    if ($halqa_id > 0) {
+        $query->where('villages.halqa_id', '=', $halqa_id);
     }
-    
+
+    if ($village_id) {
+        $query->where('villages.village_id', '=', $village_id);
+    }
+
+    $Irrigators = $query->get();
+
+    if ($request->ajax()) {
+        return view('AddIrragtorPartialTable', compact('Irrigators'))->render();
+    }
+
+    // First load view
+    $villages = $halqa_id > 0 ? village::where('halqa_id', $halqa_id)->get() : village::all();
+    $Halqas = $halqa_id > 0 ? Halqa::where('id', $halqa_id)->get() : Halqa::all();
+
+    $districts = District::all();
+    $tehsils = Tehsil::all();
+    $divsions = Divsion::all();
+    $canals = Canal::all();
+
+    return view('AddIrragtor', compact('villages', 'canals', 'districts', 'tehsils', 'divsions', 'Halqas', 'Irrigators'));
+}
+
 
     public function Search(Request $request)
     {
@@ -96,28 +98,40 @@ class IrrigatorController extends Controller
     
 public function StoreIrrgator(Request $request)
 {
-    $validated = $request->validate([
-        'irrigator_name' => 'required|string|max:255',
-        'irrigator_khata_number' => 'required|string|max:255',
-        'cnic' => 'nullable|string|max:255',
-        'irrigator_f_name' => 'required|string|max:255',
-        'irrigator_mobile_number' => 'nullable|string|max:255',
-        'village_id' => 'required|exists:villages,village_id',
-        'canal_id' => 'required|exists:canals,id',
-        'div_id' => 'required|exists:divisions,id',
-    ]);
+    try {
+        $validated = $request->validate([
+            'irrigator_name' => 'required|string|max:255',
+           'irrigator_khata_number' => 'required|integer',
+            'cnic' => 'nullable|string|max:255',
+            'irrigator_f_name' => 'required|string|max:255',
+            'irrigator_mobile_number' => 'nullable|string|max:255',
+            'village_id' => 'required|exists:villages,village_id',
+            'canal_id' => 'required|exists:canals,id',
+            'div_id' => 'required|exists:divisions,id',
+        ]);
 
-    $duplicate = Irrigator::where('irrigator_khata_number', $request->irrigator_khata_number)
-        ->where('village_id', $request->village_id)
-        ->exists();
+        $duplicate = Irrigator::where('irrigator_khata_number', $request->irrigator_khata_number)
+            ->where('village_id', $request->village_id)
+            ->exists();
 
-    if ($duplicate) {
-        return response()->json(['error' => 'The irrigator with the same khata number already exists in this village.'], 422);
+        if ($duplicate) {
+            return response()->json([
+                'error' => 'The irrigator with the same khata number already exists in this village.'
+            ], 422);
+        }
+
+        Irrigator::create($validated);
+
+        return response()->json([
+            'success' => 'Data has been submitted successfully.'
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => 'Something went wrong. Please try again later.'
+        ], 500); // HTTP 500 = Internal Server Error
     }
-
-    Irrigator::create($validated);
-    return response()->json(['success' => 'Data has been submitted successfully.']);
 }
+
 
 
 public function Districts($divisionId)

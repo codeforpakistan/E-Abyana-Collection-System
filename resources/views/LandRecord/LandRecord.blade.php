@@ -1,5 +1,4 @@
 @extends('layout')
-
 @section('content')
 <head>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -238,7 +237,7 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label font-weight-bold urdu-text"><span>(5) </span>Entry Date /تاریخ اندراج</label>
-                                <input type="date" class="form-control" value="<?php echo date("Y-m-d");?>" placeholder="Entry Date/تاریخ اندراج " name="registration_date">
+                                <input type="date" class="form-control" required placeholder="Entry Date/تاریخ اندراج " name="registration_date">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -250,7 +249,7 @@
                             </div>
                             <div class="col-md-6 mb-6">
                             <label class="form-label font-weight-bold urdu-text"><span>(7) </span> Sowing Date / تاریخ تخمریزی</label>
-                            <input type="date" class="form-control" value="<?php echo date("Y-m-d");?>" placeholder="Sowing Date / تاریخ تخمریزی" name="snowing_date">
+                            <input type="date" class="form-control" required placeholder="Sowing Date / تاریخ تخمریزی" name="snowing_date">
                         </div>
                         </div>
                         <h5 class="font-weight-bold text-primary mt-3 urdu-text">Crop Type Registration/انداراج جنس شدکار
@@ -416,7 +415,9 @@
                                 <input type="number" name="is_billed" value="0" style="display:none;">
                                 <input type="text"   name="review" value="Survey Added" style="display:none;">
                                 <input type="number" name="status" value="0" style="display:none;">
-                                
+                                <input type="number" name="patwari_user_id" value="{{ session('id') }}" style="display:none;">
+                                 <!-- if patwari_user_id column has 12 so its patwari user and 1 then admin user -->
+                                <!-- {{-- session('role_id') --}} -->
                             </div>
                         </div>
                         <!-- Submit Button -->

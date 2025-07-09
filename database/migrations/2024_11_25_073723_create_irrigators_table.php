@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('village_id');
             $table->integer('canal_id');
             $table->string('irrigator_name');
-            $table->string('irrigator_khata_number');
+            $table->integer('irrigator_khata_number');
             $table->string('irrigator_f_name');
             $table->string('irrigator_mobile_number')->nullable();
             $table->timestamps();

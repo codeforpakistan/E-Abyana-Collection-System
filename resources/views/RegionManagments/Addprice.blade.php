@@ -3,15 +3,13 @@
 @section('content')
 <head>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.css" />
+    <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
 </head>
  
 <div class="app-content">
   
-    <section class="section">
-       
-
-
+<section class="section">
 <div id="simpleModal" class="fixed  inset-0 bg-gray-400 bg-opacity-50 flex z-50 items-center justify-center hidden">
   
     <div class="card shadow-sm w-[60vw]">
@@ -72,7 +70,7 @@
                                 @csrf
                                 @method('DELETE')
                                 
-                                <table id="example" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
+                                <table id="example123" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
                                     <thead>
                                         <tr>
                                             <!--<th><input type="checkbox" id="select-all"></th> -->
@@ -112,6 +110,13 @@
                 </div>
             </div>
 </div>
+<script>
+$(document).ready(function() {
+ let table = new DataTable('#example123', {
+            pageLength: 100
+        }); 
+  });
+</script>     
     </section>
 </div>
 @if(session('success'))
