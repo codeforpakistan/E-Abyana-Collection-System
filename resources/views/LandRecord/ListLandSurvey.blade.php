@@ -2,15 +2,54 @@
 @section('content')
 <head>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <style>
-    #example th{
-        padding: 4px !important;
-    }
     .button-container {
         display: flex;
         justify-content: space-between;
         margin-bottom: 15px;
     }
+  /* Main table settings */
+  #example123 {
+    width: 100% !important;
+    table-layout: auto;
+    word-wrap: break-word;
+    font-size: 13px !important;
+  }
+
+  /* Main table cells */
+  #example123 td,
+  #example123 th {
+    padding: 2px !important;
+    margin: 2px !important;
+    white-space: normal !important;
+    font-size: 13px !important;
+  }
+  /* Nested table and its cells */
+  #example123 table,
+  #example123 table td,
+  #example123 table th {
+    font-size: 12px !important;
+    padding: 2px !important;
+    margin: 2px !important;
+    white-space: normal !important;
+  }
+
+  /* Fix width for "Action" column in nested table */
+  #example123 table th:last-child,
+  #example123 table td:last-child {
+    width: 200px !important;
+    max-width: 200px !important;
+    white-space: nowrap !important;
+  }
+  #example123 th{
+   background-color: rgba(72, 128, 255, 0.5);
+  }
+  #example123 table th{
+   background-color: rgba(72, 128, 255, 0.5);
+  }
 </style>
 </head>
 <div class="app-content">
@@ -22,19 +61,19 @@
       <h3><strong>Land Survey List</strong></h3>
       <!-- <p>Halqa ID: {{ session('halqa_id') }}</p> -->
       </div>
-      <div class="card-body">
-      <div class="table-responsive">
+      <div class="card-body p-2">
         <div class="button-container">
          <button id="check-all" class="btn btn-warning btn-sm"><strong>Check All</strong></button>
          <button id="forward-selected" class="btn btn-success btn-sm" style="display: none;"><i class="fa fa-arrow-right"></i><strong> Forward All</strong></button>
         </div>
-      <table id="example" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
+         <div class="table-responsive">
+      <table id="example123" class="table table-bordered border-t0 key-buttons w-100">
     <thead class="table-primary text-center align-middle">
         <tr>
             {{-- <th>ID</th> --}}
-            <th>Irrigator Name</th>
-            <th>Khata #</th>
-            <th>Crop Surveys</th>
+            <th class="text-center">Irrigator Name</th>
+            <th class="text-center">Khata #</th>
+            <th class="text-center">Crop Surveys</th>
         </tr>
     </thead>
     <tbody>
@@ -48,17 +87,17 @@
                     <table class="table table-sm table-bordered">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th>Village</th>
-                                <th>Session</th>
-                                <th>Crop</th>
-                                <th>Rate</th>
-                                <th>Date</th>
+                                <th class="text-center"></th>
+                                <th class="text-center">Village</th>
+                                <th class="text-center">Session</th>
+                                <th class="text-center">Crop</th>
+                                <th class="text-center">Rate</th>
+                                <th class="text-center">Date</th>
                                {{-- <th>Length</th>
                                 <th>Width</th>
                                 <th>Marla</th>
                                 <th>Kanal</th> --}}
-                                <th>Action</th>
+                                <th class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -69,10 +108,13 @@
 
                           <tr @if($invalid) style="background-color: #FFFFE0;" @endif>
                                      <td class="text-center align-middle">
-                                         <input type="checkbox" class="survey-checkbox" value="{{ $survey->crop_survey_id }}">
+                                         <input type="checkbox"
+                                         class="survey-checkbox"
+                                         value="{{ $survey->crop_survey_id }}"
+                                         @if($invalid) disabled title="Cannot forward: Invalid survey data" @endif>
                                      </td>
                                     <td>{{ $survey->village_name }}</td>
-                                    <td>{{ $survey->crop_name }}</td>
+                                    <td>{{ $survey->crop_name }} ({{$survey->session_date}})</td>
                                     <td>{{ $survey->final_crop }}</td>
                                     <td>{{ $survey->crop_price }}</td>
                                     <td>{{ $survey->date }}</td>
@@ -120,7 +162,7 @@
         @endforeach
     </tbody>
 </table>
-      </div>
+ </div>
       </div>
       </div>
       </div>
@@ -128,70 +170,90 @@
 </section>  
 </div>    
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const checkAllButton = document.getElementById('check-all');
-        const approveSelectedButton = document.getElementById('forward-selected');
-        const checkboxes = document.querySelectorAll('.survey-checkbox');
+$(document).ready(function () {
+    $('#example123').DataTable({
+        pageLength: 100,
+        lengthMenu: [ [100, 250, 500, -1], [100, 250, 500, "All"] ],
+        ordering: false
+    });
+});
+</script>  
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const checkAllButton = document.getElementById('check-all');
+    const approveSelectedButton = document.getElementById('forward-selected');
+    
+    function getAllCheckboxes() {
+        return Array.from(document.querySelectorAll('.survey-checkbox'));
+    }
 
-        checkAllButton.addEventListener('click', function () {
-            const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
-            checkboxes.forEach(checkbox => checkbox.checked = !allChecked);
-            checkAllButton.textContent = allChecked ? 'Check All' : 'Uncheck All';
-            toggleApproveButton();
-        });
+    function getEnabledCheckboxes() {
+        return getAllCheckboxes().filter(checkbox => !checkbox.disabled);
+    }
 
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', toggleApproveButton);
-        });
+    checkAllButton.addEventListener('click', function () {
+        const enabledCheckboxes = getEnabledCheckboxes();
+        const allChecked = enabledCheckboxes.every(checkbox => checkbox.checked);
 
-        function toggleApproveButton() {
-            const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
-            approveSelectedButton.style.display = anyChecked ? 'inline-block' : 'none';
+        enabledCheckboxes.forEach(checkbox => checkbox.checked = !allChecked);
+
+        checkAllButton.textContent = allChecked ? 'Check All' : 'Uncheck All';
+        toggleApproveButton();
+    });
+
+    getAllCheckboxes().forEach(checkbox => {
+        checkbox.addEventListener('change', toggleApproveButton);
+    });
+
+    function toggleApproveButton() {
+        const anyChecked = getEnabledCheckboxes().some(checkbox => checkbox.checked);
+        approveSelectedButton.style.display = anyChecked ? 'inline-block' : 'none';
+    }
+
+    approveSelectedButton.addEventListener('click', function () {
+        const selectedIrrigators = getEnabledCheckboxes()
+            .filter(checkbox => checkbox.checked)
+            .map(checkbox => checkbox.value);
+
+        if (selectedIrrigators.length === 0) {
+            Swal.fire('Error', 'No Survey selected!', 'error');
+            return;
         }
 
-        approveSelectedButton.addEventListener('click', function () {
-            const selectedIrrigators = Array.from(checkboxes)
-                .filter(checkbox => checkbox.checked)
-                .map(checkbox => checkbox.value);
-
-            if (selectedIrrigators.length === 0) {
-                Swal.fire('Error', 'No Survey selected!', 'error');
-                return;
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to forward the selected surveys!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Forward',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch("{{ route('survey_forward.multiple') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({ irrigator_ids: selectedIrrigators })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire('Success', data.message, 'success').then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire('Error', data.message, 'error');
+                    }
+                })
+                .catch(error => {
+                    Swal.fire('Error', 'Something went wrong!', 'error');
+                });
             }
-
-            Swal.fire({
-                title: 'Are you sure?',
-                text: 'You are about to forward the selected surveys!',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, Forward',
-                cancelButtonText: 'Cancel'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    fetch("{{ route('survey_forward.multiple') }}", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                        },
-                        body: JSON.stringify({ irrigator_ids: selectedIrrigators })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            Swal.fire('Success', data.message, 'success').then(() => {
-                                location.reload();
-                            });
-                        } else {
-                            Swal.fire('Error', data.message, 'error');
-                        }
-                    })
-                    .catch(error => {
-                        Swal.fire('Error', 'Something went wrong!', 'error');
-                    });
-                }
-            });
         });
     });
+});
+
 </script>
  @endsection

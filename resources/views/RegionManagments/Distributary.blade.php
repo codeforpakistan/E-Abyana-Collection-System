@@ -89,12 +89,12 @@
                             <!-- No. of Outlets (Left Side) -->
                             <div class="form-group col-4">
                                 <label class="form-label">No. of Outlets (Left Side)</label>
-                                <input class="form-control" type="number" name="no_outlet_ls" required>
+                                <input class="form-control" type="text" name="no_outlet_ls" required>
                             </div>
                             <!-- No. of Outlets (Right Side) -->
                             <div class="form-group col-4">
                                 <label class="form-label">No. of Outlets (Right Side)</label>
-                                <input class="form-control" type="number" name="no_outlet_rs" required>
+                                <input class="form-control" type="text" name="no_outlet_rs" required>
                             </div>
                         </div>
                     

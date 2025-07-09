@@ -162,6 +162,8 @@ Route::put('/canals/{id}/update', [CanalController::class, 'update'])->name('upd
     Route::post('LandRecord/add', [FarmerLandRecord::class, 'storeFarmer'])->name('LandRecord.add');
     
     Route::get('ListLandSurvey', [FarmerLandRecord::class, 'LandSurvey'])->name('ListLandSurvey');
+
+
     Route::get('ListBills', [FarmerLandRecord::class, 'ListBills']);
     Route::get('ListLandSurveyZilladar', [FarmerLandRecord::class, 'LandSurveyZilladar'])->name('ListLandSurveyZilladar');
     Route::get('ListLandSurveyCollector', [FarmerLandRecord::class, 'LandSurveyCollector'])->name('ListLandSurveyCollector');
@@ -232,7 +234,6 @@ Route::get('listforwardedcollertor', [FarmerLandRecord::class, 'forwardedcollect
 Route::get('/irrigators/search', [IrrigatorController::class, 'Search'])->name('irrigator.search');
 Route::post('Canalbranch/add', [CanalController::class, 'store'])->name('Canalbranch/add');
 Route::get('Canalbranch', [CanalController::class, 'Addbranch'])->name('Canalbranch/Addbranch');
-
 
 //************************ REPORTS ************************************************/
 Route::get('ReportViewNaksha5', [FarmerLandRecord::class, 'ReportViewNaksha5'])->name('ReportViewNaksha5');

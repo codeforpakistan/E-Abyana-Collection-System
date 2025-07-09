@@ -28,7 +28,7 @@ class VollageController extends Controller
                 'divisions.id as division_id',
                 'divisions.divsion_name as divsion_name'
             )
-            ->paginate(10); // Show 10 records per page
+            ->paginate(100); // Show 10 records per page
     
         // Fetch supporting data
         $Halqas = Halqa::all(); 

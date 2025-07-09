@@ -6,6 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Login - Irrigation Department</title>
     <link rel="icon" type="image/jpg" href="{{ asset('assets/img/avatar/logo.png') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         html, body {
             margin: 0;
@@ -68,11 +69,15 @@
                     <input type="email" id="email" name="email" class="form-control"
                         placeholder="Enter Email">
                 </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" id="password" name="password" class="form-control"
-                        placeholder="Enter Password">
-                </div>
+                <div class="mb-3 position-relative">
+    <label for="password" class="form-label">Password</label>
+    <div class="input-group">
+        <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password">
+        <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
+            <i class="fa fa-eye" id="eyeIcon"></i>
+        </span>
+    </div>
+</div>
                 <button type="submit" class="btn btn-primary w-100 fw-semibold">Login</button>
             </form>
         </div>
@@ -82,10 +87,21 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</body>
-</html>
-          
 
+<script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const passwordInput = document.querySelector('#password');
+    const eyeIcon = document.querySelector('#eyeIcon');
+
+    togglePassword.addEventListener('click', function () {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+
+        // Toggle icon class
+        eyeIcon.classList.toggle('fa-eye');
+        eyeIcon.classList.toggle('fa-eye-slash');
+    });
+</script>
             @if (session('error'))
                 <script>
                     Swal.fire({
@@ -97,3 +113,5 @@
                     });
                 </script>
             @endif
+</body>
+</html>

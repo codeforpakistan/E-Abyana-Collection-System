@@ -310,6 +310,9 @@
                                 </label>
                                 <input type="text" class="form-control" value="{{$survey->land_quality ?? N/A}}" placeholder="Land Quality/کیفیت" name="land_quality">
                             </div>
+                            <input type="number" name="patwari_user_id" value="{{ session('id') }}" style="display:none;">
+                                 <!-- if patwari_user_id column has 12 so its patwari user and 1 then admin user -->
+                                <!-- {{-- session('role_id') --}} -->
                         </div>
                         <div class="row">
                             <div class="col-lg-12">

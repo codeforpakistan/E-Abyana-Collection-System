@@ -3,7 +3,8 @@
 @section('content')
 <head>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+        <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.css" />
+    <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
 </head>
 @if(session('success'))
     @push('scripts')
@@ -108,7 +109,7 @@
                                 @csrf
                                 @method('DELETE')
                                 
-                                  <table id="example" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
+                                  <table id="example123" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
                                     <thead>
                                         <tr>
                                             <th><input type="checkbox" id="select-all"></th>
@@ -150,11 +151,15 @@
                     </div>
                 </div>
             </div>
-        </div
+        </div>
     </section>
 </div>
-
-
-              
+<script>
+$(document).ready(function() {
+ let table = new DataTable('#example123', {
+            pageLength: 100
+        }); 
+  });
+</script>            
  @endsection
  

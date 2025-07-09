@@ -1,9 +1,18 @@
 @extends('layout')
-
 @section('content')
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endpush
+<style>
+    #detailsModal table th {
+        width: 40%;
+        background-color: #f2f2f2;
+    }
+    #detailsModal table td {
+        background-color: #fff;
+    }
+</style>
+
 
 <div class="app-content">
 <div id="simpleModal" class="fixed inset-0 bg-gray-400 bg-opacity-50 flex z-50 items-center justify-center hidden">
@@ -72,11 +81,11 @@
                             </div>
                             <div class="form-group col-3">
                                 <label class="form-label">Name Outlet</label>
-                                <input class="form-control" type="text" name="outlet_name" required>
+                                <input class="form-control" type="text" value="RD-" name="outlet_name" required>
                             </div>
                             <div class="form-group col-3">
                                 <label class="form-label">	Total No CCA</label>
-                                <input class="form-control" type="number" name="total_no_cca" required>
+                                <input class="form-control" type="text" name="total_no_cca" required>
                             </div>
                         </div>
                         
@@ -89,13 +98,10 @@
                             
                             <div class="form-group col-lg-6">
                                 <label class="form-label">Total No. of Discharge (Cusec)</label>
-                                <input class="form-control" type="number" name="total_no_discharge_cusic" required>
+                                <input class="form-control" type="text" name="total_no_discharge_cusic" required>
                             </div>
                            
                         </div>
-                    
-                      
-                    
                         <!-- Submit Button -->
                         <div class="row">
                             <div class="col-lg-12">
@@ -121,67 +127,60 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="example" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
+                            <table id="example123" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
                                 <thead>
                                     <tr>
                                         <th>#</th>
                                         <th>OutLet Name</th>
                                         <th>Division Name</th>
                                         <th>Canal Name</th>
-                                        <th>Distributroy</th>
-                                        <th>Minor</th>
-                                        <th>Branch</th>
-                                        <th>Beneficiaries</th>
-                                        <th>Total No. of CCA</th>
-                                        <th>Total No. of Discharge (Cusec)</th>
+                                        <th>Details</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                  <tbody>
-                                    @if($canal->count())
-                                        @foreach($outlets as $canal)
-                                        <tr>
-                                            <td>{{ $canal->id }}</td>
-                                            <td>{{ $canal->outlet_name }}</td>
-                                            <td>{{ $canal->division->divsion_name ?? 'N/A' }}</td>
-                                            <td>
-                                                @if($canal->canal)
-                                                    {{ $canal->canal->canal_name }}
-                                                @else
-                                                    <strong style="color:red;">No Canal Found</strong>
-                                                @endif
-                                            </td>
-                                            <td>{{ $canal->minor->minor_name ?? 'N/A' }}</td>
-                                            <td>{{ $canal->distributsry->name ?? 'N/A' }}</td>
-                                            <td>{{ $canal->CanalBranch->branch_name ?? 'N/A' }}</td>
-                                            <td>{{ $canal->beneficiaries ?? 'N/A' }}</td>
-                                          
-                                            <td>{{ $canal->total_no_cca }}</td>
-                                           <td>{{ $canal->total_no_discharge_cusic }}</td>
+@foreach($outlets as $outlet)
+<tr>
+    <td>{{ $outlet->id }}</td>
+    <td>{{ $outlet->outlet_name }}</td>
+    <td>{{ $outlet->division->divsion_name ?? 'N/A' }}</td>
+    <td>{{ $outlet->canal->canal_name ?? 'N/A' }}</td>
 
-                                            <td>
-                                                <button class="btn btn-sm btn-danger">
-                                                    <i class="fa fa-trash"></i> Delete
-                                                </button>
-                                                <td>
-                                                    <a href="{{ url('/outlets/edit/' . $canal->id) }}" class="btn btn-sm btn-info">
-                                                        <i class="fa fa-edit"></i> Edit
-                                                    </a>
-                                                </td>
-                                                
-                                            </td>
-                                        </tr>
-                                        @endforeach 
-                                    @else
-                                        <tr>
-                                            <td colspan="4" class="text-center">No data available</td>
-                                        </tr>
-                                    @endif
-                                </tbody> 
+    <td>
+        <button class="btn btn-sm btn-success" onclick="showDetails({{ json_encode($outlet) }})">
+            <i class="fa fa-eye"></i> View
+        </button>
+    </td>
+
+    <td>
+        <a href="{{ url('/outlets/edit/' . $outlet->id) }}" class="btn btn-sm btn-info">
+            <i class="fa fa-edit"></i> Edit
+        </a>
+        <button class="btn btn-sm btn-danger">
+            <i class="fa fa-trash"></i> Delete
+        </button>
+    </td>
+</tr>
+@endforeach
+</tbody>
                             </table>
-                            <div class="mt-3">
-                                {{ $outlets->links() }}
-                            </div>
+                            
+<div id="detailsModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-[9999] hidden">
+    <div class="bg-white rounded-lg shadow-lg w-[60vw] max-h-[100vh] overflow-y-auto">
+ <div class="flex justify-between items-center bg-primary text-white p-1 rounded-t">
+            <h6 class="text-lg font-bold">Outlet Details</h6>
+            <button onclick="closeDetails()" class="text-white hover:text-gray-300 text-xl">&times;</button>
+        </div>
+        <div id="detailsContent">
+            <!-- Table is dynamically inserted here -->
+        </div>
+    </div>
+</div>
+
+                            
+                           <!-- <div class="mt-3">
+                               {{-- $outlets->links() --}} 
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -200,9 +199,51 @@ function closeModal() {
 </script>
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+function showDetails(data) {
+    let html = `
+        <table class="table table-bordered w-100">
+            <tbody style="font-size:12px;">
+                <tr><th>Outlet Name</th><td>${data.outlet_name}</td></tr>
+                <tr><th>Division</th><td>${data.division?.divsion_name ?? 'N/A'}</td></tr>
+                <tr><th>Canal</th><td>${data.canal?.canal_name ?? 'N/A'}</td></tr>
+                <tr><th>Distributary</th><td>${data.minor_name?.name ?? 'N/A'}</td></tr>
+                <tr><th>Minor</th><td>${data.minor?.distributsry ?? 'N/A'}</td></tr>
+                <tr><th>Branch</th><td>${data.CanalBranch?.branch_name ?? 'N/A'}</td></tr>
+                <tr><th>Beneficiaries</th><td>${data.beneficiaries}</td></tr>
+                <tr><th>CCA</th><td>${data.total_no_cca}</td></tr>
+                <tr><th>Discharge (Cusec)</th><td>${data.total_no_discharge_cusic}</td></tr>
+            </tbody>
+        </table>
+    `;
+    document.getElementById('detailsContent').innerHTML = html;
+    document.getElementById('detailsModal').classList.remove('hidden');
+}
+
+
+function closeDetails() {
+    document.getElementById('detailsModal').classList.add('hidden');
+}
+</script>
+
 
 <script>
 $(document).ready(function() {
+    
+        if (!$.fn.DataTable.isDataTable('#example123')) {
+        $('#example123').DataTable({
+            paging: true,
+            lengthChange: true,
+            searching: true,
+            ordering: true,
+            info: true,
+            autoWidth: false,
+            responsive: true,
+            pageLength: 100,
+            dom: 'lftip'
+        });
+    }
+
     // Load Canals when Division is selected
     $('#div_id').change(function() {
         var division_id = $(this).val();

@@ -85,11 +85,11 @@
                         <div class="row" style="margin-top:-10px;">
                             <div class="form-group col-lg-6">
                                 <label class="form-label">Total No. of CCA</label>
-                                <input class="form-control" type="number" name="total_no_cca" required>
+                                <input class="form-control" type="text" name="total_no_cca" required>
                             </div>
                             <div class="form-group col-lg-6">
                                 <label class="form-label">Total No. of Discharge (Cusec)</label>
-                                <input class="form-control" type="number" name="total_no_discharge_cusic" required>
+                                <input class="form-control" type="text" name="total_no_discharge_cusic" required>
                             </div>
                         </div>
                         <div class="row">

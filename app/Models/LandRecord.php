@@ -51,6 +51,7 @@ class LandRecord extends Model
         'is_billed',
         'review',
         'status',
+        'patwari_user_id',
         
     ];
 }

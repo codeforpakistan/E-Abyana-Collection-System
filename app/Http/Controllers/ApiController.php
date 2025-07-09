@@ -21,6 +21,7 @@ use App\Models\Cropprice;
 use App\Models\Distributary;
 use App\Models\Minorcanal;
 use App\Models\CanalBranch;
+use App\Models\PriceRevenue;
 
 use DB;
 use Illuminate\Support\Facades\Hash;
@@ -655,6 +656,7 @@ public function getIrrigators(Request $request)
         ->join('tehsils', 'halqa.tehsil_id', '=', 'tehsils.tehsil_id')
         ->join('districts', 'tehsils.district_id', '=', 'districts.id')
         ->join('divisions', 'districts.div_id', '=', 'divisions.id')
+        ->join('canals', 'irrigators.canal_id', '=', 'canals.id')
         ->select(
             'irrigators.id', 
             'irrigators.irrigator_name', 
@@ -669,7 +671,9 @@ public function getIrrigators(Request $request)
             'districts.id AS district_id',
             'districts.name AS district_name',
             'divisions.id AS div_id',
-            'divisions.divsion_name AS divsion_name'
+            'divisions.divsion_name AS divsion_name',
+            'irrigators.canal_id',
+            'canals.canal_name'
         );
 
     // Apply filter based on halqa_id
@@ -1243,7 +1247,6 @@ public function getSurveyBill($id)
     }
     public function apiGetMinors(Request $request)
     {
-        // Optional filtering
         $query = Minorcanal::query();
     
         if ($request->has('canal_id')) {
@@ -1262,6 +1265,85 @@ public function getSurveyBill($id)
             'data' => $minors
         ]);
     }
+
+public function apiGetDistributariesByCanal($canal_id)
+{
+    $distributaries = Minorcanal::where('canal_id', $canal_id)->get();
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Distributaries for the given Canal fetched successfully.',
+        'data' => $distributaries
+    ]);
+}
+
+public function apiGetMinorByDistry($minor_id)
+{
+    $minors = Distributary::where('minor_id', $minor_id)->get();
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Minors for the given Distry fetched successfully.',
+        'data' => $minors
+    ]);
+}
+
+public function apiGetBranchByMinor($distrib_id)
+{
+    $branches = CanalBranch::where('distrib_id', $distrib_id)->get();
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Branches for the given Minor fetched successfully.',
+        'data' => $branches
+    ]);
+}
+
+public function apiGetOutletByCanal($canal_id)
+{
+    $Outlets = Outlet::where('canal_id', $canal_id)->get();
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Outlet for the given Canal fetched successfully.',
+        'data' => $Outlets
+    ]);
+}
+
+public function apiGetOutletByDistry($minor_id)
+{
+    $Outlets = Outlet::where('minor_id', $minor_id)->get();
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Outlet for the given Distry fetched successfully.',
+        'data' => $Outlets
+    ]);
+}
+
+public function apiGetOutletByMinor($distrib_id)
+{
+    $Outlets = Outlet::where('distrib_id', $distrib_id)->get();
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Outlet for the given Minor fetched successfully.',
+        'data' => $Outlets
+    ]);
+}
+
+public function apiGetOutletByBranch($branch_id)
+{
+    $Outlets = Outlet::where('branch_id', $branch_id)->get();
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Outlet for the given Branch fetched successfully.',
+        'data' => $Outlets
+    ]);
+}
+
+
     
     public function apiGetDistributaries(Request $request)
     {
@@ -1340,6 +1422,28 @@ public function getSurveyBill($id)
             'data' => $canals
         ]);
     }
+public function apiGetcroplist()
+{
+    $croplist = Cropprice::all();
+
+    return response()->json([
+        'status' => true,
+        'message' => 'CropList fetched successfully.',
+        'data' => $croplist
+    ]);
+}
+
+
+public function apiGetrevenueModel()
+{
+    $PriceRevenue = PriceRevenue::all();
+
+    return response()->json([
+        'status' => true,
+        'message' => 'PriceRevenue fetched successfully.',
+        'data' => $PriceRevenue
+    ]);
+}
     
 }
 

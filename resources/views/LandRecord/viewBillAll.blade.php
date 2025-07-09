@@ -193,7 +193,7 @@
                                   </tr>
                                   <tr>
                                     <td style="width:360px;">Payable Amount (After Due Date)</td>
-                                    <td class="text-center" style="width:80px;"><strong>{{number_format($total_amount+440, 2)}}</strong></td>
+                                    <td class="text-center" style="width:80px;"><strong>{{number_format($total_amount*1.10, 2)}}</strong></td>
                                   </tr>
                                 </table>
                             </div>
@@ -265,7 +265,7 @@
                                 </tr>
                                 <tr>
                                   <td style="width:360px;">Payable Amount (After Due Date)</td>
-                                  <td style="width:80px;" class="text-center"><strong>{{number_format($total_amount+440, 2)}}</strong></td>
+                                  <td style="width:80px;" class="text-center"><strong>{{number_format($total_amount*1.10, 2)}}</strong></td>
                                 </tr>
                                 </table>
                                 </div>
