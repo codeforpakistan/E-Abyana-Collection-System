@@ -101,13 +101,13 @@
 }
 
 .sw-theme-circles > ul.step-anchor > li.active > a {
-    border-color: #4880FF;
+    border-color: #1B8D5F;
     color: #fff !important;
-    background: #4880FF;
+    background: #1B8D5F;
 }
 
 .sw-theme-circles > ul.step-anchor > li.active > a > small {
-    color: #4880FF;
+    color: #1B8D5F;
 }
 
 .sw-theme-circles > ul.step-anchor > li.done > a {

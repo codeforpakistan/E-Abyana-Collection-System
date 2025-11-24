@@ -150,7 +150,7 @@
 	border-radius: 4px; 
 }
 .daterangepicker td.active, .daterangepicker td.active:hover {
-	background-color: #4880FF;
+	background-color: #1B8D5F;
 	border-color: transparent;
 	color: #fff !important; 
 }
@@ -193,7 +193,7 @@
 	width: 100%; 
 }
 .daterangepicker .input-mini.active {
-	border: 1px solid #4880FF;
+	border: 1px solid #1B8D5F;
 	border-radius: 4px;
 }
 .daterangepicker .daterangepicker_input {
@@ -242,19 +242,19 @@
 	background-color: #f8f9fa;
 	border: 1px solid #f8f9fa;
 	border-radius: 4px;
-	color: #4880FF;
+	color: #1B8D5F;
 	padding: 3px 12px;
 	margin-bottom: 8px;
 	cursor: pointer; 
 }
 .ranges li:hover {
-	background-color: #4880FF;
-	border: 1px solid #4880FF;
+	background-color: #1B8D5F;
+	border: 1px solid #1B8D5F;
 	color: #fff; 
 }
 .ranges li.active {
-	background-color: #4880FF;
-	border: 1px solid #4880FF;
+	background-color: #1B8D5F;
+	border: 1px solid #1B8D5F;
 	color: #fff; 
 }
 

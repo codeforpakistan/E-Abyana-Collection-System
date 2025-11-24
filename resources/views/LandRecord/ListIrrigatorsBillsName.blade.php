@@ -2,9 +2,13 @@
 @section('content')
 <head>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <style>
-    #example th {
+    #example123 th{
         padding: 4px !important;
+        background-color: #5cd17b;
     }
     .button-container {
         display: flex;
@@ -48,22 +52,22 @@
                         <form method="POST" action="{{ route('survey_bill.view_multiple') }}">
                             @csrf
                            <div class="button-container">
-                                <button id="check-all" type="button" class="btn btn-warning btn-sm">
+                                <button id="check-all" type="button" class="btn btn-primary btn-sm">
                                     <strong>Check All</strong>
                                 </button>
-                                <button id="approve-selected" type="submit" class="btn btn-success btn-sm" style="display: none;">
+                                <button id="approve-selected" type="submit" class="btn btn-primary btn-sm" style="display: none;">
                                     <strong>Generate</strong>
                                 </button>
                             </div>
 
-                            <table id="example" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
+                            <table id="example123" style="font-size:14px;" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
                                 <thead class="table-primary text-center align-middle">
                                     <tr>
-                                        <th></th>
-                                        <th>ID</th>
-                                        <th>Irrigator Name</th>
-                                        <th>Khata #</th>
-                                        <th>Action</th>
+                                        <th class="text-center text-light"></th>
+                                        <th class="text-center text-light">ID</th>
+                                        <th class="text-center text-light">Irrigator Name</th>
+                                        <th class="text-center text-light">Khata #</th>
+                                        <th class="text-center text-light">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -98,9 +102,16 @@
     </div> 
 </section>  
 </div>    
-
+<script>
+$(document).ready(function () {
+    $('#example123').DataTable({
+        pageLength: 100,
+        lengthMenu: [ [100, 250, 500, -1], [100, 250, 500, "All"] ],
+        ordering: false
+    });
+});
+</script> 
 @endsection
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const checkAllButton = document.getElementById('check-all');

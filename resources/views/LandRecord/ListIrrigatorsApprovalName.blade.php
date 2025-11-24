@@ -2,9 +2,13 @@
 @section('content')
 <head>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <style>
-    #example th {
+    #example123 th{
         padding: 4px !important;
+        background-color: #5cd17b;
     }
     .button-container {
         display: flex;
@@ -46,19 +50,19 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <div class="button-container">
-                                <button id="check-all" class="btn btn-warning btn-sm"><strong>Check All</strong></button>
-                                <button id="approve-selected" class="btn btn-success btn-sm" style="display: none;"><i class="side-menu__icon fas fa-check"></i><strong>Approve All</strong></button>
+                                <button id="check-all" class="btn btn-primary btn-sm"><strong>Check All</strong></button>
+                                <button id="approve-selected" class="btn btn-primary btn-sm" style="display: none;"><i class="side-menu__icon fas fa-check"></i><strong>Approve All</strong></button>
                             </div>
-                            <table id="example" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
+                            <table id="example123" style="font-size:14px;" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
                                 <thead class="table-primary text-center align-middle">
                                     <tr>
-                                        <th></th>
-                                        <th>ID</th>
-                                        <th>Irrigator Name</th>
-                                        <th>Khata #</th>
-                                        <th>Village</th>
-                                        <th>Amount</th>
-                                        <th>Action</th>
+                                        <th class="text-center text-light"></th>
+                                        <th class="text-center text-light">ID</th>
+                                        <th class="text-center text-light">Irrigator Name</th>
+                                        <th class="text-center text-light">Khata #</th>
+                                        <th class="text-center text-light">Village</th>
+                                        <th class="text-center text-light">Amount</th>
+                                        <th class="text-center text-light">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -74,7 +78,7 @@
                                             <td class="text-center align-middle"><strong>{{ $irrigator_surveys->total_bill_amount }}</strong></td>
                                             <td class="text-center align-middle">
                                                 <a href="{{ url('survey_bill/approve/view') }}/{{ $irrigator_surveys->irrigator_id }}">
-                                                    <button class="btn btn-warning btn-sm" type="button" title="Bill">
+                                                    <button class="btn btn-primary btn-sm" type="button" title="Bill">
                                                         <i class="fas fa-eye"></i> View</button>
                                                 </a>
                                                 <a href="{{ url('survey_bill/approve') }}/{{ $irrigator_surveys->irrigator_id }}">
@@ -86,6 +90,20 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                {{-- Laravel paginator summary (correct numbers) --}}
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <div>
+                            @if ($grouped_survey_bill_eligible->total())
+                                Showing {{ $grouped_survey_bill_eligible->firstItem() }} to {{ $grouped_survey_bill_eligible->lastItem() }} of {{ $grouped_survey_bill_eligible->total() }} entries
+                            @else
+                                Showing 0 entries
+                            @endif
+                        </div>
+                    
+                        <div>
+                            {{ $grouped_survey_bill_eligible->links('pagination::bootstrap-4') }}
+                        </div>
+                    </div>
                         </div>
                     </div>
                 </div>
@@ -93,9 +111,16 @@
         </div>
     </section>
 </div>    
-
+<script>
+$(document).ready(function () {
+$('#example123').DataTable({
+    paging: false,   // keep DataTables paging off (server-side paging is used)
+    info: false,     // IMPORTANT: disable DataTables info text (the wrong "Showing 1 to 200 of 200")
+    ordering: false
+});
+});
+</script> 
 @endsection
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const checkAllButton = document.getElementById('check-all');

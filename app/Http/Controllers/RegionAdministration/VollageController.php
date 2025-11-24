@@ -66,4 +66,23 @@ public function StoreVillage(Request $request)
     // Redirect back with success message
     return redirect()->back()->with('success', 'Tehsil created successfully!');
 }
+public function editvillage($id)
+{
+    $village = village::findOrFail($id);
+    $halqas = Halqa::all();
+   return view('RegionManagments.edit-village', compact('village', 'halqas'));
+}
+public function updateVillage(Request $request, $id)
+{
+    $request->validate([
+        'halqa_id' => 'required',
+        'village_name' => 'required',
+    ]);
+    $village = Village::findOrFail($id);
+    $village->halqa_id = $request->halqa_id;
+    $village->village_name = $request->village_name;
+    $village->save();
+    return redirect()->route('AddVillage')->with('success', 'Village updated successfully.');
+}
+
 }

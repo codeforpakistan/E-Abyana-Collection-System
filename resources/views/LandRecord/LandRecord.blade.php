@@ -2,12 +2,50 @@
 @section('content')
 <head>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        .urdu-text {
-          font-family: 'Noto Nastaliq Urdu', serif;
-          /*direction: rtl; */
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<style>
+    .urdu-text {
+        font-family: 'Noto Nastaliq Urdu', serif;
+    }
+
+    /* Ensure Select2 fits the parent width */
+    .select2-container {
+        width: 100% !important;
+    }
+
+    /* Match Bootstrap form-control appearance */
+    .select2-container--default .select2-selection--single {
+        background-color: #ffffff;
+        border: 1px solid #ced4da;
+        height: 38px;
+        border-radius: 0.375rem;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        font-family: inherit;
+        color: #495057;
+    }
+
+    /* Proper position and size of dropdown arrow */
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 38px;
+        right: 6px;
+    }
+
+    /* Prevent dropdown from causing horizontal scrollbar */
+    .select2-container--default .select2-dropdown {
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+    }
+
+    /* Prevent entire page from scrolling horizontally */
+    body {
+        overflow-x: hidden;
+    }
+</style>
+
 </head>
 
 <div class="app-content">
@@ -141,7 +179,7 @@
                         <div class="row" id="canal_radiobutton_show">
                         <div class="col-12">
                                 <label class="form-label font-weight-bold urdu-text">Outlet/موگہ</label>
-                                <select name="canal_outlet_id" id="canal_outlet_id" class="form-control">
+                                <select name="canal_outlet_id" id="canal_outlet_id" class="form-control select2">
                                     <option value="">Choose Outlet</option>
                                 </select>
                             </div>
@@ -156,7 +194,7 @@
                             </div>
                         <div class="col-6">
                                 <label class="form-label font-weight-bold urdu-text">Outlet/موگہ</label>
-                                <select name="minor_outlet_id" id="minor_outlet_id" class="form-control">
+                                <select name="minor_outlet_id" id="minor_outlet_id" class="form-control select2">
                                     <option value="">Choose Outlet</option>
                                 </select>
                             </div>
@@ -183,22 +221,28 @@
                          </div>
                         <div class="col-4">
                                 <label class="form-label font-weight-bold urdu-text">Outlet/موگہ</label>
-                                <select name="distri_outlet_id" id="distri_outlet_id" class="form-control">
+                                <select name="distri_outlet_id" id="distri_outlet_id" class="form-control select2">
                                     <option value="">Choose Outlet</option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="row">
-                            @php
+                           <!-- @php
                             $currentYear = date('Y');
                             $sessionStart = $currentYear - 1;
                             $sessionEnd = $currentYear;
                             $sessionValue = $sessionStart . '-' . substr($sessionEnd, -2);
-                            @endphp
+                            @endphp -->
                         <div class="col-6">
                                 <label class="form-label font-weight-bold urdu-text">Session Year / فصلی سال</label>
-                                <input type="text" class="form-control" placeholder="Session Year" value="{{ $sessionValue }}" name="session_date">
+                                <!-- <input type="text" class="form-control" placeholder="Session Year" value="{{ $sessionValue }}" name="session_date"> -->
+                                  <select name="session_date" class="form-control" required>
+                                    <option value="2024-25">2024-25</option>
+                                    <option value="2025-26">2025-26</option>
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                </select>
                             </div>
                             <div class="col-6">
                                 <label class="form-label font-weight-bold urdu-text">Crop Session /فصل&nbsp;&nbsp;<span style="color:red;">*</span></label>
@@ -223,7 +267,7 @@
                                 <input type="text" class="form-control" placeholder="Khata Number" name="irrigator_khata_number" readonly value="{{$survey->irrigator_khata_number}}">
                             </div>
                             <div class="col-md-4 mb-2">
-                                <label class="form-label font-weight-bold urdu-text"><span>(3) </span>Name Irrigator / کاشتکار نام</label>
+                                <label class="form-label font-weight-bold urdu-text"><span>(3) </span>Name Irrigator / مالک کا نام</label>
                                 <input type="text" class="form-control" placeholder="Khasra Assessment Number/نمبر خسرہ بندوبست" readonly name="irrigator_name" value="{{$survey->irrigator_name}}">
                             </div>
                             <div class="col-md-4 mb-2" style="display:none;">
@@ -237,7 +281,7 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label font-weight-bold urdu-text"><span>(5) </span>Entry Date /تاریخ اندراج</label>
-                                <input type="date" class="form-control" required placeholder="Entry Date/تاریخ اندراج " name="registration_date">
+                                <input type="text" class="form-control" required placeholder="dd/mm/yyyy" name="registration_date" id="registration_date">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -249,24 +293,23 @@
                             </div>
                             <div class="col-md-6 mb-6">
                             <label class="form-label font-weight-bold urdu-text"><span>(7) </span> Sowing Date / تاریخ تخمریزی</label>
-                            <input type="date" class="form-control" required placeholder="Sowing Date / تاریخ تخمریزی" name="snowing_date">
+                            <input type="text" class="form-control" required placeholder="dd/mm/yyyy" name="snowing_date" id="snowing_date">
                         </div>
                         </div>
                         <h5 class="font-weight-bold text-primary mt-3 urdu-text">Crop Type Registration/انداراج جنس شدکار
                         </h5>
                         <div class="form-group row">
                             <div class="col-md-6 mb-3">
+                                <label class="form-label font-weight-bold urdu-text"><span>(9) </span>Land Assessment Kanal / اراضی تخمینہ  
+                            </label>
+                            <input type="text" class="form-control" placeholder="Kanal/کنال" value="0" name="land_assessment_kanal" onfocus="if(this.value=='0') this.value='';" onblur="if(this.value=='') this.value='0';">
+                            </div>
+                            <div class="col-md-6 mb-3">
                                 <label class="form-label font-weight-bold urdu-text"><span>(8) </span>Land Assessment Marla /اراضی تخمینہ  
                                 </label>
                                 <input type="text" class="form-control" placeholder="Marla/مرلہ  
-                                " name="land_assessment_marla" value="0">
+                                " name="land_assessment_marla" value="0" onfocus="if(this.value=='0') this.value='';" onblur="if(this.value=='') this.value='0';">
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold urdu-text"><span>(9) </span>Land Assessment Kanal / اراضی تخمینہ  
-                            </label>
-                            <input type="text" class="form-control" placeholder="Kanal/کنال" value="0" name="land_assessment_kanal">
-                            </div>
-   
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12 mb-12">
@@ -279,23 +322,28 @@
                                 </select>
                             </div>
                         </div>
-                        <h5 class="font-weight-bold text-primary mt-3 urdu-text">Final Measurement /پیمائش پختہ
+                        <h5 class="font-weight-bold text-primary mt-3 urdu-text d-flex justify-content-between align-items-center">
+                            Final Measurement / پیمائش پختہ
+                            <span style="border:1px solid green; padding:6px 6px; border-radius:5px;">
+                                Saalam (سالم)
+                                <input type="checkbox" name="saalam_checkbox" id="saalam_checkbox" class="ml-2">
+                            </span>
                         </h5>
                         <div class="form-group row">
                             <div class="col-md-4 mb-3">
                                 <label class="form-label font-weight-bold urdu-text"><span>(11) </span>Date/تاریخ</label>
-                                <input type="date" class="form-control"  placeholder="Date/تاریخ" name="date">
+                                <input type="text" class="form-control"  placeholder="dd/mm/yyyy" name="date" id="date">
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label class="form-label font-weight-bold urdu-text"><span>(12) </span>Length/طول (Karam/کرم)
+                                <label class="form-label font-weight-bold urdu-text"><span>(12) </span>Length/طول (kaan/کان)
  
                                 </label>
                                 <input type="text" class="form-control" value="0" placeholder="Length/طول  
-                                " name="length" id="length">
+                                " name="length" id="length" onfocus="if(this.value=='0') this.value='';" onblur="if(this.value=='') this.value='0';">
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label class="form-label font-weight-bold urdu-text"><span>(13) </span>Width/عرض (Karam/کرم)</label>
-                                <input type="text" class="form-control" placeholder="Width/عرض" value="0" name="width" id="width">
+                                <label class="form-label font-weight-bold urdu-text"><span>(13) </span>Width/عرض (kaan/کان)</label>
+                                <input type="text" class="form-control" placeholder="Width/عرض" value="0" name="width" id="width" onfocus="if(this.value=='0') this.value='';" onblur="if(this.value=='') this.value='0';">
                             </div>
                         </div>
                         <h5 class="font-weight-bold text-primary mt-3 urdu-text">Area/رقبہ
@@ -303,14 +351,14 @@
                         </h5>
                         <div class="form-group row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold urdu-text"><span>(14) </span>Marla/مرلہ    
-                                </label>
-                                <input type="text" class="form-control" value="0" placeholder="Marla/مرلہ" name="area_marla" id="marla" readonly>
-                            </div>
-                            <div class="col-md-6 mb-3">
                                 <label class="form-label font-weight-bold urdu-text"><span>(15) </span> Kanal/کنال  
                             </label>
                             <input type="text" class="form-control" placeholder="Kanal/کنال" value="0" name="area_kanal" id="kanal" readonly>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label font-weight-bold urdu-text"><span>(14) </span>Marla/مرلہ    
+                                </label>
+                                <input type="text" class="form-control" value="0" placeholder="Marla/مرلہ" name="area_marla" id="marla" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -337,17 +385,17 @@
                         </h5>
                         <div class="form-group row">
                             <div class="col-md-6 mb-3">
+                                <label class="form-label font-weight-bold urdu-text"><span>(19) </span>Kanal/کنال  
+                            </label>
+                            <input type="text" class="form-control" placeholder="Kanal/کنال  " value="0" name="replanting_kanal">
+                            </div>
+                            <div class="col-md-6 mb-3">
                                 <label class="form-label font-weight-bold urdu-text"><span>(18) </span>Marla/مرلہ    
                                 </label>
                                 <input type="text" class="form-control" value="0" placeholder="Marla/مرلہ    
 
                                 " name="replanting_marla">
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold urdu-text"><span>(19) </span>Kanal/کنال  
-                            </label>
-                            <input type="text" class="form-control" placeholder="Kanal/کنال  " value="0" name="replanting_kanal">
-                            </div>
+                            </div> 
                         </div>
                         <h5 class="font-weight-bold text-primary mt-3 urdu-text">Double Crop Land /اراضی دو فصلی</h5>
                         <div class="form-group row">
@@ -365,20 +413,25 @@
                                 </select>
                             </div>
                             <div class="col-md-3 mb-3">
+                                <label class="form-label font-weight-bold urdu-text"><span>(23) </span>Kanal/کنال  
+                            </label>
+                            <input type="text" class="form-control" value="0" placeholder="Kanal/کنال  "name="double_crop_kanal">
+                            </div>
+                            <div class="col-md-3 mb-3">
                                 <label class="form-label font-weight-bold urdu-text"><span>(22) </span>Marla/مرلہ    
                                 </label>
                                 <input type="text" class="form-control" value="0" placeholder="Marla/مرلہ    
 
                                 "name="double_crop_marla">
                             </div>
-                            <div class="col-md-3 mb-3">
-                                <label class="form-label font-weight-bold urdu-text"><span>(23) </span>Kanal/کنال  
-                            </label>
-                            <input type="text" class="form-control" value="0" placeholder="Kanal/کنال  "name="double_crop_kanal">
-                            </div>
                         </div>
                         <h5 class="font-weight-bold text-primary mt-3 urdu-text">Irrigated Area / مجرائی رقبہ</h5>
                         <div class="form-group row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label font-weight-bold urdu-text"><span>(25) </span>Kanal/کنال  
+                            </label>
+                            <input type="text" class="form-control" value="0" placeholder="Kanal/کنال" name="irrigated_area_kanal">
+                            </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label font-weight-bold urdu-text"><span>(24) </span>Marla/مرلہ    
                                 </label>
@@ -386,24 +439,19 @@
 
                                 "name="irrigated_area_marla">
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold urdu-text"><span>(25) </span>Kanal/کنال  
-                            </label>
-                            <input type="text" class="form-control" value="0" placeholder="Kanal/کنال" name="irrigated_area_kanal">
-                            </div>
                         </div>
                         <div class="form-group row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label font-weight-bold urdu-text"><span>(27) </span>Identifiable Area Kanal/قابل شناخت رقبہ کنال
+                            </label>
+                            <input type="text" class="form-control" value="0" placeholder="Kanal/کنال" name="identifable_area_kanal">
+                            </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label font-weight-bold urdu-text"><span>(26) </span>Identifiable Area Marla/قابل شناخت رقبہ مرلہ
                                 </label>
                                 <input type="text" class="form-control" value="0" placeholder="Marla/مرلہ    
 
                                 "name="identifable_area_marla">
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label font-weight-bold urdu-text"><span>(27) </span>Identifiable Area Kanal/قابل شناخت رقبہ کنال
-                            </label>
-                            <input type="text" class="form-control" value="0" placeholder="Kanal/کنال" name="identifable_area_kanal">
                             </div>
                         </div>
 
@@ -439,6 +487,18 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+    flatpickr("#registration_date", {
+        dateFormat: "d/m/Y",
+        allowInput: true
+    });
+    flatpickr("#snowing_date", {
+        dateFormat: "d/m/Y",
+        allowInput: true
+    });
+        flatpickr("#date", {
+        dateFormat: "d/m/Y",
+        allowInput: true
+    });
         const canalTypeRadios = document.getElementsByName('canalType');
         const canalDropdown = document.getElementById('canal_id');
         const branchCheckbox = document.getElementById('branchCheckbox');
@@ -800,18 +860,49 @@ branchCheckbox.addEventListener('change', function () {
             }
         });
 
-        // Area calculation based on length/width
-        function calculateArea() {
-            const length = parseFloat(document.getElementById('length').value) || 0;
-            const width = parseFloat(document.getElementById('width').value) || 0;
-            const total = (length * width) / 20;
-            const kanal = Math.floor(total);
-            const marla = Math.round((total - kanal) * 20);
-            document.getElementById('kanal').value = kanal;
-            document.getElementById('marla').value = marla;
-        }
+    const lengthInput = document.getElementById('length');
+    const widthInput = document.getElementById('width');
+    const kanalInput = document.getElementById('kanal');
+    const marlaInput = document.getElementById('marla');
+    const saalamCheckbox = document.getElementById('saalam_checkbox');
 
-        document.getElementById('length').addEventListener('input', calculateArea);
-        document.getElementById('width').addEventListener('input', calculateArea);
+    function calculateArea() {
+        if (saalamCheckbox.checked) return;
+        const length = parseFloat(lengthInput.value) || 0;
+        const width = parseFloat(widthInput.value) || 0;
+        const total = (length * width) / 20;
+        const kanal = Math.floor(total);
+        const marla = Math.round((total - kanal) * 20);
+        kanalInput.value = kanal;
+        marlaInput.value = marla;
+    }
+
+    saalamCheckbox.addEventListener('change', function () {
+        if (this.checked) {
+            lengthInput.value = 0;
+            widthInput.value = 0;
+            lengthInput.readOnly = true;
+            widthInput.readOnly = true;
+            kanalInput.readOnly = false;
+            marlaInput.readOnly = false;
+        } else {
+            lengthInput.readOnly = false;
+            widthInput.readOnly = false;
+            kanalInput.readOnly = true;
+            marlaInput.readOnly = true;
+            calculateArea();
+        }
     });
+
+    lengthInput.addEventListener('input', calculateArea);
+    widthInput.addEventListener('input', calculateArea);
+    });
+</script>
+<script>
+$(document).ready(function() {
+    $('.select2').select2({
+        allowClear: true,
+        width: '100%'
+    });
+});
 </script>

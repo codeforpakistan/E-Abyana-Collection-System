@@ -65,7 +65,7 @@ $(function(e) {
 			}
 		},
 		series: chartdata,
-		color: ['#f47b25', '#b03cd5', '#4880FF', ]
+		color: ['#f47b25', '#b03cd5', '#1B8D5F', ]
 	};
 	barChart.setOption(option);
 
@@ -83,7 +83,7 @@ $(function(e) {
 		smooth: true,
 		size: 10,
 		data: [8, 12, 28, 10, 10, 12],
-		color: ['#4880FF']
+		color: ['#1B8D5F']
 	}];
 	var chart2 = document.getElementById('echart2');
 	var barChart2 = echarts.init(chart2);
@@ -123,7 +123,7 @@ $(function(e) {
 			}
 		},
 		series: chartdata2,
-		color: ['#f47b25', '#b03cd5', '#4880FF', ]
+		color: ['#f47b25', '#b03cd5', '#1B8D5F', ]
 	};
 	barChart2.setOption(option2);
 
@@ -167,7 +167,7 @@ $(function(e) {
 			}
 		},
 		series: chartdata,
-		color: ['#f47b25', '#b03cd5', '#4880FF', ]
+		color: ['#f47b25', '#b03cd5', '#1B8D5F', ]
 	};
 	var chart3 = document.getElementById('echart3');
 	var barChart3 = echarts.init(chart3);
@@ -213,7 +213,7 @@ $(function(e) {
 			}
 		},
 		series: chartdata2,
-		color: ['#4880FF', '#f47b25', '#b03cd5']
+		color: ['#1B8D5F', '#f47b25', '#b03cd5']
 	};
 	var chart4 = document.getElementById('echart4');
 	var barChart4 = echarts.init(chart4);
@@ -268,7 +268,7 @@ $(function(e) {
 			}
 		},
 		series: chartdata3,
-		color: ['#4880FF', '#f47b25']
+		color: ['#1B8D5F', '#f47b25']
 	};
 	var chart5 = document.getElementById('echart5');
 	var barChart5 = echarts.init(chart5);
@@ -314,7 +314,7 @@ $(function(e) {
 			}
 		},
 		series: chartdata3,
-		color: ['#4880FF', '#f47b25']
+		color: ['#1B8D5F', '#f47b25']
 	};
 	var chart6 = document.getElementById('echart6');
 	var barChart6 = echarts.init(chart6);
@@ -363,7 +363,7 @@ $(function(e) {
 			}
 		},
 		series: chartdata4,
-		color: ['#4880FF']
+		color: ['#1B8D5F']
 	};
 	var chart7 = document.getElementById('echart7');
 	var lineChart = echarts.init(chart7);

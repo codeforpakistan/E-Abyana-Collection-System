@@ -11,10 +11,9 @@ class DivsionController extends Controller
 {
     public function AddDivsion(Request $request)
     {
-        $perPage = 5;
+        $perPage =100;
         $query = Divsion::orderBy('id', 'asc');
-    
-        // 🔍 Apply Search Filter
+
         if ($request->has('search') && !empty($request->search)) {
             $query->where('divsion_name', 'like', '%' . $request->search . '%');
         }
@@ -58,7 +57,24 @@ public function destroy($id)
     $Divsion = Divsion::findOrFail($id);
     $Divsion->delete();
 
-    return redirect()->back()->with('success', 'User deleted successfully.');
+    return redirect()->back()->with('success', 'Division deleted successfully.');
+}
+
+public function edit_division($id)
+{
+    $division = Divsion::findOrFail($id);
+
+    return view('RegionManagments.edit-division', compact('division'));
+}
+
+public function update_division(Request $request, $id)
+{
+    $division = Divsion::findOrFail($id);
+    $division->divsion_name = $request->divsion_name;
+    $division->save();
+    //return redirect()->back()->with('success', 'Division updated successfully');
+    return redirect()->route('AddDivsion')->with('success', 'Division updated successfully');
+
 }
 
 }

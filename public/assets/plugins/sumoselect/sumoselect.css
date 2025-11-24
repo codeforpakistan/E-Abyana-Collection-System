@@ -78,7 +78,7 @@
 	width: 100%;
 }
 .SumoSelect:focus>.CaptionCont{
-	border-color: #4880FF;
+	border-color: #1B8D5F;
 }
 .SumoSelect>.CaptionCont {
 	position: relative;
@@ -334,7 +334,7 @@
 	padding-bottom: 43px;
 }
 .SumoSelect>.optWrapper.multiple>.options li.opt.selected span i, .SumoSelect .select-all.selected>span i, .SumoSelect .select-all.partial>span i {
-	background-color: #4880FF;
+	background-color: #1B8D5F;
 	box-shadow: none;
 	border-color: transparent;
 	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAGCAYAAAD+Bd/7AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNXG14zYAAABMSURBVAiZfc0xDkAAFIPhd2Kr1WRjcAExuIgzGUTIZ/AkImjSofnbNBAfHvzAHjOKNzhiQ42IDFXCDivaaxAJd0xYshT3QqBxqnxeHvhunpu23xnmAAAAAElFTkSuQmCC');

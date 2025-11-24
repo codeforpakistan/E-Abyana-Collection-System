@@ -91,10 +91,10 @@
                         
                         <div class="row" style="margin-top:-10px;">
                             <!-- Name -->
-                            <div class="form-group col-lg-6">
+                           <!-- <div class="form-group col-lg-6">
                                 <label class="form-label">Beneficiaries</label>
                                 <input class="form-control" type="text" name="beneficiaries" required>
-                            </div>
+                            </div> -->
                             
                             <div class="form-group col-lg-6">
                                 <label class="form-label">Total No. of Discharge (Cusec)</label>

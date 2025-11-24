@@ -76,7 +76,7 @@ $(function() {
 				name: 'Aug'
 			}]
 		}, ],
-		color: ['#ff473d', '#004ced', '#01b8ff ', '#ffb209', '#b03cd5', ' #22e840', '#f47b25', '#4880FF']
+		color: ['#ff473d', '#004ced', '#01b8ff ', '#ffb209', '#b03cd5', ' #22e840', '#f47b25', '#1B8D5F']
 	};
 	myChart2.setOption(option2);
 	/*---echart (#echart2) closed---*/
@@ -168,7 +168,7 @@ $(function() {
 			areaStyle: {
 				color: new echarts.graphic.LinearGradient([{
 					offset: 0,
-					color: '#4880FF'
+					color: '#1B8D5F'
 				}, {
 					offset: 1,
 					color: '#3edbe8'
@@ -176,7 +176,7 @@ $(function() {
 			},
 			data: data
 		}],
-		color: ['#4880FF']
+		color: ['#1B8D5F']
 	};
 	myChart6.setOption(option1);
     /*---echart (#echart6) closed---*/
@@ -265,10 +265,10 @@ $(function() {
 					barBorderRadius: 5,
 					color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
 						offset: 0,
-						color: '#4880FF'
+						color: '#1B8D5F'
 					}, {
 						offset: 1,
-						color: '#4880FF'
+						color: '#1B8D5F'
 					}])
 				}
 			},
@@ -338,7 +338,7 @@ $(function() {
 		xkey: 'x',
 		ykeys: ['y', 'z'],
 		labels: ['Likes', 'Shares'],
-		barColors: ['#4880FF', '#f47b25']
+		barColors: ['#1B8D5F', '#f47b25']
 	});
 	/*---Morris (#graph5) closed---*/
 
@@ -352,7 +352,7 @@ $(function() {
 			],
 			labelColor:"#555858",
 			  colors: [
-			'#4880FF', '#f47b25', '#fdb901'
+			'#1B8D5F', '#f47b25', '#fdb901'
 	    ],
 		  formatter: function (x) { return x + "%"}
 		}).on('click', function(i, row){

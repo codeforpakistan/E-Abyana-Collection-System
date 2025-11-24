@@ -3,6 +3,8 @@
 @section('content')
 <head>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <style>
         .urdu-text {
           font-family: 'Noto Nastaliq Urdu', serif;
@@ -166,7 +168,7 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label font-weight-bold urdu-text"><span>(5) </span>Entry Date /تاریخ اندراج</label>
-                                <input type="date" class="form-control" value="{{$survey->registration_date}}" placeholder="Entry Date/تاریخ اندراج " name="registration_date">
+                                <input type="text" class="form-control" value="{{$survey->registration_date}}" placeholder="dd/mm/yyyy" name="registration_date" id="registration_date">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -178,7 +180,7 @@
                             </div>
                             <div class="col-md-6 mb-6">
                             <label class="form-label font-weight-bold urdu-text"><span>(7) </span> Sowing Date / تاریخ تخمریزی</label>
-                            <input type="date" class="form-control" value="{{$survey->snowing_date}}" placeholder="Sowing Date / تاریخ تخمریزی" name="snowing_date">
+                            <input type="text" class="form-control" value="{{$survey->snowing_date}}" placeholder="dd/mm/yyyy" name="snowing_date" id="snowing_date">
                         </div>
                         </div>
                         <h5 class="font-weight-bold text-primary mt-3 urdu-text">Crop Type Registration/انداراج جنس شدکار
@@ -213,7 +215,7 @@
                         <div class="form-group row">
                             <div class="col-md-4 mb-3">
                                 <label class="form-label font-weight-bold urdu-text"><span>(11) </span>Date/تاریخ</label>
-                                <input type="date" class="form-control"  value="{{$survey->date}}" placeholder="Date/تاریخ" name="date">
+                                <input type="text" class="form-control"  value="{{$survey->date}}" placeholder="Date/تاریخ" name="date" id="date">
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label class="form-label font-weight-bold urdu-text"><span>(12) </span>Length/طول (Karam/کرم)</label>
@@ -230,12 +232,12 @@
                             <div class="col-md-6 mb-3">
                                 <label class="form-label font-weight-bold urdu-text"><span>(14) </span>Marla/مرلہ    
                                 </label>
-                                <input type="text" class="form-control" value="{{$survey->area_marla ?? 0}}" placeholder="Marla/مرلہ" name="area_marla" id="marla" readonly>
+                                <input type="text" class="form-control" value="{{$survey->area_marla ?? 0}}" placeholder="Marla/مرلہ" name="area_marla" id="marla">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label font-weight-bold urdu-text"><span>(15) </span> Kanal/کنال  
                             </label>
-                            <input type="text" class="form-control" placeholder="Kanal/کنال" value="{{$survey->area_kanal ?? 0}}" name="area_kanal" id="kanal" readonly>
+                            <input type="text" class="form-control" placeholder="Kanal/کنال" value="{{$survey->area_kanal ?? 0}}" name="area_kanal" id="kanal">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -333,6 +335,18 @@
 </script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+    flatpickr("#registration_date", {
+        dateFormat: "d/m/Y",
+        allowInput: true
+    });
+    flatpickr("#snowing_date", {
+        dateFormat: "d/m/Y",
+        allowInput: true
+    });
+        flatpickr("#date", {
+        dateFormat: "d/m/Y",
+        allowInput: true
+    });
         const previousCropSelect = document.getElementById('previous_crop');
         const finalCropSelect = document.getElementById('finalcrop_id');
         const priceInput = document.getElementById('crop_price');

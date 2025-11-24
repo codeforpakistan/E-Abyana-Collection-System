@@ -105,16 +105,14 @@
 </div> 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <form action="{{ route('tehsil.delete') }}" method="POST">
-                                @csrf
-                                @method('DELETE')
+
                                 
                                   <table id="example123" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
                                     <thead>
                                         <tr>
-                                            <th><input type="checkbox" id="select-all"></th>
+                                            
                                             <th>#</th>
-                                            <th>Village Name/حلقہ</th>
+                                            <th>Village Name</th>
                                             <th>Tehsil Name</th>
                                             <th>District Name</th>
                                             <th>Division</th>
@@ -126,7 +124,7 @@
                                     <tbody>
                                         @foreach($villages as $village)
                                         <tr>
-                                            <td><input type="checkbox" name="ids[]" value=""></td>
+                                           
                                             <td>{{ $village->village_id }}</td>
                                             <td>{{ $village->village_name }}</td>
                                             <td>{{ $village->tehsil_name }}</td>
@@ -135,9 +133,14 @@
                                             
                                      
                                             <td>
-                                                <button class="btn btn-sm btn-primary" type="submit">
+                                               <!-- <button class="btn btn-sm btn-primary" type="submit">
                                                     <i class="fa fa-trash"></i> Delete
+                                                </button> -->
+                                                <a href="{{ route('village.edit', $village->village_id) }}">
+                                                <button class="btn btn-sm btn-primary">
+                                                    <i class="fa fa-pencil"></i> Edit
                                                 </button>
+                                                </a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -146,7 +149,6 @@
                                 <div class="mt-3">
                                     {{ $villages->links() }}
                                 </div>
-                            </fle>
                         </div>
                     </div>
                 </div>

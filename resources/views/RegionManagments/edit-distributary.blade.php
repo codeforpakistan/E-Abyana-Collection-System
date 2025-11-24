@@ -43,21 +43,12 @@
 
 
             <section class="section">
-                <!--page-header open-->
-                <div class="page-header pt-0">
-                    <h4 class="page-title font-weight-bold">Edit Canal</h4>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#" class="text-light-color"></a></li>
-                        <li class="breadcrumb-item active" aria-current="page"></li>
-                    </ol>
-                </div>
-                <!--page-header closed-->
         
                 <!--row open-->
-                <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12" style="margin-top: 80px;">
+                <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
                     <div class="card shadow-sm">
                         <div class="card-header bg-primary text-white">
-                            <h4 class="font-weight-bold">Edit Distributary</h4> <!-- Updated to reflect Employer data -->
+                            <h4 class="font-weight-bold">Edit Minor</h4> <!-- Updated to reflect Employer data -->
                         </div>
                         <div class="card-body">
                             <form class="form-horizontal" action="{{ route('updatedist', $distributary->id) }}" method="POST">
@@ -95,9 +86,9 @@
                                 <div class="row">
                                     <!-- Minor Canal Selection -->
                                     <div class="form-group col-lg-6">
-                                        <label class="form-label font-weight-bold" for="minor_id">Select Minor Canal / چھوٹا نہر</label>
+                                        <label class="form-label font-weight-bold" for="minor_id">Select Distry</label>
                                         <select name="minor_id" id="minor_id" class="form-control" required>
-                                            <option value="">Choose Minor Canal</option>
+                                            <option value="">Choose Distry</option>
                                             @foreach($minors as $minor)
                                                 <option value="{{ $minor->id }}" {{ $distributary->minor_id == $minor->id ? 'selected' : '' }}>
                                                     {{ $minor->minor_name }}
@@ -108,51 +99,28 @@
                             
                                     <!-- Name of Distributary -->
                                     <div class="form-group col-lg-6">
-                                        <label class="form-label font-weight-bold">Name Distributary</label>
-                                        <input class="form-control form-control-lg" type="text" name="name" value="{{ $distributary->name }}" required>
+                                        <label class="form-label font-weight-bold">Minor Name</label>
+                                        <input class="form-control" type="text" name="name" value="{{ $distributary->name }}" required>
                                     </div>
                                 </div>
                             
                                 <div class="row">
-                                    <!-- No. of Outlets -->
-                                    <div class="form-group col-lg-6">
-                                        <label class="form-label font-weight-bold">No. of Outlets</label>
-                                        <input class="form-control form-control-lg" type="number" name="no_outlet" value="{{ $distributary->no_outlet }}" required>
-                                    </div>
-                            
-                                    <!-- No. of Outlets (Left Side) -->
-                                    <div class="form-group col-lg-6">
-                                        <label class="form-label font-weight-bold">No. of Outlets (Left Side)</label>
-                                        <input class="form-control form-control-lg" type="number" name="no_outlet_ls" value="{{ $distributary->no_outlet_ls }}" required>
-                                    </div>
-                                </div>
-                            
-                                <div class="row">
-                                    <!-- No. of Outlets (Right Side) -->
-                                    <div class="form-group col-lg-6">
-                                        <label class="form-label font-weight-bold">No. of Outlets (Right Side)</label>
-                                        <input class="form-control form-control-lg" type="number" name="no_outlet_rs" value="{{ $distributary->no_outlet_rs }}" required>
-                                    </div>
-                            
                                     <!-- Total No. of CCA -->
                                     <div class="form-group col-lg-6">
                                         <label class="form-label font-weight-bold">Total No. of CCA</label>
-                                        <input class="form-control form-control-lg" type="number" name="total_no_cca" value="{{ $distributary->total_no_cca }}" required>
+                                        <input class="form-control" type="number" name="total_no_cca" value="{{ $distributary->total_no_cca }}" required>
                                     </div>
-                                </div>
-                            
-                                <div class="row">
                                     <!-- Total No. of Discharge (Cusec) -->
                                     <div class="form-group col-lg-6">
                                         <label class="form-label font-weight-bold">Total No. of Discharge (Cusec)</label>
-                                        <input class="form-control form-control-lg" type="number" name="total_no_discharge_cusic" value="{{ $distributary->total_no_discharge_cusic }}" required>
+                                        <input class="form-control" type="number" name="total_no_discharge_cusic" value="{{ $distributary->total_no_discharge_cusic }}" required>
                                     </div>
                                 </div>
                             
                                 <!-- Submit Button -->
                                 <div class="row">
                                     <div class="col-lg-12 text-center mt-3">
-                                        <button type="submit" class="btn btn-primary btn-lg">Update</button>
+                                        <button type="submit" class="btn btn-primary">Update</button>
                                     </div>
                                 </div>
                             </form>

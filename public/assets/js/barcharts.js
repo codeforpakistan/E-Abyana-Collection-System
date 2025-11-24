@@ -14,8 +14,8 @@
 					data: [45, 58, 62, 89, 63, 46, 63]
 				}, {
 					label: 'Dataset 2',
-					backgroundColor: "#4880FF",
-					borderColor: "#4880FF",
+					backgroundColor: "#1B8D5F",
+					borderColor: "#1B8D5F",
 					data: [25, 55, 64, 9, 30, 96, 33]
 				}, {
 					label: 'Dataset 3',
@@ -78,8 +78,8 @@
 					data: [45, 58, 62, 89]
 				}, {
 					label: 'Dataset 2',
-					backgroundColor: "#4880FF",
-					borderColor: '#4880FF',
+					backgroundColor: "#1B8D5F",
+					borderColor: '#1B8D5F',
 					data: [25, 55, 64, 9]
 				}, {
 					label: 'Dataset 3',
@@ -146,8 +146,8 @@
 					data: [14, 18, 25, 36, 54, 42, 52]
 				}, {
 					label: 'Dataset 2',
-					backgroundColor: "#4880FF",
-					borderColor: "#4880FF",
+					backgroundColor: "#1B8D5F",
+					borderColor: "#1B8D5F",
 					yAxisID: "y-axis-2",
 					data: [2, 18, 25, 38, 48, 24, 24]
 				}, {
@@ -222,8 +222,8 @@
 					data: [14, 25, 32, 36, 14, 12, 48]
 				}, {
 					label: 'Dataset 2',
-					backgroundColor: "#4880FF",
-					borderColor: "#4880FF",
+					backgroundColor: "#1B8D5F",
+					borderColor: "#1B8D5F",
 					data: [14, 25, 32, 36, 14, 12, 48]
 				}, {
 					label: 'Dataset 3',

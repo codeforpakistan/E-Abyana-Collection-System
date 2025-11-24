@@ -8,26 +8,26 @@
         </div>
 
         <div class="card-body">
-            <form action="" method="POST">
-                @csrf
-                @method('PUT')
+<form action="{{ route('halqa.update', $halqa->id) }}" method="POST">
+    @csrf
+    @method('PUT')
 
                 <div class="row mb-3">
-                    <!-- District -->
+                    <!-- District 
                     <div class="col-md-6">
                         <label for="district_id" class="form-label font-weight-bold">Select District / ضلع</label>
                         <select name="district_id" id="district_id" class="form-control" onchange="get_tehsils(this)" required>
                             <option value="">Choose District</option>
-                            @foreach($districts as $district)
+                          {{-- @foreach($districts as $district)
                                 <option value="{{ $district->id }}" {{ $district->id == $halqa->district_id ? 'selected' : '' }}>
                                     {{ $district->name }}
                                 </option>
-                            @endforeach
+                            @endforeach --}}
                         </select>
-                    </div>
+                    </div> -->
 
                     <!-- Tehsil -->
-                    <div class="col-md-6">
+                    <div class="col-6">
                         <label for="tehsil_id" class="form-label font-weight-bold">Select Tehsil / تحصیل</label>
                         <select name="tehsil_id" id="tehsil_id" class="form-control" required>
                             <option value="">Choose Tehsil</option>
@@ -38,20 +38,17 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
-
-                <!-- Halqa Name -->
-                <div class="mb-3">
+                    <!-- Halqa Name -->
+                <div class="col-6">
                     <label for="halqa_name" class="form-label font-weight-bold">Halqa Name / حلقہ</label>
                     <input type="text" name="halqa_name" id="halqa_name" class="form-control" value="{{ $halqa->halqa_name }}" required>
                 </div>
-
+                </div>
                 <!-- Submit -->
                 <div class="text-end">
                     <button type="submit" class="btn btn-success">
                         <i class="fa fa-save"></i> Update Halqa
                     </button>
-                    <a href="" class="btn btn-secondary ms-2">Cancel</a>
                 </div>
             </form>
         </div>

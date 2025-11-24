@@ -95,7 +95,6 @@
                             <label class="form-label font-weight-bold" for="halqa_id">Select Halqa /حلقہ</label>
                             <select name="halqa_id" id="halqa_id" class="form-control" readonly
                                 onchange="get_village(this)">
-                                <option value="">Choose Halqa /حلقہ</option>
                                 @foreach ($Halqas as $Halqa)
                                     <option value="{{ $Halqa->id }}">{{ $Halqa->halqa_name }}</option>
                                 @endforeach
@@ -104,19 +103,18 @@
                         <div class="form-group col-6">
                             <label class="form-label font-weight-bold" for="village_id">Select
                                 Village / گاؤں</label>
-                            <select name="village_id" id="village_id" class="form-control" required onchange="get_canals(this)">
-                                <option value="">Choose Village / گاؤں</option>
+                            <select name="village_id" id="village_id" class="form-control" required>
+                               <!-- <option value="">Choose Village / گاؤں</option>
                                 @foreach ($villages as $village)
                                     <option value="{{ $village->village_id }}">{{ $village->village_name }}
                                     </option>
-                                @endforeach
+                                @endforeach  -->
                             </select>
                         </div>
                      
                             <div class="form-group col-lg-6">
                                 <label class="form-label font-weight-bold" for="div_id">Select Division / ڈویژن</label>
                                 <select name="div_id" id="div_id" class="form-control" required>
-                                    <option value="">Choose Division / ڈویژن</option>
                                     @foreach($divsions as $divsion)
                                         <option value="{{ $divsion->id }}">{{ $divsion->divsion_name }}</option>
                                     @endforeach
@@ -125,10 +123,10 @@
                             <div class="form-group col-lg-6">
                                 <label  class="form-label font-weight-bold" for="canal_id">Select Canal / نہر</label>
                                 <select name="canal_id" id="canal_id" class="form-control " >
-                                    <option value="">Choose Canal / نہر</option>
+                                  <!--  <option value="">Choose Canal / نہر</option>
                                     @foreach($canals as $canal)
                                         <option value="{{ $canal->id }}">{{ $canal->canal_name }}</option>
-                                    @endforeach
+                                    @endforeach -->
                                 </select>
                                 
                 
@@ -155,17 +153,23 @@
                         placeholder=" Enter Khata Number"
                             required>
                     </div>
+                     <div class="form-group col-lg-6">
+                        <label class="form-label font-weight-bold">Arrears</label>
+                        <input class="form-control" type="number" id="previous_arrears"
+                        placeholder="Enter Previous Arrears" step="0.01" name="previous_arrears">
+                    </div>
+
                     <div class="form-group col-lg-6">
                         <label class="form-label font-weight-bold">Mobile Number</label>
                         <input class="form-control" type="text" id="irrigator_mobile_number"
                         placeholder=" Enter Mobile Number"
-                            name="irrigator_mobile_number">
+                            name="irrigator_mobile_number" maxlength="13">
                     </div>
-                    <div class="form-group col-lg-12">
+                    <div class="form-group col-lg-6">
                         <label class="form-label font-weight-bold">Irrigator CNIC</label>
                         <input class="form-control" type="text" id="cnic"
                         placeholder=" Enter CNIC Number"
-                            name="cnic">
+                            name="cnic" maxlength="15">
                     </div>
                 </div>
         </div>
@@ -176,7 +180,40 @@
        </form>
       </div>
     </div>
-  </div> 
+  </div>
+<script>
+const mobileInput = document.getElementById('irrigator_mobile_number');
+mobileInput.value = '+92';
+mobileInput.addEventListener('keydown', function (e) {
+    if (mobileInput.selectionStart < 3 && (e.key === 'Backspace' || e.key === 'Delete')) {
+        e.preventDefault();
+    }
+});
+mobileInput.addEventListener('input', function (e) {
+    let value = e.target.value;
+    if (!value.startsWith('+92')) {
+        value = '+92' + value.replace(/\D/g, '');
+    }
+    value = '+92' + value.substring(3).replace(/\D/g, '');
+    value = value.replace(/^(\+920)/, '+92');
+    if (value.length > 13) {
+        value = value.substring(0, 13);
+    }
+
+    e.target.value = value;
+});
+</script>
+<script>
+document.getElementById('cnic').addEventListener('input', function (e) {
+    let value = e.target.value.replace(/\D/g, '');
+    value = value.substring(0, 13);
+    if (value.length > 5 && value.length <= 12)
+        value = value.replace(/(\d{5})(\d{0,7})/, '$1-$2');
+    else if (value.length > 12)
+        value = value.replace(/(\d{5})(\d{7})(\d{0,1})/, '$1-$2-$3');
+    e.target.value = value;
+});
+</script>
     <div class="app-content">   
 
         <section class="section">
@@ -320,6 +357,7 @@
         }
     }
 </script>
+
 <script>
     function get_village(element) {
         var halqaId = element.value; // Get the selected Halqa ID
@@ -455,6 +493,13 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+
+    $('#exampleModal').on('shown.bs.modal', function () {
+        const halqaSelect = document.getElementById('halqa_id');
+        get_village(halqaSelect);  // Auto trigger
+        $('#div_id').trigger('change');
+    });
+
         $('#exampleModal').on('hidden.bs.modal', function () {
             console.log('Modal hidden event triggered');
             window.location.href = '{{ route("AddIrragtor") }}';
@@ -509,7 +554,7 @@
 
             if (div_id) {
                 $.ajax({
-                    url: "{{ route('getCanals') }}", // API route to fetch canals
+                    url: "{{ route('getCanals') }}",
                     type: "GET",
                     data: { div_id: div_id },
                     success: function(data) {

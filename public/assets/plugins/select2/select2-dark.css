@@ -256,7 +256,7 @@
 	margin-right: auto;
 }
 .select2-container--default.select2-container--focus .select2-selection--multiple {
-	border: 1px solid #4880FF;
+	border: 1px solid #1B8D5F;
 	outline: 0;
 }
 .select2-container--default.select2-container--disabled .select2-selection--multiple {
@@ -329,7 +329,7 @@
 	padding-left: 6em;
 }
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
-	background-color: #4880FF;
+	background-color: #1B8D5F;
 	color: #fff;
 }
 .select2-container--default .select2-results__group {
@@ -349,7 +349,7 @@
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFFFF', endColorstr='#FFEEEEEE', GradientType=0);
 }
 .select2-container--classic .select2-selection--single:focus {
-	border: 1px solid #4880FF;
+	border: 1px solid #1B8D5F;
 }
 .select2-container--classic .select2-selection--single .select2-selection__rendered {
 	color: #936c81;
@@ -406,7 +406,7 @@
 	right: auto;
 }
 .select2-container--classic.select2-container--open .select2-selection--single {
-	border: 1px solid #4880FF;
+	border: 1px solid #1B8D5F;
 }
 .select2-container--classic.select2-container--open .select2-selection--single .select2-selection__arrow {
 	background: transparent;
@@ -444,7 +444,7 @@
 	outline: 0;
 }
 .select2-container--classic .select2-selection--multiple:focus {
-	border: 1px solid #4880FF;
+	border: 1px solid #1B8D5F;
 }
 .select2-container--classic .select2-selection--multiple .select2-selection__rendered {
 	list-style: none;
@@ -486,7 +486,7 @@
 	margin-right: auto;
 }
 .select2-container--classic.select2-container--open .select2-selection--multiple {
-	border: 1px solid #4880FF;
+	border: 1px solid #1B8D5F;
 }
 .select2-container--classic.select2-container--open.select2-container--above .select2-selection--multiple {
 	border-top: none;
@@ -527,7 +527,7 @@
 	color: grey;
 }
 .select2-container--classic .select2-results__option--highlighted[aria-selected] {
-	background-color: #4880FF;
+	background-color: #1B8D5F;
 	color: #2d2d42;
 }
 .select2-container--classic .select2-results__group {
@@ -536,5 +536,5 @@
 	padding: 6px;
 }
 .select2-container--classic.select2-container--open .select2-dropdown {
-	border-color: #4880FF;
+	border-color: #1B8D5F;
 }

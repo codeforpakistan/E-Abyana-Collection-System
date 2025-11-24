@@ -50,7 +50,7 @@
     transform-origin: 50% 48%;
     border-radius: 0%;
     animation: drift 3000ms infinite linear;
-    background: linear-gradient(to bottom right, #4880FF, #4880FF);
+    background: linear-gradient(to bottom right, #1B8D5F, #1b8d5f);
     z-index: 1;
     max-width: 1170px;
     margin: 0 auto;

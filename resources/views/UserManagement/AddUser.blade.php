@@ -5,22 +5,77 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/selectra@1.0.12/dist/selectra.min.css">
+
+<style>
+/* Force Selectra to use Bootstrap full-width form-control style */
+#halqa_zilladar .selectra-container {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 1 auto !important;
+    box-sizing: border-box !important;
+    font-size: 1rem;
+}
+
+/* Selection box (the visible input) */
+#halqa_zilladar .selectra-selection {
+    width: 100% !important;
+    display: block !important;
+    border: 1px solid #ced4da !important;
+    border-radius: .25rem !important;
+    padding: .375rem .75rem !important;
+    min-height: calc(1.5em + .75rem + 2px) !important;
+    line-height: 1.5 !important;
+    background-color: #fff !important;
+    font-size: 1rem !important;
+}
+
+/* Selected tags */
+#halqa_zilladar .selectra-tags {
+    width: 100% !important;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .25rem;
+}
+#halqa_zilladar .selectra-tag {
+    background-color: #007bff !important;
+    color: #fff !important;
+    border-radius: .2rem !important;
+    padding: 0 .4rem !important;
+    font-size: .875rem !important;
+}
+
+/* Dropdown search box */
+.selectra-dropdown .selectra-search {
+    width: 100% !important;
+    border: 1px solid #ced4da !important;
+    border-radius: .25rem !important;
+    padding: .375rem .75rem !important;
+    box-sizing: border-box !important;
+}
+
+/* Dropdown panel width aligned with input */
+.selectra-dropdown {
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+</style>
+
+
 
 </head>
-
-<div class="app-content">
-<div id="simpleModal" class="fixed inset-0 top-[12%] bg-gray-400 bg-opacity-50 flex z-[9999] items-center justify-center hidden">
-  
-    <div class="card shadow-sm w-[60vw]">
-        <div class="card-header bg-primary flex justify-between text-white">
-            <h4 class="font-weight-bold">Add User</h4> <!-- Updated to reflect Employer data -->
-
-            <button onclick="closeModal()" type="button"
-                class="bg-white text-black h-[30px] w-[30px] rounded-[50px]" data-target="#exampleModalCenter">
-                <i class="fa fa-close"></i></button>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header bg-primary">
+          <h5 class="modal-title text-white" id="exampleModalLabel">Add Irrigator</h5>
+          <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-        <div class="card-body">
-            <form class="form-horizontal" action="{{ url('AddUser/add') }}" method="POST">
+        <div class="modal-body">
+                    <form class="form-horizontal" action="{{ url('AddUser/add') }}" method="POST">
                 @csrf
                 
                 <!-- First Row (Name and Email) -->
@@ -60,7 +115,7 @@
                 <div class="form-group row">
                     <div id="div_division" class="col-lg-6">
                         <label class="form-label font-weight-bold">Select Division / ڈویژن</label>
-                        <select name="div_id" id="div_id" class="form-control">
+                        <select name="div_id" id="div_id" class="form-control" onchange="get_districts(this)">
                             <option value="">Choose Division</option>
                             @foreach($divsions as $division)
                                 <option value="{{ $division->id }}">{{ $division->divsion_name }}</option>
@@ -70,51 +125,52 @@
                     
                     <div id="div_district" class="col-lg-6">
                         <label class="form-label font-weight-bold">Select District / ضلع</label>
-                        <select name="district_id" id="district_id" class="form-control">
-                            <option value="">Choose District</option>
-                            @foreach($districts as $district)
-                                <option value="{{ $district->id }}">{{ $district->name }}</option>
-                            @endforeach
+                        <select name="district_id" id="district_id" class="form-control" onchange="get_tehsils(this)">
                         </select>
                     </div>
                 </div>
-            
-                <!-- Fourth Row (Tehsil and Halqa) -->
                 <div class="form-group row">
                     <div id="div_tehsil" class="col-lg-6">
                         <label class="form-label font-weight-bold">Select Tehsil / تحصیل</label>
-                        <select name="tehsil_id" id="tehsil_id" class="form-control">
-                            <option value="">Choose Tehsil</option>
-                            @foreach($tehsils as $tehsil)
-                                <option value="{{$tehsil->tehsil_id}}">{{$tehsil->tehsil_name}}</option>
-                            @endforeach
+                        <select name="tehsil_id" id="tehsil_id" class="form-control" onchange="get_halqa(this)">
                         </select>
                     </div>
                     
                     <div id="div_halqa" class="col-lg-6">
                         <label class="form-label font-weight-bold">Select Halqa / حلقہ</label>
                         <select name="halqa_id" id="halqa_id" class="form-control">
-                            <option value="">Choose Halqa</option>
-                            @foreach($Halqas as $Halqa)
-                                <option value="{{ $Halqa->id }}">{{ $Halqa->halqa_name }}</option>
-                            @endforeach
                         </select>
                     </div>
                 </div>
-            
-                <!-- Submit Button -->
                 <div class="form-group row">
-                    <div class="col-lg-12">
-                        <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-                    </div>
+                <div id="halqa_zilladar" class="col-12">
+                        <label class="form-label font-weight-bold">Select Halqa / حلقہ</label>
+                       <select id="halqa_multiple" 
+                       class="form-control halqa_multiple" 
+                       name="halqa_multiple[]" 
+                       multiple="multiple">
+                           <option value="">Choose Halqa's</option>
+                           @foreach($Halqas as $Halqa)
+                               <option value="{{ $Halqa->id }}">{{ $Halqa->halqa_name }}</option>
+                           @endforeach
+                       </select>
                 </div>
-            </form>
-            
-            
-      
+                </div>
+          
         </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+       </form>
+      </div>
     </div>
-</div>  
+  </div>
+
+<!--*********************************************************************** -->
+<div class="app-content">
+
+
 <section class="section">
 
     @if(session('success'))
@@ -145,9 +201,9 @@
                 <div class="card export-database">
  <div class="card-header d-flex justify-content-between">
     <h4><strong>System Users List</strong></h4>
-    <button onclick="openModal()" type="button" class="btn btn-primary" data-toggle="modal"
-        data-target="#exampleModalCenter">
-        <i class="fa fa-plus"></i> </button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        <i class="fa fa-plus"></i>
+    </button>
 </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -231,113 +287,49 @@
         </script>
     @endif
 
-    <script>
-        function confirmDelete(districtId) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "This district cannot be deleted because it is associated with other records, such as tehsils. Please remove any linked records before attempting to delete this district.!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    deleteDistrict(districtId);
-                }
-            });
-        }
-    
-        function deleteDistrict(districtId) {
-            fetch(`{{ route('district.delete') }}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({
-                    ids: { [districtId]: districtId }
-                })
-            }).then(response => {
-                if (!response.ok) {
-                    throw response;
-                }
-                return response.json();
-            }).then(data => {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Deleted!',
-                    text: 'The district has been deleted.',
-                    confirmButtonText: 'OK'
-                }).then(() => {
-                    location.reload();
-                });
-            }).catch(error => {
-                error.json().then(errorData => {
-                    if (errorData.errorCode === 1451) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Deletion Error',
-                            text: errorData.error,
-                            confirmButtonText: 'OK'
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'An unexpected error occurred. Please try again.',
-                            confirmButtonText: 'OK'
-                        });
-                    }
-                });
-            });
-        }
-//******************************************************************************* */
+<script>
 function get_districts(element) {
-        var divisionId = element.value; // Get the selected value
+    var divisionId = element.value;
+    var districtSelect = document.getElementById('district_id');
 
-        if (divisionId) {
-            // Make an AJAX request to fetch districts based on the selected division
-            $.ajax({
-                url: '/get-districts/' + divisionId,
-                type: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    // Clear the district dropdown and add a placeholder option
-                    $('#district_id').empty();
-                    $('#district_id').append('<option value="">Choose District</option>');
+    // Reset district dropdown
+    districtSelect.innerHTML = '<option value="">Choose District</option>';
 
-                    // Populate the district dropdown with the data received
-                    $.each(data, function (key, value) {
-                        $('#district_id').append('<option value="' + value.id + '">' + value.name + '</option>');
+    if (divisionId) {
+        fetch('/get-districts/' + divisionId)
+            .then(response => response.json())
+            .then(data => {
+                if (data.length > 0) {
+                    data.forEach(function(district) {
+                        var option = document.createElement('option');
+                        option.value = district.id;
+                        option.textContent = district.name;
+                        districtSelect.appendChild(option);
                     });
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error fetching districts:', error);
+                } else {
+                    districtSelect.innerHTML = '<option value="">No Districts Found</option>';
                 }
+            })
+            .catch(error => {
+                console.error('Error fetching districts:', error);
+                districtSelect.innerHTML = '<option value="">Error loading districts</option>';
             });
-        } else {
-            // Reset the district dropdown if no division is selected
-            $('#district_id').empty();
-            $('#district_id').append('<option value="">Choose District</option>');
-        }
+    } else {
+        districtSelect.innerHTML = '<option value="">No Data Available</option>';
     }
+}
 function get_tehsils(element) {
     var districtId = element.value; 
     console.log(districtId);
 
     if (districtId) {
-        // Make an AJAX request to fetch tehsils based on the selected district
         $.ajax({
             url: '/get-tehsils/' + districtId,
             type: 'GET',
             dataType: 'json',
             success: function (data) {
-                // Clear the Tehsil dropdown and add a placeholder option
                 $('#tehsil_id').empty();
                 $('#tehsil_id').append('<option value="">Choose Tehsil</option>');
-
-                // Populate the Tehsil dropdown with the received data
                 $.each(data, function (key, value) {
                     $('#tehsil_id').append('<option value="' + value.tehsil_id + '">' + value.tehsil_name + '</option>');
                 });
@@ -347,70 +339,96 @@ function get_tehsils(element) {
             }
         });
     } else {
-        // Reset the Tehsil dropdown if no district is selected
         $('#tehsil_id').empty();
-        $('#tehsil_id').append('<option value="">Choose Tehsil</option>');
+        $('#tehsil_id').append('<option value="">No Data Available</option>');
     }
 }
 function get_halqa(element) {
-        var tehsilId = element.value; 
-        console.log(tehsilId);
+    const tehsilId = element.value;
 
-        if (tehsilId) {
-          
-            $.ajax({
-                url: '/halqa_for_users/' + tehsilId,
-                type: 'GET',
-                dataType: 'json',
-                success: function (data) {
-    
-                    $('#halqa_id').empty();
-                    $('#halqa_id').append('<option value="">Choose Halqa</option>');
+    const halqaSelect = document.getElementById("halqa_id");
+    const halqaMultiple = document.getElementById("halqa_multiple");
 
-                  
-                    $.each(data, function (key, value) {
-                        $('#halqa_id').append('<option value="' + value.id + '">' + value.halqa_name + '</option>');
-                    });
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error fetching tehsils:', error);
-                }
+    // Clear both selects
+    halqaSelect.innerHTML = "";
+    halqaMultiple.innerHTML = "";
+
+    if (tehsilId) {
+        fetch(`/halqa_for_users/${tehsilId}`)
+            .then(response => response.json())
+            .then(data => {
+                // Add default options
+                halqaSelect.innerHTML = '<option value="">Choose Halqa</option>';
+                halqaMultiple.innerHTML = '<option value="">Choose Halqa\'s</option>';
+
+                // Append new options
+                data.forEach(halqa => {
+                    const opt1 = document.createElement("option");
+                    opt1.value = halqa.id;
+                    opt1.textContent = halqa.halqa_name;
+                    halqaSelect.appendChild(opt1);
+
+                    const opt2 = document.createElement("option");
+                    opt2.value = halqa.id;
+                    opt2.textContent = halqa.halqa_name;
+                    halqaMultiple.appendChild(opt2);
+                });
+            })
+            .catch(error => {
+                console.error("Error fetching halqas:", error);
+                halqaSelect.innerHTML = '<option value="">Error loading data</option>';
+                halqaMultiple.innerHTML = '<option value="">Error loading data</option>';
             });
-        } else {
-           
-            $('#halqa_id').empty();
-            $('#halqa_id').append('<option value="">Choose Halqa</option>');
-        }
+    } else {
+        halqaSelect.innerHTML = '<option value="">No Data Available</option>';
+        halqaMultiple.innerHTML = '<option value="">No Data Available</option>';
     }
+}
     </script>
-
-    
-    <script> <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-</script>
 </div>             
  @endsection
- 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 <script>
     function toggleDropdowns() {
-        var role = $("#role_id option:selected").text().toLowerCase(); // Get selected role name
-
-        // Hide all dropdowns initially
-        $("#div_division, #div_district, #div_tehsil, #div_halqa").hide();
-
+        var role = $("#role_id option:selected").text().toLowerCase();
+        $("#div_division, #div_district, #div_tehsil, #div_halqa,#halqa_zilladar").hide();
         if (role === "patwari") {
-           
-            $("#div_district, #div_tehsil, #div_halqa").show();
-        } else if (role === "zilladar" || role === "deputy collector") {
-            $("#div_district").show();
+            $("#div_division,#div_district, #div_tehsil, #div_halqa").show();
+        } else if (role === "zilladar") {
+            $("#div_division,#div_district,#div_tehsil,#halqa_zilladar").show();
+        }else if(role === "deputy collector"){
+            $("#div_division,#div_district").show();
         } else if (role === "xen") {
-            
             $("#div_division").show();
         }
-    
     }
 
-  
-    $(document).ready(function () {
-        toggleDropdowns();
-    });
+$(document).ready(function () {
+    toggleDropdowns();
+});
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/selectra@1.0.12/dist/selectra.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const halqaSelect = new Selectra('#halqa_multiple', {
+        search: true,
+        langInputPlaceholder: 'Search Halqas...',
+        langEmptyValuePlaceholder: "Choose Halqa's"
+    });
+    halqaSelect.init();
+
+    // Ensure full width when modal opens
+    $('#exampleModal').on('shown.bs.modal', function () {
+        $('#halqa_zilladar .selectra-container, #halqa_zilladar .selectra-selection').css({
+            "width": "100%",
+            "max-width": "100%"
+        });
+        $('.selectra-dropdown').css({
+            "width": "100%"
+        });
+    });
+});
+</script>
+

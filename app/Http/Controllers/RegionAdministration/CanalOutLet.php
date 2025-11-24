@@ -32,14 +32,12 @@ public function AddOutlet(){
 
 public function storeOutlet(Request $request)
 {
-
-
     // Create a new Canal Outlet record
     Outlet::create([
         'outlet_name' => $request->outlet_name,
         'total_no_cca' => $request->total_no_cca,
         'total_no_discharge_cusic' => $request->total_no_discharge_cusic,
-        'beneficiaries' => $request->beneficiaries,
+       // 'beneficiaries' => $request->beneficiaries,
         'canal_id' => $request->canal_id,
         'minor_id' => $request->minor_id,
         'distrib_id' => $request->distrib_id,
@@ -86,7 +84,7 @@ public function update(Request $request, $id)
         'distrib_id' => 'required',
         'outlet_name' => 'required|string|max:255',
         'total_no_cca' => 'required|numeric',
-        'beneficiaries' => 'required|string|max:255',
+       // 'beneficiaries' => 'required|string|max:255',
         'total_no_discharge_cusic' => 'required|numeric',
     ]);
 
@@ -102,6 +100,4 @@ public function getBranches($minor_id)
     $branches = CanalBranch::where('distrib_id', $minor_id)->get();
     return response()->json($branches);
 }
-
-
 }

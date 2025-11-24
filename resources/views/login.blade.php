@@ -14,54 +14,49 @@
             height: 100%;
             overflow: hidden;
         }
-        body {
-            background-image: url("{{ asset('assets/login-bg.jpg') }}");
-            background-size: cover; 
-            background-repeat: no-repeat;
-            background-position: center; 
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+body {
+    background: linear-gradient(
+                  rgba(0, 64, 32, 0.7), 
+                  rgba(0, 100, 0, 0.7)
+              ),
+              url("{{ asset('assets/login-bg_old.jpg') }}");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
         .form-section {
             flex-grow: 1;
             display: flex;
             justify-content: center;
             align-items: center;
         }
+        @media (max-width: 576px) {
+
+}
     </style>
 </head>
 <body>
 <!-- Logo Row -->
-<div class="container-fluid mt-3">
-    <div class="row align-items-center">
-        <!-- Left: E-Abyana Text and Logo -->
-        <div class="col-md-4 d-flex align-items-center">
-            <img src="{{ asset('assets/img/avatar/logo.png') }}" alt="Left Logo" style="width:80px;">
-            <div class="ms-2" style="margin-top:-5px;">
-                <span class="fw-bold text-success" style="font-size:20px;">E-Abyana</span><br>
-                <span class="fw-bold text-primary" style="font-size:14px;">Irrigation Department KPK</span>
-            </div>
-        </div>
+<div class="container-fluid mt-4">
+    <div class="row justify-content-center text-center">
+        <div class="col-12">
+            <!-- Centered Logo -->
+            <img src="{{ asset('assets/img/avatar/KP-Logo_white.png') }}" alt="KP Logo" class="img-fluid" style="width: 90px;">
 
-        <!-- Center: New Logo -->
-        <div class="col-md-4 text-center">
-            <img src="{{ asset('assets/img/avatar/cfp_logo.png') }}" alt="Center Logo" style="width:160px;">
-        </div>
-
-        <!-- Right: KP Logo -->
-        <div class="col-md-4 text-end">
-            <img src="{{ asset('assets/img/avatar/KP-Logo.png') }}" alt="Right Logo" style="width:80px;">
+            <h4 class="mt-2 fw-bold text-white">E-Abyana</h4>
+            <p class="text-light mb-0" style="margin-top:-5px;">Water Billing & Collection System</p>
         </div>
     </div>
 </div>
-
 
 <!-- Login Form -->
 <div class="form-section">
     <div class="col-md-4 col-sm-8">
         <div class="login-form p-4 border shadow bg-white" style="border-radius: 15px">
-            <h2 class="h4 fw-bold text-center text-primary mb-4">Login</h2>
+            <h2 class="h4 fw-bold text-center text-success mb-4">Login</h2>
             <form action="{{ url('signin') }}" method="post">
                 @csrf
                 <div class="mb-3">
@@ -78,7 +73,7 @@
         </span>
     </div>
 </div>
-                <button type="submit" class="btn btn-primary w-100 fw-semibold">Login</button>
+              <button type="submit" class="btn btn-success w-100 fw-semibold">Login</button>
             </form>
         </div>
     </div>

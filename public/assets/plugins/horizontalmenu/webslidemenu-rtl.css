@@ -198,13 +198,13 @@
 	width: 230px;
 }
 .horizontalMenu>.horizontalMenu-list>li.rightmenu>.topmenusearch input:focus~.btnstyle .fa {
-	color: #4880FF;
+	color: #1B8D5F;
 	opacity: 1;
 }
 .horizontalMenu>.horizontalMenu-list>li.rightmenu>.topmenusearch input:focus~.searchicon {
 	opacity: 1;
 	z-index: 3;
-	color: #4880FF;
+	color: #1B8D5F;
 }
 .horizontalMenu>.horizontalMenu-list>li.rightmenu>.topmenusearch .btnstyle {
 	top: 0px;

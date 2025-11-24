@@ -45,7 +45,7 @@
 }
 
 .radio-group .radio-normal:hover + label:before {
-    border-color: #4880FF;
+    border-color: #1B8D5F;
 }
 
 .radio-group .radio-normal:checked + label:before {
@@ -54,9 +54,9 @@
     color: #fff;
     font-size: 14px;
     line-height: 15px;
-    border-color: #4880FF;
+    border-color: #1B8D5F;
     text-align: center;
-    background: #4880FF;
+    background: #1B8D5F;
 }
 
 .radio-group .radio-normal:disabled + label:before {
@@ -87,7 +87,7 @@
 }
 
 .checkbox-group .checkbox-normal:hover + label:before {
-    border-color: #4880FF;
+    border-color: #1B8D5F;
 }
 
 .checkbox-group .checkbox-normal:checked + label:before {
@@ -97,9 +97,9 @@
     font-size: 12px;
     text-align: center;
     line-height: 13px;
-    border-color: #4880FF;
+    border-color: #1B8D5F;
     font-weight: bold;
-    background: #4880FF;
+    background: #1B8D5F;
 }
 
 .checkbox-group .checkbox-normal:disabled + label:before {
@@ -116,9 +116,9 @@
     text-align: center;
     line-height: 15px;
     color: #fff;
-    border-color: #4880FF;
+    border-color: #1B8D5F;
     font-weight: bold;
-    background: #4880FF;
+    background: #1B8D5F;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
@@ -200,8 +200,8 @@
 }
 
 .tab-active {
-    color: #4880FF;
-    border-bottom: 2px solid #4880FF;
+    color: #1B8D5F;
+    border-bottom: 2px solid #1B8D5F;
 }
 
 .transfer-double-content-param {
@@ -342,7 +342,7 @@
     line-height: 24px;
     border-top: 1px solid rgba(255,255,255,0.1);
     padding-left: 18px;
-    color: #4880FF;
+    color: #1B8D5F;
     padding-top: 1px;
 }
 .transfer-double-list-footer span {
@@ -379,7 +379,7 @@
 
 .btn-arrow-active {
     color: #fff;
-    background: #4880FF;
+    background: #1B8D5F;
 }
 
 /*
@@ -441,7 +441,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 }
 
 .transfer-double-list-main::-webkit-scrollbar-thumb:hover {
-    background: #4880FF;
+    background: #1B8D5F;
 }
 
 .transfer-double-list-main::-webkit-scrollbar-corner {
@@ -464,7 +464,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 }
 
 .transfer-double-selected-list-main::-webkit-scrollbar-thumb:hover {
-    background: #4880FF;
+    background: #1B8D5F;
 }
 
 .transfer-double-selected-list-main::-webkit-scrollbar-corner {

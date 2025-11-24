@@ -112,13 +112,13 @@
 }
 
 .sw-theme-arrows > ul.step-anchor > li.active > a {
-    border-color: #4880FF!important;
+    border-color: #1B8D5F!important;
     color: #fff !important;
-    background: #4880FF!important;
+    background: #1B8D5F!important;
 }
 
 .sw-theme-arrows > ul.step-anchor > li.active > a:after {
-    border-right: 30px solid #4880FF!important;
+    border-right: 30px solid #1B8D5F!important;
 }
 
 .sw-theme-arrows > ul.step-anchor > li.done > a {
@@ -180,5 +180,5 @@
 
 .sw-theme-arrows::before {
     border: 10px solid #f3f3f3;
-    border-top: 10px solid #4880FF;
+    border-top: 10px solid #1B8D5F;
 }

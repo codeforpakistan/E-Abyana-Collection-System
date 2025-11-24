@@ -31,18 +31,9 @@
             </script>
         @endif
 
-        <!-- Page Header -->
-        <div class="page-header pt-0">
-            <h4 class="page-title font-weight-bold">Edit District</h4>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#" class="text-light-color">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Edit District</li>
-            </ol>
-        </div>
-
         <!-- Centered Form Row -->
-        <div class="row justify-content-center" style="margin-top: 80px;">
-            <div class="col-md-6">
+        <div class="row justify-content-center">
+            <div class="col-12">
                 <div class="card shadow-sm">
                     <div class="card-header bg-primary text-white">
                         <h4 class="font-weight-bold mb-0">Edit District</h4>

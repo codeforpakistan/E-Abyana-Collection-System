@@ -117,7 +117,7 @@ $(function() {
         var options = {
 		  bars: 'vertical',
           vAxis: {format: 'decimal'},
-          colors: ['#4880FF', '#f47b25', '#b03cd5'],
+          colors: ['#1B8D5F', '#f47b25', '#b03cd5'],
 		  backgroundColor: 'transparent',
 
         };

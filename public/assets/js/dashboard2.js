@@ -8,10 +8,10 @@ $(function() {
 			datasets: [{
 				label: "online",
 				data: [65, 59, 80, 81, 56, 55, 40],
-				borderColor: "#4880FF",
+				borderColor: "#1B8D5F",
 				borderWidth: "0",
 				barWidth: "1",
-				backgroundColor: "#4880FF"
+				backgroundColor: "#1B8D5F"
 			}, {
 				label: "offline",
 				data: [28, 48, 40, 19, 86, 27, 90],
@@ -83,7 +83,7 @@ $(function() {
  			b: 90,
 			c: 50
  		}],
- 		barColors: ['#f47b25', '#4880FF','#ffb209'],
+ 		barColors: ['#f47b25', '#1B8D5F','#ffb209'],
  		xkey: 'y',
  		ykeys: ['a', 'b', 'c'],
  		labels: ['Success', 'Pending','Failed'],
@@ -102,12 +102,12 @@ $(function() {
 				label: "New",
 				data: [0, 30, 10, 120, 50, 63, 10],
 				backgroundColor: 'transparent',
-				borderColor: '#4880FF',
+				borderColor: '#1B8D5F',
 				borderWidth: 3,
 				pointStyle: 'circle',
 				pointRadius: 5,
 				pointBorderColor: 'transparent',
-				pointBackgroundColor: '#4880FF',
+				pointBackgroundColor: '#1B8D5F',
 			}, {
 				label: "Existing",
 				data: [0, 50, 40, 80, 40, 79, 120],
@@ -186,8 +186,8 @@ $(function() {
 		data: {
 			datasets: [{
 				data: [40, 25, 20],
-				backgroundColor: ['#4880FF', ' #f47b25', '#ffb209' ],
-				hoverBackgroundColor: ['#4880FF','#f47b25','#ffb209'],
+				backgroundColor: ['#1B8D5F', ' #f47b25', '#ffb209' ],
+				hoverBackgroundColor: ['#1B8D5F','#f47b25','#ffb209'],
 				borderColor:'transparent',
 			}],
 			labels: ["sales", "profit", "growth"]

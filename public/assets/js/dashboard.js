@@ -11,7 +11,7 @@ $(function() {
                 data: [1, 18, 9, 17, 34, 22, 11],
                 label: 'Marketcap',
                 backgroundColor: 'transparent',
-                borderColor: '#4880FF',
+                borderColor: '#1B8D5F',
             }, ]
         },
         options: {
@@ -205,7 +205,7 @@ $(function() {
 			},
 			axisLabel: {
 				fontSize: 10,
-				color: '#4880FF'
+				color: '#1B8D5F'
 			}  
 		},
 		{
@@ -217,7 +217,7 @@ $(function() {
 			axisLine: {
 				 show: true,
 				 textStyle: {
-					color: '#4880FF'
+					color: '#1B8D5F'
 				} 
 			},
 			axisLabel: {
@@ -226,7 +226,7 @@ $(function() {
 			}  
 		}],
 		series: chartdata,
-		color: ['#4880FF', '#f3a774', '#4880FF', ]
+		color: ['#1B8D5F', '#f3a774', '#1B8D5F', ]
 		
 	};
 	barChart.setOption(option);

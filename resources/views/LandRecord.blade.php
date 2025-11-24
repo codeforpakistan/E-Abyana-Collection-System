@@ -6,8 +6,6 @@
     
 </head>
 
-    
-    
 <div class="app-content">
   
     <section class="section">
@@ -40,7 +38,7 @@
                             </div>
                             
                             <div class="form-group col-lg-12">
-                                <label  class="form-label font-weight-bold for="village_id">Select Village/ضلع</label>
+                                <label  class="form-label font-weight-bold" for="village_id">Select Village/ضلع</label>
                                 <select name="village_id" id="village_id" class="form-control" required>
                                     <option value="">Choose Village/گاؤں</option>
                                     @foreach($villages as $village)
@@ -49,7 +47,7 @@
                                 </select>
                             </div>
                             <div class="form-group col-lg-12">
-                                <label  class="form-label font-weight-bold for="id">Select Irrigator</label>
+                                <label  class="form-label font-weight-bold" for="id">Select Irrigator</label>
                                 <select name="id" id="id" class="form-control" required>
                                     <option value="">Choose Irrigator</option>
                                     @foreach($Irrigators as $Irrigator)
@@ -60,8 +58,7 @@
                 
                             </div>
                             <div class="form-group col-lg-12">
-                                <label class="form-label font-weight-bold">3. Tenant Name / نام مالگزار بقید ولدیت  
-                                </label>
+                                <label class="form-label font-weight-bold">3. Tenant Name / نام مالگزار بقید ولدیت </label>
                                 <input class="form-control form-control-lg" type="text" name="irrigator_mobile_number" required>
                             </div>
                             <div class="form-group col-lg-12">

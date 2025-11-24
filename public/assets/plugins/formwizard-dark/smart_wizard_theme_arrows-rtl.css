@@ -125,18 +125,18 @@
 }
 
 .sw-theme-arrows > ul.step-anchor > li.active > a {
-    border-color: #4880FF!important;
+    border-color: #1B8D5F!important;
     color: #fff !important;
-    background: #4880FF!important;
+    background: #1B8D5F!important;
 }
 
 .sw-theme-arrows > ul.step-anchor > li.active > a:after {
-    border-right: 30px solid #4880FF!important;
+    border-right: 30px solid #1B8D5F!important;
 }
 
 .sw-theme-arrows > ul.step-anchor > li.done > a {
     border-color: #343350 !important;
- /*  #4880FF*/
+ /*  #1B8D5F*/
     color: #c5c5f3 !important;
     background: #343350 !important;
 }
@@ -197,5 +197,5 @@
 /* Loader Custom Style */
 .sw-theme-arrows::before {
     border: 10px solid #f3f3f3;
-    border-top: 10px solid #4880FF;
+    border-top: 10px solid #1B8D5F;
 }

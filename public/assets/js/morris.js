@@ -49,7 +49,7 @@
  		xkey: 'y',
  		ykeys: ['item1', 'item2'],
  		labels: ['Item 1', 'Item 2'],
- 		lineColors: ['#f47b25', '#4880FF'],
+ 		lineColors: ['#f47b25', '#1B8D5F'],
 		behaveLikeLine: true,
 		pointSize: 0,
         lineWidth: 0,
@@ -97,7 +97,7 @@
  		xkey: 'y',
  		ykeys: ['item1'],
  		labels: ['Item 1'],
- 		lineColors: ['#4880FF'],
+ 		lineColors: ['#1B8D5F'],
  		hideHover: 'auto'
  	});
 
@@ -105,7 +105,7 @@
  	var donut = new Morris.Donut({
  		element: 'sales-chart',
  		resize: true,
- 		colors: ['#f47b25', '#4880FF', '#b03cd5'],
+ 		colors: ['#f47b25', '#1B8D5F', '#b03cd5'],
  		data: [{
  			label: "Download Sales",
  			value: 72
@@ -153,7 +153,7 @@
  			a: 100,
  			b: 90
  		}],
- 		barColors: ['#f47b25', '#4880FF'],
+ 		barColors: ['#f47b25', '#1B8D5F'],
  		xkey: 'y',
  		ykeys: ['a', 'b'],
  		labels: ['CPU', 'DISK'],

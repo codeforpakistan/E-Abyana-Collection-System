@@ -45,10 +45,10 @@
     white-space: nowrap !important;
   }
   #example123 th{
-   background-color: rgba(72, 128, 255, 0.5);
+   background-color: #5cd17b;
   }
   #example123 table th{
-   background-color: rgba(72, 128, 255, 0.5);
+   background-color: #5cd17b;
   }
 </style>
 </head>
@@ -63,17 +63,17 @@
       </div>
       <div class="card-body p-2">
         <div class="button-container">
-         <button id="check-all" class="btn btn-warning btn-sm"><strong>Check All</strong></button>
-         <button id="forward-selected" class="btn btn-success btn-sm" style="display: none;"><i class="fa fa-arrow-right"></i><strong> Forward All</strong></button>
+         <button id="check-all" class="btn btn-primary btn-sm"><strong>Check All</strong></button>
+         <button id="forward-selected" class="btn btn-primary btn-sm" style="display: none;"><i class="fa fa-arrow-right"></i><strong> Forward All</strong></button>
         </div>
          <div class="table-responsive">
       <table id="example123" class="table table-bordered border-t0 key-buttons w-100">
     <thead class="table-primary text-center align-middle">
         <tr>
             {{-- <th>ID</th> --}}
-            <th class="text-center">Irrigator Name</th>
-            <th class="text-center">Khata #</th>
-            <th class="text-center">Crop Surveys</th>
+            <th class="text-center text-light">Irrigator Name</th>
+            <th class="text-center text-light">Khata #</th>
+            <th class="text-center text-light">Crop Surveys</th>
         </tr>
     </thead>
     <tbody>
@@ -87,24 +87,24 @@
                     <table class="table table-sm table-bordered">
                         <thead>
                             <tr>
-                                <th class="text-center"></th>
-                                <th class="text-center">Village</th>
-                                <th class="text-center">Session</th>
-                                <th class="text-center">Crop</th>
-                                <th class="text-center">Rate</th>
-                                <th class="text-center">Date</th>
+                                <th class="text-center text-light"></th>
+                                <th class="text-center text-light">Village</th>
+                                <th class="text-center text-light">Session</th>
+                                <th class="text-center text-light">Crop</th>
+                                <th class="text-center text-light">Rate</th>
+                                <th class="text-center text-light">Date</th>
                                {{-- <th>Length</th>
                                 <th>Width</th>
                                 <th>Marla</th>
                                 <th>Kanal</th> --}}
-                                <th class="text-center">Action</th>
+                                <th class="text-center text-light">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($irrigator_surveys as $survey)
-                            @php
-                                $invalid = is_null($survey->date) || $survey->area_kanal <= 0;
-                            @endphp
+                           @php
+                           $invalid = is_null($survey->date) || ($survey->area_kanal <= 0 && $survey->area_marla <= 0);
+                           @endphp
 
                           <tr @if($invalid) style="background-color: #FFFFE0;" @endif>
                                      <td class="text-center align-middle">
@@ -127,7 +127,7 @@
                                     </td> --}}
                                     <td class="align-middle text-center">
                                         <a href="{{ url('survey/view') }}/{{$survey->crop_survey_id}}">
-                                            <button class="btn btn-success btn-sm" title="View"><i class="fa fa-eye"></i></button>
+                                            <button class="btn btn-primary btn-sm" title="View"><i class="fa fa-eye"></i></button>
                                         </a>
                                         
                                         <form action="{{ route('landservey.destroy', $survey->crop_survey_id) }}"
@@ -136,11 +136,11 @@
                                                   style="display: inline;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="btn btn-danger btn-sm" title="Delete"><i class="fa fa-trash"></i></button>
+                                                <button class="btn btn-primary btn-sm" title="Delete"><i class="fa fa-trash"></i></button>
                                         </form>
                         
                                         <a href="{{ $invalid ? '#' : url('survey/patwari/forward') . '/' . $survey->crop_survey_id }}">
-                                            <button class="btn btn-warning btn-sm 
+                                            <button class="btn btn-primary btn-sm 
                                                            @if($invalid) disabled opacity-50 @endif"
                                                     title="{{ $invalid ? 'Disabled' : 'Forward' }}"
                                                     @if($invalid) disabled @endif>

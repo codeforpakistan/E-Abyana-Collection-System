@@ -125,18 +125,18 @@
 }
 
 .sw-theme-arrows > ul.step-anchor > li.active > a {
-    border-color: #4880FF!important;
+    border-color: #1B8D5F!important;
     color: #fff !important;
-    background: #4880FF!important;
+    background: #1B8D5F!important;
 }
 
 .sw-theme-arrows > ul.step-anchor > li.active > a:after {
-    border-left: 30px solid #4880FF!important;
+    border-left: 30px solid #1B8D5F!important;
 }
 
 .sw-theme-arrows > ul.step-anchor > li.done > a {
     border-color: #f4f5f5 !important;
- /*  #4880FF*/
+ /*  #1B8D5F*/
     color: #5c6287 !important;
     background: #f4f5f5 !important;
 }
@@ -197,5 +197,5 @@
 /* Loader Custom Style */
 .sw-theme-arrows::before {
     border: 10px solid #f3f3f3;
-    border-top: 10px solid #4880FF;
+    border-top: 10px solid #1B8D5F;
 }

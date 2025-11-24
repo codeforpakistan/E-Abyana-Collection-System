@@ -2,10 +2,42 @@
 @section('content')
 <head>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <style>
-    #example th{
-        padding: 4px !important;
-    }
+
+  /* Main table settings */
+  #example123 {
+    width: 100% !important;
+    table-layout: auto;
+    word-wrap: break-word;
+    font-size: 14px !important;
+  }
+
+  /* Main table cells */
+  #example123 td,
+  #example123 th {
+    padding: 2px !important;
+    margin: 2px !important;
+    white-space: normal !important;
+    font-size: 14px !important;
+  }
+  /* Nested table and its cells */
+  #example123 table,
+  #example123 table td,
+  #example123 table th {
+    font-size: 13px !important;
+    padding: 2px !important;
+    margin: 2px !important;
+    white-space: normal !important;
+  }
+  #example123 th{
+   background-color: #5cd17b;
+  }
+  #example123 table th{
+   background-color: #5cd17b;
+  }
 </style>
 </head>
 <div class="app-content">
@@ -19,13 +51,13 @@
       </div>
       <div class="card-body">
       <div class="table-responsive">
-      <table id="example" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
+      <table id="example123" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
     <thead class="table-primary text-center align-middle">
         <tr>
-            <th>ID</th>
-            <th>Irrigator Name</th>
-            <th>Khata #</th>
-            <th>Crop Surveys</th>
+            <th class="text-center text-light">ID</th>
+            <th class="text-center text-light">Irrigator Name</th>
+            <th class="text-center text-light">Khata #</th>
+            <th class="text-center text-light">Crop Surveys</th>
         </tr>
     </thead>
     <tbody>
@@ -39,15 +71,15 @@
                     <table class="table table-sm table-bordered">
                         <thead>
                             <tr>
-                                <th>Village</th>
-                                <th>Farmer</th>
-                                <th>Crop</th>
-                                <th>Rate</th>
-                                <th>Date</th>
-                                <th>Length</th>
-                                <th>Width</th>
-                                <th>Marla</th>
-                                <th>Kanal</th>
+                                <th class="text-center text-light">Village</th>
+                                <th class="text-center text-light">Cultivator</th>
+                                <th class="text-center text-light">Crop</th>
+                                <th class="text-center text-light">Rate</th>
+                                <th class="text-center text-light">Date</th>
+                                <!-- <th>Length</th>
+                                <th>Width</th> -->
+                                <th class="text-center text-light">Marla</th>
+                                <th class="text-center text-light">Kanal</th>
                                
                             </tr>
                         </thead>
@@ -59,8 +91,8 @@
                                     <td>{{ $survey->final_crop }}</td>
                                     <td>{{ $survey->crop_price }}</td>
                                     <td>{{ $survey->date }}</td>
-                                    <td>{{ $survey->length }}</td>
-                                    <td>{{ $survey->width }}</td>
+                                   <!-- <td>{{ $survey->length }}</td>
+                                    <td>{{ $survey->width }}</td> -->
                                     <td>{{ $survey->area_marla }}</td>
                                     <td>{{ $survey->area_kanal }}</td>
                                   
@@ -79,5 +111,14 @@
       </div>
     </div> 
 </section>  
-</div>    
+</div>   
+<script> 
+$(document).ready(function () {
+    $('#example123').DataTable({
+        pageLength: 100,
+        lengthMenu: [ [100, 250, 500, -1], [100, 250, 500, "All"] ],
+        ordering: false
+    });
+});
+</script> 
  @endsection

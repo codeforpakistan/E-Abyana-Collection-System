@@ -78,7 +78,7 @@
                             </div>
                         </div>
                     
-                        <div class="row" style="margin-top:-10px;">
+                       <!-- <div class="row" style="margin-top:-10px;">
                             <div class="form-group col-4">
                                 <label class="form-label">No. of Outlets</label>
                                 <input class="form-control" type="text" name="no_outlet" required>
@@ -91,7 +91,7 @@
                                 <label class="form-label">No. of Outlets (RS)</label>
                                 <input class="form-control" type="text" name="no_outlet_rs" required>
                             </div>
-                        </div>
+                        </div> -->
                     
                         <div class="row" style="margin-top:-10px;">
                             <div class="form-group col-lg-6">
@@ -134,39 +134,36 @@
                                         <th>#</th>
                                         <th>Canal</th>
                                         <th>Division Name</th>
-                                        <th>No Of Outlet</th>
+                                      <!--  <th>No Of Outlet</th>
                                         <th>No. of Outlets (LS)</th>
-                                        <th>No. of Outlets (RS)</th>
-                                        <th>Total No. of CCA</th>
-                                        <th>Total No. of Discharge (Cusec)</th>
+                                        <th>No. of Outlets (RS)</th> -->
+                                        <th>Total CCA</th>
+                                        <th>Discharge (Cusec)</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                
-                                        @foreach($canals as $canal)
+                                @foreach($canals as $canal)
                                         <tr>
-                                            <td>{{ $canal->id }}</td>
-                                            <td>{{ $canal->canal_name }}</td>
-                                           
-                                    
+                                          <td>{{ $canal->id }}</td>
+                                          <td>{{ $canal->canal_name }}</td>
                                           <td>{{ $canal->division->divsion_name ?? 'N/A' }}</td>
-                                                <td>{{ $canal->no_outlet }}</td>
+                                       <!--  <td>{{ $canal->no_outlet }}</td>
                                              <td>{{ $canal->no_outlet_ls }}</td>
-                                             <td>{{ $canal->no_outlet_rs }}</td>
+                                             <td>{{ $canal->no_outlet_rs }}</td> -->
                                                <td>{{ $canal->total_no_cca }}</td>
                                            <td>{{ $canal->total_no_discharge_cusic }}</td>
-                                           
-                                            <td>
+                                           <td>
+                                            <a href="{{ route('editCanal', $canal->id) }}"><button class="btn btn-sm btn-primary">
+                                                    <i class="fa fa-pencil"></i> Edit
+                                                </button></a>
                                                 <button class="btn btn-sm btn-danger">
                                                     <i class="fa fa-trash"></i> Delete
                                                 </button>
+
                                             </td>
                                         </tr>
-                                        @endforeach 
-                                
-                                       
-                                
+                                        @endforeach
                                 </tbody> 
                             </table>
                             <div class="mt-3">
@@ -183,14 +180,13 @@
 <script>
 function openModal() {
     let modal = document.getElementById("simpleModal");
-    modal.style.display = "flex"; // Show the modal
+    modal.style.display = "flex";
 }
 
 function closeModal() {
     let modal = document.getElementById("simpleModal");
-    modal.style.display = "none"; // Hide the modal
+    modal.style.display = "none";
 }
-
 </script>
 
 @endsection

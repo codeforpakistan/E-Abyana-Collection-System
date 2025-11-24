@@ -54,24 +54,53 @@ public function Halqa($tehsilId)
 }
 public function storeUser(Request $request)
 {
-    // Validate incoming data
- 
-    // Create a new user record
+    $roleId = $request->input('role_id');
+    $divId = ($roleId == 12) ? null : $request->input('div_id');
+
+    $districtId=$request->input('district_id');
+    $tehsilId=$request->input('tehsil_id');
+    $halqaId=$request->input('halqa_id');
+
+    if($roleId==15 || $roleId==16){
+    $divId=null;
+    $tehsilId=null;
+    $halqaId=null;
+    }elseif($roleId==1){
+    $divId=null;
+    $districtId=null;
+    $tehsilId=null;
+    $halqaId=0;
+    }
+
     $user = User::create([
         'name' => $request->input('name'),
         'email' => $request->input('email'),
         'password' => Hash::make($request->password),
-
         'phone_number' => $request->input('phone_number'),
         'role_id' => $request->input('role_id'),
-        'halqa_id' => $request->input('halqa_id'),
-        'div_id' => $request->div_id,
-        'district_id' => $request->district_id,
-        'tehsil_id' => $request->tehsil_id,
+        'halqa_id' => $halqaId,
+        'div_id' => $divId,
+        'district_id' => $districtId,
+        'tehsil_id' => $tehsilId,
     ]);
 
-    // Assign role to user
-  
+    // If role is 15, insert multiple halqas for this user
+    if ($roleId == 15) {
+        $halqaIds = $request->input('halqa_multiple', []);
+
+        if (!empty($halqaIds)) {
+            $data = [];
+            foreach ($halqaIds as $hId) {
+                $data[] = [
+                    'user_id'  => $user->id,
+                    'halqa_id' => $hId,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+            DB::table('zilladar_halqas')->insert($data);
+        }
+    }
 
     return redirect()->back()->with('success', 'User added successfully.');
 }

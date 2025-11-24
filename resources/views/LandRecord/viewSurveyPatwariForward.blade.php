@@ -31,7 +31,7 @@
       <div class="card-header">
         <div class="row">
             <div class="col-12">
-            <h4><strong>Survey Review / Forward</strong></h4>
+            <h4><strong>Survey Review / Forward to Zilladar</strong></h4>
             </div>
         </div>
       </div>
@@ -43,10 +43,9 @@
          <label class="form-label font-weight-bold">Review Text Description</label>
          <textarea class="form-control" name="review" type="text" rows="4"></textarea>
         </div>
-        <div class="form-group col-6 d-flex justify-content- align-items-center">
+        <div class="form-group col-2 d-flex justify-content- align-items-center">
           <button class="btn btn-primary" type="submit" title="Forward to Zilladar" style="margin-top:30px;">
-          <i class="fa fa-arrow-right"></i>&nbsp;Forward to Zilladar
-          </button>
+          <i class="fa fa-arrow-right"></i>&nbsp;Forward</button>
         </div>
         </div>
         @if($survey->review !== 'Survey Added')

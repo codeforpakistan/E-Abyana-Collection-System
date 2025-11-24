@@ -16,21 +16,18 @@ class DistrictController extends Controller
   
     public function StoreDistrict(Request $request)
     {
-        // Validate the incoming request
         $request->validate([
             'name' => 'required|string|unique:districts,name',
-            'div_id' => 'required|exists:divisions,id', // Ensure it checks the 'id' column of the divisions table
+            'div_id' => 'required|exists:divisions,id',
         ], [
             'name.unique' => 'The district name has already been taken.',
             'name.required' => 'The district name is required.',
             'div_id.required' => 'The division is required.',
             'div_id.exists' => 'The selected division does not exist.',
         ]);
-    
-        // Create a new District record
         District::create([
             'name' => $request->name,
-            'div_id' => $request->div_id, // Ensure this matches the column in the districts table
+            'div_id' => $request->div_id,
         ]);
     
         // Redirect back with success message

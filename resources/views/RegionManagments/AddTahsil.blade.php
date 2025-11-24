@@ -92,18 +92,16 @@
                                 <table id="example" class="table table-bordered key-buttons text-nowrap w-100">
                                     <thead>
                                         <tr>
-                                            <th><input type="checkbox" id="select-all"></th>
                                             <th>ID</th>
-                                            <th>Name Division / نام ڈویژن</th>
-                                            <th>District Name / نام ضلع</th>
-                                            <th>Tehsil Name / نام تحصیل</th>
+                                            <th> Division /  ڈویژن</th>
+                                            <th>District /  ضلع</th>
+                                            <th>Tehsil /  تحصیل</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($tehsils as $tehsil)
                                             <tr>
-                                                <td><input type="checkbox" name="ids[]" value="{{ $tehsil->tehsil_id }}"></td>
                                                 <td>{{ $tehsil->tehsil_id }}</td>
                                                 <td>{{ $tehsil->district->division->divsion_name }}</td>
                                                 <td>{{ $tehsil->district->name }}</td>

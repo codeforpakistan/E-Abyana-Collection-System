@@ -39,9 +39,9 @@
 .bootstrap-tagsinput .badge {
   margin-right: 2px;
   color: white;
-  background-color:#4880FF;
+  background-color:#1B8D5F;
   padding:5px 8px;border-radius:3px;
-  border:1px solid #4880FF;
+  border:1px solid #1B8D5F;
   margin-top: 8px;
 }
 .bootstrap-tagsinput .badge [data-role="remove"] {

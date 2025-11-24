@@ -23,7 +23,7 @@ $(function(e){
 		title: "Custom Shadow",
 		label: "",
 		gaugeColor: "#343350",
-		levelColors: ["#4880FF"],
+		levelColors: ["#1B8D5F"],
 		shadowOpacity: 0.3,
 		shadowSize: 0,
 		shadowVerticalOffset: 0
@@ -40,7 +40,7 @@ $(function(e){
 		gaugeColor: "#343350",
 		levelColors: [
 			"#31c92e",
-			"#4880FF",
+			"#1B8D5F",
 			"#f47b25"
 		]
 
@@ -115,8 +115,8 @@ $(function(e){
 		  color: '#ececff'
 	  },
 	  limitMax: 'false',
-	  colorStart: '#4880FF',
-	  colorStop: '#4880FF',
+	  colorStart: '#1B8D5F',
+	  colorStop: '#1B8D5F',
 	  strokeColor: '#343350',
 	  generateGradient: true
 	};

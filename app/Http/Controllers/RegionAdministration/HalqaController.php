@@ -72,11 +72,35 @@ public function storeHalqa(Request $request)
 public function edithalqa($id)
 {
     $halqa = Halqa::findOrFail($id);
-    $districts = District::all();
+   // $districts = District::all();
     $tehsils = Tehsil::all();
 
-    return view('RegionManagments.edit-halqa', compact('halqa', 'districts', 'tehsils'));
+   // return view('RegionManagments.edit-halqa', compact('halqa', 'districts', 'tehsils'));
+   return view('RegionManagments.edit-halqa', compact('halqa', 'tehsils'));
 }
+
+public function updateHalqa(Request $request, $id)
+{
+    // Validate inputs
+    $request->validate([
+        'halqa_name' => 'required',
+        'tehsil_id' => 'required',
+    ]);
+
+    // Find the Halqa record
+    $halqa = Halqa::findOrFail($id);
+
+    // Update fields
+    $halqa->halqa_name = $request->halqa_name;
+    $halqa->tehsil_id = $request->tehsil_id;
+
+    // Save changes
+    $halqa->save();
+
+    // Redirect back with success message
+    return redirect()->route('AddHalqa')->with('success', 'Halqa updated successfully.');
+}
+
 
 
 }

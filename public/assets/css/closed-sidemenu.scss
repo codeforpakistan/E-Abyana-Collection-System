@@ -646,7 +646,7 @@
 	top: 0;
 	width: 4.5px;
 	height: 100%;
-	background: linear-gradient(to bottom right, $primary, #4880FF);
+	background: linear-gradient(to bottom right, $primary, #1b8d5f);
 	display: block;
 }
 .sidenav-toggled .main-wrapper .side-menu .side-menu__item {
@@ -668,7 +668,7 @@
     right: 0;
     position: fixed;
     z-index: 890;
-    background: linear-gradient(to bottom right,$primary, #4880FF);
+    background: linear-gradient(to bottom right,$primary, #1b8d5f);
     box-shadow: 0 2px 17px 2px rgba(0,0,0,0.2);
     padding: .0rem 1rem;
 }
@@ -681,5 +681,5 @@
     transform-origin: 50% 48%;
     border-radius: 0%;
     animation: drift 3000ms infinite linear;
-    background: linear-gradient(to bottom right, $primary, #4880FF);
+    background: linear-gradient(to bottom right, $primary, #1b8d5f);
 }

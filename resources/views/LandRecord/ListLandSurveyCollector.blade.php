@@ -2,10 +2,54 @@
 @section('content')
 <head>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <style>
-    #example th{
-        padding: 4px !important;
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
     }
+  /* Main table settings */
+  #example123 {
+    width: 100% !important;
+    table-layout: auto;
+    word-wrap: break-word;
+    font-size: 13px !important;
+  }
+
+  /* Main table cells */
+  #example123 td,
+  #example123 th {
+    padding: 2px !important;
+    margin: 2px !important;
+    white-space: normal !important;
+    font-size: 13px !important;
+  }
+  /* Nested table and its cells */
+  #example123 table,
+  #example123 table td,
+  #example123 table th {
+    font-size: 12px !important;
+    padding: 2px !important;
+    margin: 2px !important;
+    white-space: normal !important;
+  }
+
+  /* Fix width for "Action" column in nested table */
+  #example123 table th:last-child,
+  #example123 table td:last-child {
+    width: 200px !important;
+    max-width: 200px !important;
+    white-space: nowrap !important;
+  }
+  #example123 th{
+   background-color: #5cd17b;
+  }
+  #example123 table th{
+   background-color: #5cd17b;
+  }
 </style>
 </head>
 <div class="app-content">
@@ -39,14 +83,18 @@
       <!-- <p>Halqa ID: {{ session('halqa_id') }}</p> -->
       </div>
       <div class="card-body">
+        <div class="button-container">
+         <button id="check-all" class="btn btn-primary btn-sm"><strong>Check All</strong></button>
+         <button id="forward-selected" class="btn btn-primary btn-sm" style="display: none;"><i class="fa fa-arrow-right"></i><strong> Forward All</strong></button>
+        </div>
       <div class="table-responsive">
-      <table id="example" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
+      <table id="example123" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
     <thead class="table-primary text-center align-middle">
         <tr>
-            <th>ID</th>
-            <th>Irrigator Name</th>
-            <th>Khata #</th>
-            <th>Crop Surveys</th>
+            <th class="text-center text-light">ID</th>
+            <th class="text-center text-light">Irrigator Name</th>
+            <th class="text-center text-light">Khata #</th>
+            <th class="text-center text-light">Crop Surveys</th>
         </tr>
     </thead>
     <tbody>
@@ -60,21 +108,27 @@
                     <table class="table table-sm table-bordered">
                         <thead>
                             <tr>
-                                <th>Village</th>
+                                <th class="text-center"></th>
+                                <th class="text-center text-light">Village</th>
                                {{-- <th>Farmer</th>--}}
-                                <th>Crop</th>
-                                <th>Rate</th>
-                                <th>Date</th>
+                                <th class="text-center text-light">Crop</th>
+                                <th class="text-center text-light">Rate</th>
+                                <th class="text-center text-light">Date</th>
                            {{-- <th>Length</th>
                                 <th>Width</th> --}}
-                                <th>Marla</th>
-                                <th>Kanal</th>
-                                <th>Action</th>
+                                <th class="text-center text-light">Marla</th>
+                                <th class="text-center text-light">Kanal</th>
+                                <th class="text-center text-light">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($irrigator_surveys as $survey)
                                 <tr>
+                                     <td class="text-center align-middle">
+                                         <input type="checkbox"
+                                         class="survey-checkbox"
+                                         value="{{ $survey->crop_survey_id }}">
+                                     </td>
                                     <td>{{ $survey->village_name }}</td>
                                    {{-- <td>{{ $survey->cultivators_info }}</td> --}}
                                     <td>{{ $survey->final_crop }}</td>
@@ -86,74 +140,24 @@
                                     <td>{{ $survey->area_kanal }}</td>
                                     <td class="align-middle text-center">
                                         <a href="{{ url('survey/view') }}/{{$survey->crop_survey_id}}">
-                                            <button class="btn btn-primary btn-sm" title="View"><i class="fa fa-eye"></i></button>
+                                            <button class="btn btn-primary btn-sm" title="View"><i class="fa fa-eye"></i>&nbsp;</button>
                                         </a>
                                         <a href="{{ url('survey/collector/reverse') }}/{{$survey->crop_survey_id}}">
-                                            <button class="btn btn-danger btn-sm" title="Reverse Survey"><i class="fa fa-arrow-left"></i></button>
+                                            <button class="btn btn-primary btn-sm" title="Reverse Survey"><i class="fa fa-arrow-left"></i>&nbsp;</button>
                                         </a>
                                         <a href="{{ url('survey/collector/forward') }}/{{$survey->crop_survey_id}}">
-                                            <button class="btn btn-success btn-sm" title="Forward Survey"><i class="fa fa-arrow-right"></i></button>
+                                            <button class="btn btn-primary btn-sm" title="Forward Survey"><i class="fa fa-arrow-right"></i>&nbsp;</button>
                                         </a>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                    <div class="mt-3">
-                     
-                    </div>
                 </td>
             </tr>
         @endforeach
     </tbody>
 </table>
-     <!-- 
- $Irrigators->links()
-     <table id="example" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
-        <thead class="table-primary text-center align-middle">
-            <tr>
-                <th rowspan="3" class="align-middle">ID</th>
-                <th rowspan="3" class="align-middle">Name</th>
-                <th rowspan="3" class="align-middle">Khata No</th>
-                <th colspan="3" class="align-middle">Crop Type Registration</th>
-                <th rowspan="3" class="align-middle">Sowing Date</th>
-                <th colspan="3" class="align-middle">Final Measurement</th>
-                <th colspan="2" class="align-middle">Area</th>
-                <th rowspan="3" class="align-middle">Action</th>
-            </tr>
-            <tr>
-                <th colspan="2" class="align-middle">Land Assessment</th>
-                <th rowspan="2" class="align-middle">Previous Crop Name</th>
-                <th rowspan="2" class="align-middle">Date</th>
-                <th rowspan="2" class="align-middle">Length</th>
-                <th rowspan="2" class="align-middle">Width</th>
-                <th rowspan="2" class="align-middle">Marla</th>
-                <th rowspan="2" class="align-middle">Kanal</th>
-            </tr>
-            <tr>
-                <th class="align-middle">Marla</th>
-                <th class="align-middle">Kanal</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="align-middle">1</td>
-                <td class="align-middle">John Doe</td>
-                <td class="align-middle">123456</td>
-                <td class="align-middle">10</td>
-                <td class="align-middle">2</td>
-                <td class="align-middle">Wheat</td>
-                <td class="align-middle">2024-01-01</td>
-                <td class="align-middle">2024-06-01</td>
-                <td class="align-middle">20</td>
-                <td class="align-middle">10</td>
-                <td class="align-middle">3</td>
-                <td class="align-middle">1</td>
-                <td class="align-middle">Edit/Delete</td>
-            </tr>
-        </tbody>
-    </table> -->
-
       </div>
       </div>
       </div>
@@ -161,4 +165,90 @@
     </div> 
 </section>  
 </div>    
+<script>
+$(document).ready(function () {
+    $('#example123').DataTable({
+        pageLength: 100,
+        lengthMenu: [ [100, 250, 500, -1], [100, 250, 500, "All"] ],
+        ordering: false
+    });
+});
+</script> 
  @endsection
+ <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const checkAllButton = document.getElementById('check-all');
+    const approveSelectedButton = document.getElementById('forward-selected');
+    
+    function getAllCheckboxes() {
+        return Array.from(document.querySelectorAll('.survey-checkbox'));
+    }
+
+    function getEnabledCheckboxes() {
+        return getAllCheckboxes().filter(checkbox => !checkbox.disabled);
+    }
+
+    checkAllButton.addEventListener('click', function () {
+        const enabledCheckboxes = getEnabledCheckboxes();
+        const allChecked = enabledCheckboxes.every(checkbox => checkbox.checked);
+
+        enabledCheckboxes.forEach(checkbox => checkbox.checked = !allChecked);
+
+        checkAllButton.textContent = allChecked ? 'Check All' : 'Uncheck All';
+        toggleApproveButton();
+    });
+
+    getAllCheckboxes().forEach(checkbox => {
+        checkbox.addEventListener('change', toggleApproveButton);
+    });
+
+    function toggleApproveButton() {
+        const anyChecked = getEnabledCheckboxes().some(checkbox => checkbox.checked);
+        approveSelectedButton.style.display = anyChecked ? 'inline-block' : 'none';
+    }
+
+    approveSelectedButton.addEventListener('click', function () {
+        const selectedIrrigators = getEnabledCheckboxes()
+            .filter(checkbox => checkbox.checked)
+            .map(checkbox => checkbox.value);
+
+        if (selectedIrrigators.length === 0) {
+            Swal.fire('Error', 'No Survey selected!', 'error');
+            return;
+        }
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to forward the selected surveys!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Forward',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch("{{ route('survey_forward_d_collector.multiple') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({ irrigator_ids: selectedIrrigators })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire('Success', data.message, 'success').then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire('Error', data.message, 'error');
+                    }
+                })
+                .catch(error => {
+                    Swal.fire('Error', 'Something went wrong!', 'error');
+                });
+            }
+        });
+    });
+});
+</script>

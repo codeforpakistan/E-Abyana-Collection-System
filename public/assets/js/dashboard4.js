@@ -13,7 +13,7 @@ $(function() {
 			  barGap:4,
 			  barSizeRatio:1,
               backgroundColor: [
-                  '#4880FF',
+                  '#1B8D5F',
                   '#f47b25',
                   '#f6d30c',
                   '#22e840',
@@ -21,7 +21,7 @@ $(function() {
                   '#f21887 '
               ],
               borderColor: [
-                  '#4880FF',
+                  '#1B8D5F',
                   '#f47b25',
                   '#f6d30c',
                   '#22e840',

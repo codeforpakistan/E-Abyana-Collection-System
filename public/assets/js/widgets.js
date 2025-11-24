@@ -59,7 +59,7 @@ $(function() {
 			}
 		},
 		stroke: {
-			colors: '#4880FF',
+			colors: '#1B8D5F',
 		},
 		series: [{
 			data: [12, 14, 2, 47, 42, 15, 47, 75, 65, 19, 14]

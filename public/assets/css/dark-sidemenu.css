@@ -20,7 +20,7 @@
 
 .side-menu__item.active, .side-menu__item:hover, .side-menu__item:focus {
   text-decoration: none;
-  color: #4880FF;
+  color: #1B8D5F;
   background: #181823; }
 
 .slide-menu {
@@ -57,7 +57,7 @@
   display: block; }
 
 .slide-menu a.active {
-  color: #4880FF;
+  color: #1B8D5F;
   background: #181823; }
 
 .slide-item.active, .slide-item:hover, .slide-item:focus {

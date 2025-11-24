@@ -39,7 +39,7 @@ $(function() {
 		xkey: 'y',
  		ykeys: ['item1'],
  		labels: ['Users'],
- 		lineColors: ['#4880FF'],
+ 		lineColors: ['#1B8D5F'],
 		pointRadius: 0,
  		hideHover: 'auto',
 		parseTime: false
@@ -50,7 +50,7 @@ $(function() {
 	var donut = new Morris.Donut({
 		element: 'donutchart',
 		resize: true,
-		colors: ['#f47b25', '#4880FF', '#ffb209','#01b8ff'],
+		colors: ['#f47b25', '#1B8D5F', '#ffb209','#01b8ff'],
 		data: [{
 			label: "Google+",
 			value: 30
@@ -90,7 +90,7 @@ $(function() {
 			width: 2,
 			colors: ['transparent']
 		},
-		colors: ['#4880FF','#f47b25'],
+		colors: ['#1B8D5F','#f47b25'],
 		series: [{
 			name: 'Users',
 			data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
@@ -235,7 +235,7 @@ $(function() {
 		ykeys: ['value'],
 		labels: ['value'],
 		parseTime: false,
-		lineColors: ['#4880FF', '#00d9bf']
+		lineColors: ['#1B8D5F', '#00d9bf']
 	});
 	/*----Morris Linechart (#graph2) closed----*/
 

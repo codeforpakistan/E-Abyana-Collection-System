@@ -106,7 +106,6 @@
                                 <table id="example" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
                                     <thead>
                                         <tr>
-                                            <th><input type="checkbox" id="select-all"></th>
                                             <th>ID</th>
                                             <th>Halqa Name/حلقہ</th>
                                             <th>Tehsil Name</th>
@@ -118,7 +117,6 @@
                                     <tbody>
                                         @foreach($halqas as $halqa)
                                         <tr>
-                                            <td><input type="checkbox" name="ids[]" value="{{ $halqa->id }}"></td>
                                             <td>{{ $halqa->id }}</td>
                                             <td>{{ $halqa->halqa_name }}</td>
                                             <td>{{ $halqa->tehsil_name }}</td>
@@ -149,7 +147,6 @@
         
         
     </section>
-
     @if(Session::has('success'))
         <script>
             swal({

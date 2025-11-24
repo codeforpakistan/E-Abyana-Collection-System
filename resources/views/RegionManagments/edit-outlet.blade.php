@@ -1,9 +1,10 @@
 @extends('layout')
 
 @section('content')
-<div class="container mt-5">
+<div class="app-content">
+     <section class="section">
     <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-10">
+        <div class="col-12">
             <div class="card shadow-sm border-0 rounded-lg">
                 <div class="card-header bg-primary text-white">
                     <h4 class="mb-0">{{ isset($outlet) ? 'Edit Outlet' : 'Add Outlet' }}</h4>
@@ -15,7 +16,7 @@
                             @method('PUT')
                         @endif
 
-                        <div class="row">
+                        <div class="row" style="margin-top:-15px;">
                             <div class="form-group col-md-6">
                                 <label for="div_id">Division</label>
                                 <select name="div_id" class="form-control" required>
@@ -41,7 +42,7 @@
                             </div>
                         </div>
 
-                        <div class="row mt-3">
+                        <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="minor_id">Minor Canal</label>
                                 <select name="minor_id" class="form-control" required>
@@ -67,7 +68,7 @@
                             </div>
                         </div>
 
-                        <div class="row mt-3">
+                        <div class="row">
                             <div class="form-group col-md-6">
                                 <label>Name Outlet</label>
                                 <input type="text" name="outlet_name" class="form-control" required value="{{ $outlet->outlet_name ?? '' }}">
@@ -79,7 +80,7 @@
                             </div>
                         </div>
 
-                        <div class="row mt-3">
+                        <div class="row">
                             <div class="form-group col-md-6">
                                 <label>Beneficiaries</label>
                                 <input type="text" name="beneficiaries" class="form-control" required value="{{ $outlet->beneficiaries ?? '' }}">
@@ -101,5 +102,6 @@
             </div>
         </div>
     </div>
+</section>
 </div>
 @endsection

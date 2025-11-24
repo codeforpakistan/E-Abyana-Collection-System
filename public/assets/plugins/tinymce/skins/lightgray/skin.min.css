@@ -113,7 +113,7 @@ div.mce-edit-area {
 	cursor: pointer
 }
 .mce-grid td.mce-grid-cell div:focus {
-	border-color: #4880FF
+	border-color: #1B8D5F
 }
 .mce-grid td.mce-grid-cell div[disabled] {
 	cursor: not-allowed
@@ -127,7 +127,7 @@ div.mce-edit-area {
 	border: 1px solid transparent
 }
 .mce-grid a:hover, .mce-grid a:focus {
-	border-color: #4880FF
+	border-color: #1B8D5F
 }
 .mce-grid-border {
 	margin: 0 4px 0 4px
@@ -138,8 +138,8 @@ div.mce-edit-area {
 	height: 13px
 }
 .mce-grid-border a:hover, .mce-grid-border a.mce-active {
-	border-color: #4880FF;
-	background: #4880FF
+	border-color: #1B8D5F;
+	background: #1B8D5F
 }
 .mce-text-center {
 	text-align: center
@@ -618,10 +618,10 @@ body .mce-abs-layout-item, .mce-abs-end {
 	color: #fff;
 	border: 1px solid transparent;
 	border-color: transparent;
-	background-color: #4880FF
+	background-color: #1B8D5F
 }
 .mce-primary:hover, .mce-primary:focus {
-	background-color: #4880FF;
+	background-color: #1B8D5F;
 	border-color: transparent
 }
 .mce-primary.mce-disabled button, .mce-primary.mce-disabled:hover button {
@@ -631,7 +631,7 @@ body .mce-abs-layout-item, .mce-abs-end {
 	zoom: 1
 }
 .mce-primary.mce-active, .mce-primary.mce-active:hover, .mce-primary:not(.mce-disabled):active {
-	background-color: #4880FF
+	background-color: #1B8D5F
 }
 .mce-primary button, .mce-primary button i {
 	color: #fff;
@@ -1122,7 +1122,7 @@ i.mce-i-checkbox {
 	visibility: visible
 }
 .mce-menu-item-normal.mce-active {
-	background-color: #4880FF;
+	background-color: #1B8D5F;
 }
 .mce-menu-item-preview.mce-active {
 	border-left: 5px solid #aaa
@@ -1139,7 +1139,7 @@ i.mce-i-checkbox {
 .mce-menu-item:hover, .mce-menu-item.mce-selected, .mce-menu-item:focus {
 	text-decoration: none;
 	color: #fff;
-	background-color: #4880FF
+	background-color: #1B8D5F
 }
 div.mce-menu .mce-menu-item-sep, .mce-menu-item-sep:hover {
 	border: 0;
@@ -1355,7 +1355,7 @@ i.mce-i-resize {
 	color: #333
 }
 .mce-textbox:focus, .mce-textbox.mce-focus {
-	border-color: #4880FF
+	border-color: #1B8D5F
 }
 .mce-placeholder .mce-textbox {
 	color: #aaa

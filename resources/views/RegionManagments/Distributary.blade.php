@@ -33,7 +33,7 @@
 <div id="simpleModal" class="fixed inset-0 bg-gray-400 bg-opacity-50 flex z-50 items-center justify-center hidden">
             <div class="card shadow-sm w-[60vw]">
                 <div class="card-header bg-primary flex justify-between text-white">
-                    <h4 class="font-weight-bold">Add Minor Canal / Branch</h4>
+                    <h4 class="font-weight-bold">Add Minor Canal</h4>
                     <button onclick="closeModal()" type="button" class="bg-white text-black h-[30px] w-[30px] rounded-[50px]">
                         <i class="fa fa-close"></i>
                     </button>
@@ -79,24 +79,24 @@
                             </div>
                         </div>
                     
-                        <div class="row" style="margin-top:-10px;">
-                            <!-- No. of Outlets -->
+                      <!--  <div class="row" style="margin-top:-10px;">
+                           
                             <div class="form-group col-4">
                                 <label class="form-label">No. of Outlets</label>
                                 <input class="form-control" type="number" name="no_outlet" required>
                             </div>
                             
-                            <!-- No. of Outlets (Left Side) -->
+                          
                             <div class="form-group col-4">
                                 <label class="form-label">No. of Outlets (Left Side)</label>
                                 <input class="form-control" type="text" name="no_outlet_ls" required>
                             </div>
-                            <!-- No. of Outlets (Right Side) -->
+                         
                             <div class="form-group col-4">
                                 <label class="form-label">No. of Outlets (Right Side)</label>
                                 <input class="form-control" type="text" name="no_outlet_rs" required>
                             </div>
-                        </div>
+                        </div>  -->
                     
                         <div class="row" style="margin-top:-10px;">
                             <!-- Total No. of CCA -->
@@ -128,26 +128,26 @@
             <div class="col-md-12">
                 <div class="card export-database">
                     <div class="card-header d-flex justify-content-between">
-                        <h4><strong>Minor Canal / Branch List</strong></h4>
+                        <h4><strong>Minor Canal List</strong></h4>
                         <button onclick="openModal()" type="button" class="btn btn-primary">
                             <i class="fa fa-plus"></i>
                         </button>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="example" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
+                            <table style="font-size:12px;" id="example" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Minor / Branch Name</th>
+                                        <th>Minor</th>
                                         <th>Division Name</th>
                                         <th>Canal Name</th>
                                         <th>Distry Name</th>
-                                        <th>No Of Outlet</th>
+                                      <!--  <th>No Of Outlet</th>
                                         <th>No. of Outlets (Left Side)</th>
-                                        <th>No. of Outlets (Right Side)</th>
-                                        <th>Total No. of CCA</th>
-                                        <th>Total No. of Discharge (Cusec)</th>
+                                        <th>No. of Outlets (Right Side)</th> -->
+                                        <th>Total CCA</th>
+                                        <th>Discharge (Cusec)</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -156,7 +156,7 @@
                                         @foreach($Distributaries as $canal)
                                         <tr>
                                             <td>{{ $canal->id }}</td>
-                                            <td>{{ $canal->name }}</td>
+                                            <td><strong>{{ $canal->name }}</strong></td>
                                             <td>{{ $canal->division->divsion_name ?? 'N/A' }}</td>
                                             <td>
                                                 @if($canal->canal)
@@ -166,9 +166,9 @@
                                                 @endif
                                             </td>
                                             <td>{{ $canal->minor->minor_name ?? 'N/A' }}</td>
-                                                <td>{{ $canal->no_outlet }}</td>
+                                         <!--<td>{{ $canal->no_outlet }}</td>
                                              <td>{{ $canal->no_outlet_ls }}</td>
-                                             <td>{{ $canal->no_outlet_rs }}</td>
+                                             <td>{{ $canal->no_outlet_rs }}</td>  -->
                                                <td>{{ $canal->total_no_cca }}</td>
                                            <td>{{ $canal->total_no_discharge_cusic }}</td>
 

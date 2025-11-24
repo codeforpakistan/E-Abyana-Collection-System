@@ -18,6 +18,8 @@ use App\Models\Minorcanal;
 use App\Models\Distributary;
 use App\Models\CanalBranch;
 use App\Models\PriceRevenue;
+use App\Models\PreviousArrear;
+use Carbon\Carbon;
 
 use DB;
 
@@ -25,6 +27,9 @@ class FarmerLandRecord extends Controller
 {
     public function dashboard()
     {
+        $sys_user_role_id = session('role_id');
+
+        if($sys_user_role_id==1 || $sys_user_role_id==16 || $sys_user_role_id==17){
         $totalIrrigators = DB::table('irrigators')->count();
         $totalCanals = DB::table('canals')->count();
         $totalDistry = DB::table('minorcanals')->count();
@@ -42,6 +47,57 @@ class FarmerLandRecord extends Controller
         $totalCropSurveyAmount = $totalCropSurveyAmount > 0 ? $totalCropSurveyAmount : 0;
 
         return view('dashboard', compact('totalIrrigators', 'totalCanals','totalDistry','totalMinor', 'totalOutlets','totalCropSurveyAmount'));
+        }elseif ($sys_user_role_id == 12) {
+                $sys_user_id = session('id');
+    $halqa_id = session('halqa_id');
+
+    $villageIds = DB::table('villages')
+        ->where('halqa_id', $halqa_id)
+        ->pluck('village_id');
+
+    $totalIrrigators = DB::table('irrigators')
+        ->whereIn('village_id', $villageIds)
+        ->count();
+
+    $totalCropSurveyAmount = DB::table('cropsurveys')
+        ->where('is_billed', 1)
+        ->where('patwari_user_id', $sys_user_id)
+        ->whereNotNull('area_marla')
+        ->whereNotNull('area_kanal')
+        ->where('area_marla', '!=', '')
+        ->where('area_kanal', '!=', '')
+        ->selectRaw('SUM(((area_marla / 20) + area_kanal) * crop_price) as total')
+        ->value('total');
+
+    $totalCropSurveyAmount = $totalCropSurveyAmount > 0 ? $totalCropSurveyAmount : 0;
+
+    return view('dashboard', compact('totalIrrigators', 'totalCropSurveyAmount'));
+        }elseif($sys_user_role_id == 15){
+
+    $sys_user_id = session('id');
+    $halqaIds = DB::table('zilladar_halqas')
+        ->where('user_id', $sys_user_id)
+        ->pluck('halqa_id');
+    $villageIds = DB::table('villages')
+        ->whereIn('halqa_id', $halqaIds)
+        ->pluck('village_id');
+    $totalIrrigators = DB::table('irrigators')
+        ->whereIn('village_id', $villageIds)
+        ->count();
+    $totalCropSurveyAmount = DB::table('cropsurveys')
+        ->where('is_billed', 1)
+        ->whereIn('village_id', $villageIds)
+        ->whereNotNull('area_marla')
+        ->whereNotNull('area_kanal')
+        ->where('area_marla', '!=', '')
+        ->where('area_kanal', '!=', '')
+        ->selectRaw('SUM(((area_marla / 20) + area_kanal) * crop_price) as total')
+        ->value('total');
+
+    $totalCropSurveyAmount = $totalCropSurveyAmount > 0 ? $totalCropSurveyAmount : 0;
+
+    return view('dashboard', compact('totalIrrigators', 'totalCropSurveyAmount'));
+}
     }
 public function LandRecord($id, $abs, $village_id, $canal_id, $div_id, Request $request)
 {
@@ -173,7 +229,17 @@ public function EditSurvey($id)
         return redirect()->back()->with('error', 'Survey not found.');
     }
 
-    // Determine water source type
+    $survey->registration_date = $survey->registration_date 
+    ? Carbon::parse($survey->registration_date)->format('d/m/Y') 
+    : null;
+
+    $survey->snowing_date = $survey->snowing_date 
+    ? Carbon::parse($survey->snowing_date)->format('d/m/Y') 
+    : null;
+    $survey->date = $survey->date 
+    ? Carbon::parse($survey->date)->format('d/m/Y') 
+    : null;
+    
     $waterSourceType = '';
     if (!is_null($survey->canal_id) && is_null($survey->minor_id) && is_null($survey->distri_id)) {
         $waterSourceType = 'Canal';
@@ -189,11 +255,8 @@ public function EditSurvey($id)
 }
 
 public function UpdateSurvey(Request $request, $crop_survey_id){
-
 try {
         $crop_survey = LandRecord::findOrFail($crop_survey_id);
-
-        // Validate required and optional fields
        $validatedData = $request->validate([
             'crop_id' => 'required',
             'khasra_number' => 'required',
@@ -227,8 +290,6 @@ try {
             'land_quality' => 'nullable',
             'patwari_user_id' => 'required|numeric|max:255',
         ]);
-
-        // Set default values for nullable fields
         $validatedData['length'] = $request->input('length', 0);
         $validatedData['width'] = $request->input('width', 0);
         $validatedData['area_marla'] = $request->input('area_marla', 0);
@@ -241,17 +302,19 @@ try {
         $validatedData['identifable_area_kanal'] = $request->input('identifable_area_kanal', 0);
         $validatedData['land_quality'] = $request->input('land_quality', 'N/A');
 
-        // Update survey
-        $crop_survey->update($validatedData);
+        $validatedData['registration_date'] = Carbon::createFromFormat('d/m/Y', $validatedData['registration_date'])->format('Y-m-d');
+        $validatedData['snowing_date']      = Carbon::createFromFormat('d/m/Y', $validatedData['snowing_date'])->format('Y-m-d');
+        $validatedData['date'] = !empty($validatedData['date'])
+        ? Carbon::createFromFormat('d/m/Y', $validatedData['date'])->format('Y-m-d')
+        : null;
 
-        // Redirect with success
+       
+        $crop_survey->update($validatedData);
         return redirect()->route('edit.survey', ['id' => $crop_survey_id])
                          ->with('success', 'Details Updated successfully!');
     } catch (\Exception $e) {
-        // Redirect with error
         return redirect()->back()->with('error', 'Somthing Went Wrong!, Try Again Error: ' . $e->getMessage());
     }
-
 }
 
 public function FarmerDistricts($divisionId)
@@ -329,13 +392,13 @@ public function storeFarmer(Request $request)
     $validatedData = $request->validate([
         'khasra_number' => 'required|string|max:255',
         'tenant_name' => 'required|string|max:255',
-        'registration_date' => 'required|date',
+        'registration_date' => 'required|string',
         'cultivators_info' => 'required|string|max:255',
-        'snowing_date' => 'required|date',
+        'snowing_date' => 'required|string',
         'land_assessment_marla' => 'required|string|max:255',
         'land_assessment_kanal' => 'required|string|max:255',
         'previous_crop' => 'required|string|max:255',
-        'date' => 'nullable|date',
+        'date' => 'nullable|string',
         'session_date' => 'required|string|max:255',
         'width' => 'numeric|min:0',
         'length' => 'numeric|min:0',
@@ -352,11 +415,11 @@ public function storeFarmer(Request $request)
         'village_id' => 'required|exists:villages,village_id',
         'irrigator_id' => 'required|exists:irrigators,id',
         'canal_id' => 'required|exists:canals,id',
-        'minor_id' => 'nullable|numeric|max:255',
-        'distri_id' => 'nullable|numeric|max:255',
-        'branch_id' => 'nullable|numeric|max:255',
+        'minor_id' => 'nullable|numeric',
+        'distri_id' => 'nullable|numeric',
+        'branch_id' => 'nullable|numeric',
         'crop_id' => 'required|exists:crops,id',
-        'outlet_id' => 'required|numeric|max:255',
+        'outlet_id' => 'required|numeric',
         'finalcrop_id' => 'nullable|exists:cropprices,id',
         'crop_price' => 'nullable|string|max:255',
         'is_billed' => 'required|numeric|max:255',
@@ -365,6 +428,11 @@ public function storeFarmer(Request $request)
         'patwari_user_id' => 'required|numeric|max:255',
     ]);
 
+    $validatedData['registration_date'] = Carbon::createFromFormat('d/m/Y', $validatedData['registration_date'])->format('Y-m-d');
+    $validatedData['snowing_date']      = Carbon::createFromFormat('d/m/Y', $validatedData['snowing_date'])->format('Y-m-d');
+    $validatedData['date'] = !empty($validatedData['date'])
+    ? Carbon::createFromFormat('d/m/Y', $validatedData['date'])->format('Y-m-d')
+    : null;
     LandRecord::create($validatedData);
     session()->flash('success', 'Data has been submitted successfully!');
     return redirect()->back();
@@ -425,7 +493,7 @@ public function surveyReviewForwardPatwari(Request $request, $crop_survey_id)
     $user_id = session('id'); 
     
     $validatedData = $request->validate([
-        'review' => 'required|string|max:255',
+         'review' => 'nullable|string|max:255',
     ]);
 
     $cropsurvey = LandRecord::findOrFail($crop_survey_id);
@@ -578,8 +646,14 @@ public function IrrigatorsForApproval()
         )
         ->where('cropsurveys.status', '=', 3)
         ->where('cropsurveys.is_billed', '=', 0)
-        ->groupBy('cropsurveys.irrigator_id', 'irrigators.irrigator_name', 'irrigators.irrigator_khata_number', 'villages.village_name', 'cropsurveys.status')
-        ->get();
+        ->groupBy(
+            'cropsurveys.irrigator_id',
+            'irrigators.irrigator_name',
+            'irrigators.irrigator_khata_number',
+            'villages.village_name',
+            'cropsurveys.status'
+        )
+        ->paginate(200); // ✅ pagination
     
     $grouped_survey_bill_eligible = $query_survey;
 
@@ -619,11 +693,12 @@ public function IrrigatorsForApproval()
 }
 
 
-
 public function LandSurveyZilladar()
 {
-    $halqa_id = session('halqa_id');
+    $halqa_id   = session('halqa_id');
     $district_id = session('district_id');
+    $user_id    = session('id'); 
+    $role_id    = session('role_id'); 
 
     $query_survey = DB::table('cropsurveys')
         ->join('villages', 'cropsurveys.village_id', '=', 'villages.village_id')
@@ -650,22 +725,31 @@ public function LandSurveyZilladar()
         )
         ->where('cropsurveys.status', '=', 1);
 
-    // **1️⃣ If Admin (halqa_id = 0), show all records**
-    if ($halqa_id == 0) {
-        // No extra filters needed, already getting all records
+    // **1️⃣ Admin (halqa_id = 0) → show all records**
+    if ($role_id === 1) {
+        // no filter
     }
-    // **2️⃣ If Zilladar (halqa_id > 0), filter district-wise**
+    // **2️⃣ Zilladar → filter records by halqas assigned to this user**
     else {
-        $query_survey->where('districts.id', '=', $district_id);
+        $halqaIds = DB::table('zilladar_halqas')
+            ->where('user_id', $user_id)
+            ->pluck('halqa_id')
+            ->toArray();
+
+        if (!empty($halqaIds)) {
+          $query_survey->whereIn('halqa.id', $halqaIds);
+        } else {
+            // If no halqas assigned, return empty
+            $query_survey->whereRaw('1 = 0');
+        }
     }
+    
 
     $survey_get = $query_survey->get();
     $grouped_survey = $survey_get->groupBy('irrigator_id');
 
     return view('LandRecord.ListLandSurveyZilladar', compact('grouped_survey'));
 }
-
-
 
 public function LandSurveyCollector()
 {
@@ -786,12 +870,6 @@ public function surveyView($id)
 
     return view('LandRecord.viewSurvey', compact('survey', 'waterSourceType'));
 }
-
-   
-
-
-
-
 
 public function surveyViewForwardPatwari($id) {
     $survey = DB::table('cropsurveys')
@@ -1079,6 +1157,7 @@ public function surveyBillView($id) {
         ->join('tehsils', 'halqa.tehsil_id', '=', 'tehsils.tehsil_id')
         ->join('districts', 'tehsils.district_id', '=', 'districts.id')
         ->join('divisions', 'districts.div_id', '=', 'divisions.id')
+        ->leftjoin('previous_arrears', 'irrigators.id', '=', 'previous_arrears.irrigator_id')
         ->select(
             'cropsurveys.crop_survey_id', 
             'cropsurveys.cultivators_info', 
@@ -1118,6 +1197,7 @@ public function surveyBillView($id) {
             'tehsils.tehsil_name',
             'districts.name',
             'divisions.divsion_name',
+            'previous_arrears.previous_arrears',
         )
         ->where('cropsurveys.irrigator_id', $id)
         ->where('cropsurveys.status', '=', 3)
@@ -1138,7 +1218,6 @@ public function surveyBillView($id) {
 
 
 public function surveyBillApprovalView($id) {
-    // Fetch all records from cropsurveys for the given irrigator_id
     $surveys = DB::table('cropsurveys')
         ->join('villages', 'cropsurveys.village_id', '=', 'villages.village_id')
         ->join('halqa', 'villages.halqa_id', '=', 'halqa.id')
@@ -1150,6 +1229,7 @@ public function surveyBillApprovalView($id) {
         ->join('tehsils', 'halqa.tehsil_id', '=', 'tehsils.tehsil_id')
         ->join('districts', 'tehsils.district_id', '=', 'districts.id')
         ->join('divisions', 'districts.div_id', '=', 'divisions.id')
+        ->leftjoin('previous_arrears', 'irrigators.id', '=', 'previous_arrears.irrigator_id')
         ->select(
             'cropsurveys.crop_survey_id', 
             'cropsurveys.cultivators_info', 
@@ -1174,7 +1254,7 @@ public function surveyBillApprovalView($id) {
             'cropsurveys.irrigated_area_marla',
             'cropsurveys.irrigated_area_kanal',
             'cropsurveys.land_quality',
-            
+
             // Single record fields from related tables
             'irrigators.id', 
             'irrigators.irrigator_name', 
@@ -1190,6 +1270,7 @@ public function surveyBillApprovalView($id) {
             'tehsils.tehsil_name',
             'districts.name',
             'divisions.divsion_name',
+            'previous_arrears.previous_arrears',
         )
         ->where('cropsurveys.irrigator_id', $id)
         ->where('cropsurveys.status', '=', 3)
@@ -1337,6 +1418,56 @@ public function surveyForwardMultiple(Request $request) {
     }
 }
 
+public function surveyForwardZilladarMultiple(Request $request) {
+    $role_id = session('role_id'); 
+    $user_id = session('id'); 
+    $irrigatorIds = $request->input('irrigator_ids');
+
+    if (empty($irrigatorIds)) {
+        return response()->json(['success' => false, 'message' => 'No Surveys selected!']);
+    }
+
+    try {
+        // Base update data
+        $updateData = [
+            'status' => 2,
+            'review' => 'Forwarded by Zilladar'
+        ];
+
+        LandRecord::whereIn('crop_survey_id', $irrigatorIds)
+            ->update($updateData);
+
+        return response()->json(['success' => true, 'message' => 'Forwarding successful for the selected records!']);
+    } catch (\Exception $e) {
+        return response()->json(['success' => false, 'message' => 'Database update failed!']);
+    }
+}
+
+public function surveyForwardCollectorMultiple(Request $request) {
+    $role_id = session('role_id'); 
+    $user_id = session('id'); 
+    $irrigatorIds = $request->input('irrigator_ids');
+
+    if (empty($irrigatorIds)) {
+        return response()->json(['success' => false, 'message' => 'No Surveys selected!']);
+    }
+
+    try {
+        // Base update data
+        $updateData = [
+            'status' => 3,
+            'review' => 'Forwarded by Deputy Collector'
+        ];
+
+        LandRecord::whereIn('crop_survey_id', $irrigatorIds)
+            ->update($updateData);
+
+        return response()->json(['success' => true, 'message' => 'Forwarding successful for the selected records!']);
+    } catch (\Exception $e) {
+        return response()->json(['success' => false, 'message' => 'Database update failed!']);
+    }
+}
+
 public function destroy($id)
 {
     $landRecord = LandRecord::findOrFail($id);
@@ -1348,6 +1479,21 @@ public function destroy($id)
 public function forwardedpatwari()
 {
     $halqa_id = session('halqa_id');
+
+    $selected_session_date = request()->session_date;
+
+    // Get last five distinct session_date values
+    $last_five_session_dates = DB::table('cropsurveys')
+        ->select('session_date')
+        ->distinct()
+        ->orderBy('session_date', 'desc')
+        ->limit(5)
+        ->pluck('session_date');
+
+    // Default session date = most recent
+    if (!$selected_session_date) {
+        $selected_session_date = $last_five_session_dates->first();
+    }
 
     $query_survey = DB::table('cropsurveys')
         ->join('villages', 'cropsurveys.village_id', '=', 'villages.village_id')
@@ -1371,22 +1517,26 @@ public function forwardedpatwari()
             'cropsurveys.status'
         );
 
-    // Apply filtering
     if ($halqa_id > 0) {
         $query_survey->where('villages.halqa_id', '=', $halqa_id);
     }
 
-    // Exclude status = 0 and fetch only status 1, 2, 3
+    // NEW: Session date filter
+    $query_survey->where('cropsurveys.session_date', '=', $selected_session_date);
+
     $query_survey->whereIn('cropsurveys.status', [1, 2, 3]);
 
-    // Execute query
     $survey_get = $query_survey->get();
 
-    // Group data by irrigator_id
     $grouped_survey = $survey_get->groupBy('irrigator_id');
 
-    return view('LandRecord.listforwardedpatwari', compact('grouped_survey'));
+    return view('LandRecord.listforwardedpatwari', compact(
+        'grouped_survey',
+        'last_five_session_dates',
+        'selected_session_date'
+    ));
 }
+
 public function forwardedzilladar()
 {
     $halqa_id = session('halqa_id');
@@ -1427,7 +1577,7 @@ public function forwardedzilladar()
     // Group data by irrigator_id
     $grouped_survey = $survey_get->groupBy('irrigator_id');
 
-    return view('LandRecord.listforwardedpatwari', compact('grouped_survey'));
+    return view('LandRecord.listforwardedzilladar', compact('grouped_survey'));
 }
 
 public function forwardedcollector()
@@ -1730,5 +1880,530 @@ public function ReportNakhshaParthalData()
 {
     
 }
+
+public function ReportViewIrrigatorsHalqaWise()
+{
+    $dropdown_divisions = DB::table('divisions')
+        ->select('divisions.id', 'divisions.divsion_name')
+        ->get();
+
+    return view('Reports.IrrigatorsListHalqaWiseReport', compact('dropdown_divisions'));
+}
+
+public function ReportViewIrrigatorsHalqaWiseData(Request $request)
+{
+    $division_id = $request->division_id;
+
+    $division = DB::table('divisions')
+        ->where('id', $division_id)
+        ->value('divsion_name');
+
+$data = DB::table('users as u')
+    ->join('halqa as h', 'u.halqa_id', '=', 'h.id')
+    ->join('tehsils as t', 'h.tehsil_id', '=', 't.tehsil_id')
+    ->join('districts as d', 't.district_id', '=', 'd.id')
+    ->join('divisions as divs', 'd.div_id', '=', 'divs.id')
+    ->leftJoin('villages as v', 'v.halqa_id', '=', 'h.id')
+    ->leftJoin('irrigators as i', 'i.village_id', '=', 'v.village_id')
+    ->where('divs.id', $division_id)
+    ->where('u.role_id', 12)
+    ->select(
+        'u.id as user_id',
+        'u.name as user_name',
+        'h.halqa_name',
+        'v.village_name',
+        DB::raw('COUNT(i.id) as irrigators_count')
+    )
+    ->groupBy('u.id', 'u.name', 'h.id', 'h.halqa_name', 'v.village_id', 'v.village_name')
+    ->orderBy('u.name')
+    ->orderBy('h.halqa_name')
+    ->orderBy('v.village_name')
+    ->get();
+
+        
+    $grouped = $data->groupBy('user_name')->map(function ($user) {
+        return $user->groupBy('halqa_name');
+    });
+
+    return response()->json([
+        'html' => view('Reports.PartialIrrigatorsListHalqaWiseReport', compact('grouped', 'division'))->render()
+    ]);
+}
+
+public function ReportViewPatwariSurvey()
+{
+    $dropdown_divisions = DB::table('divisions')
+        ->select('divisions.id', 'divisions.divsion_name')
+        ->get();
+    $dropdown_seasons = DB::table('crops')
+        ->select('crops.id', 'crops.crop_name')
+        ->get();
+    $dropdown_session_year = DB::table('cropsurveys')
+        ->select('session_date')
+        ->distinct()
+        ->orderBy('session_date', 'desc')
+        ->get();
+
+    return view('Reports.PatwariSurveyReport', compact('dropdown_divisions','dropdown_seasons','dropdown_session_year'));
+}
+
+public function ReportViewPatwariSurveyData(Request $request)
+{
+    $div_id       = $request->div_id;
+    $crop_id      = $request->crop_id;
+    $session_date = $request->session_date;
+
+    // Get division name
+    $division = DB::table('divisions')
+        ->where('id', $div_id)
+        ->value('divsion_name');
+
+    // Fetch survey counts grouped by User -> Halqa -> Village
+    $data = DB::table('users as u')
+        ->join('halqa as h', 'u.halqa_id', '=', 'h.id')
+        ->join('tehsils as t', 'h.tehsil_id', '=', 't.tehsil_id')
+        ->join('districts as d', 't.district_id', '=', 'd.id')
+        ->join('divisions as divs', 'd.div_id', '=', 'divs.id')
+        ->leftJoin('villages as v', 'v.halqa_id', '=', 'h.id')
+        ->leftJoin('cropsurveys as cs', 'cs.village_id', '=', 'v.village_id')
+        ->where('divs.id', $div_id)
+        ->where('u.role_id', 12) // Patwari role
+        ->when($crop_id, function ($q) use ($crop_id) {
+            $q->where('cs.crop_id', $crop_id);
+        })
+        ->when($session_date, function ($q) use ($session_date) {
+            $q->where('cs.session_date', $session_date);
+        })
+        ->select(
+            'u.id as user_id',
+            'u.name as user_name',
+            'h.halqa_name',
+            'v.village_name',
+            DB::raw('COUNT(cs.crop_survey_id) as surveys_count')
+        )
+        ->groupBy('u.id', 'u.name', 'h.id', 'h.halqa_name', 'v.village_id', 'v.village_name')
+        ->orderBy('u.name')
+        ->orderBy('h.halqa_name')
+        ->orderBy('v.village_name')
+        ->get();
+
+    $grouped = $data->groupBy('user_name')->map(function ($user) {
+        return $user->groupBy('halqa_name');
+    });
+
+    return response()->json([
+        'html' => view('Reports.PartialPatwariSurveyReport', compact('grouped', 'division'))->render()
+    ]);
+}
+
+public function ReportViewNoNic()
+{
+    $dropdown_divisions = DB::table('divisions')
+        ->select('divisions.id', 'divisions.divsion_name')
+        ->get();
+
+    return view('Reports.NoNicReport', compact('dropdown_divisions'));
+}
+
+public function get_irrigator_no_nic(Request $request)
+{
+    $division_id = $request->division_id;
+
+$division = DB::table('divisions')
+    ->where('id', $division_id)
+    ->value('divsion_name');
+
+$data = DB::table('users as u')
+    ->join('halqa as h', 'u.halqa_id', '=', 'h.id')
+    ->join('tehsils as t', 'h.tehsil_id', '=', 't.tehsil_id')
+    ->join('districts as d', 't.district_id', '=', 'd.id')
+    ->join('divisions as divs', 'd.div_id', '=', 'divs.id')
+    ->leftJoin('villages as v', 'v.halqa_id', '=', 'h.id')
+    ->leftJoin('irrigators as i', 'i.village_id', '=', 'v.village_id')
+    ->where('divs.id', $division_id)
+    ->where('u.role_id', 12)
+    ->where(function($query) {
+        $query->whereNull('i.cnic')
+              ->orWhere('i.cnic', 'NOT REGEXP', '^[0-9]{5}-[0-9]{7}-[0-9]{1}$');
+    })
+    ->select(
+        'u.id as user_id',
+        'u.name as user_name',
+        'h.halqa_name',
+        'v.village_name',
+        DB::raw('COUNT(i.id) as irrigators_count')
+    )
+    ->groupBy('u.id', 'u.name', 'h.id', 'h.halqa_name', 'v.village_id', 'v.village_name')
+    ->orderBy('u.name')
+    ->orderBy('h.halqa_name')
+    ->orderBy('v.village_name')
+    ->get();
+
+$grouped = $data->groupBy('user_name')->map(function ($user) {
+    return $user->groupBy('halqa_name');
+});
+
+    return response()->json([
+        'html' => view('Reports.PartialIrrigatorsListNoNicReport', compact('grouped', 'division'))->render()
+    ]);
+}
+
+public function ReportViewPendingArrears()
+{
+    $dropdown_divisions = DB::table('divisions')
+        ->select('divisions.id', 'divisions.divsion_name')
+        ->get();
+
+    return view('Reports.PendingArrearsReport', compact('dropdown_divisions'));
+}
+
+public function get_irrigator_pending_arrears(Request $request)
+{
+    $division_id = $request->division_id;
+
+    $division = DB::table('divisions')
+        ->where('id', $division_id)
+        ->value('divsion_name');
+
+    $data = DB::table('users as u')
+        ->join('halqa as h', 'u.halqa_id', '=', 'h.id')
+        ->join('tehsils as t', 'h.tehsil_id', '=', 't.tehsil_id')
+        ->join('districts as d', 't.district_id', '=', 'd.id')
+        ->join('divisions as divs', 'd.div_id', '=', 'divs.id')
+        ->leftJoin('villages as v', 'v.halqa_id', '=', 'h.id')
+        ->leftJoin('irrigators as i', 'i.village_id', '=', 'v.village_id')
+        ->leftJoin('previous_arrears as pa', 'pa.irrigator_id', '=', 'i.id')
+        ->where('divs.id', $division_id)
+        ->where('u.role_id', 12)
+        ->select(
+            'u.id as user_id',
+            'u.name as user_name',
+            'h.halqa_name',
+            'v.village_name',
+            // count irrigators who have entered arrears
+            DB::raw('SUM(CASE WHEN pa.irrigator_id IS NOT NULL THEN 1 ELSE 0 END) as arrears_entered'),
+            // count irrigators who have no arrears entered
+            DB::raw('SUM(CASE WHEN pa.irrigator_id IS NULL THEN 1 ELSE 0 END) as arrears_pending'),
+            DB::raw('COUNT(i.id) as total_irrigators')
+        )
+        ->groupBy('u.id', 'u.name', 'h.id', 'h.halqa_name', 'v.village_id', 'v.village_name')
+        ->orderBy('u.name')
+        ->orderBy('h.halqa_name')
+        ->orderBy('v.village_name')
+        ->get();
+
+    $grouped = $data->groupBy('user_name')->map(function ($user) {
+        return $user->groupBy('halqa_name');
+    });
+
+    return response()->json([
+        'html' => view('Reports.PartialIrrigatorsListPendingArrearsReport', compact('grouped', 'division'))->render()
+    ]);
+}
+
+public function ReportViewCcaArea()
+{
+    $dropdown_divisions = DB::table('divisions')
+        ->select('divisions.id', 'divisions.divsion_name')
+        ->get();
+
+    return view('Reports.AreaCCAReport', compact('dropdown_divisions'));
+}
+public function getCanalsByDivisionInReport(Request $request)
+{
+    $divisionId = $request->division_id;
+
+    $canals = DB::table('canals')
+        ->where('div_id', $divisionId)
+        ->select('id', 'canal_name')
+        ->get();
+    return response()->json($canals);
+}
+public function getOutletByCanalInReport(Request $request)
+{
+    $canalId = $request->canalId;
+
+    $outlets = DB::table('outlets')
+        ->where('canal_id', $canalId)
+        ->select('id', 'outlet_name')
+        ->get();
+    return response()->json($outlets);
+}
+
+public function get_cca_data_only_division(Request $request)
+{
+    $division_id = $request->division_id;
+
+    $division = DB::table('divisions')
+        ->where('id', $division_id)
+        ->value('divsion_name');
+
+    $total_cca_sum = DB::table('outlets')
+        ->where('div_id', $division_id)
+        ->sum('total_no_cca');
+    $total_cca_sum = number_format($total_cca_sum, 2, '.', '');
+
+    $outlet_ids = DB::table('outlets')
+        ->where('div_id', $division_id)
+        ->pluck('id');
+
+    // acres = (area_kanal / 8) + (area_marla / 160)
+
+    $assessment_cca_sum = DB::table('cropsurveys')
+        ->whereIn('outlet_id', $outlet_ids)
+        ->selectRaw('SUM((area_kanal / 8) + (area_marla / 160)) as total_assessment')
+        ->value('total_assessment');
+
+    $assessment_cca_sum = number_format($assessment_cca_sum, 2, '.', '');
+
+    /** 🔹 UPDATED CODE — Canal Wise Data WITH CANAL NAME **/
+    $canal_data = DB::table('outlets as o')
+        ->join('canals as c', 'o.canal_id', '=', 'c.id')
+        ->where('o.div_id', $division_id)
+        ->whereNotNull('o.canal_id')
+        ->select(
+            'o.canal_id',
+            'c.canal_name',
+            DB::raw('SUM(o.total_no_cca) as total_area_cca')
+        )
+        ->groupBy('o.canal_id', 'c.canal_name')
+        ->get();
+
+    $canal_wise_data = [];
+
+    foreach ($canal_data as $canal) {
+        $outlet_ids_by_canal = DB::table('outlets')
+            ->where('canal_id', $canal->canal_id)
+            ->pluck('id');
+
+        $assessment_by_canal = DB::table('cropsurveys')
+            ->whereIn('outlet_id', $outlet_ids_by_canal)
+            ->selectRaw('SUM((area_kanal / 8) + (area_marla / 160)) as total_assessment')
+            ->value('total_assessment');
+
+        $canal_wise_data[] = [
+            'canal_id'       => $canal->canal_id,
+            'canal_name'     => $canal->canal_name, // added canal name
+            'total_area_cca' => number_format($canal->total_area_cca, 2, '.', ''),
+            'assessment_cca' => number_format($assessment_by_canal ?? 0, 2, '.', ''),
+        ];
+    }
+    /** 🔹 END UPDATED CODE **/
+
+    return response()->json([
+        'html' => view(
+            'Reports.PartialAreaCCAReport',
+            compact('division', 'total_cca_sum', 'assessment_cca_sum', 'canal_wise_data')
+        )->render()
+    ]);
+}
+
+
+/* **************************************************************************** */
+public function get_cca_data_canal(Request $request)
+{
+    $division_id = $request->division_id;
+    $canal_id = $request->canal_id;
+
+    $division = DB::table('divisions')
+        ->where('id', $division_id)
+        ->value('divsion_name');
+
+    $canal = DB::table('canals')
+        ->where('id', $canal_id)
+        ->value('canal_name');
+
+    $total_cca_sum = DB::table('outlets')
+        ->where('canal_id', $canal_id)
+        ->sum('total_no_cca');
+    $total_cca_sum = number_format($total_cca_sum, 2, '.', '');
+
+    $outlet_ids = DB::table('outlets')
+        ->where('canal_id', $canal_id)
+        ->pluck('id');
+
+    $assessment_cca_sum = DB::table('cropsurveys')
+        ->whereIn('outlet_id', $outlet_ids)
+        ->selectRaw('SUM((area_kanal / 8) + (area_marla / 160)) as total_assessment')
+        ->value('total_assessment');
+
+    $assessment_cca_sum = number_format($assessment_cca_sum, 2, '.', '');
+
+    // ------------------ NEW CODE (DO NOT CHANGE YOUR EXISTING CODE ABOVE) ------------------
+
+$outlets = DB::table('outlets')
+    ->where('canal_id', $canal_id)
+    ->get()
+    ->groupBy(function($item) {
+        if ($item->minor_id && !$item->distrib_id && !$item->branch_id) {
+            return 'minor_'.$item->minor_id;
+        } elseif ($item->minor_id && $item->distrib_id && !$item->branch_id) {
+            return 'distrib_'.$item->distrib_id;
+        } elseif ($item->minor_id && $item->distrib_id && $item->branch_id) {
+            return 'branch_'.$item->branch_id;
+        } else {
+            return 'others';
+        }
+    });
+
+$minorNames   = DB::table('minorcanals')->pluck('minor_name','id');
+$distribNames = DB::table('distributaries')->pluck('name','id');
+$branchNames  = DB::table('canal_branch')->pluck('branch_name','id');
+// ----------------------------------------------------------------------------------------
+
+$assessmentPerOutlet = DB::table('cropsurveys')
+    ->selectRaw('outlet_id, SUM((area_kanal / 8) + (area_marla / 160)) as total_assessment')
+    ->whereIn('outlet_id', $outlet_ids)
+    ->groupBy('outlet_id')
+    ->pluck('total_assessment', 'outlet_id');
+
+
+return response()->json([
+    'html' => view(
+        'Reports.PartialAreaCanalCCAReport',
+        compact(
+            'division',
+            'canal',
+            'total_cca_sum',
+            'assessment_cca_sum',
+            'outlets',
+            'minorNames',
+            'distribNames',
+            'branchNames',
+            'assessmentPerOutlet'
+        )
+    )->render()
+]);
+}
+/* *************************************************************************** */
+public function get_cca_data_outlet(Request $request)
+{
+    $division_id = $request->division_id;
+    $canal_id = $request->canal_id;
+    $outlet_id = $request->outlet_id;
+
+    $division = DB::table('divisions')
+        ->where('id', $division_id)
+        ->value('divsion_name');
+
+    $canal = DB::table('canals')
+        ->where('id', $canal_id)
+        ->value('canal_name');
+
+    $outlet = DB::table('outlets')
+        ->where('id', $outlet_id)
+        ->value('outlet_name');
+
+    $total_cca_sum = DB::table('outlets')
+        ->where('id', $outlet_id)
+        ->sum('total_no_cca');
+    $total_cca_sum = number_format($total_cca_sum, 2, '.', '');
+
+    $outlet_ids = DB::table('outlets')
+        ->where('id', $outlet_id)
+        ->pluck('id');
+
+    $assessment_cca_sum = DB::table('cropsurveys')
+        ->whereIn('outlet_id', $outlet_ids)
+        ->selectRaw('SUM((area_kanal / 8) + (area_marla / 160)) as total_assessment')
+        ->value('total_assessment');
+
+    $assessment_cca_sum = number_format($assessment_cca_sum, 2, '.', '');
+
+    return response()->json([
+        'html' => view(
+            'Reports.PartialAreaOutletCCAReport',
+            compact('division','canal','outlet', 'total_cca_sum', 'assessment_cca_sum')
+        )->render()
+    ]);
+}
+
+public function ReportViewPatwariCca()
+{
+    $dropdown_divisions = DB::table('divisions')
+        ->select('divisions.id', 'divisions.divsion_name')
+        ->get();
+
+    $dropdown_seasons = DB::table('crops')
+        ->select('crops.id', 'crops.crop_name')
+        ->get();
+
+    $dropdown_session_year = DB::table('cropsurveys')
+        ->select('session_date')
+        ->distinct()
+        ->orderBy('session_date', 'desc')
+        ->get();
+
+    return view('Reports.PatwariCCAReport', compact('dropdown_divisions', 'dropdown_seasons', 'dropdown_session_year'));
+}
+
+public function get_patwari_halqa_cca(Request $request)
+{
+    $div_id       = $request->div_id;
+    $crop_id      = $request->crop_id;
+    $session_date = $request->session_date;
+    
+    $division = DB::table('divisions')
+        ->where('id', $div_id)
+        ->value('divsion_name');
+
+    $total_cca_sum = DB::table('outlets')
+        ->where('div_id', $div_id)
+        ->sum('total_no_cca');
+    $total_cca_sum = number_format($total_cca_sum, 2, '.', '');
+
+    $assessment_cca_sum = DB::table('users as u')
+        ->join('halqa as h', 'u.halqa_id', '=', 'h.id')
+        ->join('tehsils as t', 'h.tehsil_id', '=', 't.tehsil_id')
+        ->join('districts as d', 't.district_id', '=', 'd.id')
+        ->join('divisions as divs', 'd.div_id', '=', 'divs.id')
+        ->leftJoin('villages as v', 'v.halqa_id', '=', 'h.id')
+        ->leftJoin('cropsurveys as cs', 'cs.village_id', '=', 'v.village_id')
+        ->where('divs.id', $div_id)
+        ->where('u.role_id', 12) // Patwari role
+        ->when($crop_id, function ($q) use ($crop_id) {
+            $q->where('cs.crop_id', $crop_id);
+        })
+        ->when($session_date, function ($q) use ($session_date) {
+            $q->where('cs.session_date', $session_date);
+        })
+        ->select(
+            'u.id as user_id',
+            'u.name as user_name',
+            DB::raw('SUM((cs.area_kanal / 8) + (cs.area_marla / 160)) as assessment_cca')
+        )
+        ->groupBy('u.id', 'u.name')
+        ->get();
+
+    /** 🔹 NEW CODE START — calculate Halqa Total CCA for each Patwari **/
+    $halqa_cca_data = [];
+
+    foreach ($assessment_cca_sum as $item) {
+        $outlet_ids = DB::table('cropsurveys')
+            ->where('patwari_user_id', $item->user_id)
+            ->distinct()
+            ->pluck('outlet_id')
+            ->toArray();
+
+        if (!empty($outlet_ids)) {
+            $halqa_total_cca = DB::table('outlets')
+                ->whereIn('id', $outlet_ids)
+                ->sum('total_no_cca');
+        } else {
+            $halqa_total_cca = 0;
+        }
+
+        $halqa_cca_data[$item->user_id] = number_format($halqa_total_cca, 2, '.', '');
+    }
+    /** 🔹 NEW CODE END **/
+
+    return response()->json([
+        'html' => view(
+            'Reports.PartialPatwariHalqaWiseCCAReport',
+            compact('division', 'total_cca_sum', 'assessment_cca_sum', 'halqa_cca_data')
+        )->render()
+    ]);
+}
+
 
 }

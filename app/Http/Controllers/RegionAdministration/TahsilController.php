@@ -11,7 +11,6 @@ class TahsilController extends Controller
 {
     public function AddTahsil(){
         $tehsils = Tehsil::with('district.division')->paginate(10); 
-
         $districts = District::all();
         $divsions = Divsion::all();  
         return view('RegionManagments.AddTahsil', compact('districts','tehsils','divsions'));

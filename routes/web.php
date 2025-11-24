@@ -27,6 +27,100 @@ Route::get('/login', [Login::class, 'index'])->name('login');
 Route::post('/signin', [Login::class, 'make_login'])->name('signin');
 Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 
+//*********** Protected Routes for Admin User *******************/
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/', [FarmerLandRecord::class, 'dashboard']);
+    Route::get('/dashboard', [FarmerLandRecord::class, 'dashboard'])->name('dashboard');
+
+   Route::get('AddDistrict', [DistrictController::class, 'AddDistrict'])->name('AddDistrict');
+       Route::post('AddDistrict/add', [DistrictController::class, 'StoreDistrict'])->name('AddDistrict.add');
+    Route::delete('deletedistrict', [DistrictController::class, 'delete'])->name('district.delete');
+    Route::get('district/edit/{id}', [DistrictController::class, 'edit'])->name('district.edit');
+    Route::put('district/update/{id}', [DistrictController::class, 'update'])->name('district.update');
+
+    Route::delete('districts/delete', [DistrictController::class, 'deleteMultiple'])->name('districts.delete');
+    Route::delete('tehsil/delete', [TahsilController::class, 'deletetehsil'])->name('tehsil.delete');
+    Route::get('tehsil/edit/{id}', [TahsilController::class, 'edittehsil'])->name('tehsil.edit');
+    Route::get('/get-districts/{division_id}', [DistrictController::class, 'getByDivision']);
+
+    Route::put('tehsil/update/{id}', [TahsilController::class, 'updatetehsil'])->name('tehsil.update');
+
+    Route::post('CanalOutlet/add', [CanalOutLet::class, 'storeOutlet'])->name('CanalOutlet/add');
+    Route::get('AddVillage', [VollageController::class, 'AddVillage'])->name('AddVillage');
+    Route::post('AddVillage/add', [VollageController::class, 'StoreVillage'])->name('AddVillage/add');
+    Route::get('/village/{id}/edit', [VollageController::class, 'editvillage'])->name('village.edit');
+    Route::put('/village/update/{id}', [VollageController::class, 'updateVillage'])->name('village.update');
+
+    Route::get('AddCrop', [CropController::class, 'AddCrop'])->name('AddCrop');
+    Route::post('AddCrop/add', [CropController::class, 'storeCrop'])->name('AddCrop/add');
+    Route::post('Addprice/add', [PriceController::class, 'Storeprice'])->name('Addprice/add');
+    Route::post('Addrates/add', [PriceController::class, 'Storerates'])->name('Addrates/add');
+    Route::get('AddTahsil', [TahsilController::class, 'AddTahsil'])->name('AddTahsil');
+    Route::post('AddTahsil/add', [TahsilController::class, 'StoreTehsil'])->name('AddTahsil/add');
+    Route::get('AddDivsion', [DivsionController::class, 'AddDivsion'])->name('AddDivsion');
+
+    Route::get('AddHalqa', [HalqaController::class, 'Addhalqa'])->name('AddHalqa');
+    Route::post('AddHalqa/add', [HalqaController::class, 'storeHalqa'])->name('AddHalqa.add');
+    Route::get('/halqa/{id}/edit', [HalqaController::class, 'edithalqa'])->name('halqa.edit');
+    Route::put('/halqa/update/{id}', [HalqaController::class, 'updateHalqa'])->name('halqa.update');
+
+
+    Route::get('AddCanal', [CanalController::class, 'AddCanal'])->name('AddCanal');
+    Route::get('/minor-canals/edit/{id}', [CanalController::class, 'editminor'])->name('editminor');
+    Route::put('/updateMinorCanal/{id}', [CanalController::class, 'updateminor'])->name('updateMinorCanal');
+    Route::put('/Distributary/update/{id}', [CanalController::class, 'updatedistributary'])->name('updatedist');
+    
+    Route::get('/minor-dis/edit/{id}', [CanalController::class, 'editdistributary'])->name('editdist');
+    Route::put('/updatedist/update/{id}', [CanalController::class, 'updatedistributary'])->name('updatedist');
+    
+    Route::get('AddMinor-Canal', [CanalController::class, 'Addminor'])->name('AddMinor-Canal');
+    Route::get('Distributary', [CanalController::class, 'AddDistributary'])->name('Distributary');
+    Route::post('AddMinor-Canal/add', [CanalController::class, 'storeMinor'])->name('AddMinor-Canal/add');
+    Route::post('Distributary/add', [CanalController::class, 'storeDistributaries'])->name('Distributary/add');
+    Route::post('AddCanal/add', [CanalController::class, 'storecanal'])->name('AddCanal/add');
+    Route::get('CanalOutlet', [CanalOutLet::class, 'AddOutlet'])->name('CanalOutlet');
+    Route::post('AddDivsion/add', [DivsionController::class, 'StoreDivsion'])->name('AddDivsion/add');
+
+    Route::get('/outlets/edit/{id}', [CanalOutLet::class, 'edit'])->name('outlet.edit');
+    Route::put('/outlets/update/{id}', [CanalOutLet::class, 'update'])->name('outlet.update');
+    Route::get('AddBranch', [CanalController::class, 'AddBranch'])->name('AddBranch');
+
+    Route::get('AddRoles', [RulesController::class, 'Add'])->name('AddRoles');
+    Route::post('AddRoles/add', [RulesController::class, 'storeRoles'])->name('AddRoles.add');
+    Route::get('Addprice', [PriceController::class, 'Addprice'])->name('Addprice');
+    Route::get('Addrates', [PriceController::class, 'Addrates'])->name('Addrates');
+    Route::get('AddPermission', [PermissionController::class, 'AddPermission']);
+    Route::post('AddPermission/add', [PermissionController::class, 'storepermission'])->name('AddPermission.add');
+
+    Route::get('AssignRoles_Permission', [AssignRController::class, 'AddAssignRoles']);
+    Route::post('AssignRoles_Permission/add', [AssignRController::class, 'storeAssignRoles'])->name('AssignRoles_Permission.add');
+
+    Route::get('AddUser', [UserController::class, 'AddUser']);
+    Route::post('AddUser/add', [UserController::class, 'storeUser'])->name('AddUser.add');
+
+    Route::get('/canals/{id}/edit', [CanalController::class, 'edit'])->name('editCanal');
+    Route::put('/canals/{id}/update', [CanalController::class, 'update'])->name('updateCanal');
+    
+
+    Route::delete('/AddUser/{id}', [UserController::class, 'destroy'])->name('AddUser.destroy');
+    Route::put('/user/{id}', [UserController::class, 'updateUser'])->name('update.user');
+
+    Route::get('Edituser/{id}',[UserController::class,'editUser'])->name('edit.user');
+    Route::delete('/AddDivsion/{id}', [DivsionController::class, 'destroy'])->name('AddDivsion.destroy');
+
+    Route::get('Addprice/edit/{id}', [PriceController::class, 'edit'])->name('cropprice.edit');
+    Route::get('rates/edit/{id}', [PriceController::class, 'rates_edit'])->name('rates.edit');
+    Route::post('rates/update/{id}', [PriceController::class, 'rates_update'])->name('rates.update');
+    Route::post('Addprice/update/{id}', [PriceController::class, 'update'])->name('cropprice.update');
+
+    Route::post('Canalbranch/add', [CanalController::class, 'store'])->name('Canalbranch/add');
+    Route::get('Canalbranch', [CanalController::class, 'Addbranch'])->name('Canalbranch/Addbranch');
+
+    Route::get('/edit_division/{id}', [DivsionController::class, 'edit_division'])->name('edit_division');
+    Route::put('/edit_division/update/{id}', [DivsionController::class, 'update_division'])->name('update_division');
+
+});
+
 // Grouping protected routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [FarmerLandRecord::class, 'dashboard']);
@@ -59,52 +153,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', function () {
         return view('profile');
     });
-
-    // Your existing protected routes
-    Route::get('AddDistrict', [DistrictController::class, 'AddDistrict'])->name('AddDistrict');
-    Route::post('AddDistrict/add', [DistrictController::class, 'StoreDistrict'])->name('AddDistrict.add');
-    Route::delete('deletedistrict', [DistrictController::class, 'delete'])->name('district.delete');
-    Route::get('district/edit/{id}', [DistrictController::class, 'edit'])->name('district.edit');
-    Route::put('district/update/{id}', [DistrictController::class, 'update'])->name('district.update');
-
-    Route::delete('districts/delete', [DistrictController::class, 'deleteMultiple'])->name('districts.delete');
-    Route::delete('tehsil/delete', [TahsilController::class, 'deletetehsil'])->name('tehsil.delete');
-    Route::get('tehsil/edit/{id}', [TahsilController::class, 'edittehsil'])->name('tehsil.edit');
-    Route::get('/get-districts/{division_id}', [DistrictController::class, 'getByDivision']);
-
-Route::put('tehsil/update/{id}', [TahsilController::class, 'updatetehsil'])->name('tehsil.update');
-
-    Route::post('CanalOutlet/add', [CanalOutLet::class, 'storeOutlet'])->name('CanalOutlet/add');
-    Route::get('AddVillage', [VollageController::class, 'AddVillage'])->name('AddVillage');
-    Route::post('AddVillage/add', [VollageController::class, 'StoreVillage'])->name('AddVillage/add');
-
-    Route::get('AddCrop', [CropController::class, 'AddCrop'])->name('AddCrop');
-    Route::post('AddCrop/add', [CropController::class, 'storeCrop'])->name('AddCrop/add');
-    Route::post('Addprice/add', [PriceController::class, 'Storeprice'])->name('Addprice/add');
-    Route::post('Addrates/add', [PriceController::class, 'Storerates'])->name('Addrates/add');
-    Route::get('AddTahsil', [TahsilController::class, 'AddTahsil'])->name('AddTahsil');
-    Route::post('AddTahsil/add', [TahsilController::class, 'StoreTehsil'])->name('AddTahsil/add');
     
-    Route::get('/minor-canals/edit/{id}', [CanalController::class, 'editminor'])->name('editminor');
-    Route::put('/updateMinorCanal/{id}', [CanalController::class, 'updateminor'])->name('updateMinorCanal');
-    Route::put('/Distributary/update/{id}', [CanalController::class, 'updatedistributary'])->name('updatedist');
-    
-    Route::get('/minor-dis/edit/{id}', [CanalController::class, 'editdistributary'])->name('editdist');
-    Route::get('/updatedist/update/{id}', [CanalController::class, 'updatedistributary'])->name('updatedist');
-    Route::get('AddCanal', [CanalController::class, 'AddCanal'])->name('AddCanal');
-    Route::get('AddMinor-Canal', [CanalController::class, 'Addminor'])->name('AddMinor-Canal');
-    Route::get('Distributary', [CanalController::class, 'AddDistributary'])->name('Distributary');
-    Route::post('AddMinor-Canal/add', [CanalController::class, 'storeMinor'])->name('AddMinor-Canal/add');
-    Route::post('Distributary/add', [CanalController::class, 'storeDistributaries'])->name('Distributary/add');
-    Route::post('AddCanal/add', [CanalController::class, 'storecanal'])->name('AddCanal/add');
-    Route::get('CanalOutlet', [CanalOutLet::class, 'AddOutlet'])->name('CanalOutlet');
-    Route::get('AddDivsion', [DivsionController::class, 'AddDivsion'])->name('AddDivsion');
-    Route::post('AddDivsion/add', [DivsionController::class, 'StoreDivsion'])->name('AddDivsion/add');
-
-    Route::get('/outlets/edit/{id}', [CanalOutLet::class, 'edit'])->name('outlet.edit');
-    Route::put('/outlets/update/{id}', [CanalOutLet::class, 'update'])->name('outlet.update');
-
-
     Route::get('/get-canals/{division_id}', [CanalOutLet::class, 'getCanals']);
     Route::get('/get-minors/{canal_id}', [CanalOutLet::class, 'getMinors']);
     Route::get('/get-distributaries/{minor_id}', [CanalOutLet::class, 'getDistributaries']);
@@ -115,23 +164,6 @@ Route::put('tehsil/update/{id}', [TahsilController::class, 'updatetehsil'])->nam
     Route::get('AddFarmer', [FarmerController::class, 'AddFarmer'])->name('AddFarmer');
     Route::post('AddFarmer/add', [FarmerController::class, 'storeFarmer'])->name('AddFarmer.add');
 
-    Route::get('AddRoles', [RulesController::class, 'Add'])->name('AddRoles');
-    Route::post('AddRoles/add', [RulesController::class, 'storeRoles'])->name('AddRoles.add');
-    Route::get('Addprice', [PriceController::class, 'Addprice'])->name('Addprice');
-    Route::get('Addrates', [PriceController::class, 'Addrates'])->name('Addrates');
-    Route::get('AddPermission', [PermissionController::class, 'AddPermission']);
-    Route::post('AddPermission/add', [PermissionController::class, 'storepermission'])->name('AddPermission.add');
-
-    Route::get('AssignRoles_Permission', [AssignRController::class, 'AddAssignRoles']);
-    Route::post('AssignRoles_Permission/add', [AssignRController::class, 'storeAssignRoles'])->name('AssignRoles_Permission.add');
-
-    Route::get('AddUser', [UserController::class, 'AddUser']);
-    Route::post('AddUser/add', [UserController::class, 'storeUser'])->name('AddUser.add');
-
-    Route::get('AddHalqa', [HalqaController::class, 'Addhalqa'])->name('AddHalqa');
-    Route::post('AddHalqa/add', [HalqaController::class, 'storeHalqa'])->name('AddHalqa.add');
-    Route::get('/halqa/{id}/edit', [HalqaController::class, 'edithalqa'])->name('halqa.edit');
-
     Route::get('AddPatwari', [ControllerPatwari::class, 'AddPatwari']);
 
   Route::get('/getCanals', [CanalController::class, 'getCanals'])->name('getCanals');
@@ -141,10 +173,11 @@ Route::get('/fetch-canals', [CanalController::class, 'fetchCanals'])->name('fetc
 Route::get('/fetch-minor-canals', [CanalController::class, 'fetchMinorCanals'])->name('fetchMinorCanals');
 Route::get('/fetch-distributary-canals', [CanalController::class, 'fetchDistributaryCanals'])->name('fetchDistributaryCanals');
 
-Route::get('/canals/{id}/edit', [CanalController::class, 'edit'])->name('editCanal');
-Route::put('/canals/{id}/update', [CanalController::class, 'update'])->name('updateCanal');
+
 
     Route::get('AddIrragtor', [IrrigatorController::class, 'AddIrrigator'])->name('AddIrragtor');
+    Route::get('AddArrearsView', [IrrigatorController::class, 'AddArrearsView'])->name('AddArrearsView');
+    Route::post('/AddArrears/add', [IrrigatorController::class, 'StoreArrears'])->name('AddArrears.add');
     Route::post('/AddIrragtor/add', [IrrigatorController::class, 'StoreIrrgator'])->name('AddIrragtor.add');
     Route::get('ListIrrigator', [IrrigatorController::class, 'ListIrrigator']);
 
@@ -157,7 +190,7 @@ Route::put('/canals/{id}/update', [CanalController::class, 'update'])->name('upd
     Route::get('/get-tehsils/{districtId}', [FarmerLandRecord::class, 'FarmerTehsils']);
     Route::get('ListIrrigator', [IrrigatorController::class, 'ListIrrigator']);
     
-    Route::get('LandRecord/LandRecord/{id}/{abs}/{village_id}/{canal_id}{div_id}', [FarmerLandRecord::class, 'LandRecord'])->name('LandRecord.ListLandSurvey');
+    Route::get('LandRecord/LandRecord/{id}/{abs}/{village_id}/{canal_id}/{div_id}', [FarmerLandRecord::class, 'LandRecord'])->name('LandRecord.ListLandSurvey');
 
     Route::post('LandRecord/add', [FarmerLandRecord::class, 'storeFarmer'])->name('LandRecord.add');
     
@@ -183,19 +216,17 @@ Route::put('/canals/{id}/update', [CanalController::class, 'update'])->name('upd
     Route::get('survey_bill/approve/{irrigator_id}', [FarmerLandRecord::class, 'surveyApproved']);
     Route::post('survey_bill/approve_multiple', [FarmerLandRecord::class, 'surveyApproveMultiple'])->name('survey_bill.approve_multiple');
     Route::post('survey/forward_multiple', [FarmerLandRecord::class, 'surveyForwardMultiple'])->name('survey_forward.multiple');
+    Route::post('survey/forward_zilladar_multiple', [FarmerLandRecord::class, 'surveyForwardZilladarMultiple'])->name('survey_forward_zilladar.multiple');
+    Route::post('survey/forward_d_collector_multiple', [FarmerLandRecord::class, 'surveyForwardCollectorMultiple'])->name('survey_forward_d_collector.multiple');
     Route::post('survey_bill/view_multiple', [FarmerLandRecord::class, 'surveyBillMultiple'])->name('survey_bill.view_multiple');
     Route::get('ListIrrigatorsForApprovals', [FarmerLandRecord::class, 'IrrigatorsForApproval'])->name('ListIrrigatorsForApprovals');
     Route::get('edit-servey/{id}',[FarmerLandRecord::class,'EditSurvey'])->name('edit.survey');
     Route::put('/update-servey/{crop_survey_id}', [FarmerLandRecord::class, 'UpdateSurvey'])->name('update.survey');
     Route::get('ListIrrigatorsForBills', [FarmerLandRecord::class, 'IrrigatorsForBills']);
     Route::delete('/landservey/{id}', [FarmerLandRecord::class, 'destroy'])->name('landservey.destroy');
-    Route::delete('/AddUser/{id}', [UserController::class, 'destroy'])->name('AddUser.destroy');
-    Route::put('/user/{id}', [UserController::class, 'updateUser'])->name('update.user');
 
-    Route::get('Edituser/{id}',[UserController::class,'editUser'])->name('edit.user');
-    Route::delete('/AddDivsion/{id}', [DivsionController::class, 'destroy'])->name('AddDivsion.destroy');
     Route::delete('/irrigators/{id}', [IrrigatorController::class, 'destroy'])->name('irrigators.destroy');
-    Route::get('AddBranch', [CanalController::class, 'AddBranch'])->name('AddBranch');
+    
 
     Route::get('/irrigators', [IrrigatorController::class, 'AddIrrigator'])->name('irrigators.search');
 
@@ -221,19 +252,15 @@ Route::put('/canals/{id}/update', [CanalController::class, 'update'])->name('upd
     
 
     Route::get('edit-irrigator/{id}',[IrrigatorController::class,'editIrrigator'])->name('edit.irrigator');
-    Route::put('/irrigators/{id}', [IrrigatorController::class, 'update'])->name('update.irrigator');
-    Route::get('Addprice/edit/{id}', [PriceController::class, 'edit'])->name('cropprice.edit');
-    Route::get('rates/edit/{id}', [PriceController::class, 'rates_edit'])->name('rates.edit');
-    Route::post('rates/update/{id}', [PriceController::class, 'rates_update'])->name('rates.update');
-    Route::post('Addprice/update/{id}', [PriceController::class, 'update'])->name('cropprice.update');
+    Route::put('/update-irrigators/{id}', [IrrigatorController::class, 'update'])->name('update.irrigator');
+    
 
 
 Route::get('listforwardedpatwari', [FarmerLandRecord::class, 'forwardedpatwari'])->name('listforwardedpatwari');
 Route::get('listforwardedzilladar', [FarmerLandRecord::class, 'forwardedzilladar'])->name('listforwardedzilladar');
 Route::get('listforwardedcollertor', [FarmerLandRecord::class, 'forwardedcollector'])->name('listforwardedcollertor');
 Route::get('/irrigators/search', [IrrigatorController::class, 'Search'])->name('irrigator.search');
-Route::post('Canalbranch/add', [CanalController::class, 'store'])->name('Canalbranch/add');
-Route::get('Canalbranch', [CanalController::class, 'Addbranch'])->name('Canalbranch/Addbranch');
+
 
 //************************ REPORTS ************************************************/
 Route::get('ReportViewNaksha5', [FarmerLandRecord::class, 'ReportViewNaksha5'])->name('ReportViewNaksha5');
@@ -248,4 +275,25 @@ Route::post('ReportMoqabilataanData', [FarmerLandRecord::class, 'ReportMoqabilat
 Route::get('ReportViewNakhshaParthal', [FarmerLandRecord::class, 'ReportViewNakhshaParthal'])->name('ReportViewNakhshaParthal');
 Route::post('ReportNakhshaParthalData', [FarmerLandRecord::class, 'ReportNakhshaParthalData'])->name('ReportNakhshaParthalData');
 
+Route::get('ReportViewIrrigatorsHalqaWise', [FarmerLandRecord::class, 'ReportViewIrrigatorsHalqaWise'])->name('ReportViewIrrigatorsHalqaWise');
+Route::post('ReportViewIrrigatorsHalqaWiseData', [FarmerLandRecord::class, 'ReportViewIrrigatorsHalqaWiseData'])->name('ReportViewIrrigatorsHalqaWiseData');
+
+Route::get('ReportViewPatwariSurvey', [FarmerLandRecord::class, 'ReportViewPatwariSurvey'])->name('ReportViewPatwariSurvey');
+Route::post('ReportViewPatwariSurveyData', [FarmerLandRecord::class, 'ReportViewPatwariSurveyData'])->name('ReportViewPatwariSurveyData');
+
+Route::get('ReportViewNoNic', [FarmerLandRecord::class, 'ReportViewNoNic'])->name('ReportViewNoNic');
+Route::post('/get-irrigator-no-nic', [FarmerLandRecord::class, 'get_irrigator_no_nic'])->name('get-irrigator-no-nic');
+
+Route::get('ReportViewPendingArrears', [FarmerLandRecord::class, 'ReportViewPendingArrears'])->name('ReportViewPendingArrears');
+Route::post('/get-irrigator-pending-arrears', [FarmerLandRecord::class, 'get_irrigator_pending_arrears'])->name('get-irrigator-pending-arrears');
+
+Route::get('ReportViewCcaArea', [FarmerLandRecord::class, 'ReportViewCcaArea'])->name('ReportViewCcaArea');
+Route::get('/getCanalsByDivisionInReport', [FarmerLandRecord::class, 'getCanalsByDivisionInReport'])->name('getCanalsByDivisionInReport');
+Route::get('/getOutletByCanalInReport', [FarmerLandRecord::class, 'getOutletByCanalInReport'])->name('getOutletByCanalInReport');
+Route::post('/get-cca-data-only-division', [FarmerLandRecord::class, 'get_cca_data_only_division'])->name('get-cca-data-only-division');
+Route::post('/get-cca-data-canal', [FarmerLandRecord::class, 'get_cca_data_canal'])->name('get-cca-data-canal');
+Route::post('/get-cca-data-outlet', [FarmerLandRecord::class, 'get_cca_data_outlet'])->name('get-cca-data-outlet');
+
+Route::get('ReportViewPatwariCca', [FarmerLandRecord::class, 'ReportViewPatwariCca'])->name('ReportViewPatwariCca');
+Route::post('/get-patwari-halqa-cca', [FarmerLandRecord::class, 'get_patwari_halqa_cca'])->name('get-patwari-halqa-cca');
 });

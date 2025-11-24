@@ -205,7 +205,7 @@
 				}
 				, text: {
 					attrs: {
-						fill: "#4880FF"
+						fill: "#1B8D5F"
 					}
 					, attrsHover: {
 						fill: "#000"
@@ -222,7 +222,7 @@
 				}
 				, text: {
 					attrs: {
-						fill: "#4880FF"
+						fill: "#1B8D5F"
 					}
 					, attrsHover: {
 						fill: "#000"

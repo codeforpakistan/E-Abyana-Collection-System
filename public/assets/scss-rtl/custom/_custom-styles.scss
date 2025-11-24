@@ -1452,7 +1452,7 @@ div {
 	transform-origin: 50% 48%;
 	border-radius: 0%;
 	animation: drift 3000ms infinite linear;
-	background: linear-gradient(to bottom right, $primary, #4880FF);
+	background: linear-gradient(to bottom right, $primary, #1b8d5f);
 	&.-three {
 		animation: drift 5000ms infinite linear;
 	}
@@ -1794,7 +1794,7 @@ div {
 	}
 	.navbar {
 		position: fixed;
-		background: linear-gradient(to bottom right, $primary, #4880FF);
+		background: linear-gradient(to bottom right, $primary, #1b8d5f);
 		box-shadow: 0 2px 17px 2px rgba(0, 0, 0, 0.2);
 		z-index: 1003;
 	}
@@ -1945,7 +1945,7 @@ div {
     background: 0 0;
     border-top-left-radius: .25rem !important;
     border-bottom-left-radius: .25rem !important;
-    background: #4880FF;
+    background: #1B8D5F;
 }
 .tree li::before, .tree li::after {
     content: '';
@@ -1970,8 +1970,8 @@ outline:none;
     line-height: 1.5;
     color: #ffffff;
     content: "Browse";
-    background-color: #4880FF;
-    border-right: 1px solid #4880FF;
+    background-color: #1B8D5F;
+    border-right: 1px solid #1B8D5F;
     border-radius: 3px 0 0 3px;
 }
 @media (min-width: 1200px){

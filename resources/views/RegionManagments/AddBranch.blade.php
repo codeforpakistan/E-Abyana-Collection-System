@@ -89,7 +89,8 @@
                                 <label class="form-label">Branch Name </label>
                                 <input class="form-control" type="text" name="branch_name" required>
                             </div>
-                            <div class="row" style="margin-top:-10px;">
+                             </div>
+                           <!-- <div class="row" style="margin-top:-10px;">
                                 <div class="form-group col-4">
                                     <label class="form-label">No. of Outlets</label>
                                     <input class="form-control" type="text" name="no_outlet" required>
@@ -102,20 +103,20 @@
                                     <label class="form-label">No. of Outlets (RS)</label>
                                     <input class="form-control" type="text" name="no_outlet_rs" required>
                                 </div>
-                            </div>
+                            </div> -->
                         
                             <div class="row" style="margin-top:-10px;">
-                                <div class="form-group col-lg-6">
+                                <div class="form-group col-6">
                                     <label class="form-label">Total No. of CCA</label>
                                     <input class="form-control" type="text" name="total_no_cca" required>
                                 </div>
                         
-                                <div class="form-group col-lg-6">
+                                <div class="form-group col-6">
                                     <label class="form-label">Total No. of Discharge (Cusec)</label>
                                     <input class="form-control" type="text" name="total_no_discharge_cusic" required>
                                 </div>
                             </div>
-                        </div>
+                        
                     
                     
                       
@@ -142,18 +143,16 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered">
+                            <table style="font-size:13px;" class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>Branch Name</th>
                                         <th>Division</th>
                                         <th>Canal</th>
+                                        <th>Distry</th>
                                         <th>Minor</th>
-                                        <th>Distributary</th>
-                                        <th>No. of Outlets</th>
                                         <th>CCA</th>
-                                        <th>Discharge (Cusec)</th>
-                                        <th>Action</th>
+                                        <th>Disc (Cusec)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -164,26 +163,8 @@
                                             <td>{{ $branch->canal->canal_name ?? 'N/A' }}</td>
                                             <td>{{ $branch->minor->minor_name ?? 'N/A' }}</td>
                                             <td>{{ $branch->distributary->name ?? 'N/A' }}</td>
-                                            <td>{{ $branch->no_outlet }} (LS: {{ $branch->no_outlet_ls }}, RS: {{ $branch->no_outlet_rs }})</td>
                                             <td>{{ $branch->total_no_cca }}</td>
-                                            <td>{{ $branch->total_no_discharge_cusic }}</td>
-                                            <td>
-                                                <div class="d-flex gap-1">
-                                                    <a href="" class="btn btn-sm btn-warning">
-                                                        <i class="fa fa-edit"></i> Edit
-                                                    </a>
-                                            
-                                                    <form action="" method="POST"
-                                                          onsubmit="return confirm('Are you sure you want to delete this branch?');">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-sm btn-danger" type="submit">
-                                                            <i class="fa fa-trash"></i> Delete
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                            
+                                            <td>{{ $branch->total_no_discharge_cusic }}</td> 
                                         </tr>
                                         
                                     @endforeach

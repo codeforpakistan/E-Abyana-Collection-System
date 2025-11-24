@@ -99,9 +99,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                         
-                                
-                                <table id="example" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
+                                <table id="example123" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
                                     <thead>
                                         <tr>
                                             <th><input type="checkbox" id="select-all"></th>
@@ -141,6 +139,25 @@
         
         
     </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    
+        if (!$.fn.DataTable.isDataTable('#example123')) {
+        $('#example123').DataTable({
+            paging: true,
+            lengthChange: true,
+            searching: true,
+            ordering: true,
+            info: true,
+            autoWidth: false,
+            responsive: true,
+            pageLength: 100,
+            dom: 'lftip'
+        });
+    }
+});
+</script>
 
     @if(Session::has('success'))
         <script>
@@ -216,14 +233,8 @@
             });
         }
     </script>
-    
-    
-    <script> <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-</script>
-</div>
-
-
-              
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+</div>       
  @endsection
  
 

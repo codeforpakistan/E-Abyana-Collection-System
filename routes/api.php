@@ -16,6 +16,7 @@ use App\Http\Controllers\RegionAdministration\HalqaController;
 use App\Http\Controllers\RegionAdministration\CanalController;
 use App\Http\Controllers\RegionAdministration\CanalOutLet;
 use App\Models\Cropprice;
+use App\Models\AppVersion;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,7 +55,12 @@ Route::get('getDivision', [ApiController::class, 'getDivisions']);
 Route::post('AddTahsil/add', [TahsilController::class, 'StoreTehsil'])->name('AddTahsil.add');
 Route::post('/village', [ApiController::class, 'StoreVillage']);
 
+Route::post('/forward_survey_single/{crop_survey_id}', [ApiController::class, 'forward_survey_single']);
 
+Route::post('/delete_survey_single/{crop_survey_id}', [ApiController::class, 'delete_survey_single']);
+Route::get('edit-servey/{id}',[ApiController::class,'EditSurvey']);
+Route::put('/update-servey/{crop_survey_id}', [ApiController::class, 'UpdateSurvey']);
+Route::post('/irrigator-delete/{id}', [ApiController::class, 'delete_irrigator']);
 
 Route::match(['get', 'post',], 'canals', [ApiController::class, 'handleCanals']);
 Route::match(['get', 'put', 'delete'], 'canals/{id?}', [ApiController::class, 'handleCanals']);
@@ -71,8 +77,11 @@ Route::get('/getHalqaData', [ApiController::class, 'getHalqaData']);
 
 Route::get('/getvillageData', [ApiController::class, 'getvillageData']);
 Route::get('/villages', [ApiController::class, 'getVillagesWithTehsil']);
+Route::get('/getVillageByID/{village_id}', [ApiController::class, 'getVillageByID']);
 
 Route::post('/AddIrragtor', [ApiController::class, 'storeIrrigator']);
+Route::get('/edit-Irragtor/{id}/{halqa_id}', [ApiController::class, 'editIrrigator']);
+Route::put('/update-Irragtor/{id}', [ApiController::class, 'updateIrrigator']);
 Route::get('/roles', [ApiController::class, 'getRoles']);
 Route::get('/permissions', [ApiController::class, 'getPermissions']);
 Route::get('/getuserData', [ApiController::class, 'listUsers']);
@@ -92,6 +101,8 @@ Route::get('/outlet_by_distry/{minor_id}', [ApiController::class, 'apiGetOutletB
 Route::get('/outlet_by_minor/{distrib_id}', [ApiController::class, 'apiGetOutletByMinor']);
 Route::get('/outlet_by_branch/{branch_id}', [ApiController::class, 'apiGetOutletByBranch']);
 
+Route::post('survey_forward_multiple', [ApiController::class, 'surveyForwardMultiple']);
+
 Route::get('/croplist', [ApiController::class, 'apiGetcroplist']);
 Route::get('/revenuemodel', [ApiController::class, 'apiGetrevenueModel']);
 
@@ -99,13 +110,10 @@ Route::get('/distributaries', [ApiController::class, 'apiGetDistributaries']);
 Route::get('/canal-branches', [ApiController::class, 'apiGetCanalBranches']);
 Route::get('/canals', [ApiController::class, 'apiGetCanals']);
 
-// Route::get('/outlets', [ApiController::class, 'getOutlets']);
+Route::post('/irrigator-by-outlet/{village_id}', [ApiController::class, 'irrigator_by_outlet']);
+Route::get('/check-update', [ApiController::class, 'checkUpdate']);
 
 
-
-
-
-//
 
 
 

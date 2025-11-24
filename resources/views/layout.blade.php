@@ -73,6 +73,16 @@
             },
         };
     </script>
+    @if(env('GOOGLE_ANALYTICS_ID'))
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ env('GOOGLE_ANALYTICS_ID') }}"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', '{{ env('GOOGLE_ANALYTICS_ID') }}');
+</script>
+@endif
 
     <style>
         #example_paginate{
@@ -209,20 +219,26 @@ Welcome to E ABYANA
                                     <span>Add Irrigator</span>
                                 </a>
                             </li>
+                            <li>
+                                <a class="slide-item" href="{{ route('AddArrearsView') }}">
+                                    <span>Add Arrears</span>
+                                </a>
+                            </li>
 
                             <!-- <li><a class="slide-item" href="{{ url('ListIrrigator') }}"><span>
                                         ListIrrigator</span></a></li> -->
                         </ul>
                     </li>
                     @endif
-
+                    @if (session('role_id') != 17) 
                     <li class="slide">
                         <a class="side-menu__item" data-toggle="slide" href="#">
                             <i class="side-menu__icon fas fa-clipboard-list"></i>
                             <span class="side-menu__label">Manage Surveys</span>
                         </a>
+                    @endif
                         <ul class="slide-menu">
-                            @if (session('role_id') == 12 || session('role_id') == 17 || session('role_id') == 1) 
+                            @if (session('role_id') == 12 || session('role_id') == 1) 
                                 <li><a class="slide-item" href="{{ url('ListLandSurvey') }}"><span>  Survey</span></a></li>
                                 <li><a class="slide-item" href="{{ url('listforwardedpatwari') }}"><span> List Forwarded Patwari</span></a></li>
                             @endif
@@ -264,6 +280,12 @@ Welcome to E ABYANA
                             <li><a class="slide-item" href="{{ url('ReportViewJinswaar') }}"><span> Jinswaar</span></a></li>
                             <li><a class="slide-item" href="{{ url('ReportViewMoqabilataan') }}"><span> Moqabilataan</span></a></li>
                              <li><a class="slide-item" href="{{ url('ReportViewNakhshaParthal') }}"><span> Naksha Parhtaal</span></a></li>
+                             <li><a class="slide-item" href="{{ url('ReportViewIrrigatorsHalqaWise') }}"><span> Irrigators List Halqa Wise</span></a></li>
+                             <li><a class="slide-item" href="{{ url('ReportViewPatwariSurvey') }}"><span> Patwari's Survey Report</span></a></li>
+                             <li><a class="slide-item" href="{{ url('ReportViewNoNic') }}"><span> NO NIC Report</span></a></li>
+                             <li><a class="slide-item" href="{{ url('ReportViewPendingArrears') }}"><span> Pending Arrears Report</span></a></li>
+                             <li><a class="slide-item" href="{{ url('ReportViewCcaArea') }}"><span> CCA Area Report</span></a></li>
+                             <li><a class="slide-item" href="{{ url('ReportViewPatwariCca') }}"><span> Patwari CCA Report</span></a></li>
                         </ul>
                     </li>
                      @endif
@@ -579,7 +601,7 @@ Welcome to E ABYANA
             modal.classList.add("hidden"); // Hide modal
         }
     </script>
-<script>
+<!--<script>
     $(document).ready(function() {
         $('.select_search').select2();
         // Fetch Canals based on Division selection
@@ -642,7 +664,7 @@ Welcome to E ABYANA
             }
         });
     });
-</script>
+</script> -->
 
 </body>
 

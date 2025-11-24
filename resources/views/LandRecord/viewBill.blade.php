@@ -19,12 +19,24 @@ $nextMonthDate = $date->format('d-m-Y');
             background: white;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
+        .nobr {
+  display: block;
+  line-height: 0;
+  margin: 0;
+  padding: 0;
+}
         @media print {
             .a4 {
               box-shadow: none;
                 width: 100%;
                 height: auto;
             }
+            .nobr {
+  display: block;
+  line-height: 0;
+  margin: 0;
+  padding: 0;
+}
         }
     </style>
 </head>
@@ -76,38 +88,32 @@ $nextMonthDate = $date->format('d-m-Y');
        <div class="row" style="margin-left:2px; margin-right:2px;">
         <div class="col-md-8 col-sm-8" style="border:1px solid gray;">
           <div class="row">
-            <div class="col-md-4 col-sm-4">
-              <span><strong>Consumer ID</strong></span>
-              <p>1000000000{{$relatedData->id}}</p>
-              <span><strong>Name</strong></span>
-              <p>{{$relatedData->irrigator_name}}</p>
-              <span><strong>Fathar Name</strong></span>
-              <p>{{$relatedData->irrigator_f_name}}</p>
-              <span><strong>Khata No</strong></span>
-              <p>{{$relatedData->irrigator_khata_number}}</p>
+            <div class="col-md-6 col-sm-6">
+              <span><strong>Consumer ID:</strong></span>&nbsp;<span>100000000{{$relatedData->id}}</span><span class="nobr"><br></span>
+              <span><strong>Khata No:</strong></span>&nbsp;<span>{{$relatedData->irrigator_khata_number}}</span><span class="nobr"><br></span>
+              <span><strong>Name:</strong></span>&nbsp;<span>{{$relatedData->irrigator_name}}</span><span class="nobr"><br></span>
+              <span><strong>Fathar Name:</strong></span>&nbsp;<span>{{$relatedData->irrigator_f_name}}</span><span class="nobr"><br></span>
             </div>
 
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-6 col-sm-6">
              <!-- <span><strong>Canal</strong></span>
               <p>{{$relatedData->canal_name}}</p> -->
-              <span><strong>Outlet</strong></span>
-              <p>{{$relatedData->outlet_name}}</p>
-              <span><strong>Division</strong></span>
-              <p>{{$relatedData->divsion_name}}</p>
-              <span><strong>District</strong></span>
-              <p>{{$relatedData->name}}</p>
+              <span><strong>Division:</strong></span>&nbsp;<span>{{$relatedData->divsion_name}}</span><span class="nobr"><br></span>
+              <span><strong>Halqa:</strong></span>&nbsp;<span>{{$relatedData->halqa_name}}</span><span class="nobr"><br></span>
+              <span><strong>Village:</strong></span>&nbsp;<span>{{$relatedData->village_name}}</span><span class="nobr"><br></span>
+             <!-- <span><strong>Outlet:</strong></span>&nbsp;<span>{{$relatedData->outlet_name}}</span><span class="nobr"><br></span> -->
+              <span><strong>Crop Season:</strong></span>&nbsp;<span>{{$relatedData->crop_name}}-{{$relatedData->session_date}}</span><span class="nobr"><br></span>
+              <!--<span><strong>District</strong></span>
+              <p>{{$relatedData->name}}</p> -->
             </div>
 
-            <div class="col-md-4 col-sm-4">
+           <!-- <div class="col-md-4 col-sm-4">
               <span><strong>Tehsil</strong></span>
               <p>{{$relatedData->tehsil_name}}</p>
-              <span><strong>Halqa</strong></span>
-              <p>{{$relatedData->halqa_name}}</p>
+              
               <span><strong>Village</strong></span>
               <p>{{$relatedData->village_name}}</p>
-              <span><strong>Crop Season</strong></span>
-              <p>{{$relatedData->crop_name}}-{{$relatedData->session_date}}</p>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="col-md-4 col-sm-4" style="border:1px solid gray;">
@@ -121,7 +127,7 @@ $nextMonthDate = $date->format('d-m-Y');
        <table class="table table-bordered text-nowrap w-100">
         <thead>
          <tr>
-          <th style="width:200px;">Authorized Use</th>
+          <th class="text-center" style="width:200px;">Crop</th>
           <th class="text-center" style="width:50px;">Rate (Rs)</th>
           <th class="text-center" style="width:80px;">Area</th>
           <th class="text-center" style="width:50px;">Amount</th>
@@ -142,7 +148,7 @@ $nextMonthDate = $date->format('d-m-Y');
        $total_kanal+=$survey->area_kanal;
         @endphp
         <tr>
-            <td>Irrigable Area <span style="float:right;">قابل آبپاشی رقبہ</span></td>
+            <td class="text-center">{{$survey->final_crop}}</td>
             <td class="text-center">{{$survey->crop_price}}</td>
             <td class="text-center">{{$survey->area_marla}} Marla - {{$survey->area_kanal}} Kanal</td>
             <td class="text-center">{{ number_format($amount, 2) }}</td>
@@ -163,7 +169,7 @@ $nextMonthDate = $date->format('d-m-Y');
         </tr>
         <tr>
           <td style="width:430px;">Arrears</td>
-          <td class="text-center" style="width:50px;"><strong>0</strong></td>
+          <td class="text-center" style="width:50px;"><strong>{{ number_format($relatedData->previous_arrears ?? 0, 2) }}</strong></td>
         </tr>
         <tr>
           <td style="width:430px;">Total Payable Amount</td>
@@ -182,11 +188,11 @@ $nextMonthDate = $date->format('d-m-Y');
         </tr>
       </table>
        </div>
-       <hr>
+       <!--<hr>
 
        <div class="row align-items-center">
         <div class="col-md-5 col-sm-5 d-flex align-items-center">
-                 <img src="{{asset('assets/img/avatar/logo.jpg')}}" alt="E-Abyana Logo" class="mr-3" style="width: 80px;"> <!-- Logo -->
+                 <img src="{{asset('assets/img/avatar/logo.jpg')}}" alt="E-Abyana Logo" class="mr-3" style="width: 80px;">
                  <div>
                      <h5 class="mb-0">E-Abyana</h5>
                      <h6 class="mb-0">Irrigation Department KPK</h6> 
@@ -210,7 +216,7 @@ $nextMonthDate = $date->format('d-m-Y');
                      </div>
                      <div class="arrears mr-1 text-center" style="height:50px; width:80px; border:1px solid gray;">
                       <p style="margin:0px;"><strong>Arrear</strong></p>
-                      <p style="margin:0px;">0</p>
+                      <p style="margin:0px;">{{ number_format($relatedData->previous_arrears ?? 0, 2) }}</p>
                      </div>
                      <div class="total mr-1 text-center" style="height:50px; width:80px; border:1px solid gray;">
                       <p style="margin:0px;"><strong>Total</strong></p>
@@ -227,7 +233,7 @@ $nextMonthDate = $date->format('d-m-Y');
             <th>Name</th>
             <th>F Name</th>
             <th>Khata No</th>
-           <!-- <th>Canal</th> -->
+           <th>Canal</th>
             <th>Outlet</th>
             <th>Crop Season</th>
           </tr>
@@ -236,7 +242,7 @@ $nextMonthDate = $date->format('d-m-Y');
             <td>{{$relatedData->irrigator_name}}</td>
             <td>{{$relatedData->irrigator_f_name}}</td>
             <td>{{$relatedData->irrigator_khata_number}}</td>
-           <!-- <td>{{$relatedData->canal_name}}</td> -->
+           <td>{{$relatedData->canal_name}}</td>
             <td>{{$relatedData->outlet_name}}</td>
             <td>{{$relatedData->crop_name}}-{{$relatedData->session_date}}</td>
           </tr>
@@ -255,7 +261,7 @@ $nextMonthDate = $date->format('d-m-Y');
           <td style="width:80px;" class="text-center"><strong>{{number_format($total_amount*1.10, 2)}}</strong></td>
         </tr>
         </table>
-        </div>
+        </div> -->
       </div>
       </div>
       </div>

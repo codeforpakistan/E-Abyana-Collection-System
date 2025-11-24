@@ -553,44 +553,58 @@ public function getHalqaData()
             ], 500); // HTTP 500 Internal Server Error
         }
     }
-    
-public function storeIrrigator(Request $request)
-    {
-        // Validate incoming data
-        $validated = $request->validate([
-            'irrigator_name' => 'required|string|max:255',
-            'irrigator_khata_number' => 'required|string|max:255',
-             'irrigator_khata_number' => 'required|string|unique:irrigators,irrigator_khata_number',
-            'irrigator_mobile_number' => 'required|string|max:255',
-            'village_id' => 'required|exists:villages,village_id', 
-        ], [
-         'irrigator_khata_number.unique' => 'The irrigator khata number name has already been taken.',
-            'village_id.required' => 'The village is required.',
-            'village_id.exists' => 'The selected village does not exist.',
-        ]);
 
-    // Check for duplicate khata number within the same village
-    $duplicate = Irrigator::where('irrigator_khata_number', $request->irrigator_khata_number)
-        ->where('village_id', $request->village_id)
-        ->exists();
+public function getVillageByID($village_id)
+{
+    $village_name = Village::where('village_id', $village_id)->value('village_name');
 
-    if ($duplicate) {
-        return response()->json([
-            'success' => false,
-            'error' => 'The irrigator with the same khata number already exists in this village.'
-        ], 422);
+    if (!$village_name) {
+        return response()->json(['error' => 'Village not found.'], 404);
     }
 
-    // Store the data
-    $irrigator = Irrigator::create($validated);
-
-    // Return response
-    return response()->json([
-        'success' => true,
-        'message' => 'Data has been submitted successfully.',
-        'data' => $irrigator,
-    ], 201);
+    return response()->json(['village_name' => $village_name]);
 }
+    
+public function storeIrrigator(Request $request)
+{
+    try {
+        $validated = $request->validate([
+            'irrigator_name' => 'required|string|max:255',
+            'irrigator_khata_number' => 'required|integer',
+            'cnic' => 'nullable|string|max:255',
+            'irrigator_f_name' => 'required|string|max:255',
+            'irrigator_mobile_number' => 'nullable|string|max:255',
+            'village_id' => 'required|exists:villages,village_id',
+            'canal_id' => 'required|exists:canals,id',
+            'div_id' => 'required|exists:divisions,id',
+        ]);
+
+        $duplicate = Irrigator::where('irrigator_khata_number', $request->irrigator_khata_number)
+            ->where('village_id', $request->village_id)
+            ->exists();
+
+        if ($duplicate) {
+            return response()->json([
+                'success' => false,
+                'error' => 'The irrigator with the same khata number already exists in this village.'
+            ], 422);
+        }
+
+        $irrigator = Irrigator::create($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Irrigator Created successfully.',
+            'data' => $irrigator
+        ], 201);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'error' => 'Something went wrong. Please try again later.'
+        ], 500);
+    }
+}
+
 
     // public function getIrrigators(Request $request)
     // {
@@ -660,6 +674,7 @@ public function getIrrigators(Request $request)
         ->select(
             'irrigators.id', 
             'irrigators.irrigator_name', 
+             'irrigators.irrigator_f_name', 
             'irrigators.irrigator_khata_number', 
             'irrigators.irrigator_mobile_number', 
             'villages.village_id AS village_id',
@@ -673,8 +688,10 @@ public function getIrrigators(Request $request)
             'divisions.id AS div_id',
             'divisions.divsion_name AS divsion_name',
             'irrigators.canal_id',
-            'canals.canal_name'
-        );
+            'canals.canal_name',
+            'canals.c_type'
+        )
+      ->orderByRaw('CAST(irrigators.irrigator_khata_number AS UNSIGNED) ASC');
 
     // Apply filter based on halqa_id
 if ($halqa_id > 0) {
@@ -719,73 +736,92 @@ public function getPermissions()
     ], 200); // Return JSON response
 }
 
-    public function storesurvey(Request $request)
-    {
-        try {
-            // Validate the request data with custom error messages
-            $validatedData = $request->validate([
-     'khasra_number' => 'required|string|max:255',
-        'tenant_name' => 'required|string|max:255',
-        'registration_date' => 'required|date',
-        'cultivators_info' => 'required|string|max:255',
-        'snowing_date' => 'required|date',
-        'land_assessment_marla' => 'required|string|max:255',
-        'land_assessment_kanal' =>'required|string|max:255',
-        'previous_crop' => 'required|string|max:255',
-        'date' => 'required|date',
-        'session_date' => 'required|date',
-        'width' => 'required|numeric|min:0',
-        'length' => 'required|numeric|min:0',
-        'area_marla' => 'nullable|numeric|min:0',
-        'area_kanal' => 'required|numeric|min:0',
-        'double_crop_marla' => 'required|string|max:255',
-        'double_crop_kanal' => 'required|string|max:255',
-        'identifable_area_marla' =>'required|string|max:255',
-        'identifable_area_kanal' =>'required|string|max:255',
-        'irrigated_area_marla' => 'required|numeric|min:0',
-        'irrigated_area_kanal' => 'required|numeric|min:0',
-        'land_quality' => 'required|string|max:255',
-        'irrigator_khata_number' => 'required|string|max:255',
-        'village_id' => 'required|exists:villages,village_id',
-        'irrigator_id' => 'required|exists:irrigators,id',
-        'canal_id' => 'required|exists:canals,id',
-        'crop_id' => 'required|exists:crops,id',
-        'outlet_id' => 'required|exists:outlets,id',
-        'finalcrop_id' => 'required|exists:cropprices,id',
-        'crop_price' => 'required|string|max:255',
-            ], [
-                'registration_date.date' => 'The registration date must be a valid date.',
-                'snowing_date.date' => 'The snowing date must be a valid date.',
-                // Add other custom messages as needed
+public function storesurvey(Request $request)
+{
+    try {
+        // Handle canalType logic like in web controller
+        if ($request->canalType == 'canal') {
+            $request->merge([
+                'outlet_id' => $request->canal_outlet_id,
+                'minor_id' => null,
+                'distri_id' => null,
             ]);
-
-
-
-            $landRecord = LandRecord::create($validatedData);
-
-            // Return a success response
-            return response()->json([
-                'success' => true,
-                'message' => 'Data has been submitted successfully!',
-                'data' => $landRecord,
-            ], 201); // 201 Created
-        } catch (ValidationException $e) {
-            // Catch and handle validation errors
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation failed.',
-                'errors' => $e->errors(),
-            ], 422); // 422 Unprocessable Entity
-        } catch (\Exception $e) {
-            // Catch and handle general exceptions
-
-
-            return response()->json([
-                'success' => false,
-                'message' => 'An error occurred: ' . $e->getMessage(),
-            ], 500); // 500 Internal Server Error
+        } elseif ($request->canalType == 'minor_canal') {
+            $request->merge([
+                'outlet_id' => $request->minor_outlet_id,
+                'minor_id' => $request->canal_minor_id,
+                'distri_id' => null,
+            ]);
+        } elseif ($request->canalType == 'distributory') {
+            $request->merge([
+                'outlet_id' => $request->distri_outlet_id,
+                'minor_id' => $request->distri_minor_id,
+                'distri_id' => $request->distri_id,
+            ]);
         }
+
+       // Updated validation rules
+        $validatedData = $request->validate([
+            'khasra_number' => 'required|string',
+            'tenant_name' => 'required|string',
+            'registration_date' => 'required|date',
+            'cultivators_info' => 'required|string',
+            'snowing_date' => 'required|date',
+            'land_assessment_marla' => 'required|string',
+            'land_assessment_kanal' => 'required|string',
+            'previous_crop' => 'required|string|max:255',
+            'date' => 'nullable|date',
+            'session_date' => 'required|string',
+            'width' => 'numeric|min:0',
+            'length' => 'numeric|min:0',
+            'area_marla' => 'nullable|numeric|min:0',
+            'area_kanal' => 'nullable|numeric|min:0',
+            'double_crop_marla' => 'required|string',
+            'double_crop_kanal' => 'required|string',
+            'identifable_area_marla' => 'required|string',
+            'identifable_area_kanal' => 'required|string',
+            'irrigated_area_marla' => 'required|numeric|min:0',
+            'irrigated_area_kanal' => 'required|numeric|min:0',
+            'land_quality' => 'required|string',
+            'irrigator_khata_number' => 'required|string',
+            'village_id' => 'required|exists:villages,village_id',
+            'irrigator_id' => 'required|exists:irrigators,id',
+            'canal_id' => 'required|exists:canals,id',
+            'minor_id' => 'nullable|numeric',
+            'distri_id' => 'nullable|numeric',
+            'branch_id' => 'nullable|numeric',
+            'crop_id' => 'required|exists:crops,id',
+            'outlet_id' => 'required|numeric',
+            'finalcrop_id' => 'nullable|exists:cropprices,id',
+            'crop_price' => 'nullable|string',
+            'is_billed' => 'required|numeric',
+            'review' => 'required|string',
+            'status' => 'required|numeric',
+            'patwari_user_id' => 'required|numeric',
+        ]);
+
+        // Store data
+        $landRecord = LandRecord::create($validatedData);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data has been submitted successfully!',
+            'data' => $landRecord,
+        ], 201);
+    } catch (ValidationException $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Validation failed.',
+            'errors' => $e->errors(),
+        ], 422);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'An error occurred: ' . $e->getMessage(),
+        ], 500);
     }
+}
+
 
 
 public function manageCrop(Request $request, $id = null)
@@ -875,24 +911,27 @@ public function getLandSurveys(Request $request)
     try {
         $halqa_id = auth()->user()->halqa_id;
 
-        $query_survey = DB::table('cropsurveys')
-            ->join('villages', 'cropsurveys.village_id', '=', 'villages.village_id')
-            ->join('halqa', 'villages.halqa_id', '=', 'halqa.id')
-            ->join('irrigators', 'cropsurveys.irrigator_id', '=', 'irrigators.id')
-            ->join('cropprices', 'cropsurveys.finalcrop_id', '=', 'cropprices.id')
-            ->select(
-                'cropsurveys.crop_survey_id', 
-                'irrigators.irrigator_name', 
-                'irrigators.irrigator_khata_number', 
-                'cropsurveys.cultivators_info', 
-                'cropprices.final_crop', 
-                'cropsurveys.crop_price', 
-                'cropsurveys.date', 
-                'cropsurveys.width', 
-                'cropsurveys.length', 
-                'cropsurveys.area_marla', 
-                'cropsurveys.area_kanal'
-            );
+$query_survey = DB::table('cropsurveys')
+    ->join('villages', 'cropsurveys.village_id', '=', 'villages.village_id')
+    ->join('halqa', 'villages.halqa_id', '=', 'halqa.id')
+    ->join('irrigators', 'cropsurveys.irrigator_id', '=', 'irrigators.id')
+    ->join('cropprices', 'cropsurveys.finalcrop_id', '=', 'cropprices.id')
+    ->where('cropsurveys.status', 0)
+    ->select(
+        'cropsurveys.crop_survey_id', 
+        'irrigators.id as irrigator_id',
+        'irrigators.irrigator_name', 
+        'irrigators.irrigator_f_name', 
+        'irrigators.irrigator_khata_number', 
+        'cropsurveys.cultivators_info', 
+        'cropprices.id as final_crop_id',
+        'cropprices.final_crop', 
+        'cropsurveys.crop_price', 
+        'cropsurveys.date',
+        'cropsurveys.area_marla', 
+        'cropsurveys.area_kanal',
+        'villages.village_name'
+    );
 
         if ($halqa_id > 0) {
             $query_survey->where('villages.halqa_id', '=', $halqa_id);
@@ -903,20 +942,31 @@ public function getLandSurveys(Request $request)
         if ($survey_data->isEmpty()) {
             return response()->json([
                 'success' => false,
-                'message' => 'No survey data found for the given halqa.',
+                'message' => 'No survey data found.',
                 'data' => []
             ], 404);
         }
 
+        // Group by irrigator_id
+        $grouped = $survey_data->groupBy('irrigator_id')->map(function ($items, $key) {
+            return [
+                'irrigator_id' => $key,
+                'irrigator_name' => $items[0]->irrigator_name ?? '',
+                'irrigator_khata_number' => $items[0]->irrigator_khata_number ?? '',
+                'surveys' => $items
+            ];
+        })->values(); // Re-index to avoid object keys
+
         return response()->json([
             'success' => true,
-            'message' => 'Survey data retrieved successfully.',
-            'data' => $survey_data
+            'message' => 'Grouped survey data retrieved successfully.',
+            'data' => $grouped
         ], 200);
+
     } catch (\Exception $e) {
         return response()->json([
             'success' => false,
-            'message' => 'An error occurred while retrieving survey data.',
+            'message' => 'Error while fetching survey data.',
             'error' => $e->getMessage()
         ], 500);
     }
@@ -1301,7 +1351,17 @@ public function apiGetBranchByMinor($distrib_id)
 
 public function apiGetOutletByCanal($canal_id)
 {
-    $Outlets = Outlet::where('canal_id', $canal_id)->get();
+        $Outlets = Outlet::where('canal_id', $canal_id)
+    ->where(function($query) {
+        $query->whereNull('minor_id')->orWhere('minor_id', '');
+    })
+    ->where(function($query) {
+        $query->whereNull('distrib_id')->orWhere('distrib_id', '');
+    })
+    ->where(function($query) {
+        $query->whereNull('branch_id')->orWhere('branch_id', '');
+    })
+    ->get();
 
     return response()->json([
         'status' => true,
@@ -1444,6 +1504,339 @@ public function apiGetrevenueModel()
         'data' => $PriceRevenue
     ]);
 }
-    
+public function forward_survey_single($crop_survey_id)
+{
+    $cropsurvey = LandRecord::find($crop_survey_id);
+
+    if (!$cropsurvey) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Crop survey record not found.',
+        ], 404);
+    }
+
+    $cropsurvey->review = 'Patwari forwarded the survey';
+    $cropsurvey->status = 1;
+    $cropsurvey->save();
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Survey Forwarded Successfully.',
+    ], 200);
+}
+
+public function delete_survey_single($crop_survey_id)
+{
+    $cropsurvey = LandRecord::find($crop_survey_id);
+
+    if (!$cropsurvey) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Crop survey record not found.',
+        ], 404);
+    }
+    $cropsurvey->delete();
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Survey Deleted Successfully.',
+    ], 200);
+}
+
+public function delete_irrigator($id)
+{
+    $irrigator = Irrigator::find($id);
+
+    if (!$irrigator) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Irrigator record not found.',
+        ], 404);
+    }
+    $irrigator->delete();
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Irrigator Deleted Successfully.',
+    ], 200);
+}
+
+public function EditSurvey($id)
+{
+    try {
+        $session_crops = Crop::all();
+        $crop_details = Cropprice::all();
+        $PriceRevenue = PriceRevenue::all();
+
+        $priceRateData = [];
+        foreach ($PriceRevenue as $rate) {
+            $priceRateData[$rate->crop_type] = [
+                'flow' => $rate->flow,
+                'LIS' => $rate->LIS,
+                't_well' => $rate->t_well,
+                'jhallar' => $rate->jhallar,
+            ];
+        }
+
+        $survey = DB::table('cropsurveys')
+            ->join('villages', 'cropsurveys.village_id', '=', 'villages.village_id')
+            ->join('halqa', 'villages.halqa_id', '=', 'halqa.id')
+            ->join('irrigators', 'cropsurveys.irrigator_id', '=', 'irrigators.id')
+            ->join('cropprices', 'cropsurveys.finalcrop_id', '=', 'cropprices.id')
+            ->leftJoin('canals', 'cropsurveys.canal_id', '=', 'canals.id')
+            ->leftJoin('minorcanals', 'cropsurveys.minor_id', '=', 'minorcanals.id')
+            ->leftJoin('distributaries', 'cropsurveys.distri_id', '=', 'distributaries.id')
+            ->leftJoin('canal_branch', 'cropsurveys.branch_id', '=', 'canal_branch.id')
+            ->join('outlets', 'cropsurveys.outlet_id', '=', 'outlets.id')
+            ->join('crops', 'cropsurveys.crop_id', '=', 'crops.id')
+            ->select(
+                'cropsurveys.*',
+                'irrigators.irrigator_name', 
+                'irrigators.irrigator_khata_number', 
+                'cropprices.final_crop', 
+                'cropprices.crop_type', 
+                'villages.village_name',
+                'halqa.halqa_name',
+                'canals.canal_name',
+                'canals.c_type as canal_type',
+                'crops.crop_name as session_crop_name',
+                'outlets.outlet_name',
+                'minorcanals.minor_name',
+                'distributaries.name as distributary_name',
+                'canal_branch.branch_name'
+            )
+            ->where('cropsurveys.crop_survey_id', $id)
+            ->first();
+
+        if (!$survey) {
+            return response()->json(['message' => 'Survey not found.'], 404);
+        }
+
+        // Determine water source type
+        $waterSourceType = '';
+        if (!is_null($survey->canal_id) && is_null($survey->minor_id) && is_null($survey->distri_id)) {
+            $waterSourceType = 'Canal';
+        } elseif (!is_null($survey->canal_id) && !is_null($survey->minor_id) && is_null($survey->distri_id)) {
+            $waterSourceType = 'Canal + Minor Canal';
+        } elseif (!is_null($survey->canal_id) && !is_null($survey->minor_id) && !is_null($survey->distri_id) && is_null($survey->branch_id)) {
+            $waterSourceType = 'Distributary';
+        } elseif (!is_null($survey->canal_id) && !is_null($survey->minor_id) && !is_null($survey->distri_id) && !is_null($survey->branch_id)) {
+            $waterSourceType = 'Branch';
+        }
+
+        return response()->json([
+            'survey' => $survey,
+            'waterSourceType' => $waterSourceType,
+            'price_rate_data' => $priceRateData,
+        ], 200);
+
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Something went wrong.', 'details' => $e->getMessage()], 500);
+    }
+}
+
+public function UpdateSurvey(Request $request, $crop_survey_id)
+{
+    try {
+        $crop_survey = LandRecord::findOrFail($crop_survey_id);
+
+        $validatedData = $request->validate([
+            'crop_id' => 'required',
+            'khasra_number' => 'required',
+            'tenant_name' => 'required',
+            'registration_date' => 'required',
+            'cultivators_info' => 'required',
+            'snowing_date' => 'required',
+            'session_date' => 'required',
+
+            'land_assessment_marla' => 'required',
+            'land_assessment_kanal' => 'required',
+            'previous_crop' => 'required',
+
+            'date' => 'nullable',
+            'length' => 'nullable',
+            'width' => 'nullable',
+            'area_marla' => 'nullable',
+            'area_kanal' => 'nullable',
+
+            'finalcrop_id' => 'required',
+            'outlet_id' => 'required',
+            'crop_price' => 'required',
+
+            'double_crop_marla' => 'nullable',
+            'double_crop_kanal' => 'nullable',
+
+            'irrigated_area_marla' => 'nullable',
+            'irrigated_area_kanal' => 'nullable',
+
+            'identifable_area_marla' => 'nullable',
+            'identifable_area_kanal' => 'nullable',
+
+            'land_quality' => 'nullable',
+            'patwari_user_id' => 'required|numeric|max:255',
+        ]);
+
+        // Assign default values to nullable fields
+        $validatedData['length'] = $request->input('length', 0);
+        $validatedData['width'] = $request->input('width', 0);
+        $validatedData['area_marla'] = $request->input('area_marla', 0);
+        $validatedData['area_kanal'] = $request->input('area_kanal', 0);
+        $validatedData['double_crop_marla'] = $request->input('double_crop_marla', 0);
+        $validatedData['double_crop_kanal'] = $request->input('double_crop_kanal', 0);
+        $validatedData['irrigated_area_marla'] = $request->input('irrigated_area_marla', 0);
+        $validatedData['irrigated_area_kanal'] = $request->input('irrigated_area_kanal', 0);
+        $validatedData['identifable_area_marla'] = $request->input('identifable_area_marla', 0);
+        $validatedData['identifable_area_kanal'] = $request->input('identifable_area_kanal', 0);
+        $validatedData['land_quality'] = $request->input('land_quality', 'N/A');
+
+        $crop_survey->update($validatedData);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Details updated successfully!',
+            'data' => $crop_survey
+        ], 200);
+
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Validation Error',
+            'errors' => $e->errors()
+        ], 422);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Something went wrong! Try again.',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+}
+
+public function editIrrigator($id,$halqa_id){
+
+    $irrigator = DB::table('irrigators')
+        ->join('villages', 'irrigators.village_id', '=', 'villages.village_id')
+        ->select('irrigators.*', 'villages.village_name')
+        ->where('irrigators.id', $id)
+        ->first();
+
+        $villages = $halqa_id > 0 
+        ? Village::where('halqa_id', $halqa_id)->get() 
+        : Village::all();
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Irrigator data fetched successfully.',
+        'data' => [
+            'irrigator' => $irrigator,
+            'villages' => $villages
+        ]
+    ]);
+}
+
+public function updateIrrigator(Request $request, $id)
+{
+    $validatedData = $request->validate([
+        'village_id' => 'required|exists:villages,village_id',
+        'irrigator_name' => 'required|string|max:255',
+        'irrigator_khata_number' => 'required|max:255',
+        'irrigator_mobile_number' => 'nullable|string|max:50',
+        'irrigator_f_name' => 'required|string|max:255',
+        'cnic' => 'nullable|string|max:255',
+    ]);
+    $irrigator = Irrigator::find($id);
+
+    if (!$irrigator) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Irrigator not found.'
+        ], 404);
+    }
+    $irrigator->update($validatedData);
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Irrigator updated successfully.',
+        'data' => $irrigator
+    ]);
+}
+
+
+public function surveyForwardMultiple(Request $request)
+{
+    $irrigatorIds = $request->input('irrigator_ids');
+
+    if (empty($irrigatorIds)) {
+        return response()->json([
+            'success' => false,
+            'message' => 'No surveys selected!'
+        ], 400);
+    }
+
+    try {
+        // Update LandRecord table
+        LandRecord::whereIn('crop_survey_id', $irrigatorIds)->update([
+            'status' => 1,
+            'review' => 'Forwarded by Patwari'
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Forwarding successful for the selected records!'
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Database update failed!',
+            'error' => $e->getMessage() // optional: helpful for debugging
+        ], 500);
+    }
+}
+
+public function irrigator_by_outlet($village_id)
+{
+$irrigators = DB::table('irrigators')
+    ->where('village_id', $village_id)
+    ->select([
+        'id',
+        'irrigator_name',
+        'irrigator_khata_number',
+    ])
+    ->orderByRaw('CAST(irrigator_khata_number AS UNSIGNED) ASC')
+    ->get();
+
+
+    // Check if irrigators found
+    if ($irrigators->isEmpty()) {
+        return response()->json([
+            'success' => false,
+            'message' => 'No irrigators found for the selected village and outlet.',
+        ], 404);
+    }
+
+    // Return irrigators
+    return response()->json([
+        'success' => true,
+        'irrigators' => $irrigators,
+    ]);
+}
+
+ public function checkUpdate(Request $request)
+    {
+        $latest = AppVersion::orderBy('version_code', 'desc')->first();
+
+        if (!$latest) {
+            return response()->json([
+                'message' => 'No version found',
+            ], 404);
+        }
+
+        return response()->json([
+            'latest_version' => $latest->version_code,
+            'version_name'   => $latest->version_name,
+            'apk_url'        => asset($latest->apk_url),
+            'force_update'   => (bool)$latest->force_update,
+        ]);
+    }
+
 }
 

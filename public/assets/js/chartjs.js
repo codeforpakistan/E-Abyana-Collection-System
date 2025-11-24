@@ -9,7 +9,7 @@ $(function() {
 				label: 'Monthly Growth',
 				data: [150, 250, 180, 350, 520, 260, 480, 570, 390, 450, 680, 720],
 				backgroundColor: 'transparent',
-				borderColor: '#4880FF',
+				borderColor: '#1B8D5F',
 				borderWidth: 4,
 				pointBackgroundColor: '#ffffff',
 				pointRadius: 8
@@ -106,7 +106,7 @@ $(function() {
 					30,
 					50,
 				],
-				backgroundColor: ['#f47b25', '#4880FF', '#b03cd5', '#31c92e'],
+				backgroundColor: ['#f47b25', '#1B8D5F', '#b03cd5', '#31c92e'],
 				label: 'Dataset 1'
 			}],
 			labels: ['Youtube', 'Tiwtter', 'Google+', 'Facebook'],
@@ -135,7 +135,7 @@ $(function() {
 					50,
 					30,
 				],
-				backgroundColor: ['#f47b25', '#4880FF', '#b03cd5', '#31c92e'],
+				backgroundColor: ['#f47b25', '#1B8D5F', '#b03cd5', '#31c92e'],
 				label: 'Dataset 1'
 			}],
 			labels: ['Sales', 'Profits', 'Growth', 'Income'],

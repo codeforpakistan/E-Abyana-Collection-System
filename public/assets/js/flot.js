@@ -40,7 +40,7 @@ $(function() {
 			verticalLines: false,
 			horizontalLines: false
 		},
-		colors: ['#f47b25', '#4880FF'],
+		colors: ['#f47b25', '#1B8D5F'],
 		yaxis: {
 			min: -1.2,
 			max: 1.2,
@@ -81,7 +81,7 @@ $(function() {
 			verticalLines: false,
 			horizontalLines: false
 		},
-		colors: ['#f47b25', '#4880FF'],
+		colors: ['#f47b25', '#1B8D5F'],
 		yaxis: {
 			min: -1.2,
 			max: 1.2,
@@ -129,7 +129,7 @@ $(function() {
 				borderWidth:1,
 			},
 
-			colors: ['#f47b25', '#4880FF', '#3ebaef'],
+			colors: ['#f47b25', '#1B8D5F', '#3ebaef'],
 			yaxis: {
 				tickLength: 0
 			},
@@ -172,7 +172,7 @@ $(function() {
 				show: true
 			}
 		},
-		colors: ['#f47b25', '#4880FF', '#3ebaef', '#31c92e', '#1891f2', '#583a96'],
+		colors: ['#f47b25', '#1B8D5F', '#3ebaef', '#31c92e', '#1891f2', '#583a96'],
 	});
 });
 

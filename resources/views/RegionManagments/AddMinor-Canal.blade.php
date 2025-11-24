@@ -53,9 +53,9 @@
                                 </select>
                             </div>
                             <div class="form-group col-4">
-                                <label  class="form-label" for="canal_id">Select Canal/ضلع</label>
+                                <label  class="form-label" for="canal_id">Select Canal/نہر</label>
                                 <select name="canal_id" id="canal_id" class="form-control" >
-                                    <option value="">Choose Canal/گاؤں</option>
+                                    <option value="">Choose Canal/نہر</option>
                                     @foreach($canals as $canal)
                                         <option value="{{ $canal->id }}">{{ $canal->canal_name }}</option>
                                     @endforeach
@@ -66,7 +66,7 @@
                                 <input class="form-control" type="text" name="minor_name" required>
                             </div>
                         </div>
-                        <div class="row" style="margin-top:-10px;">
+                        <!-- <div class="row" style="margin-top:-10px;">
                             
                             <div class="form-group col-4">
                                 <label class="form-label">No. of Outlets</label>
@@ -80,7 +80,7 @@
                                 <label class="form-label">No. of Outlets (Right Side)</label>
                                 <input class="form-control" type="number" name="no_outlet_rs" required>
                             </div>
-                        </div>
+                        </div> -->
                            
                         <div class="row" style="margin-top:-10px;">
                             <div class="form-group col-lg-6">
@@ -113,18 +113,18 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="example" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
+                            <table style="font-size:12px;" id="example" class="table table-bordered border-t0 key-buttons text-nowrap w-100">
                                 <thead>
                                     <tr>
                                         <th>#</th>
                                         <th>Distributory</th>
                                         <th>Division Name</th>
                                         <th>Canal Name</th>
-                                        <th>No Of Outlet</th>
+                                      <!--  <th>No Of Outlet</th>
                                         <th>No. of Outlets (Left Side)</th>
-                                        <th>No. of Outlets (Right Side)</th>
-                                        <th>Total No. of CCA</th>
-                                        <th>Total No. of Discharge (Cusec)</th>
+                                        <th>No. of Outlets (Right Side)</th> -->
+                                        <th>Total CCA</th>
+                                        <th>Discharge (Cusec)</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -133,7 +133,7 @@
                                         @foreach($minorCanals as $canal)
                                         <tr>
                                             <td>{{ $canal->id }}</td>
-                                            <td>{{ $canal->minor_name }}</td>
+                                            <td><strong>{{ $canal->minor_name }}</strong></td>
                                             <td>{{ $canal->division->divsion_name ?? 'N/A' }}</td>
                                             <td>
                                                 @if($canal->canal)
@@ -144,9 +144,9 @@
                                             </td>
                                     
                                           
-                                            <td>{{ $canal->no_outlet }}</td>
+                                          <!--  <td>{{ $canal->no_outlet }}</td>
                                              <td>{{ $canal->no_outlet_ls }}</td>
-                                             <td>{{ $canal->no_outlet_rs }}</td>
+                                             <td>{{ $canal->no_outlet_rs }}</td> -->
                                                <td>{{ $canal->total_no_cca }}</td>
                                            <td>{{ $canal->total_no_discharge_cusic }}</td>
 

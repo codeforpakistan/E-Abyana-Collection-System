@@ -19,7 +19,7 @@
 .side-menu__item:hover,
 .side-menu__item:focus {
     text-decoration: none;
-    color: #4880FF;
+    color: #1B8D5F;
     background: #181823;
 }
 
@@ -67,7 +67,7 @@
 }
 
 .slide-menu a.active {
-    color: #4880FF;
+    color: #1B8D5F;
     background: #181823;
 }
 
